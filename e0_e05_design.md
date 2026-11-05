@@ -59,6 +59,16 @@ per-partition row counts, and membership digests. This is the primary
 reproducible partition proposal; it does not replace the separately reported
 temporal-coverage and temporal-control analysis.
 
+The frozen methodology also requires two separate controls where the fields
+permit them. First, construct an **earlier-period source train/calibration and
+later-period source test** using the start/end timestamps, with any flow
+crossing a boundary assigned to an explicit exclusion/embargo set. Second,
+construct a **host/session-disjoint sensitivity split** from observed
+endpoint/session identifiers only; never invent a grouping key. The E0
+temporal and identifier summaries must be reviewed before fixing those exact
+boundaries and group definitions. These are controls alongside the baseline
+60/20/20 partition, not substitutes for the cross-domain target lockbox.
+
 ## CIC2018 target lockbox
 
 For the first UNSW-to-CIC2018 pilot, the complete CIC2018 feature table is the
