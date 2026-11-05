@@ -1,6 +1,6 @@
 # Target-label firewall implementation
 
-**Status:** Implemented as a pre-pilot access boundary; no run is unlocked.  
+**Status:** Implemented as a pre-pilot access boundary; no run is unlocked.
 **Scope:** CIC2018 target data in the active UNSW → CIC2018 direction.
 
 ## Access paths

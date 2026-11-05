@@ -1,8 +1,8 @@
 # First Random Forest pilot lock — working draft
 
-**Status:** Not frozen; target labels remain sealed.  
-**Repository branch:** `codex/e0-e05`.  
-**Active direction:** NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3.  
+**Status:** Not frozen; target labels remain sealed.
+**Repository branch:** `codex/e0-e05`.
+**Active direction:** NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3.
 **ToN-IoT-v3:** Excluded.
 
 This draft translates the frozen protocol into a reviewable pilot checklist.
