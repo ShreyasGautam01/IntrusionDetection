@@ -27,6 +27,20 @@ It does not authorize training or target evaluation. The frozen proposal and
 | Review budgets | 1%, 5%, and 10% |
 | Transfer directions in initial lock | UNSW→CIC2018 and CIC2018→UNSW |
 
+## Random Forest implementation proposal
+
+The concrete review proposal is in `rf_config_draft.json`, with rationale in
+`RF_CONFIG_DRAFT.md`. It records the method-fixed settings (200 trees and leaf
+size 5), proposes the documented classifier defaults for remaining tree
+parameters, proposes seeds 0–9, and sets single-job execution. These values
+are **not frozen**. The current Python environment has no scikit-learn
+installation and the repository has no dependency lock, so the implementation
+version remains unresolved and the model has not been instantiated.
+
+The frozen E1 gate also requires stable results across seeds without defining
+a numeric stability tolerance. Define and record that review criterion before
+any E1 run.
+
 ## Current E0/E0.5 settings and cautions
 
 - The deterministic 60/20/20 label-blind UNSW hash partition is the baseline
@@ -61,10 +75,11 @@ It does not authorize training or target evaluation. The frozen proposal and
    derived values and identifier-like ports, before any fitting.
 3. Finalize the conservative family matrix from dataset documentation before
    any family-level target analysis.
-4. Specify every remaining Random Forest parameter and software version; the
-   frozen method fixes tree count and minimum leaf size but not all settings.
-5. Fix the seed list. The proposal recommends at least 10 where practical;
-   practical feasibility and the exact list are not yet locked.
+4. Review the explicit candidate Random Forest parameters and seeds in
+   `rf_config_draft.json`; pin a compatible Python/scikit-learn runtime. The
+   current environment lacks scikit-learn.
+5. Define a reviewable source-only E1 stability criterion before running E1;
+   the frozen method requires stability but gives no numeric tolerance.
 6. Freeze the exact split/control used by the pilot and retain the temporal and
    host/session controls as separate predeclared analyses.
 7. Complete the source-only in-domain E1 stability gate across the locked seeds

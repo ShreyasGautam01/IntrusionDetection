@@ -1,0 +1,62 @@
+{
+  "configuration_id": "rf-draft-1",
+  "generated_at_utc": "2026-11-05T20:30:46Z",
+  "generated_from_git_commit": "aa34678cb96edd00460811a5583c9e77d1d2c090",
+  "status": "draft_not_frozen",
+  "purpose": "Pre-pilot configuration proposal only; this file does not authorize fitting or target-label access.",
+  "active_direction": "NF-UNSW-NB15-v3_to_NF-CSE-CIC-IDS2018-v3",
+  "datasets": {
+    "source": {
+      "name": "NF-UNSW-NB15-v3",
+      "sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5"
+    },
+    "target": {
+      "name": "NF-CSE-CIC-IDS2018-v3",
+      "sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74"
+    }
+  },
+  "implementation_candidate": "scikit-learn RandomForestClassifier",
+  "runtime": {
+    "python_detected": "3.14.7",
+    "scikit_learn_detected": null,
+    "numpy_detected": true,
+    "scipy_detected": false,
+    "status": "scikit-learn is not installed in the current environment; pin and record the supported runtime before E1"
+  },
+  "seeds": {
+    "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "status": "proposed_not_frozen",
+    "basis": "Ten deterministic seeds meet the proposal's recommendation of at least ten where practical."
+  },
+  "estimator": {
+    "n_estimators": {"value": 200, "status": "fixed_by_methodology"},
+    "min_samples_leaf": {"value": 5, "status": "fixed_by_methodology"},
+    "criterion": {"value": "gini", "status": "proposed_library_default"},
+    "max_depth": {"value": null, "status": "proposed_library_default"},
+    "min_samples_split": {"value": 2, "status": "proposed_library_default"},
+    "min_weight_fraction_leaf": {"value": 0.0, "status": "proposed_library_default"},
+    "max_features": {"value": "sqrt", "status": "proposed_classifier_default"},
+    "max_leaf_nodes": {"value": null, "status": "proposed_library_default"},
+    "min_impurity_decrease": {"value": 0.0, "status": "proposed_library_default"},
+    "bootstrap": {"value": true, "status": "proposed_library_default"},
+    "oob_score": {"value": false, "status": "proposed_library_default"},
+    "n_jobs": {"value": 1, "status": "proposed_execution_setting_for_reproducibility"},
+    "random_state": {"value": "one value from seeds.values per replicate", "status": "proposed_seed_policy"},
+    "verbose": {"value": 0, "status": "proposed_library_default"},
+    "warm_start": {"value": false, "status": "proposed_library_default"},
+    "class_weight": {"value": null, "status": "proposed_library_default_no_reweighting"},
+    "ccp_alpha": {"value": 0.0, "status": "proposed_library_default"},
+    "max_samples": {"value": null, "status": "proposed_library_default"},
+    "monotonic_cst": {"value": null, "status": "proposed_library_default_if_supported_by_pinned_version"}
+  },
+  "gates": {
+    "predictive_feature_set": "unresolved_review_required",
+    "source_split": "proposed_label_blind_UNSW_60_20_20_hash_partition",
+    "calibration": "source_only_sigmoid_fitted_on_calibration_partition",
+    "target_labels": "sealed_until_committed_freeze_manifest_and_E1_gate",
+    "E1_stability_threshold": "not_numeric_in_frozen_methodology; report all seeds and define approval criterion before E1"
+  },
+  "documentation_source": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html",
+  "documentation_version_seen": "1.9.1",
+  "important_limit": "Parameter defaults are recorded explicitly as a review proposal. Because scikit-learn is absent locally and no version is pinned, this configuration has not been instantiated or validated against a runtime."
+}

@@ -213,3 +213,16 @@ pilot has not been run.
 - Both protocol and cumulative TCP flag fields can use direct common v3
   columns. Ports remain the unresolved governance decision for the compact
   representation. No target labels were accessed.
+
+### 2026-11-06 — RF pre-pilot settings made reviewable
+
+- Added a machine-readable candidate configuration and human-readable decision
+  sheet. The draft preserves the methodology's 200 trees and minimum leaf size
+  5, proposes explicit documented classifier defaults for other parameters,
+  and lists ten seeds (0–9). No estimator was instantiated or fit.
+- The local environment is Python 3.14.7 with no scikit-learn installation;
+  no dependency lock file exists. A compatible pinned runtime is required
+  before E1 and before a freeze manifest can be produced.
+- The frozen methodology asks for stable E1 results across seeds but supplies
+  no numeric acceptance tolerance. That criterion remains to be defined before
+  E1; no arbitrary threshold was added to the frozen protocol.
