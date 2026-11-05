@@ -239,3 +239,16 @@ pilot has not been run.
   the documented target-constant caution.
 - Target labels and label counts do not determine the proposed feature list;
   no raw dataset rows were read by the generator and no model was trained.
+
+### 2026-11-06 — Batched target feature-only reader
+
+- Added `iter_target_feature_batches` to the lockbox reader with a default
+  batch size of 8,192 rows. It returns only explicitly selected feature tuples
+  and zero-based starting row numbers; `Label` and `Attack` are rejected.
+- Kept the row-wise feature-only API by implementing it over one-row batches.
+  Both paths validate requested columns, duplicate headers, and row widths.
+- This makes the 20.1-million-row CIC lockbox practical to score in bounded
+  memory once a future model/config is frozen. The feature API does not index
+  or return label values, change the dataset, or authorize evaluation.
+- No tests were run and no model was trained; the target-label freeze manifest
+  is still absent.

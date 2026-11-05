@@ -80,24 +80,57 @@ def iter_target_features(
 ) -> Iterator[tuple[int, dict[str, str]]]:
     """Yield row number and features only; target columns are never returned."""
     selected = tuple(feature_columns)
+    for start_row, batch in iter_target_feature_batches(target_file, selected, batch_size=1):
+        yield start_row, dict(zip(selected, batch[0]))
+
+
+def iter_target_feature_batches(
+    target_file: Path,
+    feature_columns: Sequence[str],
+    *,
+    batch_size: int = 8192,
+) -> Iterator[tuple[int, list[tuple[str, ...]]]]:
+    """Yield bounded batches of selected features, never labels.
+
+    `start_row` is a zero-based data-row offset (the header is not counted).
+    Each record is a tuple ordered exactly like `feature_columns`. Only the
+    selected values are returned or retained in the batch. This supports
+    memory-bounded prediction on the full target lockbox.
+    """
+    selected = tuple(feature_columns)
     if not selected:
         raise ValueError('At least one explicit feature column is required')
+    if len(selected) != len(set(selected)):
+        raise ValueError('Duplicate requested feature names prevent safe selection')
+    if not isinstance(batch_size, int) or isinstance(batch_size, bool) or batch_size < 1:
+        raise ValueError('batch_size must be a positive integer')
     forbidden = TARGET_COLUMNS.intersection(selected)
     if forbidden:
         raise ValueError(f'Target columns cannot enter prediction features: {sorted(forbidden)}')
     with target_file.open('r', encoding='utf-8-sig', newline='', buffering=1024*1024) as stream:
         reader = csv.reader(stream)
-        header = next(reader)
+        try:
+            header = next(reader)
+        except StopIteration as exc:
+            raise ValueError('Target file is empty and has no feature header') from exc
         if len(header) != len(set(header)):
             raise ValueError('Duplicate input column names prevent safe selection')
         absent = set(selected).difference(header)
         if absent:
             raise ValueError(f'Requested feature columns are absent: {sorted(absent)}')
         indices = [header.index(name) for name in selected]
+        batch: list[tuple[str, ...]] = []
+        batch_start = 0
         for row_number, row in enumerate(reader):
             if len(row) != len(header):
                 raise ValueError(f'Malformed row width at row {row_number + 2}')
-            yield row_number, dict(zip(selected, (row[i] for i in indices)))
+            batch.append(tuple(row[i] for i in indices))
+            if len(batch) == batch_size:
+                yield batch_start, batch
+                batch_start = row_number + 1
+                batch = []
+        if batch:
+            yield batch_start, batch
 
 
 def iter_final_evaluation_labels(

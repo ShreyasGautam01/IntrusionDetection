@@ -60,8 +60,9 @@ The deterministic UNSW-training-only median policy is implemented in
 inference transform. No dataset has been transformed or overwritten.
 
 `src/ids_research/target_lockbox.py` implements feature-only target streaming
-and fails closed on label access unless a matching freeze manifest is
-committed, clean, and descended from the current checkout. The interface is
-implemented; no freeze manifest exists yet, so target labels remain sealed.
+and now provides bounded batch output for target scoring. It fails closed on
+label access unless a matching freeze manifest is committed, clean, and
+descended from the current checkout. No freeze manifest exists yet, so target
+labels remain sealed.
 
 The frozen `research_proposal.md` and `methodology_final.md` were not modified.

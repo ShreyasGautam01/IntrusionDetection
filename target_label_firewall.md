@@ -5,10 +5,16 @@
 
 ## Access paths
 
-- Prediction code must call `iter_target_features` from
+- Prediction code should call `iter_target_feature_batches` from
   `src/ids_research/target_lockbox.py` with an explicit feature-column list.
-  The function rejects `Label` and `Attack`, rejects duplicate headers and
-  malformed rows, and yields only a row number and selected feature values.
+  It yields the zero-based starting row number and up to 8,192 tuples per
+  batch, ordered exactly like the requested columns. The default batch size is
+  configurable and keeps target scoring memory bounded. The row-wise
+  `iter_target_features` interface remains available for small uses.
+- Both feature-only functions reject `Label` and `Attack`, duplicate selected
+  feature names, duplicate input headers, absent requested features, and
+  malformed rows. They return only selected feature values; target columns are
+  never included in their outputs.
 - Final evaluation code may call `iter_final_evaluation_labels` only after
   `verify_freeze_manifest` accepts a committed freeze record. The record must
   bind the exact source and target SHA-256 values, experiment-config SHA-256,
