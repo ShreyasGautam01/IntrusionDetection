@@ -1,7 +1,7 @@
 # UNSW source temporal and group controls
 
-**Input:** NF-UNSW-NB15-v3, audited SHA-256 `4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5`.  
-**Generated:** 2026-11-06 (Asia/Kolkata).  
+**Input:** NF-UNSW-NB15-v3, audited SHA-256 `4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5`.
+**Generated:** 2026-11-06 (Asia/Kolkata).
 **Method:** label-blind; details and exact counts are in `e0_source_controls.json`.
 
 ## Temporal source control
