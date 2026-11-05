@@ -1,0 +1,28 @@
+# Local/raw datasets — never commit
+data/raw/
+data/downloads/
+data/cache/
+
+# Large generated data
+data/processed/
+data/intermediate/
+results/raw/
+results/checkpoints/
+
+# Local environments
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Local IDE/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local logs and temporary files
+*.log
+*.tmp
+*.bak
