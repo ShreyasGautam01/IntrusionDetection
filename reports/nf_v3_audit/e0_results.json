@@ -1,0 +1,176 @@
+{
+  "generated_utc": "2026-11-05T18:39:49.981546+00:00",
+  "input_sha256": {
+    "NF-UNSW-NB15-v3": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+    "NF-CSE-CIC-IDS2018-v3": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74"
+  },
+  "split_assignment": "Label-blind SHA-256 of canonical raw 53-feature strings. UNSW first 8 digest bytes modulo 100: 0-59 train, 60-79 calibration, 80-99 source_test. CIC all rows target_lockbox.",
+  "partition_row_counts": {
+    "NF-CSE-CIC-IDS2018-v3:target_lockbox": 20115529,
+    "NF-UNSW-NB15-v3:calibration": 473301,
+    "NF-UNSW-NB15-v3:source_test": 473171,
+    "NF-UNSW-NB15-v3:train": 1418952
+  },
+  "temporal": {
+    "NF-UNSW-NB15-v3": {
+      "start_min_ms": 1421927376907,
+      "start_max_ms": 1424262564927,
+      "start_min_utc": "2015-01-22T11:49:36.907000+00:00",
+      "start_max_utc": "2015-02-18T12:29:24.927000+00:00",
+      "input_order_nondecreasing": false,
+      "daily_capture_blocks": [
+        {
+          "date": "2015-01-22",
+          "rows": 1095574,
+          "benign": 1078112,
+          "attack": 17462
+        },
+        {
+          "date": "2015-01-23",
+          "rows": 39778,
+          "benign": 39778
+        },
+        {
+          "date": "2015-02-18",
+          "rows": 1230072,
+          "benign": 1119841,
+          "attack": 110231
+        }
+      ],
+      "gap_threshold_seconds": 60,
+      "episode_count": 18,
+      "episode_size_histogram_rows_per_episode": {
+        "263": 1,
+        "791": 1,
+        "2425": 1,
+        "3986": 1,
+        "4239": 1,
+        "4470": 1,
+        "4479": 1,
+        "4522": 1,
+        "4747": 1,
+        "5260": 1,
+        "5314": 1,
+        "5579": 1,
+        "7034": 1,
+        "7168": 1,
+        "13280": 1,
+        "13350": 1,
+        "18414": 1,
+        "22372": 1
+      }
+    },
+    "NF-CSE-CIC-IDS2018-v3": {
+      "start_min_ms": 1518611287705,
+      "start_max_ms": 1520021065524,
+      "start_min_utc": "2018-02-14T12:28:07.705000+00:00",
+      "start_max_utc": "2018-03-02T20:04:25.524000+00:00",
+      "input_order_nondecreasing": false,
+      "daily_capture_blocks": [
+        {
+          "date": "2018-02-14",
+          "rows": 2138838,
+          "benign": 1563644,
+          "attack": 575194
+        },
+        {
+          "date": "2018-02-15",
+          "rows": 1665321,
+          "benign": 1567981,
+          "attack": 97340
+        },
+        {
+          "date": "2018-02-16",
+          "rows": 1784129,
+          "benign": 1578503,
+          "attack": 205626
+        },
+        {
+          "date": "2018-02-20",
+          "rows": 1829859,
+          "benign": 1541270,
+          "attack": 288589
+        },
+        {
+          "date": "2018-02-21",
+          "rows": 2712803,
+          "benign": 1677042,
+          "attack": 1035761
+        },
+        {
+          "date": "2018-02-22",
+          "rows": 2040128,
+          "benign": 2037590,
+          "attack": 2538
+        },
+        {
+          "date": "2018-02-23",
+          "rows": 1933002,
+          "benign": 1933002
+        },
+        {
+          "date": "2018-02-27",
+          "rows": 828,
+          "benign": 828
+        },
+        {
+          "date": "2018-02-28",
+          "rows": 2032727,
+          "benign": 1948400,
+          "attack": 84327
+        },
+        {
+          "date": "2018-03-01",
+          "rows": 2147533,
+          "benign": 2043708,
+          "attack": 103825
+        },
+        {
+          "date": "2018-03-02",
+          "rows": 1830361,
+          "benign": 1622658,
+          "attack": 207703
+        }
+      ],
+      "gap_threshold_seconds": 60,
+      "episode_count": 27,
+      "episode_size_histogram_rows_per_episode": {
+        "2": 4,
+        "3": 1,
+        "5": 2,
+        "20": 1,
+        "66": 1,
+        "2070": 1,
+        "2153": 1,
+        "2538": 1,
+        "3450": 1,
+        "12176": 1,
+        "14192": 1,
+        "32860": 1,
+        "36040": 1,
+        "39895": 1,
+        "84290": 1,
+        "100076": 1,
+        "103823": 1,
+        "105550": 1,
+        "188474": 1,
+        "207703": 1,
+        "246475": 1,
+        "386720": 1,
+        "1032311": 1
+      }
+    }
+  },
+  "CIC_duplicate_feature_vector_conflict_groups": {
+    "Attack": 440,
+    "either": 440,
+    "Label": 0
+  },
+  "exact_feature_vector_overlap_unique_vectors": {
+    "UNSW_cross_partition": 0,
+    "UNSW_source_to_CIC_lockbox": 0,
+    "train__CIC_lockbox": 0,
+    "calibration__CIC_lockbox": 0,
+    "source_test__CIC_lockbox": 0
+  }
+}

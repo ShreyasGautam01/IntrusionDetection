@@ -10,22 +10,25 @@ for the two active datasets. `feature_registry.csv` records the draft role for
 all 53 features and both targets. `e0_e05_design.md` records the proposed
 label-blind split and source-fitted missing/non-finite handling rules.
 
-A focused streaming pass was attempted twice to calculate CIC2018
-duplicate-vector label conflicts, daily temporal coverage and attack episodes,
-deterministic partition counts, and exact feature-vector intersections. The
-first attempt used an unindexed overlap join; the second added an index but
-stalled for over an hour of wall time without completing. Both temporary
-databases were discarded. No partial counts are reported as findings.
+A bounded-memory external-sort pass has completed for CIC2018 duplicate-vector
+label conflicts, daily temporal coverage and attack episodes, deterministic
+label-blind partition counts, and exact feature-vector intersections. Results
+are in `e0_results.json`, with interpretation in
+`E0_TEMPORAL_CONFLICT_REPORT.md`. The conservative observed family inventory
+and pair matrix are `family_inventory.csv` and `family_matrix_draft.csv`. Two
+earlier SQLite approaches were stopped because they did not complete in a
+practical review window; their scratch databases were discarded and no partial
+values from those attempts were used.
 
 Remaining before E0 can close:
 
-1. Implement an external-sort or otherwise bounded approach for duplicate
-   conflicts and exact overlap checks; avoid a giant SQLite transaction.
-2. Review the proposed hash-based 60/20/20 UNSW split against the temporal
-   control and host/session grouping provisions in the frozen methodology.
-3. Implement and persist the UNSW-training-fitted median replacement values;
+1. Review the proposed hash-based 60/20/20 UNSW split against temporal and
+   host/session controls in the frozen methodology; the configured split is a
+   reproducible baseline, not the required temporal/host sensitivity controls.
+2. Implement and persist UNSW-training-fitted median replacement values, then
    demonstrate identical application to calibration, source test, and target.
-4. Review and freeze the feature registry and conservative source/target
-   family matrix before the pilot.
+3. Review and freeze the candidate feature registry and conservative family
+   matrix. Do not use the draft matrix to assert family equivalence or unseen
+   attacks.
 
 The frozen `research_proposal.md` and `methodology_final.md` were not modified.

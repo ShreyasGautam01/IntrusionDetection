@@ -1,0 +1,26 @@
+dataset,raw_attack_value,binary_label,row_count,family_mapping,mapping_basis
+NF-CSE-CIC-IDS2018-v3,Benign,0,17514626,benign,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,Bot,1,207703,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,Brute_Force_-Web,1,1618,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,Brute_Force_-XSS,1,480,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,DDOS_attack-HOIC,1,1032311,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,DDOS_attack-LOIC-UDP,1,3450,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,DDoS_attacks-LOIC-HTTP,1,288589,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,DoS_attacks-GoldenEye,1,61300,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,DoS_attacks-Hulk,1,100076,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,DoS_attacks-SlowHTTPTest,1,105550,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,DoS_attacks-Slowloris,1,36040,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,FTP-BruteForce,1,386720,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,Infilteration,1,188152,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,SQL_Injection,1,440,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-CSE-CIC-IDS2018-v3,SSH-Bruteforce,1,188474,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Analysis,1,1226,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Backdoor,1,4659,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Benign,0,2237731,benign,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,DoS,1,5980,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Exploits,1,42748,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Fuzzers,1,33816,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Generic,1,19651,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Reconnaissance,1,17074,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Shellcode,1,2381,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
+NF-UNSW-NB15-v3,Worms,1,158,dataset_local_unmapped,Exact observed audit value; no cross-dataset equivalence inferred
