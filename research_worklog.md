@@ -179,3 +179,17 @@ pilot has not been run.
 - Mapping review, exact feature governance, complete RF configuration and seed
   lock, source-only E1 stability gate, and the target-label firewall freeze
   manifest remain blockers before the first UNSW→CIC2018 Random Forest pilot.
+
+### 2026-11-06 — Compact representation crosswalk drafted
+
+- The frozen methodology names a TAN-IDS-inspired 8-feature sensitivity but
+  does not list the corresponding v3 columns. Added a draft crosswalk from the
+  cited paper's Table 5 to the audited v3 schema, keeping all transformations
+  unapplied.
+- Flagged required review of bounded numeric ports, protocol-code alignment,
+  source/target TCP-flag semantics, and zero-duration handling for derived
+  packets-per-second. The source paper is used only for this representation;
+  its data filtering, split, and adaptation procedures are not adopted.
+- No target labels were used, and no model or data transformation was run.
+- The representation crosswalk, exact primary predictive feature list, and
+  complete model/seed lock remain review gates before E1.

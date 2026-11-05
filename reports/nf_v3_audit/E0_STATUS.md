@@ -15,7 +15,12 @@ label conflicts, daily temporal coverage and attack episodes, deterministic
 label-blind partition counts, and exact feature-vector intersections. Results
 are in `e0_results.json`, with interpretation in
 `E0_TEMPORAL_CONFLICT_REPORT.md`. The conservative observed family inventory
-and pair matrix are `family_inventory.csv` and `family_matrix_draft.csv`. Two
+and pair matrix are `family_inventory.csv` and `family_matrix_draft.csv`; the
+raw-label crosswalk and interpretation are `family_mapping_draft.csv` and
+`FAMILY_MAPPING_DRAFT.md`. The compact 8-feature sensitivity mapping required
+by the frozen methodology is drafted in `representation_8feature_draft.csv`
+and `REPRESENTATION_8FEATURE_DRAFT.md`; v3-specific encoding questions remain
+unresolved. Two
 earlier SQLite approaches were stopped because they did not complete in a
 practical review window; their scratch databases were discarded and no partial
 values from those attempts were used.

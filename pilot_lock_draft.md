@@ -39,6 +39,12 @@ It does not authorize training or target evaluation. The frozen proposal and
   half the UNSW flows and retains only 6 calibration and 7 source-test hosts.
 - The current feature registry and family matrix remain drafts. No cross-domain
   family equivalence or unseen-family conclusion is frozen.
+- The frozen methodology also requires a compact 8-feature representation
+  sensitivity. Its draft crosswalk to v3 columns is in
+  `reports/nf_v3_audit/representation_8feature_draft.csv`, with discussion in
+  `reports/nf_v3_audit/REPRESENTATION_8FEATURE_DRAFT.md`. It is not implemented
+  or frozen. Port inclusion, protocol-code alignment, TCP-flag semantics, and
+  zero-duration packet-rate handling still need review.
 - Finite-value replacements are fitted from UNSW baseline training rows only
   and applied unchanged at inference.
 
@@ -47,17 +53,19 @@ It does not authorize training or target evaluation. The frozen proposal and
 1. Approve the exact predictive feature columns from `feature_registry.csv`,
    including treatment of identifiers, absolute time, and
    `FTP_COMMAND_RET_CODE` (constant in CIC2018, variable in UNSW).
-2. Finalize the conservative family matrix from dataset documentation before
+2. Review and freeze the eight-feature sensitivity crosswalk, especially its
+   derived values and identifier-like ports, before any fitting.
+3. Finalize the conservative family matrix from dataset documentation before
    any family-level target analysis.
-3. Specify every remaining Random Forest parameter and software version; the
+4. Specify every remaining Random Forest parameter and software version; the
    frozen method fixes tree count and minimum leaf size but not all settings.
-4. Fix the seed list. The proposal recommends at least 10 where practical;
+5. Fix the seed list. The proposal recommends at least 10 where practical;
    practical feasibility and the exact list are not yet locked.
-5. Freeze the exact split/control used by the pilot and retain the temporal and
+6. Freeze the exact split/control used by the pilot and retain the temporal and
    host/session controls as separate predeclared analyses.
-6. Complete the source-only in-domain E1 stability gate across the locked seeds
+7. Complete the source-only in-domain E1 stability gate across the locked seeds
    before any target-label evaluation is unlocked.
-7. Record exact dataset/config/registry hashes and a committed freeze manifest
+8. Record exact dataset/config/registry hashes and a committed freeze manifest
    that satisfies `target_label_firewall.md`.
 
 ## Stop conditions
