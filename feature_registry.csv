@@ -1,56 +1,111 @@
-"feature","role","observed_type","missing_unsw","positive_inf_unsw","notes"
-"FLOW_START_MILLISECONDS","audit_split_metadata","numeric_finite","0","0","Retain for temporal audit/splitting; exclude raw value from predictive matrix pending lock"
-"FLOW_END_MILLISECONDS","audit_split_metadata","numeric_finite","0","0","Retain for temporal audit/splitting; exclude raw value from predictive matrix pending lock"
-"IPV4_SRC_ADDR","identifier_like","address_text","0","0","Retain in audit layer; predictive inclusion requires explicit review"
-"L4_SRC_PORT","identifier_like","numeric_finite","0","0","Retain in audit layer; predictive inclusion requires explicit review"
-"IPV4_DST_ADDR","identifier_like","address_text","0","0","Retain in audit layer; predictive inclusion requires explicit review"
-"L4_DST_PORT","identifier_like","numeric_finite","0","0","Retain in audit layer; predictive inclusion requires explicit review"
-"PROTOCOL","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"L7_PROTO","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"IN_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"IN_PKTS","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"OUT_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"OUT_PKTS","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"TCP_FLAGS","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"CLIENT_TCP_FLAGS","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"SERVER_TCP_FLAGS","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"FLOW_DURATION_MILLISECONDS","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DURATION_IN","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DURATION_OUT","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"MIN_TTL","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"MAX_TTL","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"LONGEST_FLOW_PKT","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"SHORTEST_FLOW_PKT","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"MIN_IP_PKT_LEN","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"MAX_IP_PKT_LEN","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"SRC_TO_DST_SECOND_BYTES","predictive_candidate","numeric_with_nonfinite","63425","59068","Candidate; no silent dropping"
-"DST_TO_SRC_SECOND_BYTES","predictive_candidate","numeric_with_nonfinite","0","122493","Candidate; no silent dropping"
-"RETRANSMITTED_IN_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"RETRANSMITTED_IN_PKTS","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"RETRANSMITTED_OUT_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"RETRANSMITTED_OUT_PKTS","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"SRC_TO_DST_AVG_THROUGHPUT","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DST_TO_SRC_AVG_THROUGHPUT","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"NUM_PKTS_UP_TO_128_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"NUM_PKTS_128_TO_256_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"NUM_PKTS_256_TO_512_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"NUM_PKTS_512_TO_1024_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"NUM_PKTS_1024_TO_1514_BYTES","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"TCP_WIN_MAX_IN","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"TCP_WIN_MAX_OUT","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"ICMP_TYPE","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"ICMP_IPV4_TYPE","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DNS_QUERY_ID","identifier_like","numeric_finite","0","0","Retain in audit layer; predictive inclusion requires explicit review"
-"DNS_QUERY_TYPE","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DNS_TTL_ANSWER","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"FTP_COMMAND_RET_CODE","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"SRC_TO_DST_IAT_MIN","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"SRC_TO_DST_IAT_MAX","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"SRC_TO_DST_IAT_AVG","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"SRC_TO_DST_IAT_STDDEV","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DST_TO_SRC_IAT_MIN","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DST_TO_SRC_IAT_MAX","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DST_TO_SRC_IAT_AVG","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"DST_TO_SRC_IAT_STDDEV","predictive_candidate","numeric_finite","0","0","Candidate; no silent dropping"
-"Label","target","numeric_finite","0","0","Never predictive"
-"Attack","target","text","0","0","Never predictive"
+dataset,feature,role,observed_type,finite_min,finite_max,empty_values,nan_values,positive_inf_values,negative_inf_values,notes
+NF-CSE-CIC-IDS2018-v3,FLOW_START_MILLISECONDS,audit_split_metadata,numeric_finite,1518611287705.0,1520021065524.0,0,0,0,0,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+NF-CSE-CIC-IDS2018-v3,FLOW_END_MILLISECONDS,audit_split_metadata,numeric_finite,1518611287705.0,1520021184780.0,0,0,0,0,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+NF-CSE-CIC-IDS2018-v3,IPV4_SRC_ADDR,identifier_like,address_text,,,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,L4_SRC_PORT,identifier_like,numeric_finite,0.0,65535.0,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,IPV4_DST_ADDR,identifier_like,address_text,,,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,L4_DST_PORT,identifier_like,numeric_finite,0.0,65535.0,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,PROTOCOL,predictive_candidate,numeric_finite,1.0,58.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,L7_PROTO,predictive_candidate,numeric_finite,0.0,401.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,IN_BYTES,predictive_candidate,numeric_finite,28.0,18597420.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,IN_PKTS,predictive_candidate,numeric_finite,1.0,309957.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,OUT_BYTES,predictive_candidate,numeric_finite,0.0,166468975.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,OUT_PKTS,predictive_candidate,numeric_finite,0.0,123117.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,TCP_FLAGS,predictive_candidate,numeric_finite,0.0,223.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,CLIENT_TCP_FLAGS,predictive_candidate,numeric_finite,0.0,223.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,SERVER_TCP_FLAGS,predictive_candidate,numeric_finite,0.0,223.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,FLOW_DURATION_MILLISECONDS,predictive_candidate,numeric_finite,1.0,120999.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DURATION_IN,predictive_candidate,numeric_finite,0.0,120999.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DURATION_OUT,predictive_candidate,numeric_finite,0.0,120999.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,MIN_TTL,predictive_candidate,numeric_finite,0.0,255.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,MAX_TTL,predictive_candidate,numeric_finite,0.0,255.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,LONGEST_FLOW_PKT,predictive_candidate,numeric_finite,28.0,65212.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,SHORTEST_FLOW_PKT,predictive_candidate,numeric_finite,28.0,1500.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,MIN_IP_PKT_LEN,predictive_candidate,numeric_finite,0.0,330.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,MAX_IP_PKT_LEN,predictive_candidate,numeric_finite,28.0,65212.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,SRC_TO_DST_SECOND_BYTES,predictive_candidate,numeric_finite,0.0,46938.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DST_TO_SRC_SECOND_BYTES,predictive_candidate,numeric_finite,0.0,2015.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,RETRANSMITTED_IN_BYTES,predictive_candidate,numeric_finite,0.0,366000.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,RETRANSMITTED_IN_PKTS,predictive_candidate,numeric_finite,0.0,264.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,RETRANSMITTED_OUT_BYTES,predictive_candidate,numeric_finite,0.0,12236023.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,RETRANSMITTED_OUT_PKTS,predictive_candidate,numeric_finite,0.0,8193.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,SRC_TO_DST_AVG_THROUGHPUT,predictive_candidate,numeric_finite,5.0,19576000.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DST_TO_SRC_AVG_THROUGHPUT,predictive_candidate,numeric_finite,0.0,375060258.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,NUM_PKTS_UP_TO_128_BYTES,predictive_candidate,numeric_finite,0.0,309957.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,NUM_PKTS_128_TO_256_BYTES,predictive_candidate,numeric_finite,0.0,1808.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,NUM_PKTS_256_TO_512_BYTES,predictive_candidate,numeric_finite,0.0,1693.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,NUM_PKTS_512_TO_1024_BYTES,predictive_candidate,numeric_finite,0.0,1845.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,NUM_PKTS_1024_TO_1514_BYTES,predictive_candidate,numeric_finite,0.0,110111.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,TCP_WIN_MAX_IN,predictive_candidate,numeric_finite,0.0,65535.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,TCP_WIN_MAX_OUT,predictive_candidate,numeric_finite,0.0,65535.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,ICMP_TYPE,predictive_candidate,numeric_finite,0.0,65280.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,ICMP_IPV4_TYPE,predictive_candidate,numeric_finite,0.0,255.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DNS_QUERY_ID,identifier_like,numeric_finite,0.0,65535.0,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,DNS_QUERY_TYPE,predictive_candidate,numeric_finite,0.0,255.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DNS_TTL_ANSWER,predictive_candidate,numeric_finite,0.0,3600000.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,FTP_COMMAND_RET_CODE,predictive_candidate,numeric_finite,0.0,0.0,0,0,0,0,"Candidate; do not silently drop; constant zero in CIC2018, variable in UNSW; possible domain-specific feature"
+NF-CSE-CIC-IDS2018-v3,SRC_TO_DST_IAT_MIN,predictive_candidate,numeric_finite,0.0,60947.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,SRC_TO_DST_IAT_MAX,predictive_candidate,numeric_finite,0.0,60970.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,SRC_TO_DST_IAT_AVG,predictive_candidate,numeric_finite,0.0,60947.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,SRC_TO_DST_IAT_STDDEV,predictive_candidate,numeric_finite,0.0,30403.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DST_TO_SRC_IAT_MIN,predictive_candidate,numeric_finite,0.0,60935.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DST_TO_SRC_IAT_MAX,predictive_candidate,numeric_finite,0.0,60935.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DST_TO_SRC_IAT_AVG,predictive_candidate,numeric_finite,0.0,60935.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,DST_TO_SRC_IAT_STDDEV,predictive_candidate,numeric_finite,0.0,30343.0,0,0,0,0,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,Label,target,numeric_finite,0.0,1.0,0,0,0,0,Never predictive
+NF-CSE-CIC-IDS2018-v3,Attack,target,text,,,0,0,0,0,Never predictive
+NF-UNSW-NB15-v3,FLOW_START_MILLISECONDS,audit_split_metadata,numeric_finite,1421927376907.0,1424262564927.0,0,0,0,0,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+NF-UNSW-NB15-v3,FLOW_END_MILLISECONDS,audit_split_metadata,numeric_finite,1421927414036.0,1424262565011.0,0,0,0,0,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+NF-UNSW-NB15-v3,IPV4_SRC_ADDR,identifier_like,address_text,,,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,L4_SRC_PORT,identifier_like,numeric_finite,0.0,65535.0,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,IPV4_DST_ADDR,identifier_like,address_text,,,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,L4_DST_PORT,identifier_like,numeric_finite,0.0,65535.0,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,PROTOCOL,predictive_candidate,numeric_finite,0.0,255.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,L7_PROTO,predictive_candidate,numeric_finite,0.0,421.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,IN_BYTES,predictive_candidate,numeric_finite,1.0,27020934.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,IN_PKTS,predictive_candidate,numeric_finite,1.0,20166.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,OUT_BYTES,predictive_candidate,numeric_finite,0.0,14656752.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,OUT_PKTS,predictive_candidate,numeric_finite,0.0,11024.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,TCP_FLAGS,predictive_candidate,numeric_finite,0.0,31.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,CLIENT_TCP_FLAGS,predictive_candidate,numeric_finite,0.0,31.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,SERVER_TCP_FLAGS,predictive_candidate,numeric_finite,0.0,31.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,FLOW_DURATION_MILLISECONDS,predictive_candidate,numeric_finite,0.0,120948.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DURATION_IN,predictive_candidate,numeric_finite,0.0,120948.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DURATION_OUT,predictive_candidate,numeric_finite,0.0,120922.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,MIN_TTL,predictive_candidate,numeric_finite,0.0,255.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,MAX_TTL,predictive_candidate,numeric_finite,0.0,255.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,LONGEST_FLOW_PKT,predictive_candidate,numeric_finite,28.0,1508.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,SHORTEST_FLOW_PKT,predictive_candidate,numeric_finite,28.0,1508.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,MIN_IP_PKT_LEN,predictive_candidate,numeric_finite,0.0,680.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,MAX_IP_PKT_LEN,predictive_candidate,numeric_finite,28.0,1508.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,SRC_TO_DST_SECOND_BYTES,predictive_candidate,numeric_with_nonfinite,0.0,4412.0,63425,0,59068,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DST_TO_SRC_SECOND_BYTES,predictive_candidate,numeric_with_nonfinite,0.0014166535495041,8712.0,0,0,122493,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,RETRANSMITTED_IN_BYTES,predictive_candidate,numeric_finite,0.0,13510379.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,RETRANSMITTED_IN_PKTS,predictive_candidate,numeric_finite,0.0,10081.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,RETRANSMITTED_OUT_BYTES,predictive_candidate,numeric_finite,0.0,7328208.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,RETRANSMITTED_OUT_PKTS,predictive_candidate,numeric_finite,0.0,5508.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,SRC_TO_DST_AVG_THROUGHPUT,predictive_candidate,numeric_finite,11.0,36000000.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DST_TO_SRC_AVG_THROUGHPUT,predictive_candidate,numeric_finite,0.0,23530666.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,NUM_PKTS_UP_TO_128_BYTES,predictive_candidate,numeric_finite,0.0,3840.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,NUM_PKTS_128_TO_256_BYTES,predictive_candidate,numeric_finite,0.0,298.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,NUM_PKTS_256_TO_512_BYTES,predictive_candidate,numeric_finite,0.0,2564.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,NUM_PKTS_512_TO_1024_BYTES,predictive_candidate,numeric_finite,0.0,642.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,NUM_PKTS_1024_TO_1514_BYTES,predictive_candidate,numeric_finite,0.0,17500.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,TCP_WIN_MAX_IN,predictive_candidate,numeric_finite,0.0,65533.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,TCP_WIN_MAX_OUT,predictive_candidate,numeric_finite,0.0,65531.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,ICMP_TYPE,predictive_candidate,numeric_finite,0.0,65285.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,ICMP_IPV4_TYPE,predictive_candidate,numeric_finite,0.0,255.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DNS_QUERY_ID,identifier_like,numeric_finite,0.0,65535.0,0,0,0,0,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,DNS_QUERY_TYPE,predictive_candidate,numeric_finite,0.0,55937.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DNS_TTL_ANSWER,predictive_candidate,numeric_finite,0.0,4283358309.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,FTP_COMMAND_RET_CODE,predictive_candidate,numeric_finite,0.0,501.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,SRC_TO_DST_IAT_MIN,predictive_candidate,numeric_finite,0.0,60598.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,SRC_TO_DST_IAT_MAX,predictive_candidate,numeric_finite,0.0,60598.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,SRC_TO_DST_IAT_AVG,predictive_candidate,numeric_finite,0.0,30299.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,SRC_TO_DST_IAT_STDDEV,predictive_candidate,numeric_finite,0.0,30299.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DST_TO_SRC_IAT_MIN,predictive_candidate,numeric_finite,0.0,1490.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DST_TO_SRC_IAT_MAX,predictive_candidate,numeric_finite,0.0,60598.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DST_TO_SRC_IAT_AVG,predictive_candidate,numeric_finite,0.0,20199.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,DST_TO_SRC_IAT_STDDEV,predictive_candidate,numeric_finite,0.0,28566.0,0,0,0,0,Candidate; do not silently drop
+NF-UNSW-NB15-v3,Label,target,numeric_finite,0.0,1.0,0,0,0,0,Never predictive
+NF-UNSW-NB15-v3,Attack,target,text,,,0,0,0,0,Never predictive

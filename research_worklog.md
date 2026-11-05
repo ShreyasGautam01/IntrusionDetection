@@ -131,16 +131,26 @@ Then run a single controlled Random Forest pilot for UNSW → CIC2018.
   the 1,418,952-row UNSW training partition. Replacements are 162.0 for
   `SRC_TO_DST_SECOND_BYTES` and 75.37562877263582 for
   `DST_TO_SRC_SECOND_BYTES`; no dataset was transformed.
+- Added the temporal control from the frozen protocol. The 60%/80% UNSW time
+  boundaries are 2015-02-18 03:20:22.862 UTC and 07:57:39.998 UTC; complete-flow
+  checks plus the 60-second embargo exclude 7,252 rows. Exact feature-vector
+  groups do not cross temporal partitions.
+- Added a direction-canonicalized 5-tuple session control and exact flow-key
+  check: 63,898 repeated session groups (497,708 extra rows) and 24,071
+  repeated full flow-key groups (24,081 extra rows). No rows were removed.
+- The strict host-disjoint sensitivity retains 1,060,409 train, 46,314
+  calibration, and 66,299 test flows, while excluding 1,192,402 flows; only
+  27/6/7 distinct hosts remain in those partitions. Treat this as a limited
+  sensitivity, not broad host-generalization evidence.
+- Reviewed constants/domain shortcuts: `FTP_COMMAND_RET_CODE` is zero in
+  CIC2018 but varies from 0 to 501 in UNSW. Absolute time, endpoint addresses
+  and ports, and `DNS_QUERY_ID` remain explicitly flagged in the registry.
 
 ### Remaining before the frozen-methodology pilot
 
-- Complete flow-key/near-duplicate and domain/capture leakage checks required
-  by frozen E0.
-- Construct and audit the temporal source control with complete-flow boundary
-  checks and the 60-second embargo.
-- Construct and audit session/host-disjoint sensitivity memberships from the
-  observed endpoint fields; assess retained support.
 - Review and freeze feature governance and the conservative family mapping.
+- Treat the strict host-disjoint sensitivity as limited due to sparse held-out
+  host support; do not claim broad host generalization.
 - Freeze the pilot configuration and enforce the target-label firewall.
 
 The machine-readable and human-readable E0 results are under

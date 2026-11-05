@@ -1,0 +1,56 @@
+{
+  "input_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+  "source_rows": 2365424,
+  "temporal_control": {
+    "boundary_method": "start-time order statistics at floor(0.60N) and floor(0.80N), labels not read",
+    "b1_ms": 1424229622862,
+    "b2_ms": 1424246259998,
+    "b1_utc": "2015-02-18T03:20:22.862000+00:00",
+    "b2_utc": "2015-02-18T07:57:39.998000+00:00",
+    "embargo_seconds": 60,
+    "row_counts": {
+      "temporal_calibration": 469631,
+      "temporal_embargo_excluded": 7252,
+      "temporal_train": 1417416,
+      "temporal_source_test": 471125
+    },
+    "feature_vector_groups_crossing_temporal_partitions": 0,
+    "utc_day_row_counts": {
+      "2015-01-22": 1095574,
+      "2015-01-23": 39778,
+      "2015-02-18": 1230072
+    }
+  },
+  "session_control": {
+    "key": "direction-canonicalized observed endpoint IP/port pairs plus PROTOCOL",
+    "split_assignment": "SHA-256 of canonical session key modulo 100 with 60/20/20 thresholds",
+    "row_counts_by_split": {
+      "session_rows_calibration": 474405,
+      "session_rows_train": 1416908,
+      "session_rows_source_test": 474111
+    },
+    "duplicate_session_groups": 63898,
+    "rows_beyond_first_in_repeated_session_groups": 497708,
+    "session_key_groups_crossing_splits": 0
+  },
+  "exact_flow_key_control": {
+    "key": "canonical endpoint IP/port pairs plus PROTOCOL and exact start/end timestamp strings",
+    "duplicate_flow_key_groups": 24071,
+    "rows_beyond_first_in_duplicate_flow_keys": 24081
+  },
+  "host_disjoint_sensitivity": {
+    "assignment": "SHA-256 of e0-host-v1 salt plus observed IP; modulo 100 with 60/20/20 thresholds; retain flow only if both endpoint IPs map to same partition",
+    "retained_row_counts": {
+      "host_retained_train": 1060409,
+      "host_retained_source_test": 66299,
+      "host_retained_calibration": 46314
+    },
+    "cross_partition_endpoint_flows_excluded": 1192402,
+    "distinct_hosts_retained_by_partition": {
+      "train": 27,
+      "calibration": 6,
+      "source_test": 7
+    },
+    "host_disjoint_by_construction": true
+  }
+}
