@@ -34,15 +34,18 @@ Remaining before the first pilot:
 1. Review and freeze the candidate feature registry and conservative family
    matrix. Do not use the draft matrix to assert family equivalence or unseen
    attacks.
-2. Review the candidate RF parameters and 10-seed list in `rf_config_draft.json`
+2. Review and freeze the explicit 46-column primary-set proposal in
+   `primary_feature_set_draft.csv` and its summary JSON/Markdown; all other
+   fields remain in the full registry.
+3. Review the candidate RF parameters and 10-seed list in `rf_config_draft.json`
    and pin a compatible runtime. The current environment has no scikit-learn
    installation; this proposal has not instantiated an estimator.
-3. Freeze the exact predictive columns and sensitivity mapping. Define the
+4. Freeze the compact sensitivity mapping. Define the
    source-only E1 stability review criterion; the frozen protocol gives no
    numeric tolerance.
-4. Run the source-only in-domain E1 stability gate across the frozen seeds
+5. Run the source-only in-domain E1 stability gate across the frozen seeds
    before target-label evaluation. This gate has not been run.
-5. Commit a freeze manifest binding dataset/config/registry hashes, then use
+6. Commit a freeze manifest binding dataset/config/registry hashes, then use
    the target-label firewall for final evaluation only.
 
 The temporal control, session split, strict host-disjoint sensitivity, repeated

@@ -1,0 +1,54 @@
+feature,source_role,target_role,source_type,target_type,proposed_primary_input,decision_status,source_notes,target_notes
+IPV4_SRC_ADDR,identifier_like,identifier_like,address_text,address_text,no,draft_review_required,Identifier-like; retain for audit/split only pending explicit review,Identifier-like; retain for audit/split only pending explicit review
+IPV4_DST_ADDR,identifier_like,identifier_like,address_text,address_text,no,draft_review_required,Identifier-like; retain for audit/split only pending explicit review,Identifier-like; retain for audit/split only pending explicit review
+L4_SRC_PORT,identifier_like,identifier_like,numeric_finite,numeric_finite,no,draft_review_required,Identifier-like; retain for audit/split only pending explicit review,Identifier-like; retain for audit/split only pending explicit review
+L4_DST_PORT,identifier_like,identifier_like,numeric_finite,numeric_finite,no,draft_review_required,Identifier-like; retain for audit/split only pending explicit review,Identifier-like; retain for audit/split only pending explicit review
+PROTOCOL,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+L7_PROTO,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+IN_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+OUT_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+IN_PKTS,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+OUT_PKTS,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+FLOW_DURATION_MILLISECONDS,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+TCP_FLAGS,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+CLIENT_TCP_FLAGS,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+SERVER_TCP_FLAGS,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DURATION_IN,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DURATION_OUT,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+MIN_TTL,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+MAX_TTL,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+LONGEST_FLOW_PKT,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+SHORTEST_FLOW_PKT,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+MIN_IP_PKT_LEN,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+MAX_IP_PKT_LEN,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+SRC_TO_DST_SECOND_BYTES,predictive_candidate,predictive_candidate,numeric_with_nonfinite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DST_TO_SRC_SECOND_BYTES,predictive_candidate,predictive_candidate,numeric_with_nonfinite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+RETRANSMITTED_IN_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+RETRANSMITTED_IN_PKTS,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+RETRANSMITTED_OUT_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+RETRANSMITTED_OUT_PKTS,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+SRC_TO_DST_AVG_THROUGHPUT,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DST_TO_SRC_AVG_THROUGHPUT,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+NUM_PKTS_UP_TO_128_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+NUM_PKTS_128_TO_256_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+NUM_PKTS_256_TO_512_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+NUM_PKTS_512_TO_1024_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+NUM_PKTS_1024_TO_1514_BYTES,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+TCP_WIN_MAX_IN,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+TCP_WIN_MAX_OUT,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+ICMP_TYPE,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+ICMP_IPV4_TYPE,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DNS_QUERY_ID,identifier_like,identifier_like,numeric_finite,numeric_finite,no,draft_review_required,Identifier-like; retain for audit/split only pending explicit review,Identifier-like; retain for audit/split only pending explicit review
+DNS_QUERY_TYPE,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DNS_TTL_ANSWER,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+FTP_COMMAND_RET_CODE,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,"Candidate; do not silently drop; constant zero in CIC2018, variable in UNSW; possible domain-specific feature"
+FLOW_START_MILLISECONDS,audit_split_metadata,audit_split_metadata,numeric_finite,numeric_finite,no,draft_review_required,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+FLOW_END_MILLISECONDS,audit_split_metadata,audit_split_metadata,numeric_finite,numeric_finite,no,draft_review_required,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+SRC_TO_DST_IAT_MIN,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+SRC_TO_DST_IAT_MAX,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+SRC_TO_DST_IAT_AVG,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+SRC_TO_DST_IAT_STDDEV,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DST_TO_SRC_IAT_MIN,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DST_TO_SRC_IAT_MAX,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DST_TO_SRC_IAT_AVG,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop
+DST_TO_SRC_IAT_STDDEV,predictive_candidate,predictive_candidate,numeric_finite,numeric_finite,yes,draft_review_required,Candidate; do not silently drop,Candidate; do not silently drop

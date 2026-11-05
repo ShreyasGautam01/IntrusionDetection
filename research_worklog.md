@@ -226,3 +226,16 @@ pilot has not been run.
 - The frozen methodology asks for stable E1 results across seeds but supplies
   no numeric acceptance tolerance. That criterion remains to be defined before
   E1; no arbitrary threshold was added to the frozen protocol.
+
+### 2026-11-06 — Primary feature list made reviewable
+
+- Added a generator and explicit 53-row decision table from the audited
+  dictionary and current feature registry. It proposes all 46 shared
+  `predictive_candidate` fields and explicitly marks seven timestamp or
+  identifier-like fields as outside the candidate predictive matrix.
+- The proposal retains the complete registry and raw inputs. It is bound to
+  the audited source/target SHA-256 values and is not approved or used for
+  fitting. `FTP_COMMAND_RET_CODE` remains visible in the proposed list with
+  the documented target-constant caution.
+- Target labels and label counts do not determine the proposed feature list;
+  no raw dataset rows were read by the generator and no model was trained.

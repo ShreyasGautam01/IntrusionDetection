@@ -68,9 +68,11 @@ any E1 run.
 
 ## Required decisions before freezing
 
-1. Approve the exact predictive feature columns from `feature_registry.csv`,
-   including treatment of identifiers, absolute time, and
-   `FTP_COMMAND_RET_CODE` (constant in CIC2018, variable in UNSW).
+1. Review and approve the explicit 46-column primary-set proposal in
+   `reports/nf_v3_audit/primary_feature_set_draft.csv` (backed by
+   `primary_feature_set_draft.json`), including identifier treatment and
+   `FTP_COMMAND_RET_CODE` (constant in CIC2018, variable in UNSW). The full
+   registry retains all 53 fields.
 2. Review and freeze the eight-feature sensitivity crosswalk, especially its
    derived values and identifier-like ports, before any fitting.
 3. Finalize the conservative family matrix from dataset documentation before
