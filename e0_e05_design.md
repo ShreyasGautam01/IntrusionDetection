@@ -69,6 +69,30 @@ temporal and identifier summaries must be reviewed before fixing those exact
 boundaries and group definitions. These are controls alongside the baseline
 60/20/20 partition, not substitutes for the cross-domain target lockbox.
 
+Proposed deterministic construction for those controls:
+
+- **Temporal control:** derive `b1` and `b2` as the 60th and 80th percentile
+  start timestamps over valid UNSW rows, without labels. Train rows must end
+  before `b1 - 60,000 ms`; calibration rows must start after `b1 + 60,000 ms`
+  and end before `b2 - 60,000 ms`; source-test rows must start after
+  `b2 + 60,000 ms`. All flows touching a boundary/embargo interval are excluded
+  from this control and counted. Report realized counts and temporal coverage.
+- **Session-disjoint control:** use the observed bidirectional 5-tuple
+  (`IPV4_SRC_ADDR`, `IPV4_DST_ADDR`, `L4_SRC_PORT`, `L4_DST_PORT`, `PROTOCOL`)
+  as a session grouping key. Canonicalize direction by lexicographically
+  sorting the two `(IP address, port)` endpoint pairs, retain `PROTOCOL`, and
+  assign whole groups by a stable SHA-256 hash to 60/20/20 partitions.
+- **Host-disjoint sensitivity:** hash each observed IP endpoint independently
+  to train/calibration/test with the same thresholds; retain a flow only when
+  both endpoints map to the same partition. Count cross-partition endpoint
+  flows excluded by this rule and report whether the retained support is
+  adequate. If this creates unusable support, document the measured reason and
+  do not claim the host-disjoint control was performed.
+
+These remain draft rules until boundary counts and retained group support are
+computed and reviewed. They do not change the baseline hash split or the
+frozen methodology.
+
 ## CIC2018 target lockbox
 
 For the first UNSW-to-CIC2018 pilot, the complete CIC2018 feature table is the

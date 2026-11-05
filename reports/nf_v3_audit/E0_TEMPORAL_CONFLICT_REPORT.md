@@ -29,6 +29,19 @@ The E0.5 proposal assigns each UNSW feature vector by SHA-256 of the canonical 5
 
 Exact 53-feature-vector intersections were zero between all UNSW source partitions and between each UNSW partition and the CIC2018 lockbox. The same digest determines a vector's UNSW partition, so within-source cross-partition overlap is zero by construction; CIC cross-domain zero is observed by the complete streamed key comparison.
 
+## Source-only finite-value handling
+
+Empty, null-marker, NaN, and positive/negative infinity values are represented
+as missing. Fit a finite-value median for each affected feature using only the
+deterministic 1,418,952-row UNSW training partition; apply the persisted value
+unchanged to calibration, source test, and CIC2018 inference. The implementation
+is `scripts/finite_value_policy.py`; it does not write transformed data. Fitted
+values are 162.0 for `SRC_TO_DST_SECOND_BYTES` and 75.37562877263582 for
+`DST_TO_SRC_SECOND_BYTES`. Training-partition replacement counts are in
+`unsw_train_finite_replacements.json`; the source SHA-256 and split rule are
+recorded there. The inference helper uses the same replacement mapping and
+never estimates from target rows.
+
 ## Family mapping guard
 
 `family_inventory.csv` lists every observed raw `Attack` value and exact row count for the active pair. `family_matrix_draft.csv` expands the source/target combinations but marks all as unmapped pending documentation review. The broad DoS rows are only a candidate semantic correspondence; no equivalence or target-exclusive-family claim is asserted. These files are descriptive and do not define binary model behavior.

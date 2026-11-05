@@ -25,10 +25,15 @@ Remaining before E0 can close:
 1. Review the proposed hash-based 60/20/20 UNSW split against temporal and
    host/session controls in the frozen methodology; the configured split is a
    reproducible baseline, not the required temporal/host sensitivity controls.
-2. Implement and persist UNSW-training-fitted median replacement values, then
-   demonstrate identical application to calibration, source test, and target.
+2. Build the separate temporal and host/session sensitivity memberships and
+   check their flow-boundary and group leakage counts.
 3. Review and freeze the candidate feature registry and conservative family
    matrix. Do not use the draft matrix to assert family equivalence or unseen
    attacks.
+
+The deterministic UNSW-training-only median policy is implemented in
+`scripts/finite_value_policy.py`; fitted values and source-only counts are in
+`unsw_train_finite_replacements.json`. The same `apply_value` function is the
+inference transform. No dataset has been transformed or overwritten.
 
 The frozen `research_proposal.md` and `methodology_final.md` were not modified.
