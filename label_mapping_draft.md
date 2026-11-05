@@ -1,131 +1,35 @@
 # Label Mapping Draft
 
-**Status:** Draft — must be finalized after exact dataset files are acquired and audited.  
-**Last updated:** 2026-11-05.
+**Status:** Draft; mapping is not frozen. Updated 2026-11-06.
 
-## 1. Purpose
+## Purpose and scope
 
-The primary detector is binary:
+The primary task remains binary benign/attack detection. `Attack` family labels are retained for dataset description and carefully governed family-level diagnostics. The active source/target pair is NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3. NF-ToN-IoT-v3 is outside this experiment.
 
-- benign
-- attack
+This document and its accompanying audit artifacts define a conservative documentation crosswalk only. They do not relabel, transform, sample, or modify either dataset, and they do not use target labels to make modeling decisions.
 
-Attack-family labels remain available for:
+## Audited label inventory
 
-- family-level diagnostics;
-- compound-shift construction;
-- target-exclusive family analysis.
+The row-level mapping and exact local counts are in [family_mapping_draft.csv](reports/nf_v3_audit/family_mapping_draft.csv). The source/target relation matrix is in [family_matrix_draft.csv](reports/nf_v3_audit/family_matrix_draft.csv), and the human-readable summary is [FAMILY_MAPPING_DRAFT.md](reports/nf_v3_audit/FAMILY_MAPPING_DRAFT.md). These are generated from the audited `Attack` counts in `target_value_counts.csv`; the downloaded files remain unchanged.
 
-The project must not invent false equivalence between attack taxonomies.
+Raw label strings are preserved. Canonical display names normalize UNSW `Exploits` to `Exploitation`, `Fuzzers` to `Fuzzing`, and CIC `Infilteration` to `Infiltration`. These aliases do not claim taxonomic equivalence across datasets.
 
-## 2. Primary source/target taxonomies
+## Cross-dataset policy
 
-### NF-UNSW-NB15-v3
+- The only direct shared category in this draft is DoS. Shared naming does not imply matching attack implementations or distributions.
+- UNSW DoS versus CIC DDoS remains ambiguous because UNSW does not distinguish distributed sources in its family label.
+- UNSW Analysis versus CIC Web Attacks is possible overlap, not equivalence.
+- UNSW Exploitation versus CIC Web Attacks or Infiltration is possible overlap, not equivalence.
+- UNSW Backdoor versus CIC Infiltration is possible overlap, not equivalence; the CIC scenario is composite.
+- UNSW Reconnaissance versus CIC Infiltration is possible overlap, not equivalence.
+- All other pairs are recorded as having no documented equivalence in the cited descriptions. This is not proof that the attack mechanisms can never overlap.
+- **No target-exclusive family is declared yet.** Claims remain withheld pending review and must not be inferred solely from differing label strings.
 
-Catalogue families:
+The `WebAttacks` canonical grouping for CIC is an inference: three audited raw labels sum to the catalogue aggregate (1,618 + 480 + 440 = 2,538). The raw names and counts remain separate in the mapping artifact, and the inference is explicitly marked there.
 
-- Fuzzers
-- Analysis
-- Backdoor
-- DoS
-- Exploits
-- Generic
-- Reconnaissance
-- Shellcode
-- Worms
+## Sources
 
-### NF-CSE-CIC-IDS2018-v3
+- UQ NetFlow v3 catalogue and family descriptions: https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+- Official CIC-IDS2018 scenarios: https://www.unb.ca/cic/datasets/ids-2018.html
 
-Catalogue families:
-
-- BruteForce
-- Bot
-- DoS
-- DDoS
-- Infiltration
-- Web Attacks
-
-### NF-ToN-IoT-v3
-
-Catalogue families:
-
-- Backdoor
-- DoS
-- DDoS
-- Injection
-- MITM
-- Password
-- Ransomware
-- Scanning
-- XSS
-
-## 3. Cross-dataset family policy
-
-A family is **strictly source-supported** only when there is a defensible semantic correspondence to source training support.
-
-A family is **target-exclusive** only when:
-
-1. it has a defensible attack-family identity at the target;
-2. no equivalent source training family exists under the adopted mapping policy.
-
-A family is **ambiguous** when available descriptions do not establish equivalence.
-
-Ambiguous families must not be labeled unseen merely to strengthen the compound-shift condition.
-
-## 4. Current obvious common categories
-
-The following broad categories appear across multiple datasets but still require conservative handling:
-
-- DoS
-- DDoS
-
-"Backdoor" appears in UNSW-NB15 and ToN-IoT, but not as a direct CSE-CIC-IDS2018-v3 category.
-
-Other categories do not have obvious direct equivalents across the primary UNSW/CIC pair.
-
-## 5. Consequence for UNSW ↔ CIC
-
-The two primary datasets do **not** share a clean one-to-one attack-family taxonomy.
-
-Therefore:
-
-- binary attack/benign transfer is the primary model task;
-- cross-dataset family overlap will be used only where semantically defensible;
-- compound shift can be established using target families absent from source training support;
-- family-level target results remain dataset-local unless a cross-dataset mapping is explicitly justified.
-
-## 6. What should not be done
-
-Do not map:
-
-- UNSW "Exploits" to CIC "Web Attacks" merely because both can involve vulnerabilities;
-- UNSW "Generic" to CIC "Bot" merely because both are malicious;
-- CIC "BruteForce" to UNSW "Fuzzers";
-- CIC "Infiltration" to UNSW "Backdoor"
-
-without an explicit semantic and experimental justification.
-
-## 7. Mapping artifact fields
-
-The final CSV should contain:
-
-- dataset;
-- original_label;
-- binary_label;
-- original_family;
-- canonical_family;
-- source_supported;
-- target_exclusive;
-- mapping_status;
-- mapping_basis;
-- notes.
-
-## 8. Finalization requirement
-
-The mapping cannot be frozen until:
-
-1. exact v3 files are acquired;
-2. actual label strings are inspected;
-3. catalogue labels are compared with file labels;
-4. any undocumented aliases are resolved;
-5. target-exclusive families are determined independently of experiment performance.
+The mapping and matrix are review drafts, not a final label ontology. Any final mapping must be fixed before model training or target-label evaluation.

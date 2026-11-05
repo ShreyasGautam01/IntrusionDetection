@@ -1,0 +1,26 @@
+dataset,raw_label,rows,binary_label,canonical_family,mapping_status,mapping_basis,source_url
+NF-CSE-CIC-IDS2018-v3,Benign,17514626,0,Benign,documented_with_local_count,Exact benign value in the audited file.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,Bot,207703,1,Bot,documented_with_local_count,Direct dataset category; UQ describes remote control of hijacked computers.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,Brute_Force_-Web,1618,1,WebAttacks,inferred_aggregate_or_canonical_spelling,Inference from UQ aggregate: raw web and XSS labels plus SQL_Injection sum to the published Web Attacks count.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,Brute_Force_-XSS,480,1,WebAttacks,inferred_aggregate_or_canonical_spelling,Inference from UQ aggregate: raw web and XSS labels plus SQL_Injection sum to the published Web Attacks count.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,DDOS_attack-HOIC,1032311,1,DDoS,documented_with_local_count,Raw label maps to the documented DDoS scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,DDOS_attack-LOIC-UDP,3450,1,DDoS,documented_with_local_count,Raw label maps to the documented DDoS scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,DDoS_attacks-LOIC-HTTP,288589,1,DDoS,documented_with_local_count,Raw label maps to the documented DDoS scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,DoS_attacks-GoldenEye,61300,1,DoS,documented_with_local_count,Raw label maps to the documented DoS scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,DoS_attacks-Hulk,100076,1,DoS,documented_with_local_count,Raw label maps to the documented DoS scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,DoS_attacks-SlowHTTPTest,105550,1,DoS,documented_with_local_count,Raw label maps to the documented DoS scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,DoS_attacks-Slowloris,36040,1,DoS,documented_with_local_count,Raw label maps to the documented DoS scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,FTP-BruteForce,386720,1,BruteForce,documented_with_local_count,Raw FTP brute-force label; direct dataset scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,Infilteration,188152,1,Infiltration,inferred_aggregate_or_canonical_spelling,Preserve raw spelling; canonicalize to UQ/UNB Infiltration category.,https://www.unb.ca/cic/datasets/ids-2018.html
+NF-CSE-CIC-IDS2018-v3,SQL_Injection,440,1,WebAttacks,inferred_aggregate_or_canonical_spelling,Inference from UQ aggregate: raw web and XSS labels plus SQL_Injection sum to the published Web Attacks count.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-CSE-CIC-IDS2018-v3,SSH-Bruteforce,188474,1,BruteForce,documented_with_local_count,Raw SSH brute-force label; direct dataset scenario.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Analysis,1226,1,Analysis,documented_with_local_count,"Exact dataset family; UQ describes a broad class of web, port, email, and script threats.",https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Backdoor,4659,1,Backdoor,documented_with_local_count,Exact dataset family; direct category name.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Benign,2237731,0,Benign,documented_with_local_count,Exact benign value in the audited file.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,DoS,5980,1,DoS,documented_with_local_count,Exact dataset family; UQ defines denial of service.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Exploits,42748,1,Exploitation,documented_with_local_count,Exact dataset family; UQ describes control via known vulnerabilities.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Fuzzers,33816,1,Fuzzing,documented_with_local_count,Exact dataset family; UQ describes randomized inputs used to crash/discover vulnerabilities.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Generic,19651,1,Generic,documented_with_local_count,Exact dataset family; retain dataset-local meaning; do not infer a broader attack class.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Reconnaissance,17074,1,Reconnaissance,documented_with_local_count,Exact dataset family; UQ describes probing/gathering host information.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Shellcode,2381,1,Shellcode,documented_with_local_count,Exact dataset family; UQ describes malware code used to control a victim host.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+NF-UNSW-NB15-v3,Worms,158,1,Worms,documented_with_local_count,Exact dataset family; UQ describes self-replicating spread.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/

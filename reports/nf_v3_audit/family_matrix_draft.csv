@@ -1,127 +1,55 @@
-source_family,source_rows,target_family,target_rows,candidate_note,mapping_status,use_for_unseen_claim
-Analysis,1226,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,DDOS_attack-HOIC,1032311,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,DDOS_attack-LOIC-UDP,3450,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,DDoS_attacks-LOIC-HTTP,288589,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,DoS_attacks-GoldenEye,61300,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,DoS_attacks-Hulk,100076,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,DoS_attacks-SlowHTTPTest,105550,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,DoS_attacks-Slowloris,36040,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-Analysis,1226,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,DDOS_attack-HOIC,1032311,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,DDOS_attack-LOIC-UDP,3450,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,DDoS_attacks-LOIC-HTTP,288589,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,DoS_attacks-GoldenEye,61300,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,DoS_attacks-Hulk,100076,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,DoS_attacks-SlowHTTPTest,105550,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,DoS_attacks-Slowloris,36040,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-Backdoor,4659,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
-DoS,5980,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-DoS,5980,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-DoS,5980,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-DoS,5980,DDOS_attack-HOIC,1032311,possible broad DoS category; not asserted equivalent,unmapped_pending_documentation_review,no
-DoS,5980,DDOS_attack-LOIC-UDP,3450,possible broad DoS category; not asserted equivalent,unmapped_pending_documentation_review,no
-DoS,5980,DDoS_attacks-LOIC-HTTP,288589,possible broad DoS category; not asserted equivalent,unmapped_pending_documentation_review,no
-DoS,5980,DoS_attacks-GoldenEye,61300,possible broad DoS category; not asserted equivalent,unmapped_pending_documentation_review,no
-DoS,5980,DoS_attacks-Hulk,100076,possible broad DoS category; not asserted equivalent,unmapped_pending_documentation_review,no
-DoS,5980,DoS_attacks-SlowHTTPTest,105550,possible broad DoS category; not asserted equivalent,unmapped_pending_documentation_review,no
-DoS,5980,DoS_attacks-Slowloris,36040,possible broad DoS category; not asserted equivalent,unmapped_pending_documentation_review,no
-DoS,5980,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-DoS,5980,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-DoS,5980,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-DoS,5980,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,DDOS_attack-HOIC,1032311,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,DDOS_attack-LOIC-UDP,3450,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,DDoS_attacks-LOIC-HTTP,288589,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,DoS_attacks-GoldenEye,61300,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,DoS_attacks-Hulk,100076,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,DoS_attacks-SlowHTTPTest,105550,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,DoS_attacks-Slowloris,36040,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-Exploits,42748,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,DDOS_attack-HOIC,1032311,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,DDOS_attack-LOIC-UDP,3450,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,DDoS_attacks-LOIC-HTTP,288589,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,DoS_attacks-GoldenEye,61300,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,DoS_attacks-Hulk,100076,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,DoS_attacks-SlowHTTPTest,105550,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,DoS_attacks-Slowloris,36040,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-Fuzzers,33816,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,DDOS_attack-HOIC,1032311,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,DDOS_attack-LOIC-UDP,3450,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,DDoS_attacks-LOIC-HTTP,288589,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,DoS_attacks-GoldenEye,61300,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,DoS_attacks-Hulk,100076,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,DoS_attacks-SlowHTTPTest,105550,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,DoS_attacks-Slowloris,36040,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-Generic,19651,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,DDOS_attack-HOIC,1032311,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,DDOS_attack-LOIC-UDP,3450,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,DDoS_attacks-LOIC-HTTP,288589,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,DoS_attacks-GoldenEye,61300,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,DoS_attacks-Hulk,100076,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,DoS_attacks-SlowHTTPTest,105550,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,DoS_attacks-Slowloris,36040,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-Reconnaissance,17074,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,DDOS_attack-HOIC,1032311,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,DDOS_attack-LOIC-UDP,3450,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,DDoS_attacks-LOIC-HTTP,288589,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,DoS_attacks-GoldenEye,61300,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,DoS_attacks-Hulk,100076,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,DoS_attacks-SlowHTTPTest,105550,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,DoS_attacks-Slowloris,36040,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-Shellcode,2381,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
-Worms,158,Bot,207703,none proposed,unmapped_pending_documentation_review,no
-Worms,158,Brute_Force_-Web,1618,none proposed,unmapped_pending_documentation_review,no
-Worms,158,Brute_Force_-XSS,480,none proposed,unmapped_pending_documentation_review,no
-Worms,158,DDOS_attack-HOIC,1032311,none proposed,unmapped_pending_documentation_review,no
-Worms,158,DDOS_attack-LOIC-UDP,3450,none proposed,unmapped_pending_documentation_review,no
-Worms,158,DDoS_attacks-LOIC-HTTP,288589,none proposed,unmapped_pending_documentation_review,no
-Worms,158,DoS_attacks-GoldenEye,61300,none proposed,unmapped_pending_documentation_review,no
-Worms,158,DoS_attacks-Hulk,100076,none proposed,unmapped_pending_documentation_review,no
-Worms,158,DoS_attacks-SlowHTTPTest,105550,none proposed,unmapped_pending_documentation_review,no
-Worms,158,DoS_attacks-Slowloris,36040,none proposed,unmapped_pending_documentation_review,no
-Worms,158,FTP-BruteForce,386720,none proposed,unmapped_pending_documentation_review,no
-Worms,158,Infilteration,188152,none proposed,unmapped_pending_documentation_review,no
-Worms,158,SQL_Injection,440,none proposed,unmapped_pending_documentation_review,no
-Worms,158,SSH-Bruteforce,188474,none proposed,unmapped_pending_documentation_review,no
+source_family,source_rows,target_family,target_rows,relation,target_exclusive_claim,rationale,source_url,target_url
+Analysis,1226,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Analysis,1226,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Analysis,1226,DDoS,1324350,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Analysis,1226,DoS,302966,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Analysis,1226,Infiltration,188152,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+Analysis,1226,WebAttacks,2538,ambiguous_possible_overlap,withheld_pending_review,"UQ describes UNSW Analysis as including web-related threats, while CIC Web Attacks is a specific scenario group; overlap is plausible but not equivalent.",https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Backdoor,4659,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Backdoor,4659,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Backdoor,4659,DDoS,1324350,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Backdoor,4659,DoS,302966,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Backdoor,4659,Infiltration,188152,ambiguous_possible_overlap,withheld_pending_review,CIC Infiltration includes a backdoor as one stage of a multi-stage inside attack; it is not the same family as UNSW Backdoor.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+Backdoor,4659,WebAttacks,2538,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+DoS,5980,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+DoS,5980,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+DoS,5980,DDoS,1324350,ambiguous_possible_overlap,withheld_pending_review,"UQ distinguishes DDoS by distributed sources; UNSW has only a DoS label, so granularity is unresolved.",https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+DoS,5980,DoS,302966,documented_shared,withheld_pending_review,Same documented canonical category.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+DoS,5980,Infiltration,188152,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+DoS,5980,WebAttacks,2538,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Exploitation,42748,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Exploitation,42748,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Exploitation,42748,DDoS,1324350,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Exploitation,42748,DoS,302966,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Exploitation,42748,Infiltration,188152,ambiguous_possible_overlap,withheld_pending_review,"CIC Infiltration includes exploitation, but is a composite scenario rather than the UNSW Exploits family.",https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+Exploitation,42748,WebAttacks,2538,ambiguous_possible_overlap,withheld_pending_review,"Vulnerability exploitation may overlap web attacks, but the labels do not establish semantic equivalence.",https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Fuzzing,33816,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Fuzzing,33816,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Fuzzing,33816,DDoS,1324350,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Fuzzing,33816,DoS,302966,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Fuzzing,33816,Infiltration,188152,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+Fuzzing,33816,WebAttacks,2538,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Generic,19651,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Generic,19651,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Generic,19651,DDoS,1324350,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Generic,19651,DoS,302966,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Generic,19651,Infiltration,188152,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+Generic,19651,WebAttacks,2538,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Reconnaissance,17074,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Reconnaissance,17074,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Reconnaissance,17074,DDoS,1324350,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Reconnaissance,17074,DoS,302966,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Reconnaissance,17074,Infiltration,188152,ambiguous_possible_overlap,withheld_pending_review,CIC Infiltration includes scanning after compromise; this does not establish equivalence to standalone reconnaissance.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+Reconnaissance,17074,WebAttacks,2538,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Shellcode,2381,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Shellcode,2381,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Shellcode,2381,DDoS,1324350,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Shellcode,2381,DoS,302966,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Shellcode,2381,Infiltration,188152,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+Shellcode,2381,WebAttacks,2538,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Worms,158,Bot,207703,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Worms,158,BruteForce,575194,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Worms,158,DDoS,1324350,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Worms,158,DoS,302966,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+Worms,158,Infiltration,188152,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://www.unb.ca/cic/datasets/ids-2018.html
+Worms,158,WebAttacks,2538,no_documented_equivalence,withheld_pending_review,No direct semantic correspondence found in the cited dataset descriptions; do not infer equivalence from maliciousness alone.,https://staff.itee.uq.edu.au/marius/NIDS_datasets/,https://staff.itee.uq.edu.au/marius/NIDS_datasets/

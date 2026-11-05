@@ -161,3 +161,21 @@ Then run a single controlled Random Forest pilot for UNSW → CIC2018.
 The machine-readable and human-readable E0 results are under
 `reports/nf_v3_audit/`. The E0/E0.5 branch is pushed; the first Random Forest
 pilot has not been run.
+
+### 2026-11-06 — Family mapping audit added
+
+- Added a reproducible, label-inventory-only generator and compact family
+  mapping report for the active UNSW-v3 → CIC2018-v3 pair.
+- Retained every observed raw family label and its local audited count. The
+  documentation crosswalk normalizes display names only; it does not alter
+  dataset labels or use labels to select modeling decisions.
+- Recorded DoS as the only directly shared documented family in this draft;
+  kept UNSW DoS versus CIC DDoS and other plausible overlaps explicitly
+  ambiguous. All target-exclusive claims remain withheld.
+- Marked CIC WebAttacks as an inference because the three local web labels sum
+  to the catalogue aggregate. This inference remains subject to review.
+- ToN-IoT remains outside the active experiment. The frozen proposal and
+  methodology hashes were checked and their files are unchanged.
+- Mapping review, exact feature governance, complete RF configuration and seed
+  lock, source-only E1 stability gate, and the target-label firewall freeze
+  manifest remain blockers before the first UNSW→CIC2018 Random Forest pilot.
