@@ -149,9 +149,14 @@ Then run a single controlled Random Forest pilot for UNSW → CIC2018.
 ### Remaining before the frozen-methodology pilot
 
 - Review and freeze feature governance and the conservative family mapping.
+- Complete the pilot lock draft with remaining RF parameters, seed list, exact
+  predictive columns, and sensitivity settings.
+- Run the source-only E1 stability gate before any target-label evaluation.
+- Commit a freeze manifest and use the target-label firewall for final target
+  evaluation. Its feature-only access interface is implemented, but no lock
+  manifest exists yet.
 - Treat the strict host-disjoint sensitivity as limited due to sparse held-out
   host support; do not claim broad host generalization.
-- Freeze the pilot configuration and enforce the target-label firewall.
 
 The machine-readable and human-readable E0 results are under
 `reports/nf_v3_audit/`. The E0/E0.5 branch is pushed; the first Random Forest

@@ -25,9 +25,12 @@ Remaining before the first pilot:
 1. Review and freeze the candidate feature registry and conservative family
    matrix. Do not use the draft matrix to assert family equivalence or unseen
    attacks.
-2. Freeze the pilot configuration and ensure evaluation labels are isolated
-   from fitting, preprocessing, calibration, and thresholds under the target-
-   label firewall.
+2. Complete the pilot lock draft: remaining RF parameters, seed list, exact
+   predictive feature set, and any sensitivity settings must be explicit.
+3. Run the source-only in-domain E1 stability gate across the frozen seeds
+   before target-label evaluation. This gate has not been run.
+4. Commit a freeze manifest binding dataset/config/registry hashes, then use
+   the target-label firewall for final evaluation only.
 
 The temporal control, session split, strict host-disjoint sensitivity, repeated
 flow-key check, and constants/domain-shortcut review are in
@@ -39,5 +42,10 @@ The deterministic UNSW-training-only median policy is implemented in
 `scripts/finite_value_policy.py`; fitted values and source-only counts are in
 `unsw_train_finite_replacements.json`. The same `apply_value` function is the
 inference transform. No dataset has been transformed or overwritten.
+
+`src/ids_research/target_lockbox.py` implements feature-only target streaming
+and fails closed on label access unless a matching freeze manifest is
+committed, clean, and descended from the current checkout. The interface is
+implemented; no freeze manifest exists yet, so target labels remain sealed.
 
 The frozen `research_proposal.md` and `methodology_final.md` were not modified.
