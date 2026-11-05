@@ -1,7 +1,7 @@
 # E0/E0.5 completion status
 
-**Status:** Incomplete; no model has been trained.  
-**Active pair:** NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3.  
+**Status:** Incomplete; no model has been trained.
+**Active pair:** NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3.
 **ToN-IoT:** Excluded from the active project scope.
 
 The inherited `REPORT.md`, `audit.json`, `schema.csv`, and

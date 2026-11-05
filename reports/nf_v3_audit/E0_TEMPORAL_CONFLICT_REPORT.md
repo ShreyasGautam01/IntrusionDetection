@@ -1,7 +1,7 @@
 # E0 temporal and duplicate-label checks
 
-**Generated:** 2026-11-05T18:39:49Z  
-**Inputs:** the exact NF-UNSW-NB15-v3 and NF-CSE-CIC-IDS2018-v3 CSVs listed in `e0_results.json`; SHA-256 values were matched to the acquisition audit.  
+**Generated:** 2026-11-05T18:39:49Z
+**Inputs:** the exact NF-UNSW-NB15-v3 and NF-CSE-CIC-IDS2018-v3 CSVs listed in `e0_results.json`; SHA-256 values were matched to the acquisition audit.
 **Scope:** E0 data checks only; no modeling and no ToN-IoT.
 
 ## CIC2018 duplicate-vector label consistency
