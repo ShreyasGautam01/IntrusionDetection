@@ -1,7 +1,7 @@
 # Random Forest Configuration Draft
 
 **Status:** Review proposal only. Not frozen; no estimator was instantiated or fit.
-**Configuration:** `rf-draft-2` (provenance and dataset hashes are recorded in `rf_config_draft.json`).
+**Configuration:** `rf-draft-4` (provenance, dataset hashes, project-spec hash, and lockfile hash are recorded in `rf_config_draft.json`).
 
 ## Fixed by the frozen methodology
 
@@ -17,11 +17,13 @@
 
 This proposal includes `class_weight=None` (no class reweighting), bootstrap sampling enabled, `max_features="sqrt"`, and unconstrained tree depth, alongside the remaining library defaults. A different choice requires an explicit source-only justification and a pre-E1 config update.
 
-## Runtime candidate
+## Installed isolated runtime
 
-The environment reports Python 3.14.7, NumPy 2.5.2, and pandas 3.0.6. It does not have scikit-learn or SciPy installed. **scikit-learn 1.9.1 is a runtime candidate**: its official installation documentation requires Python 3.11 or newer, which the detected Python meets. Windows wheel resolution has not been attempted. No dependency lock file exists in the repository.
+Added `pyproject.toml` and `uv.lock`, then installed into the repository's Git-ignored `.venv`. The resolved environment is Python 3.14.7, NumPy 2.5.2, pandas 3.0.6, SciPy 1.18.1, and scikit-learn 1.9.1. `uv.lock` resolved Windows CPython 3.14 wheels, and imports in that virtual environment reported these exact versions. The lock pins transitive packages as well.
 
-The config remains uninstantiated. Before E1, resolve and record all transitive package versions in a lock, then verify package installation in an isolated environment. The current draft must not be used to unlock the target-label firewall.
+Recreate the ignored environment with `uv sync --locked` using the pinned uv 0.11.19 executable.
+
+The config remains uninstantiated: no estimator was created or fit. The runtime lock only addresses software reproducibility; it does not freeze model/feature choices or unlock the target-label firewall.
 
 ## Remaining pre-E1 decisions
 

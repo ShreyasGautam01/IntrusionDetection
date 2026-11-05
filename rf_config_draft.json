@@ -1,7 +1,7 @@
 {
-  "configuration_id": "rf-draft-2",
-  "generated_at_utc": "2026-11-05T21:07:44Z",
-  "generated_from_git_commit": "8a44eafa93014a8362cc40c5f1779f0c6b30add9",
+  "configuration_id": "rf-draft-4",
+  "generated_at_utc": "2026-11-05T21:18:08Z",
+  "generated_from_git_commit": "b74232679b7dc0092737323cec3b5d53c2cfee6c",
   "status": "draft_not_frozen",
   "purpose": "Pre-pilot configuration proposal only; this file does not authorize fitting or target-label access.",
   "active_direction": "NF-UNSW-NB15-v3_to_NF-CSE-CIC-IDS2018-v3",
@@ -18,14 +18,19 @@
   "implementation_candidate": "scikit-learn RandomForestClassifier",
   "runtime": {
     "python_detected": "3.14.7",
-    "scikit_learn_detected": null,
+    "uv_detected": "0.11.19",
+    "scikit_learn_detected": "1.9.1",
     "scikit_learn_candidate": "1.9.1",
     "numpy_version_detected": "2.5.2",
     "pandas_version_detected": "3.0.6",
     "numpy_detected": true,
-    "scipy_detected": false,
-    "compatibility_note": "Official scikit-learn 1.9 installation documentation specifies Python 3.11 or newer; the detected Python 3.14.7 meets that minimum. Windows wheel resolution has not been attempted.",
-    "status": "scikit-learn 1.9.1 is a version candidate only; package is not installed and the transitive dependency lock is not generated"
+    "scipy_detected": "1.18.1",
+    "dependency_lock": "uv.lock",
+    "dependency_lock_sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1",
+    "project_spec_sha256": "e66de14810689c7368f88717ac236a7d5034e70302e9bec8d0c22d3a6f62b798",
+    "environment_path": ".venv (git-ignored)",
+    "compatibility_note": "The lock resolved and installed Windows CPython 3.14 wheels for the scientific dependencies. Runtime imports reported the exact locked versions.",
+    "status": "isolated_runtime_installed_and_version_checked"
   },
   "seeds": {
     "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -62,5 +67,5 @@
   },
   "documentation_source": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html",
   "documentation_version_seen": "1.9.1",
-  "important_limit": "Parameter defaults are recorded explicitly as a review proposal. scikit-learn is absent locally, so this configuration has not been instantiated; pinning all transitive dependencies and verifying Windows wheel resolution remain outstanding."
+  "important_limit": "Parameter defaults remain a review proposal, not a frozen experiment config. The environment is installed, but no estimator was instantiated or fit; model parameters, feature decisions, and the E1 stability criterion remain unresolved."
 }

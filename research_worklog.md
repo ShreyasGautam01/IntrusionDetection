@@ -221,14 +221,25 @@ pilot has not been run.
   5, proposes explicit documented classifier defaults for other parameters,
   and lists ten seeds (0–9). No estimator was instantiated or fit.
 - The local environment is Python 3.14.7 with no scikit-learn installation;
-  NumPy 2.5.2 and pandas 3.0.6 are present, but SciPy is absent and no
-  dependency lock file exists. Official scikit-learn 1.9.1 documentation sets
-  Python 3.11 as its minimum, so 1.9.1 is a candidate for the detected Python;
-  Windows wheel resolution and a complete isolated dependency lock remain
-  outstanding. No packages were installed.
+  NumPy 2.5.2 and pandas 3.0.6 were present. The official scikit-learn 1.9.1
+  documentation sets Python 3.11 as its minimum; the detected Python meets
+  this requirement. Continued below with a project-local lock and environment.
 - The frozen methodology asks for stable E1 results across seeds but supplies
   no numeric acceptance tolerance. That criterion remains to be defined before
   E1; no arbitrary threshold was added to the frozen protocol.
+
+### 2026-11-06 — Isolated experiment runtime resolved
+
+- Added `pyproject.toml` with direct dependency pins and generated `uv.lock`;
+  the lock contains exact transitive versions and Windows CPython 3.14 wheels.
+- Pinned the resolver itself to uv 0.11.19 so future lock refreshes are
+  attributable and reproducible.
+- Installed the lock into the repository's ignored `.venv` (not the global
+  Python environment). Version-only imports confirmed Python 3.14.7, NumPy
+  2.5.2, pandas 3.0.6, SciPy 1.18.1, and scikit-learn 1.9.1.
+- Recorded the runtime and lock hash in RF config draft `rf-draft-4`. No
+  estimator was instantiated or fit, no target labels were used, and no model
+  experiment was run.
 
 ### 2026-11-06 — Primary feature list made reviewable
 

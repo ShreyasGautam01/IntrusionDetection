@@ -1,0 +1,14 @@
+[project]
+name = "intrusion-detection-research"
+version = "0.1.0"
+description = "Reproducible environment for the frozen NetFlow-v3 intrusion detection study"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+    "numpy==2.5.2",
+    "pandas==3.0.6",
+    "scikit-learn==1.9.1",
+]
+
+[tool.uv]
+package = false
+required-version = "==0.11.19"
