@@ -106,3 +106,43 @@ Complete E0/E0.5 before model training:
 7. final label/family matrix.
 
 Then run a single controlled Random Forest pilot for UNSW → CIC2018.
+
+## 2026-11-06 — Active-pair E0/E0.5 progress
+
+### Completed on `codex/e0-e05`
+
+- Verified the frozen proposal and methodology in this checkout match
+  `origin/main` byte-for-byte; neither was modified.
+- Added the existing acquisition/schema audit outputs for only UNSW-v3 and
+  CIC-IDS2018-v3 to this project branch. ToN-specific artifacts remain out of
+  the active scope.
+- Generated `feature_registry.csv` with an explicit draft role for all 53
+  features and the two target fields.
+- Completed a bounded-memory external-sort pass. CIC2018 has 440 repeated
+  feature-vector groups with conflicting `Attack` values and zero with
+  conflicting `Label` values. Both source CSVs are not timestamp-ordered;
+  daily UTC coverage and a sorted 60-second attack-episode summary are in the
+  E0 report.
+- Fixed the label-blind baseline partition proposal at UNSW 60/20/20 by
+  SHA-256 of the canonical 53-feature vector; CIC2018 is the target lockbox.
+  The exact-vector precheck found zero source cross-partition duplicates and
+  zero exact 53-feature intersections with CIC2018.
+- Implemented the source-only finite-value policy and fitted exact medians on
+  the 1,418,952-row UNSW training partition. Replacements are 162.0 for
+  `SRC_TO_DST_SECOND_BYTES` and 75.37562877263582 for
+  `DST_TO_SRC_SECOND_BYTES`; no dataset was transformed.
+
+### Remaining before the frozen-methodology pilot
+
+- Complete flow-key/near-duplicate and domain/capture leakage checks required
+  by frozen E0.
+- Construct and audit the temporal source control with complete-flow boundary
+  checks and the 60-second embargo.
+- Construct and audit session/host-disjoint sensitivity memberships from the
+  observed endpoint fields; assess retained support.
+- Review and freeze feature governance and the conservative family mapping.
+- Freeze the pilot configuration and enforce the target-label firewall.
+
+The machine-readable and human-readable E0 results are under
+`reports/nf_v3_audit/`. The E0/E0.5 branch is pushed; the first Random Forest
+pilot has not been run.
