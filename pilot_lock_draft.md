@@ -43,8 +43,12 @@ It does not authorize training or target evaluation. The frozen proposal and
   sensitivity. Its draft crosswalk to v3 columns is in
   `reports/nf_v3_audit/representation_8feature_draft.csv`, with discussion in
   `reports/nf_v3_audit/REPRESENTATION_8FEATURE_DRAFT.md`. It is not implemented
-  or frozen. Port inclusion, protocol-code alignment, TCP-flag semantics, and
-  zero-duration packet-rate handling still need review.
+  or frozen. Protocol and TCP-flag alignment are supported by the supplied
+  feature dictionary. Port inclusion remains a feature-governance decision.
+  The packet-rate formula yields undefined values for 122,493 source flows
+  whose duration is zero; the draft policy maps these to missing and uses a
+  source-training-only median, with the exact derived-feature fit still to be
+  implemented and recorded before E1.
 - Finite-value replacements are fitted from UNSW baseline training rows only
   and applied unchanged at inference.
 

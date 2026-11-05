@@ -193,3 +193,23 @@ pilot has not been run.
 - No target labels were used, and no model or data transformation was run.
 - The representation crosswalk, exact primary predictive feature list, and
   complete model/seed lock remain review gates before E1.
+
+### 2026-11-06 — Feature-only checks for compact representation
+
+- Added a bounded-memory reader that requests only `FLOW_DURATION_MILLISECONDS`
+  and `PROTOCOL`, in 250,000-row chunks. It does not request `Label` or
+  `Attack`; both downloaded files remain unchanged.
+- The source scan found 122,493/2,365,424 zero-duration rows (5.18%); target
+  found 0/20,115,529. For the proposed derived packets-per-second feature, a
+  zero-duration denominator must be treated as missing and replaced by a
+  median fitted only on source training rows. This derived median has not yet
+  been fitted and the feature has not been materialized.
+- Protocol values are numeric IP protocol identifier bytes per the supplied
+  dictionary. Source has 255 observed codes and target has 6; shared codes are
+  1, 2, 6, 17, and 47, while 58 appears only in target. The IANA registry
+  identifies these as standardized IP protocol numbers, with 58 denoting
+  IPv6-ICMP. Marginal code-set differences are documented; no remapping was
+  applied.
+- Both protocol and cumulative TCP flag fields can use direct common v3
+  columns. Ports remain the unresolved governance decision for the compact
+  representation. No target labels were accessed.

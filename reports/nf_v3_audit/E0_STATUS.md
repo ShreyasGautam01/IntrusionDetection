@@ -20,7 +20,11 @@ raw-label crosswalk and interpretation are `family_mapping_draft.csv` and
 `FAMILY_MAPPING_DRAFT.md`. The compact 8-feature sensitivity mapping required
 by the frozen methodology is drafted in `representation_8feature_draft.csv`
 and `REPRESENTATION_8FEATURE_DRAFT.md`; v3-specific encoding questions remain
-unresolved. Two
+limited to port governance and derived packet-rate handling. A targeted
+streaming scan of only duration and protocol is recorded in
+`representation_input_check.json`; it found 122,493 source zero-duration rows,
+no target zero-duration rows, and the protocol-code counts/overlap. It did not
+request `Label` or `Attack`. Two
 earlier SQLite approaches were stopped because they did not complete in a
 practical review window; their scratch databases were discarded and no partial
 values from those attempts were used.
