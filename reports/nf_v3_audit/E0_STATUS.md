@@ -38,8 +38,9 @@ Remaining before the first pilot:
    `primary_feature_set_draft.csv` and its summary JSON/Markdown; all other
    fields remain in the full registry.
 3. Review the candidate RF parameters and 10-seed list in `rf_config_draft.json`
-   and pin a compatible runtime. The current environment has no scikit-learn
-   installation; this proposal has not instantiated an estimator.
+   and resolve a complete dependency lock. scikit-learn 1.9.1 is a candidate
+   for Python 3.14.7 but is not installed or wheel-verified; no estimator has
+   been instantiated.
 4. Freeze the compact sensitivity mapping. Define the
    source-only E1 stability review criterion; the frozen protocol gives no
    numeric tolerance.

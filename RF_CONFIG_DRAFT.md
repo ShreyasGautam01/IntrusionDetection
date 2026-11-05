@@ -1,6 +1,7 @@
 # Random Forest Configuration Draft
 
 **Status:** Review proposal only. Not frozen; no estimator was instantiated or fit.
+**Configuration:** `rf-draft-2` (provenance and dataset hashes are recorded in `rf_config_draft.json`).
 
 ## Fixed by the frozen methodology
 
@@ -16,11 +17,11 @@
 
 This proposal includes `class_weight=None` (no class reweighting), bootstrap sampling enabled, `max_features="sqrt"`, and unconstrained tree depth, alongside the remaining library defaults. A different choice requires an explicit source-only justification and a pre-E1 config update.
 
-## Runtime is not ready
+## Runtime candidate
 
-The current environment reports Python 3.14.7 and does not have scikit-learn installed. No dependency lock file exists in the repository. The scikit-learn version, compatible runtime, and any additional package versions must be pinned before E1; no model run has been made.
+The environment reports Python 3.14.7, NumPy 2.5.2, and pandas 3.0.6. It does not have scikit-learn or SciPy installed. **scikit-learn 1.9.1 is a runtime candidate**: its official installation documentation requires Python 3.11 or newer, which the detected Python meets. Windows wheel resolution has not been attempted. No dependency lock file exists in the repository.
 
-The current draft records the implementation candidate and the unresolved version field. It must not be used to unlock the target-label firewall.
+The config remains uninstantiated. Before E1, resolve and record all transitive package versions in a lock, then verify package installation in an isolated environment. The current draft must not be used to unlock the target-label firewall.
 
 ## Remaining pre-E1 decisions
 

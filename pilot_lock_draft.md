@@ -34,8 +34,10 @@ The concrete review proposal is in `rf_config_draft.json`, with rationale in
 size 5), proposes the documented classifier defaults for remaining tree
 parameters, proposes seeds 0–9, and sets single-job execution. These values
 are **not frozen**. The current Python environment has no scikit-learn
-installation and the repository has no dependency lock, so the implementation
-version remains unresolved and the model has not been instantiated.
+installation. scikit-learn 1.9.1 is a candidate compatible with the installed
+Python 3.14.7 minimum-version requirement, but Windows wheel resolution and a
+complete dependency lock remain outstanding; the model has not been
+instantiated.
 
 The frozen E1 gate also requires stable results across seeds without defining
 a numeric stability tolerance. Define and record that review criterion before
@@ -78,8 +80,8 @@ any E1 run.
 3. Finalize the conservative family matrix from dataset documentation before
    any family-level target analysis.
 4. Review the explicit candidate Random Forest parameters and seeds in
-   `rf_config_draft.json`; pin a compatible Python/scikit-learn runtime. The
-   current environment lacks scikit-learn.
+   `rf_config_draft.json`; resolve all packages in an isolated, pinned runtime.
+   scikit-learn 1.9.1 is a candidate, not installed or verified.
 5. Define a reviewable source-only E1 stability criterion before running E1;
    the frozen method requires stability but gives no numeric tolerance.
 6. Freeze the exact split/control used by the pilot and retain the temporal and

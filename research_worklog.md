@@ -221,8 +221,11 @@ pilot has not been run.
   5, proposes explicit documented classifier defaults for other parameters,
   and lists ten seeds (0–9). No estimator was instantiated or fit.
 - The local environment is Python 3.14.7 with no scikit-learn installation;
-  no dependency lock file exists. A compatible pinned runtime is required
-  before E1 and before a freeze manifest can be produced.
+  NumPy 2.5.2 and pandas 3.0.6 are present, but SciPy is absent and no
+  dependency lock file exists. Official scikit-learn 1.9.1 documentation sets
+  Python 3.11 as its minimum, so 1.9.1 is a candidate for the detected Python;
+  Windows wheel resolution and a complete isolated dependency lock remain
+  outstanding. No packages were installed.
 - The frozen methodology asks for stable E1 results across seeds but supplies
   no numeric acceptance tolerance. That criterion remains to be defined before
   E1; no arbitrary threshold was added to the frozen protocol.
