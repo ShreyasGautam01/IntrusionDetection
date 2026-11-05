@@ -1,0 +1,7 @@
+{
+  "NF-ToN-IoT-v3": {
+    "exact_duplicate_rows_beyond_first": 1816137,
+    "duplicate_expected_feature_vectors_beyond_first": 1816137,
+    "source": "Completed full-table SHA-256 fingerprint index preserved from the original audit run after its final ToN-IoT-v3 row scan."
+  }
+}
