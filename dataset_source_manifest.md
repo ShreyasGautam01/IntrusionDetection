@@ -1,7 +1,25 @@
+
 # Dataset Source Manifest
 
-**Status:** Working manifest — exact downloaded-file hashes remain pending dataset acquisition.  
+**Status:** Working manifest — exact downloaded-file hashes remain pending local audit.  
 **Last updated:** 2026-11-05.
+
+## Active datasets
+
+The current active dataset scope is deliberately limited to two datasets:
+
+1. NF-UNSW-NB15-v3
+2. NF-CSE-CIC-IDS2018-v3
+
+These are the only datasets that should be audited and prepared for the first pilot and experiment lock.
+
+## Deferred dataset
+
+NF-ToN-IoT-v3 is already downloaded but is **not currently part of the active experiment pipeline**.
+
+Keep its raw files untouched.
+
+Do not build a second preprocessing path, family mapping, or experiment matrix for ToN-IoT at this stage.
 
 ## Authoritative catalogue
 
@@ -9,17 +27,11 @@ University of Queensland ML-Based NIDS Datasets:
 
 https://staff.itee.uq.edu.au/marius/NIDS_datasets/
 
-The catalogue states that NetFlow-v3 contains four datasets with 53 extended NetFlow features and is the only version in the collection incorporating the additional temporal features.
+The catalogue states that NetFlow-v3 contains four datasets with 53 extended NetFlow features.
 
-## Exact current download endpoints
+## Active exact download endpoints
 
 ### NF-UNSW-NB15-v3
-
-Catalogue entry:
-
-https://staff.itee.uq.edu.au/marius/NIDS_datasets/
-
-Current download endpoint exposed by the catalogue:
 
 https://rdm.uq.edu.au/files/abd2f5d8-e268-4ff0-84fb-f2f7b3ca3e8f
 
@@ -31,8 +43,6 @@ Reference catalogue count:
 
 ### NF-CSE-CIC-IDS2018-v3
 
-Current download endpoint exposed by the catalogue:
-
 https://rdm.uq.edu.au/files/4ac221b1-6bd6-42b1-bdf7-03f4fc7efb22
 
 Reference catalogue count:
@@ -41,9 +51,9 @@ Reference catalogue count:
 - 2,600,903 attack
 - 17,514,626 benign
 
-### NF-ToN-IoT-v3
+## Deferred exact endpoint
 
-Current download endpoint exposed by the catalogue:
+### NF-ToN-IoT-v3
 
 https://rdm.uq.edu.au/files/343e2e8c-6e6e-4a0c-813d-a46acea1b7f4
 
@@ -53,53 +63,30 @@ Reference catalogue count:
 - 10,728,046 attack
 - 16,792,214 benign
 
-## Important provenance note
+No ToN-IoT audit should be started before the core two-dataset pipeline is stable.
 
-The RDM endpoints are the current download targets exposed by the UQ catalogue as of the methodology preparation date. They are not yet the experiment's locked file hashes.
+## Provenance requirements
 
-After download, record:
+For each active dataset, record:
 
-- final file name;
+- canonical URL;
+- download timestamp;
+- file/archive name;
 - byte size;
 - SHA-256;
-- extracted file hash if archived;
+- extracted-file hash where applicable;
 - schema hash;
 - row count;
 - column count;
-- exact label values;
-- exact family counts.
+- label values;
+- family counts.
 
-## Dataset versions
+Required artifact:
 
-The experiment uses **NetFlow-v3**, not the older NetFlow-v1 or v2 files.
+`dataset_manifest.json`
 
-The v3 dataset paper is:
+## Raw-data policy
 
-Majed Luay, Siamak Layeghy, Seyedehfaezeh Hosseininoorbin, Mohanad Sarhan, Nour Moustafa, Marius Portmann,
-"Temporal Analysis of NetFlow Datasets for Network Intrusion Detection Systems."
+Do not commit raw data to GitHub.
 
-Preprint:
-https://arxiv.org/abs/2503.04404
-
-Current catalogue citation instructions should be followed in the eventual paper.
-
-## Release-selection rule
-
-Do not replace a downloaded v3 release with an older release merely because a preprocessing script expects another schema.
-
-If the downloaded release differs from the catalogue counts, first investigate whether the difference is due to:
-
-- file segmentation;
-- an updated release;
-- archive contents;
-- extraction errors;
-- filtering;
-- corrupted download.
-
-Do not call it a methodological difference until the provenance issue is resolved.
-
-## Raw-data handling
-
-The raw datasets are not committed to GitHub.
-
-Only provenance, checksums, schemas, mappings, split manifests, and code are committed.
+Raw datasets are read-only inputs.
