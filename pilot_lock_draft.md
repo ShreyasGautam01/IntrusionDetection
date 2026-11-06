@@ -65,6 +65,11 @@ any E1 run.
   implemented and recorded before E1.
 - Finite-value replacements are fitted from UNSW baseline training rows only
   and applied unchanged at inference.
+- The draft memory bounds and staging recommendation are in
+  `reports/nf_v3_audit/MEMORY_FEASIBILITY_DRAFT.md`. They assume 46 float32
+  inputs and are not a peak-memory guarantee; target inference should use the
+  batch feature reader, while actual Random Forest training memory must be
+  measured during the later source-only E1 gate.
 
 ## Required decisions before freezing
 

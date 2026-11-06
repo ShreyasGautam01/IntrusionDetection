@@ -1,0 +1,39 @@
+{
+  "configuration_id": "memory-estimate-draft-1",
+  "generated_at_utc": "2026-11-06T05:50:28Z",
+  "generated_from_git_commit": "642875579260f9bd3ddd7a23d25fa405aa6c768e",
+  "status": "planning_estimate_not_capacity_test",
+  "assumptions": {
+    "primary_feature_count": 46,
+    "primary_feature_status": "draft_not_approved",
+    "dtype": "float32",
+    "bytes_per_value": 4,
+    "scope": "dense numeric feature matrix only; excludes labels, CSV strings, framework copies, estimator workspace, and model structures",
+    "no_dataset_rows_read": true,
+    "no_target_labels_used": true,
+    "no_model_trained": true
+  },
+  "datasets": {
+    "NF-UNSW-NB15-v3": {
+      "sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+      "source_train_rows": 1418952,
+      "source_calibration_rows": 473301,
+      "source_test_rows": 473171,
+      "source_total_rows": 2365424
+    },
+    "NF-CSE-CIC-IDS2018-v3": {
+      "sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+      "target_lockbox_rows": 20115529
+    }
+  },
+  "dense_float32_lower_bounds": {
+    "unsw_train_46_features": {"bytes": 261087168, "mib": 248.99, "gib": 0.243},
+    "unsw_calibration_46_features": {"bytes": 87087384, "mib": 83.05, "gib": 0.081},
+    "unsw_source_test_46_features": {"bytes": 87063464, "mib": 83.03, "gib": 0.081},
+    "unsw_all_partitions_46_features": {"bytes": 435238016, "mib": 415.08, "gib": 0.405},
+    "cic_target_full_46_features": {"bytes": 3701257336, "mib": 3529.79, "gib": 3.447},
+    "cic_target_batch_8192_46_features": {"bytes": 1507328, "mib": 1.44, "gib": 0.001},
+    "cic_target_full_53_features": {"bytes": 4264492148, "mib": 4066.94, "gib": 3.972}
+  },
+  "recommendation": "Keep target scoring batch-streamed. Consider disk-backed source staging only after the feature set and transformation are frozen. Measure actual E1 peak memory; these bounds are not a capacity guarantee."
+}

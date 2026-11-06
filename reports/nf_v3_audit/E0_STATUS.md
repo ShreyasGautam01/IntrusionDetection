@@ -65,4 +65,9 @@ label access unless a matching freeze manifest is committed, clean, and
 descended from the current checkout. No freeze manifest exists yet, so target
 labels remain sealed.
 
+The dense-matrix lower bounds and chunking guidance are in
+`MEMORY_FEASIBILITY_DRAFT.md` and `memory_estimate_draft.json`. They use the
+current 46-column proposal and do not include model/workspace overhead; no
+memory benchmark or fit has been performed.
+
 The frozen `research_proposal.md` and `methodology_final.md` were not modified.

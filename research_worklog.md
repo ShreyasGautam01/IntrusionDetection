@@ -266,3 +266,17 @@ pilot has not been run.
   or return label values, change the dataset, or authorize evaluation.
 - No tests were run and no model was trained; the target-label freeze manifest
   is still absent.
+
+### 2026-11-06 — Pre-pilot memory plan
+
+- Calculated dense float32 input lower bounds from the already-audited row
+  counts and the 46-column feature proposal; no dataset rows were scanned.
+- The source train matrix alone is about 249 MiB. The full CIC2018 46-column
+  matrix would be about 3.45 GiB, versus about 1.44 MiB of numeric values per
+  default 8,192-row batch. These estimates exclude parsing, copies, model
+  structures, and estimator workspace.
+- Documented target streaming and a possible disk-backed source staging plan
+  for after feature freeze. Actual Random Forest peak memory remains unmeasured
+  and must be observed during the eventual source-only E1 gate.
+- No target labels were read, no dataset was transformed, and no model was
+  trained.
