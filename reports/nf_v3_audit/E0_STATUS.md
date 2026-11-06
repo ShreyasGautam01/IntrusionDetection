@@ -58,10 +58,19 @@ flow-key check, and constants/domain-shortcut review are in
 reported as a bounded sensitivity because the retained host support is small;
 do not present it as broad host generalization.
 
+The source-only E1 feature matrices are staged on disk under the ignored
+`data/processed/source-e1-lock-1` path, using the locked 46-feature order and
+source-only replacements. Counts and hashes are summarized in
+`SOURCE_E1_STAGE_REPORT.md` and `source_e1_stage_report.json`. The RF fit has
+not started because only 2.5 GiB RAM was free after staging; CIC2018 remains
+unread by the E1 path.
+
 The deterministic UNSW-training-only median policy is implemented in
 `scripts/finite_value_policy.py`; fitted values and source-only counts are in
 `unsw_train_finite_replacements.json`. The same `apply_value` function is the
-inference transform. No dataset has been transformed or overwritten.
+inference transform. The source-only E1 model and reliability settings are
+consolidated in `source_e1_config.json`; this config does not unlock CIC2018 or
+authorize target evaluation. No raw dataset has been transformed or overwritten.
 
 `src/ids_research/target_lockbox.py` implements feature-only target streaming
 and now provides bounded batch output for target scoring. It fails closed on

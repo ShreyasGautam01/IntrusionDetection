@@ -1,0 +1,209 @@
+{
+  "configuration_id": "source-e1-lock-1",
+  "created_utc": "2026-11-06T12:10:06.861387+00:00",
+  "status": "frozen_for_source_only_E1",
+  "scope": "NF-UNSW-NB15-v3 in-domain E1 only; no CIC2018 feature or label access",
+  "source_dataset": {
+    "name": "NF-UNSW-NB15-v3",
+    "sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+    "row_count": 2365424
+  },
+  "partition": {
+    "method": "SHA-256 of canonical raw 53-feature strings; first 8 digest bytes interpreted big-endian modulo 100",
+    "train_buckets": "0-59",
+    "calibration_buckets": "60-79",
+    "source_test_buckets": "80-99",
+    "rows": {
+      "train": 1418952,
+      "calibration": 473301,
+      "source_test": 473171
+    }
+  },
+  "features": {
+    "source": "reports/nf_v3_audit/primary_feature_set_draft.json",
+    "count": 46,
+    "columns": [
+      "PROTOCOL",
+      "L7_PROTO",
+      "IN_BYTES",
+      "OUT_BYTES",
+      "IN_PKTS",
+      "OUT_PKTS",
+      "FLOW_DURATION_MILLISECONDS",
+      "TCP_FLAGS",
+      "CLIENT_TCP_FLAGS",
+      "SERVER_TCP_FLAGS",
+      "DURATION_IN",
+      "DURATION_OUT",
+      "MIN_TTL",
+      "MAX_TTL",
+      "LONGEST_FLOW_PKT",
+      "SHORTEST_FLOW_PKT",
+      "MIN_IP_PKT_LEN",
+      "MAX_IP_PKT_LEN",
+      "SRC_TO_DST_SECOND_BYTES",
+      "DST_TO_SRC_SECOND_BYTES",
+      "RETRANSMITTED_IN_BYTES",
+      "RETRANSMITTED_IN_PKTS",
+      "RETRANSMITTED_OUT_BYTES",
+      "RETRANSMITTED_OUT_PKTS",
+      "SRC_TO_DST_AVG_THROUGHPUT",
+      "DST_TO_SRC_AVG_THROUGHPUT",
+      "NUM_PKTS_UP_TO_128_BYTES",
+      "NUM_PKTS_128_TO_256_BYTES",
+      "NUM_PKTS_256_TO_512_BYTES",
+      "NUM_PKTS_512_TO_1024_BYTES",
+      "NUM_PKTS_1024_TO_1514_BYTES",
+      "TCP_WIN_MAX_IN",
+      "TCP_WIN_MAX_OUT",
+      "ICMP_TYPE",
+      "ICMP_IPV4_TYPE",
+      "DNS_QUERY_TYPE",
+      "DNS_TTL_ANSWER",
+      "FTP_COMMAND_RET_CODE",
+      "SRC_TO_DST_IAT_MIN",
+      "SRC_TO_DST_IAT_MAX",
+      "SRC_TO_DST_IAT_AVG",
+      "SRC_TO_DST_IAT_STDDEV",
+      "DST_TO_SRC_IAT_MIN",
+      "DST_TO_SRC_IAT_MAX",
+      "DST_TO_SRC_IAT_AVG",
+      "DST_TO_SRC_IAT_STDDEV"
+    ],
+    "feature_registry_sha256": "3fa1c856f0ee858f072f8f0f85dff41c4bb1369fa3400ed3516a9642e591091d",
+    "excluded_from_predictors_retained_in_registry": [
+      "IPV4_SRC_ADDR",
+      "IPV4_DST_ADDR",
+      "L4_SRC_PORT",
+      "L4_DST_PORT",
+      "DNS_QUERY_ID",
+      "FLOW_START_MILLISECONDS",
+      "FLOW_END_MILLISECONDS"
+    ]
+  },
+  "preprocessing": {
+    "finite_policy_file": "scripts/finite_value_policy.py",
+    "replacement_values_file": "reports/nf_v3_audit/unsw_train_finite_replacements.json",
+    "replacement_values_sha256": "ea7a93ac62c73fd7466c7312cdcc4eecae2e4bb5fb0e7ddee6e3441a7827705b",
+    "fit_partition": "UNSW train only",
+    "values": {
+      "SRC_TO_DST_SECOND_BYTES": 162.0,
+      "DST_TO_SRC_SECOND_BYTES": 75.37562877263582
+    },
+    "empty_nan_inf_rule": "replace with fitted source-train finite median; use 0.0 only if no finite source-train observations",
+    "target_preprocessing": "not run"
+  },
+  "target": {
+    "dataset": "NF-CSE-CIC-IDS2018-v3",
+    "labels_accessed": false,
+    "features_accessed": false,
+    "evaluation_unlocked": false
+  },
+  "random_forest": {
+    "class": "sklearn.ensemble.RandomForestClassifier",
+    "parameters": {
+      "n_estimators": 200,
+      "min_samples_leaf": 5,
+      "criterion": "gini",
+      "max_depth": null,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "max_features": "sqrt",
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "bootstrap": true,
+      "oob_score": false,
+      "n_jobs": 1,
+      "verbose": 0,
+      "warm_start": false,
+      "class_weight": null,
+      "ccp_alpha": 0.0,
+      "max_samples": null,
+      "random_state": "one run per seed"
+    },
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "software_lock": "uv.lock"
+  },
+  "calibration": {
+    "calibration_partition_source": "UNSW calibration split only",
+    "disjoint_subsets": {
+      "probability_calibration_fit": "secondary SHA-256 of the canonical 46-feature float32 vector with fixed domain-separation string source-e1-cal-v1; first 8 digest bytes modulo 100 in 0-49",
+      "conformal_quantile_fit": "same secondary digest rule, buckets 50-99",
+      "duplicate_vectors": "identical 46-feature vectors remain in the same calibration subpartition"
+    },
+    "probability_method": "sigmoid/Platt calibration fit on probability_calibration_fit subset only",
+    "conformal_calibration": "fit split-conformal quantile on disjoint conformal_quantile_fit subset only, using probabilities from the frozen Platt calibrator",
+    "target_recalibration": false
+  },
+  "e1_reporting": {
+    "per_seed": "detector metrics, generic-error ranking, attack-miss ranking, calibration, score distributions",
+    "across_seed_summary": [
+      "median",
+      "IQR",
+      "minimum",
+      "maximum"
+    ],
+    "target_eval_allowed_after_this_run": false,
+    "acceptance_rule": "Report source-only stability; do not unlock target until the project-level stability interpretation is recorded.",
+    "primary_source_endpoints": [
+      "attack-miss AUPRC",
+      "attack-miss capture at 5% review"
+    ],
+    "additional_review_budgets": [
+      0.01,
+      0.05,
+      0.1
+    ],
+    "generic_error_endpoint": "AUPRC for ranking incorrect source-test predictions as positive events",
+    "stability_numeric_tolerance": "not imposed; source-only metrics and across-seed spreads are reported, and target evaluation remains locked pending stability-gate review"
+  },
+  "method_note": "This lock operationalizes the existing source-only gate and existing 46-column candidate. It adds no dataset, feature selection from labels, or target-derived choice. Compact 8-feature sensitivity and cross-domain study are outside this run.",
+  "reliability_signals": {
+    "confidence": {
+      "score": "1 - max(source-calibrated class probabilities)",
+      "higher_means": "more deserving of review"
+    },
+    "random_forest_disagreement": {
+      "score": "1 - maximum per-class fraction of the 200 tree predictions",
+      "higher_means": "more deserving of review"
+    },
+    "feature_space_distance": {
+      "reference": "UNSW source-train only",
+      "scaler": "StandardScaler fit on UNSW source-train only",
+      "metric": "Euclidean",
+      "neighbors": 5,
+      "score": "mean distance to the 5 nearest source-train reference rows",
+      "higher_means": "more deserving of review"
+    },
+    "split_conformal": {
+      "calibration": "disjoint conformal_quantile_fit subset of UNSW source calibration partition",
+      "alpha": 0.1,
+      "nonconformity": "1 - calibrated probability assigned to the true source-calibration class",
+      "quantile": "finite-sample split-conformal order statistic at ceil((n+1)*(1-alpha))/n",
+      "prediction_set": "include each binary class whose nonconformity is at or below the frozen calibration quantile",
+      "scalar_review_score": "(prediction_set_size - 1) / (2 - 1)",
+      "higher_means": "more deserving of review"
+    },
+    "isolation_forest": {
+      "fit_data": "UNSW source-train only",
+      "n_estimators": 100,
+      "max_samples": 256,
+      "max_features": 1.0,
+      "contamination": "auto",
+      "bootstrap": false,
+      "random_state": "same run seed",
+      "score": "negative sklearn score_samples, higher means more anomalous and more deserving of review"
+    }
+  }
+}

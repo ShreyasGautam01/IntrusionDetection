@@ -294,3 +294,17 @@ pilot has not been run.
 - The draft requires fixed source partitions/configuration across the ten proposed seeds, per-seed detector and reliability outputs, seed-spread summaries, ranking agreement, and a repeated fixed-seed reproducibility check.
 - It deliberately sets no numeric pass tolerance: the frozen protocol requires stability but does not define a cutoff. Owner review is still required before any E1 fitting.
 - No model was instantiated or trained, target rows/labels were not accessed, and neither frozen core document was modified.
+
+### 2026-11-06 — Source-only E1 setup consolidated
+
+- Consolidated the 46-feature primary candidate, deterministic UNSW 60/20/20 hash split, source-training-only finite replacements, fixed 200-tree/minimum-leaf-5 Random Forest, ten seeds, and source-only sigmoid calibration in `reports/nf_v3_audit/source_e1_config.json`.
+- Fixed source-only settings for confidence, forest disagreement, standardized kNN distance, split conformal at alpha 0.10, and Isolation Forest. The source-only config cannot access CIC2018 data or unlock target evaluation.
+- Hardware preflight showed 15.7 GiB physical RAM total but 1.9 GiB available at inspection time. The planned numeric source matrices require about 415 MiB before the RF trees and working copies; no training was started because peak model memory is not yet bounded.
+- The source-only config reports all ten seeds and their variation; no arbitrary numeric pass tolerance was inserted. Target evaluation remains sealed pending interpretation of the frozen stability gate.
+
+### 2026-11-06 — UNSW source E1 matrices staged
+
+- Added `scripts/stage_source_e1.py`, which verifies the audited source SHA-256, partitions by the locked feature-vector digest, applies the recorded source-train replacements, and writes disk-backed arrays. It refuses overwrite and never opens CIC2018.
+- Staged the 1,418,952/473,301/473,171 train/calibration/test rows in the locked 46-column order. The current UNSW source hash rechecked exactly against the audit.
+- Added `SOURCE_E1_STAGE_REPORT.md` and `source_e1_stage_report.json` with the array hashes and execution limits. Local matrices are ignored under `data/processed/`; raw data are unchanged.
+- Model fitting remains unstarted because only 2.5 GiB RAM was available after staging; forest peak memory is not known.
