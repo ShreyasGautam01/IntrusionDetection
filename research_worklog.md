@@ -287,3 +287,10 @@ pilot has not been run.
 - The local UNSW family counts match the versioned paper exactly. The current UQ HTML table has three conflicting UNSW counts (Analysis, Backdoor, Shellcode), and its prose attack total is 127,639 versus 127,693 in its own family-table sum and the local/release-paper counts. CIC counts match.
 - Added per-label and aggregate comparisons to `family_mapping_draft.csv` and documented the discrepancy in the family report and label-mapping draft. No labels, rows, or dataset files were changed.
 - This is a source-documentation correction only; the family mapping remains draft, and target-exclusive claims remain withheld. No features were selected from labels and no model was trained.
+
+### 2026-11-06 — Source-only E1 stability gate prepared for review
+
+- Mapped the frozen E1 acceptance statement to a proposed run/reporting procedure in `reports/nf_v3_audit/E1_STABILITY_GATE_DRAFT.md`.
+- The draft requires fixed source partitions/configuration across the ten proposed seeds, per-seed detector and reliability outputs, seed-spread summaries, ranking agreement, and a repeated fixed-seed reproducibility check.
+- It deliberately sets no numeric pass tolerance: the frozen protocol requires stability but does not define a cutoff. Owner review is still required before any E1 fitting.
+- No model was instantiated or trained, target rows/labels were not accessed, and neither frozen core document was modified.

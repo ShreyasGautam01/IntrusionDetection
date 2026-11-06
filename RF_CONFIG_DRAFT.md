@@ -30,7 +30,7 @@ The config remains uninstantiated: no estimator was created or fit. The runtime 
 1. Approve the exact primary predictive columns and the compact sensitivity mapping, including numeric port treatment.
 2. Review and freeze the family ontology and mapping policy before family-level reporting.
 3. Approve or revise this candidate parameter set and seed list, then pin the runtime.
-4. Define the source-only stability gate's review criterion before running E1; the frozen text requires stability across seeds but does not set a numeric tolerance.
+4. Review `reports/nf_v3_audit/E1_STABILITY_GATE_DRAFT.md` and approve numeric source-only stability tolerances before running E1; the draft defines reporting but does not invent thresholds absent from the frozen method.
 5. Freeze the source split, calibration procedure details, and all reliability-signal parameters.
 6. Run source-only E1; only after the gate passes may the freeze manifest be committed for final target evaluation.
 

@@ -84,8 +84,9 @@ any E1 run.
    any family-level target analysis.
 4. Review the explicit candidate Random Forest parameters and seeds in
    `rf_config_draft.json`; the isolated package runtime is pinned in `uv.lock`.
-5. Define a reviewable source-only E1 stability criterion before running E1;
-   the frozen method requires stability but gives no numeric tolerance.
+5. Review `reports/nf_v3_audit/E1_STABILITY_GATE_DRAFT.md` and approve the
+   source-only E1 stability tolerances before running E1; the frozen method
+   requires stability but gives no numeric tolerance.
 6. Freeze the exact split/control used by the pilot and retain the temporal and
    host/session controls as separate predeclared analyses.
 7. Complete the source-only in-domain E1 stability gate across the locked seeds

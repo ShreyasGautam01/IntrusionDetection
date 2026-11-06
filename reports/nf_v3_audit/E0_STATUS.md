@@ -48,6 +48,8 @@ Remaining before the first pilot:
 6. Commit a freeze manifest binding dataset/config/registry hashes, then use
    the target-label firewall for final evaluation only.
 
+A review-only source E1 stability procedure is drafted in `E1_STABILITY_GATE_DRAFT.md`. It defines per-seed reporting and reproducibility checks but intentionally leaves numerical pass tolerances open for project-owner review; no E1 model has been run.
+
 The family-count crosswalk now reconciles the existing local counts against the versioned NetFlow-v3 release paper and current UQ catalogue HTML. The local UNSW counts match the paper exactly; the live HTML page has three conflicting family cells and a prose attack total 54 below its own family-table sum. This source discrepancy is recorded in `FAMILY_MAPPING_DRAFT.md`, `family_mapping_draft.csv`, and `label_mapping_draft.md`; labels remain unchanged.
 
 The temporal control, session split, strict host-disjoint sensitivity, repeated
