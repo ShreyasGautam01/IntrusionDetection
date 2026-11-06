@@ -280,3 +280,10 @@ pilot has not been run.
   and must be observed during the eventual source-only E1 gate.
 - No target labels were read, no dataset was transformed, and no model was
   trained.
+
+### 2026-11-06 — NetFlow-v3 family-count source reconciliation
+
+- Compared existing BagIt-verified active-pair label counts with Table 3 of the versioned NetFlow-v3 release paper and the current UQ catalogue HTML; no raw dataset scan was repeated.
+- The local UNSW family counts match the versioned paper exactly. The current UQ HTML table has three conflicting UNSW counts (Analysis, Backdoor, Shellcode), and its prose attack total is 127,639 versus 127,693 in its own family-table sum and the local/release-paper counts. CIC counts match.
+- Added per-label and aggregate comparisons to `family_mapping_draft.csv` and documented the discrepancy in the family report and label-mapping draft. No labels, rows, or dataset files were changed.
+- This is a source-documentation correction only; the family mapping remains draft, and target-exclusive claims remain withheld. No features were selected from labels and no model was trained.

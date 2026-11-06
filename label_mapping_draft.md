@@ -14,6 +14,10 @@ The row-level mapping and exact local counts are in [family_mapping_draft.csv](r
 
 Raw label strings are preserved. Canonical display names normalize UNSW `Exploits` to `Exploitation`, `Fuzzers` to `Fuzzing`, and CIC `Infilteration` to `Infiltration`. These aliases do not claim taxonomic equivalence across datasets.
 
+## Release-count reconciliation
+
+The local BagIt-verified UNSW file matches Table 3 of the versioned NetFlow-v3 release paper exactly. The current UQ catalogue HTML lists different UNSW counts for Analysis (2,381), Backdoor (1,226), and Shellcode (4,659), while the release paper and local audit report 1,226, 4,659, and 2,381, respectively. The page prose reports 127,639 attacks, 54 fewer than the page’s own family-table sum and the local/paper total of 127,693. This is documented as a source-page discrepancy; no raw labels or rows were changed. Per-label and total comparisons are recorded in `reports/nf_v3_audit/family_mapping_draft.csv`.
+
 ## Cross-dataset policy
 
 - The only direct shared category in this draft is DoS. Shared naming does not imply matching attack implementations or distributions.

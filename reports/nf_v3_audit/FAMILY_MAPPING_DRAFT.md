@@ -8,6 +8,10 @@ Only NF-UNSW-NB15-v3 (source candidate) and NF-CSE-CIC-IDS2018-v3 (target candid
 
 Canonical groupings below are a documentation crosswalk, not relabeling of data. UNSW `Exploits` is rendered as `Exploitation`, `Fuzzers` as `Fuzzing`, and CIC `Infilteration` as `Infiltration` for readable canonical names while exact raw values remain in the CSV. CIC `WebAttacks` is inferred because the three local raw web labels sum exactly to the UQ catalogue aggregate (2,538).
 
+## Release-count reconciliation
+
+The BagIt-verified local UNSW file matches the family counts in Table 3 of the NetFlow-v3 release paper exactly, including Analysis 1,226, Backdoor 4,659, and Shellcode 2,381. The current UQ catalogue HTML table instead lists 2,381, 1,226, and 4,659 for those labels, respectively. Its prose total says 127,639 attacks, while its own family table sums to 127,693; the local file and v3 release paper both report 127,693. This is a discrepancy in the current catalogue page, not evidence to relabel the local file. Raw labels and BagIt-verified data are retained unchanged; family-level claims use the v3 release paper and remain draft pending review.
+
 ## Audited local family inventory
 
 Counts come from `target_value_counts.csv`, not catalogue estimates.
@@ -47,6 +51,7 @@ Counts come from `target_value_counts.csv`, not catalogue estimates.
 
 ## Sources and inference
 
-- UQ NetFlow v3 catalogue and family descriptions: https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+- NetFlow-v3 release paper, Table 3 (release-matched family counts): https://arxiv.org/html/2503.04404v3
+- UQ NetFlow v3 catalogue HTML (current family descriptions and count discrepancy): https://staff.itee.uq.edu.au/marius/NIDS_datasets/
 - Official CIC-IDS2018 scenario documentation: https://www.unb.ca/cic/datasets/ids-2018.html
 - CIC `WebAttacks` aggregate correspondence is an inference from exact local raw-label counts: 1,618 + 480 + 440 = 2,538, matching the published aggregate. Retain this as provisional until reviewed.

@@ -48,6 +48,8 @@ Remaining before the first pilot:
 6. Commit a freeze manifest binding dataset/config/registry hashes, then use
    the target-label firewall for final evaluation only.
 
+The family-count crosswalk now reconciles the existing local counts against the versioned NetFlow-v3 release paper and current UQ catalogue HTML. The local UNSW counts match the paper exactly; the live HTML page has three conflicting family cells and a prose attack total 54 below its own family-table sum. This source discrepancy is recorded in `FAMILY_MAPPING_DRAFT.md`, `family_mapping_draft.csv`, and `label_mapping_draft.md`; labels remain unchanged.
+
 The temporal control, session split, strict host-disjoint sensitivity, repeated
 flow-key check, and constants/domain-shortcut review are in
 `e0_source_controls.json` and `E0_SOURCE_CONTROL_REPORT.md`. The host result is
