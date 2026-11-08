@@ -1,6 +1,6 @@
 # E0/E0.5 completion status
 
-**Status:** E0/E0.5 artifacts and the full UNSW source-only E1 computation are complete for seeds 0–9 and five signals. The qualitative gate recommendation is recorded in SOURCE_E1_GATE_INTERPRETATION.md and awaits project-owner acceptance. The CIC source-only E1 gate required for CIC→UNSW is not yet complete. No target evaluation has occurred.
+**Status:** E0/E0.5 artifacts and the full UNSW source-only E1 computation are complete for seeds 0–9 and five signals. The qualitative gate recommendation is recorded in SOURCE_E1_GATE_INTERPRETATION.md and was accepted for descriptive analysis on 2026-11-09. The CIC source-only E1 gate required for CIC→UNSW is not yet complete. No target evaluation has occurred.
 **Active pair:** NF-UNSW-NB15-v3 ↔ NF-CSE-CIC-IDS2018-v3; each direction requires its own source-only E1 gate.
 **ToN-IoT:** Excluded from the active project scope.
 
@@ -31,11 +31,10 @@ values from those attempts were used.
 
 Remaining before target evaluation:
 
-1. Obtain project-owner acceptance of the UNSW E1 interpretation.
-2. Review the CIC exact-distance benchmark decision and deterministic reference-bank proposal. No alternative or full CIC E1 run starts before approval.
-3. After method approval, freeze the CIC source-only E1 config and manifest, complete and verify seeds 0–9, then obtain acceptance of the CIC gate interpretation.
-4. Only after both source-gate interpretations are accepted, freeze the 46-feature registry, conservative family mapping, and direction-specific manifests before target scoring.
-5. Keep target labels sealed until the matching clean, committed manifest validates.
+1. Run the owner-approved, bounded feature-only distance-bank comparison and present K-size results for method approval.
+2. After the selected distance definition is approved, freeze the CIC source-only E1 config and manifest, complete and verify seeds 0–9, then obtain acceptance of the CIC gate interpretation.
+3. Only after both source-gate interpretations are accepted, freeze the 46-feature registry, conservative family mapping, and direction-specific manifests before target scoring.
+4. Keep target labels sealed until the matching clean, committed manifest validates.
 
 
 The E1 evidence and conditional qualitative recommendation are in SOURCE_E1_GATE_INTERPRETATION.md; owner acceptance is pending. Full per-seed metrics remain in SOURCE_E1_FINAL_REPORT.md and source_e1_final_results.json. No post-hoc numeric threshold has been added, and target evaluation remains sealed.

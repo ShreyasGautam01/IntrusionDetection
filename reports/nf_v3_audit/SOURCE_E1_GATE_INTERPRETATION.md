@@ -1,6 +1,6 @@
 # UNSW Source E1 Stability Interpretation
 
-**Status:** Recommendation recorded; awaiting project-owner acceptance. Target evaluation remains locked.
+**Status:** Project owner accepted conditional descriptive use on 2026-11-09. CIC E1 and target gates remain pending.
 **Source configuration:** source-e1-lock-1, NF-UNSW-NB15-v3, seeds 0–9.
 **Evidence:** SOURCE_E1_FINAL_REPORT.md and source_e1_final_results.json.
 
@@ -21,3 +21,8 @@ The pipeline is computationally reproducible, and detector metrics are stable. O
 ## Gate state
 
 Target evaluation remains locked until the project owner accepts or rejects this interpretation. The CIC→UNSW direction also requires its own complete CIC source-only E1 gate and an accepted interpretation. No CIC target evaluation or target-label access is authorized by this record.
+
+
+## Owner decision
+
+On 2026-11-09, the project owner accepted the recommendation for descriptive target-transfer analysis. Preserve all seeds and report per-seed results and ranges without selecting a winner from an across-seed average. This acceptance closes the UNSW interpretation gate only; target evaluation remains sealed until the CIC source-only E1 gate is completed and accepted and the direction manifests are committed.

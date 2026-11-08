@@ -1,6 +1,6 @@
 # CIC Source E1 Distance-Bank Alternative — Owner Review Required
 
-**Status:** Proposal only. No change to the CIC source-E1 config or experiment manifest; no approximation benchmark or E1 run has been launched.
+**Status:** Owner approved the bounded feature-only bank benchmark on 2026-11-09. The selected approximation and final CIC experiment manifest remain unapproved; no full E1 run has been launched.
 
 ## Why an alternative is proposed
 
@@ -24,11 +24,11 @@ This is an explicit deterministic reference-bank approximation to the frozen all
 
 At the measured 500,000-reference scale, exact KDTree fit took 5.27 seconds, a 512-query batch took 0.335 seconds (about 1,526 queries/s), and peak process working set was 2.60 GB including the benchmark’s staged-array baseline. The stored standardized bank is about 184 MB; the current exact implementation would process 4.44 GB of standardized references. A 500k bank suggests well under one hour for 4.03M CIC source-test queries at the measured rate, subject to a bounded confirmation run.
 
-If approved, before changing the final experiment manifest:
+The owner-approved next action is the bounded comparison below; it does not change the config or final experiment manifest:
 
 1. Generate the bank by the hash-priority rule above and record its offset-list hash, data hash, `K`, scaler hash, algorithm and versions.
 2. Repeat the selection twice and require an identical offset-list hash and identical distance outputs.
 3. On 4,096 deterministic source-test feature rows, compare `K` = 100k, 250k, and 500k banks against the bounded exact 2.4M-reference benchmark. Report median and 95th-percentile relative distance error and Spearman rank correlation. This is feature-only validation; do not use labels or RF outcomes to choose K.
 4. Present those measurements for approval. Only then update and commit the CIC E1 experiment manifest with the chosen approximation and launch the final source-only gate.
 
-Until approval, retain the exact frozen definition in the current config, preserve all staged arrays and UNSW outputs, and do not compute bank scores or start CIC seeds.
+Until a K and distance definition are accepted after reviewing benchmark measurements, retain the exact frozen definition in the current config, preserve all staged arrays and UNSW outputs, and do not start CIC seeds.

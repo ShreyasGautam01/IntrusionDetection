@@ -16,7 +16,7 @@
 
 ## Current state
 
-The workspace is synchronized to `codex/e0-e05` at the published UNSW-gate interpretation milestone. UNSW source-only E1 is complete for seeds 0–9, with exact feature distance shared across seeds and a same-seed repeat. The qualitative interpretation recommends conditional acceptance for descriptive transfer; project-owner acceptance is pending, so target evaluation remains locked.
+The workspace is synchronized to `codex/e0-e05` at the published UNSW-gate interpretation milestone. UNSW source-only E1 is complete for seeds 0–9, with exact feature distance shared across seeds and a same-seed repeat. The qualitative interpretation recommends conditional acceptance for descriptive transfer; the project owner accepted this on 2026-11-09. Target evaluation remains locked pending the CIC source gate and committed direction manifests.
 
 CIC source staging for the reverse CIC → UNSW E1 gate is complete under the separate `source-e1-cic-lock-1` configuration. The label-blind 60/20/20 split produced 12,068,590 train, 4,021,791 calibration, and 4,025,148 source-test rows in the locked 46-feature order. All six staged arrays match their local ignored stage manifest and have finite features. CIC labels were used as source labels only. UNSW target files and labels were not read.
 
@@ -28,11 +28,10 @@ Ignored UNSW source E1 arrays, recovered seed 0–5 RF artifacts, and completed 
 
 ## Next work
 
-1. Review and accept or reject the UNSW E1 interpretation in `reports/nf_v3_audit/SOURCE_E1_GATE_INTERPRETATION.md`.
-2. Review the exact-distance resource decision and deterministic reference-bank proposal. If an alternative is approved, benchmark its deterministic bank sizes and feature-only approximation error before changing the CIC experiment manifest. If rejected, reassess exact execution only after adequate memory headroom is available.
-3. Freeze and commit the approved CIC source-E1 configuration/manifest before running its full five-signal gate. Verify seeds 0–9 and a same-seed repeat; then record a qualitative CIC gate interpretation for owner acceptance.
-4. Only after both source-gate interpretations are accepted, finalize the shared feature/family registry, benchmark target feature inference and exact target distance on feature-only subsets, and commit manifests for both directions.
-5. Score target features through the streaming feature-only iterator. Read target labels only after the corresponding clean, committed manifest validates. Preserve per-row outputs locally and commit compact provenance/results only.
+1. Run the owner-approved deterministic reference-bank comparison on feature-only source subsets and present K-size accuracy/resource results for approval.
+2. After the selected distance definition is approved, freeze and commit the CIC source-E1 configuration/manifest before its full five-signal gate. Verify seeds 0–9 and a same-seed repeat; then record a qualitative CIC gate interpretation for owner acceptance.
+3. Only after both source-gate interpretations are accepted, finalize the shared feature/family registry, benchmark target feature inference and exact target distance on feature-only subsets, and commit manifests for both directions.
+4. Score target features through the streaming feature-only iterator. Read target labels only after the corresponding clean, committed manifest validates. Preserve per-row outputs locally and commit compact provenance/results only.
 
 ## Experiment details already frozen
 
