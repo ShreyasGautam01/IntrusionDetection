@@ -136,4 +136,333 @@
       "files_present": {
         "metrics.json": true,
         "prediction.npy": true,
-        "calibrated_pr
+        "calibrated_probability.npy": true,
+        "rf_disagreement.npy": true
+      },
+      "files": {
+        "metrics": {
+          "bytes": 1939,
+          "sha256": "54941fa903eef0daa69e2baca713d174aec9f93cb7ea361ec564c7bccff35baf"
+        },
+        "prediction": {
+          "bytes": 473299,
+          "sha256": "4ad09b60cbf75c121432a6e4bec5500e784c5fe698c4b000ec6da0a3bb1dd17c"
+        },
+        "calibrated_probability": {
+          "bytes": 1892812,
+          "sha256": "66ca7a64a5c12c0e083d6647406fd969dd1f348fa9acadd516690d98b5d516dc"
+        },
+        "rf_disagreement": {
+          "bytes": 1892812,
+          "sha256": "c77d595640bc3c6fd908ff6bd1cbb4fbd4d711c8f9667b514e19b0b2ca332476"
+        }
+      },
+      "rows": 473171,
+      "features": 46,
+      "source_attack_rows": 25608,
+      "source_attack_miss_rows": 10,
+      "generic_error_rows": 19,
+      "fit_seconds": 6683.152559399954,
+      "identity_matches_locked_rf_subconfiguration": true,
+      "array_shapes_match_source_test": true,
+      "arrays_finite": true,
+      "predictions_match_probability_threshold": true,
+      "detector_metric_recompute_abs_diffs": {
+        "accuracy": 0.0,
+        "attack_auprc": 0.0,
+        "attack_auroc": 0.0,
+        "brier_score": 7.352141085607139e-13
+      },
+      "detector_metrics_match_with_float32_tolerance": true,
+      "reliability_metric_recompute": {
+        "confidence": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        },
+        "rf_disagreement": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        }
+      },
+      "reliability_metrics_match": true,
+      "verified_partial_artifact": true
+    },
+    "2": {
+      "seed": 2,
+      "files_present": {
+        "metrics.json": true,
+        "prediction.npy": true,
+        "calibrated_probability.npy": true,
+        "rf_disagreement.npy": true
+      },
+      "files": {
+        "metrics": {
+          "bytes": 1938,
+          "sha256": "7b231a51f36f0926c1229a6267c41b058556fbda45eac80179c95e3120be645c"
+        },
+        "prediction": {
+          "bytes": 473299,
+          "sha256": "ec548232cd55fc655b16f7f4a5aaa49cb4a57732dede62d8b9ec0846f0ef25e1"
+        },
+        "calibrated_probability": {
+          "bytes": 1892812,
+          "sha256": "c64554b902bbd552d967c3f903501b406080aa556c4c0dbb3085d1088c3f1cea"
+        },
+        "rf_disagreement": {
+          "bytes": 1892812,
+          "sha256": "35f2f43fc54b331941ee9c194628594cf023d9eb2cf701a328092a71e4ad7b14"
+        }
+      },
+      "rows": 473171,
+      "features": 46,
+      "source_attack_rows": 25608,
+      "source_attack_miss_rows": 10,
+      "generic_error_rows": 15,
+      "fit_seconds": 219.3047663999023,
+      "identity_matches_locked_rf_subconfiguration": true,
+      "array_shapes_match_source_test": true,
+      "arrays_finite": true,
+      "predictions_match_probability_threshold": true,
+      "detector_metric_recompute_abs_diffs": {
+        "accuracy": 0.0,
+        "attack_auprc": 0.0,
+        "attack_auroc": 0.0,
+        "brier_score": 5.243786599330637e-13
+      },
+      "detector_metrics_match_with_float32_tolerance": true,
+      "reliability_metric_recompute": {
+        "confidence": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        },
+        "rf_disagreement": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        }
+      },
+      "reliability_metrics_match": true,
+      "verified_partial_artifact": true
+    },
+    "3": {
+      "seed": 3,
+      "files_present": {
+        "metrics.json": true,
+        "prediction.npy": true,
+        "calibrated_probability.npy": true,
+        "rf_disagreement.npy": true
+      },
+      "files": {
+        "metrics": {
+          "bytes": 1941,
+          "sha256": "f43ebb552d449e611f833dc816ea89ee4b4fccc22fd2f8c31abcd6b5392ae7e3"
+        },
+        "prediction": {
+          "bytes": 473299,
+          "sha256": "583008ecc417e808720cbe4b0b96395a073e5c9445c13d094622293ad3c1a6ac"
+        },
+        "calibrated_probability": {
+          "bytes": 1892812,
+          "sha256": "ede02fa7c717d0efdb9a027e92fe5cfc58e8c29f6ff84c9daf1b79e72744a587"
+        },
+        "rf_disagreement": {
+          "bytes": 1892812,
+          "sha256": "3e21a8e2485d27d46aa9f10602e3759af6c71d989dd069615196772cf8c2a9eb"
+        }
+      },
+      "rows": 473171,
+      "features": 46,
+      "source_attack_rows": 25608,
+      "source_attack_miss_rows": 10,
+      "generic_error_rows": 18,
+      "fit_seconds": 257.8331682999851,
+      "identity_matches_locked_rf_subconfiguration": true,
+      "array_shapes_match_source_test": true,
+      "arrays_finite": true,
+      "predictions_match_probability_threshold": true,
+      "detector_metric_recompute_abs_diffs": {
+        "accuracy": 0.0,
+        "attack_auprc": 0.0,
+        "attack_auroc": 0.0,
+        "brier_score": 3.491355899591479e-13
+      },
+      "detector_metrics_match_with_float32_tolerance": true,
+      "reliability_metric_recompute": {
+        "confidence": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        },
+        "rf_disagreement": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        }
+      },
+      "reliability_metrics_match": true,
+      "verified_partial_artifact": true
+    },
+    "4": {
+      "seed": 4,
+      "files_present": {
+        "metrics.json": true,
+        "prediction.npy": true,
+        "calibrated_probability.npy": true,
+        "rf_disagreement.npy": true
+      },
+      "files": {
+        "metrics": {
+          "bytes": 1944,
+          "sha256": "a5768db9b374520af9f46a40c2305a48ca93430e2342271d35a9dc484096c23c"
+        },
+        "prediction": {
+          "bytes": 473299,
+          "sha256": "583008ecc417e808720cbe4b0b96395a073e5c9445c13d094622293ad3c1a6ac"
+        },
+        "calibrated_probability": {
+          "bytes": 1892812,
+          "sha256": "e502563cbec1870e76c72c239273afebbe2f93dfe5e90a8a0d6e94b5c9dca51c"
+        },
+        "rf_disagreement": {
+          "bytes": 1892812,
+          "sha256": "70f5a7163fd51f29bbdd106bf2465fcef4271a196a266e14d2cdef516b27ad08"
+        }
+      },
+      "rows": 473171,
+      "features": 46,
+      "source_attack_rows": 25608,
+      "source_attack_miss_rows": 10,
+      "generic_error_rows": 18,
+      "fit_seconds": 254.30796810006723,
+      "identity_matches_locked_rf_subconfiguration": true,
+      "array_shapes_match_source_test": true,
+      "arrays_finite": true,
+      "predictions_match_probability_threshold": true,
+      "detector_metric_recompute_abs_diffs": {
+        "accuracy": 0.0,
+        "attack_auprc": 0.0,
+        "attack_auroc": 0.0,
+        "brier_score": 4.61030295699754e-13
+      },
+      "detector_metrics_match_with_float32_tolerance": true,
+      "reliability_metric_recompute": {
+        "confidence": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        },
+        "rf_disagreement": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        }
+      },
+      "reliability_metrics_match": true,
+      "verified_partial_artifact": true
+    },
+    "5": {
+      "seed": 5,
+      "files_present": {
+        "metrics.json": true,
+        "prediction.npy": true,
+        "calibrated_probability.npy": true,
+        "rf_disagreement.npy": true
+      },
+      "files": {
+        "metrics": {
+          "bytes": 1945,
+          "sha256": "28af82087cfb023e7d4844dee9a94762994755c5890e4ad1623c30613dc74097"
+        },
+        "prediction": {
+          "bytes": 473299,
+          "sha256": "48f02270d74ea48f11b58a7e0d20a02c84531bd6f9110fd15003c378c9414b7f"
+        },
+        "calibrated_probability": {
+          "bytes": 1892812,
+          "sha256": "bef1a8d0f69aec6a87f9dfd37349a913b434ff31ba31e72e27029b002509fc4a"
+        },
+        "rf_disagreement": {
+          "bytes": 1892812,
+          "sha256": "4211447839faf298fa931f4d350988fffaa63cdc60bc3f9f76939e1aeedc9895"
+        }
+      },
+      "rows": 473171,
+      "features": 46,
+      "source_attack_rows": 25608,
+      "source_attack_miss_rows": 10,
+      "generic_error_rows": 17,
+      "fit_seconds": 268.36811129993293,
+      "identity_matches_locked_rf_subconfiguration": true,
+      "array_shapes_match_source_test": true,
+      "arrays_finite": true,
+      "predictions_match_probability_threshold": true,
+      "detector_metric_recompute_abs_diffs": {
+        "accuracy": 0.0,
+        "attack_auprc": 0.0,
+        "attack_auroc": 0.0,
+        "brier_score": 1.2080791689282958e-12
+      },
+      "detector_metrics_match_with_float32_tolerance": true,
+      "reliability_metric_recompute": {
+        "confidence": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 5.551115123125783e-17,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        },
+        "rf_disagreement": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        }
+      },
+      "reliability_metrics_match": true,
+      "verified_partial_artifact": true
+    }
+  },
+  "recovery_conclusion": "Seeds 0-5 are recoverable and verified for the RF, confidence, and disagreement partial run. They are incomplete for the full five-signal source-e1-lock-1 configuration; conformal calibration predictions were not saved.",
+  "full_source_e1_gate_complete": false,
+  "target_evaluation_unlocked": false
+}

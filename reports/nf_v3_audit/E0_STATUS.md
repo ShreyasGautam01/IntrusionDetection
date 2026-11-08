@@ -54,4 +54,28 @@ reported as a bounded sensitivity because the retained host support is small;
 do not present it as broad host generalization.
 
 The source-only E1 feature matrices and full per-seed arrays remain local and
-ignored under `data/pro
+ignored under `data/processed/source-e1-lock-1`. Ten seeds and all five
+signals have completed. Compact results are in `SOURCE_E1_FINAL_REPORT.md`
+and `source_e1_final_results.json`. CIC2018 remains unread by the E1 path.
+
+The deterministic UNSW-training-only median policy is implemented in
+`scripts/finite_value_policy.py`; fitted values and source-only counts are in
+`unsw_train_finite_replacements.json`. The same `apply_value` function is the
+inference transform. The source-only E1 model and reliability settings are
+consolidated in `source_e1_config.json`; this config does not unlock CIC2018 or
+authorize target evaluation. No raw dataset has been transformed or overwritten.
+
+`src/ids_research/target_lockbox.py` implements feature-only target streaming
+and now provides bounded batch output for target scoring. It fails closed on
+label access unless a matching freeze manifest is committed, clean, and
+descended from the current checkout. No freeze manifest exists yet, so target
+labels remain sealed.
+
+The dense-matrix lower bounds and chunking guidance are in
+`MEMORY_FEASIBILITY_DRAFT.md` and `memory_estimate_draft.json`. They use the
+46-column proposal and exclude model/workspace overhead. Source E1's measured
+bounded resource benchmarks and full distance runtime are in
+`SOURCE_E1_BENCHMARK.md` and `SOURCE_E1_FINAL_REPORT.md`; full-process peak RSS
+was estimated from the bounded benchmarks, not sampled during every full run.
+
+The frozen `research_proposal.md` and `methodology_final.md` were not modified.

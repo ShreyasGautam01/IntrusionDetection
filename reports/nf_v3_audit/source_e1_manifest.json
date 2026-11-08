@@ -108,4 +108,208 @@
       "FTP_COMMAND_RET_CODE",
       "SRC_TO_DST_IAT_MIN",
       "SRC_TO_DST_IAT_MAX",
-    
+      "SRC_TO_DST_IAT_AVG",
+      "SRC_TO_DST_IAT_STDDEV",
+      "DST_TO_SRC_IAT_MIN",
+      "DST_TO_SRC_IAT_MAX",
+      "DST_TO_SRC_IAT_AVG",
+      "DST_TO_SRC_IAT_STDDEV"
+    ],
+    "sha256": "3fa1c856f0ee858f072f8f0f85dff41c4bb1369fa3400ed3516a9642e591091d"
+  },
+  "preprocessing": {
+    "finite_policy_file": "scripts/finite_value_policy.py",
+    "replacement_values_file": "reports/nf_v3_audit/unsw_train_finite_replacements.json",
+    "replacement_values_sha256": "ea7a93ac62c73fd7466c7312cdcc4eecae2e4bb5fb0e7ddee6e3441a7827705b",
+    "fit_partition": "UNSW train only",
+    "values": {
+      "SRC_TO_DST_SECOND_BYTES": 162.0,
+      "DST_TO_SRC_SECOND_BYTES": 75.37562877263582
+    },
+    "empty_nan_inf_rule": "replace with fitted source-train finite median; use 0.0 only if no finite source-train observations",
+    "target_preprocessing": "not run"
+  },
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1",
+    "uv": "0.11.19",
+    "uv_lock_sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1"
+  },
+  "random_forest": {
+    "estimator": "sklearn.ensemble.RandomForestClassifier",
+    "parameters": {
+      "n_estimators": 200,
+      "min_samples_leaf": 5,
+      "criterion": "gini",
+      "max_depth": null,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "max_features": "sqrt",
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "bootstrap": true,
+      "oob_score": false,
+      "n_jobs": 1,
+      "verbose": 0,
+      "warm_start": false,
+      "class_weight": null,
+      "ccp_alpha": 0.0,
+      "max_samples": null,
+      "random_state": "one run per seed"
+    },
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "final_fit_n_jobs": 1
+  },
+  "signals": {
+    "confidence": {
+      "definition": "1 - max(source-Platt-calibrated class probabilities)",
+      "seed_dependent": true,
+      "dependencies": [
+        "RF seed",
+        "source calibration subset"
+      ]
+    },
+    "random_forest_disagreement": {
+      "definition": "1 - maximum class vote fraction across 200 per-tree class predictions",
+      "seed_dependent": true,
+      "dependencies": [
+        "RF seed"
+      ]
+    },
+    "feature_space_distance": {
+      "definition": "mean Euclidean distance to exact 5 nearest rows among all source-train references after StandardScaler fitted on all source-train rows",
+      "implementation": "sklearn NearestNeighbors algorithm=kd_tree, leaf_size=30, metric=euclidean, n_jobs=1; float64 standardized reference/query arrays; query blocks 2048",
+      "seed_dependent": false,
+      "compute_once_and_share": true,
+      "randomness": "none"
+    },
+    "split_conformal": {
+      "definition": "nonconformity=1-P_calibrated(true class); finite-sample order index ceil((n+1)*(1-alpha))-1, alpha=0.10; prediction set includes binary class if 1-P(class)<=quantile; score=(set_size-1)/(2-1)",
+      "seed_dependent": true,
+      "dependencies": [
+        "RF seed",
+        "source Platt calibrator",
+        "disjoint conformal calibration subset"
+      ],
+      "empty_prediction_set_score": -1
+    },
+    "isolation_forest": {
+      "definition": "negative sklearn score_samples, higher means more anomalous and more deserving of review",
+      "parameters": {
+        "n_estimators": 100,
+        "max_samples": 256,
+        "max_features": 1.0,
+        "contamination": "auto",
+        "bootstrap": false,
+        "random_state": "same run seed"
+      },
+      "seed_dependent": true,
+      "rf_prediction_dependent": false,
+      "compute_once_per_configured_seed": true,
+      "randomness": "fixed random_state equal to corresponding RF run seed; no hidden randomness"
+    }
+  },
+  "factorization": {
+    "shared_once": [
+      "feature_space_distance"
+    ],
+    "per_seed": [
+      "confidence",
+      "random_forest_disagreement",
+      "split_conformal",
+      "isolation_forest"
+    ],
+    "isolation_forest_note": "The IF fit does not consume RF predictions, but the frozen config binds its random_state to each run seed, so its outputs are not one shared seed-invariant fit."
+  },
+  "compute_resources": {
+    "logical_cpu_count": 16,
+    "thread_limits": {
+      "OpenMP": 1,
+      "BLAS": 1,
+      "RF_n_jobs": 1,
+      "IsolationForest_n_jobs": 1
+    },
+    "rf_workers": 2,
+    "distance_workers": 1,
+    "memory_available_before_runs_gib": 3.79,
+    "distance_benchmark_decision": "b: exact computation is practical as a long single-job computation; no approximation is introduced.",
+    "distance_runtime_estimate_minutes": [
+      38,
+      55
+    ],
+    "distance_peak_working_set_estimate_gib": [
+      1.0,
+      1.5
+    ],
+    "rf_runtime_estimate_minutes_all_seeds": [
+      30,
+      60
+    ],
+    "rf_peak_working_set_estimate_gib": [
+      0.7,
+      1.0
+    ],
+    "total_e1_compute_budget_minutes": [
+      68,
+      115
+    ],
+    "basis": "Bounded benchmark reports source_e1_benchmark.json, source_e1_benchmark_extended.json, source_e1_benchmark_800k.json, and source_e1_rf_benchmark_25pct.json; extrapolation uncertainty is substantial because 46D KDTree query throughput varied with reference size and deterministic subset."
+  },
+  "benchmark_artifacts": {
+    "source_e1_benchmark.json": "42725ed2e715ef05b39591d634b6860b2c02ef51d55c0d75ed3b1b07ed05e3f5",
+    "source_e1_benchmark_extended.json": "da5498d1f861e238d976e60f5f72cb64053218ff1033d1f88a215f945ff843c7",
+    "source_e1_benchmark_800k.json": "393f5dfdaf79be296e20bde40006c7baea2819b518abc0e784169a39d7073273",
+    "source_e1_rf_benchmark_25pct.json": "d96fb2b3c70e24a4d8526e41756a7753747f7afcce2647e50496067341e59f81",
+    "smoke_test_sha256": "97707ade26200464b0487d0ba146b60c8042b5f368b4270ceae5ab3f39a5410e"
+  },
+  "implementation": {
+    "runner": "scripts/run_source_e1_complete.py",
+    "runner_sha256": "7f083ec896362b52715419df8f7a090cb825c463161e30eb0b00f097506b0d57",
+    "benchmark_runner": "scripts/benchmark_source_e1.py",
+    "benchmark_runner_sha256": "d27fb837cc8629a09d0334ec37657fc627fbd3f06c456534523d173f0f677395",
+    "smoke_test": "source_e1_smoke_test.json"
+  },
+  "recovered_artifacts": {
+    "seeds_0_5": "Reuse existing confidence, prediction, and RF-disagreement arrays when exact comparisons to source-e1-lock-1 refits match. Refit only because calibration-subset probabilities required for conformal were not retained; compare all recovered outputs before using rerun products. Preserve original directories.",
+    "seeds_6_9": "Compute complete source-only RF and five signal outputs under this manifest."
+  },
+  "stability_gate": {
+    "seed_set": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "summary": [
+      "median",
+      "IQR",
+      "min",
+      "max",
+      "pairwise Spearman rank correlation"
+    ],
+    "same_seed_reproducibility_repeat": 0,
+    "numeric_tolerance": "None imposed by source-e1-lock-1. Report empirical ranges and rank stability; do not invent post-hoc numeric limits.",
+    "target_unlock": "No target evaluation until ten-seed outputs, exact same-seed reproduction, and a written project-level stability interpretation are complete."
+  },
+  "provenance_policy": "Never overwrite recovered partial artifacts; full outputs live in ignored data/processed/source-e1-lock-1/full_runs. Commit only code, manifests, benchmark evidence, and compact metrics."
+}

@@ -75,4 +75,22 @@ def main():
     votes=np.zeros((len(yte),2),dtype=np.uint8)
     for tree in estimator.estimators_:
         prediction=tree.predict(xte).astype(np.uint8,copy=False)
-        
+        votes[np.arange(len(prediction)),prediction]+=1
+    disagreement=1.0-votes.max(axis=1).astype(np.float32)/len(estimator.estimators_)
+    scores=risk_metrics(np.asarray(yte,dtype=np.uint8),calibrated,yhat,disagreement)
+    out.mkdir(parents=True)
+    np.save(out/'calibrated_probability.npy',calibrated.astype(np.float32))
+    np.save(out/'prediction.npy',yhat)
+    np.save(out/'rf_disagreement.npy',disagreement)
+    report={
+      'run_id':f'source-e1-seed-{seed}','generated_utc':datetime.now(timezone.utc).isoformat(),
+      'configuration_id':cfg['configuration_id'],'source_sha256':cfg['source_dataset']['sha256'],
+      'target_file_read':False,'target_labels_read':False,'seed':seed,
+      'train_rows':len(ytr),'calibration_rows':int(mask.sum()),'conformal_calibration_rows':int((~mask).sum()),'source_test_rows':len(yte),
+      'feature_count':int(xtr.shape[1]),'rf_parameters':cfg['random_forest']['parameters'],
+      'fit_seconds':train_seconds,'source_test_results':scores,
+      'status':'single_seed_pilot_only; E1 ten-seed stability gate incomplete; target remains locked'
+    }
+    (out/'metrics.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps(report,indent=2))
+if __name__=='__main__': main()

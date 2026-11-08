@@ -68,4 +68,35 @@ interpretation before target evaluation.
   and applied unchanged at inference.
 - The source-only matrices and full per-seed arrays are local/ignored at `data/processed/source-e1-lock-1/`. Seeds 0–9 and all five signals completed under `source-e1-lock-1`; bounded resource measurements and the full-run summary are in the source E1 benchmark/final report.
 
-## Required decisions before target tr
+## Required decisions before target transfer
+
+1. Review and approve the explicit 46-column primary-set proposal in
+   `reports/nf_v3_audit/primary_feature_set_draft.csv` (backed by
+   `primary_feature_set_draft.json`), including identifier treatment and
+   `FTP_COMMAND_RET_CODE` (constant in CIC2018, variable in UNSW). The full
+   registry retains all 53 fields.
+2. Review and freeze the eight-feature sensitivity crosswalk, especially its
+   derived values and identifier-like ports, before any fitting.
+3. Finalize the conservative family matrix from dataset documentation before
+   any family-level target analysis.
+4. Review the explicit candidate Random Forest parameters and seeds in
+   `rf_config_draft.json`; the isolated package runtime is pinned in `uv.lock`.
+5. Review `reports/nf_v3_audit/E1_STABILITY_GATE_DRAFT.md` and the completed
+   `SOURCE_E1_FINAL_REPORT.md`; record a project-level stability interpretation
+   before target evaluation.
+6. Freeze the exact split/control used by the pilot and retain the temporal and
+   host/session controls as separate predeclared analyses.
+7. Keep target evaluation locked until the source-only stability interpretation
+   is accepted.
+8. Record exact dataset/config/registry hashes and a committed freeze manifest
+   that satisfies `target_label_firewall.md`.
+
+## Stop conditions
+
+- Do not begin target evaluation until the decisions above are frozen.
+- Do not expose target labels to fitting, calibration, preprocessing,
+  thresholds, feature selection, seed/config selection, or method choice.
+- If source-only in-domain runs are unstable across seeds, resolve the
+  reproducibility issue before unlocking target evaluation.
+- Preserve all negative and failed results; do not tune after inspecting
+  target results.

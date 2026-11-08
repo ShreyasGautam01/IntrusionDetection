@@ -87,3 +87,87 @@ def main() -> None:
         for name, score in (
             ("confidence", 1 - np.maximum(prob, 1 - prob)),
             ("rf_disagreement", disagreement),
+        ):
+            stored = metrics["source_test_results"]["reliability"][name]
+            ap_miss = float(average_precision_score(miss.astype(np.uint8), score))
+            ap_error = float(average_precision_score(errors.astype(np.uint8), score))
+            order = np.argsort(-score, kind="mergesort")
+            capture = {}
+            for budget in (.01, .05, .10):
+                n = max(1, int(np.ceil(len(y) * budget)))
+                capture[str(budget)] = float(miss[order[:n]].sum() / max(1, int(miss.sum())))
+            score_checks[name] = {
+                "miss_auprc_abs_diff": abs(ap_miss - float(stored["attack_miss_auprc"])),
+                "generic_error_auprc_abs_diff": abs(ap_error - float(stored["generic_error_auprc"])),
+                "capture_abs_diff": {
+                    b: abs(capture[b] - float(stored["attack_miss_capture"][b])) for b in capture
+                },
+            }
+        score_ok = all(
+            item["miss_auprc_abs_diff"] <= 1e-12
+            and item["generic_error_auprc_abs_diff"] <= 1e-12
+            and all(v <= 1e-12 for v in item["capture_abs_diff"].values())
+            for item in score_checks.values()
+        )
+        for label, path in (("metrics", p_metrics), ("prediction", p_pred), ("calibrated_probability", p_prob), ("rf_disagreement", p_dis)):
+            record["files"][label] = {"bytes": path.stat().st_size, "sha256": sha256(path)}
+        record.update({
+            "rows": len(y),
+            "features": metrics.get("feature_count"),
+            "source_attack_rows": int(y.sum()),
+            "source_attack_miss_rows": int(miss.sum()),
+            "generic_error_rows": int(errors.sum()),
+            "fit_seconds": metrics.get("fit_seconds"),
+            "identity_matches_locked_rf_subconfiguration": bool(identity_ok),
+            "array_shapes_match_source_test": bool(shape_ok),
+            "arrays_finite": finite_ok,
+            "predictions_match_probability_threshold": bool(prediction_ok),
+            "detector_metric_recompute_abs_diffs": metric_diffs,
+            "detector_metrics_match_with_float32_tolerance": bool(metric_ok),
+            "reliability_metric_recompute": score_checks,
+            "reliability_metrics_match": bool(score_ok),
+        })
+        record["verified_partial_artifact"] = bool(
+            stage_ok and identity_ok and shape_ok and finite_ok and prediction_ok and metric_ok and score_ok
+        )
+        outputs[str(seed)] = record
+
+    configured = set(config["reliability_signals"])
+    produced = {"confidence", "random_forest_disagreement"}
+    missing = sorted(configured - produced)
+    result = {
+        "report_id": "source-e1-partial-recovery-audit-1",
+        "configuration_id": config["configuration_id"],
+        "config_sha256": config_hash,
+        "prior_summary_config_sha256_matches": config_hash == prior.get("config_sha256"),
+        "source_dataset": config["source_dataset"],
+        "stage_manifest_sha256": sha256(manifest_path),
+        "software": {"numpy": np.__version__, "scikit_learn": sklearn.__version__},
+        "staged_arrays": stage_checks,
+        "all_staged_arrays_match_manifest": bool(stage_ok),
+        "source_test_rows": len(y),
+        "source_test_attack_rows": int(y.sum()),
+        "configured_reliability_signals": sorted(configured),
+        "signals_present_in_seed_0_to_5_artifacts": sorted(produced),
+        "signals_missing_for_full_locked_configuration": missing,
+        "seeds": outputs,
+        "recovery_conclusion": "Seeds 0-5 are recoverable and verified for the RF, confidence, and disagreement partial run. They are incomplete for the full five-signal source-e1-lock-1 configuration; conformal calibration predictions were not saved.",
+        "full_source_e1_gate_complete": False,
+        "target_evaluation_unlocked": False,
+    }
+    out = REPORTS / "source_e1_recovery_audit.json"
+    out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({
+        "audit_path": str(out),
+        "all_staged_arrays_match_manifest": stage_ok,
+        "prior_summary_config_sha256_matches": result["prior_summary_config_sha256_matches"],
+        "seeds_verified_partial": [int(k) for k, v in outputs.items() if v.get("verified_partial_artifact")],
+        "seeds_unverified": [int(k) for k, v in outputs.items() if not v.get("verified_partial_artifact")],
+        "signals_missing": missing,
+        "full_source_e1_gate_complete": False,
+        "target_evaluation_unlocked": False,
+    }, indent=2))
+
+
+if __name__ == "__main__":
+    main()

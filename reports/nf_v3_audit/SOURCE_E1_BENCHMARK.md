@@ -36,4 +36,14 @@ The exact 200-tree RF parameters were fit on one deterministic 25% source-train 
 
 Two workers complete two sample fits in 49.79s versus 84.84s if run one at a time, a measured 1.70× throughput gain. Use **two concurrent RF seeds**, with OpenMP and BLAS limited to one thread and each estimator `n_jobs=1`. The bounded 25% peak was 537MB; scaling for full data/model size gives a planning range of **0.7–1.0GB working set** for the RF workers. Run the distance job separately so it does not compete for this memory.
 
-For ten full seeds, including source calibration, disagreement, conformal scoring, Isolation Forest, scoring, and one same-seed reproducibility repeat, reserve **30–60 minutes**. The previous seed-1 fit-time anomaly remains included; concurrency results do not invalidate or exclude it. Total estimated E1 compute budget is **about 68–115 minutes**, plus any resume ove
+For ten full seeds, including source calibration, disagreement, conformal scoring, Isolation Forest, scoring, and one same-seed reproducibility repeat, reserve **30–60 minutes**. The previous seed-1 fit-time anomaly remains included; concurrency results do not invalidate or exclude it. Total estimated E1 compute budget is **about 68–115 minutes**, plus any resume overhead.
+
+## Five-signal factorization
+
+- Confidence depends on each seed’s calibrated RF probabilities.
+- RF disagreement depends on that seed’s tree votes.
+- Split conformal depends on that seed’s calibrated RF probabilities on the fixed disjoint conformal-calibration subset.
+- Feature-space distance depends only on the fixed source-train scaler/reference and source-test feature arrays. It has no random seed and is computed once, then shared across all RF seeds.
+- Isolation Forest does not consume RF predictions, but `source-e1-lock-1` sets its `random_state` to the corresponding RF run seed. It is therefore seed-varying under the frozen config and will be fit once for each declared seed; changing to one shared IF fit would change the protocol.
+
+The full measured benchmark records are `source_e1_benchmark.json`, `source_e1_benchmark_extended.json`, `source_e1_benchmark_800k.json`, and `source_e1_rf_benchmark_25pct.json`. The experiment manifest records their hashes and the selected resource plan.

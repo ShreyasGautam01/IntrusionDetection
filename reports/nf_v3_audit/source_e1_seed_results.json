@@ -116,4 +116,512 @@
       "brier_score": 3.003181018985576e-05,
       "attack_miss_rows": 10,
       "generic_error_rows": 18,
-   
+      "confidence_generic_error_auprc": 0.31062175992731544,
+      "confidence_attack_miss_auprc": 0.17474025974025975,
+      "confidence_capture_1pct": 1.0,
+      "confidence_capture_5pct": 1.0,
+      "rf_disagreement_generic_error_auprc": 0.25372891567133576,
+      "rf_disagreement_attack_miss_auprc": 0.11819391298893116,
+      "rf_disagreement_capture_1pct": 1.0,
+      "rf_disagreement_capture_5pct": 1.0
+    },
+    {
+      "seed": 5,
+      "fit_seconds": 268.36811129993293,
+      "accuracy": 0.9999640721853199,
+      "attack_auprc": 0.9999995506235033,
+      "attack_auroc": 0.9999999742609699,
+      "brier_score": 2.8001969738667952e-05,
+      "attack_miss_rows": 10,
+      "generic_error_rows": 17,
+      "confidence_generic_error_auprc": 0.41285263376533027,
+      "confidence_attack_miss_auprc": 0.16459951789239824,
+      "confidence_capture_1pct": 1.0,
+      "confidence_capture_5pct": 1.0,
+      "rf_disagreement_generic_error_auprc": 0.23676119632018988,
+      "rf_disagreement_attack_miss_auprc": 0.11684734236593143,
+      "rf_disagreement_capture_1pct": 1.0,
+      "rf_disagreement_capture_5pct": 1.0
+    }
+  ],
+  "summary_min_median_max": {
+    "fit_seconds": {
+      "min": 219.3047663999023,
+      "median": 256.0705682000262,
+      "max": 6683.152559399954
+    },
+    "accuracy": {
+      "min": 0.9999598453835928,
+      "median": 0.9999619587844564,
+      "max": 0.999968298987047
+    },
+    "attack_auprc": {
+      "min": 0.9999995048956469,
+      "median": 0.9999995528895127,
+      "max": 0.9999996343219268
+    },
+    "attack_auroc": {
+      "min": 0.9999999716434415,
+      "median": 0.9999999743918463,
+      "max": 0.9999999790597721
+    },
+    "brier_score": {
+      "min": 2.680421182645699e-05,
+      "median": 2.847690417180303e-05,
+      "max": 3.003181018985576e-05
+    },
+    "attack_miss_rows": {
+      "min": 10,
+      "median": 10.0,
+      "max": 10
+    },
+    "generic_error_rows": {
+      "min": 15,
+      "median": 18.0,
+      "max": 19
+    },
+    "confidence_generic_error_auprc": {
+      "min": 0.2967114886760263,
+      "median": 0.3414094337193366,
+      "max": 0.41285263376533027
+    },
+    "confidence_attack_miss_auprc": {
+      "min": 0.15734341829852014,
+      "median": 0.16580243803001826,
+      "max": 0.17474025974025975
+    },
+    "confidence_capture_1pct": {
+      "min": 1.0,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "confidence_capture_5pct": {
+      "min": 1.0,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "rf_disagreement_generic_error_auprc": {
+      "min": 0.20242097653508,
+      "median": 0.24524505599576282,
+      "max": 0.2751673448275652
+    },
+    "rf_disagreement_attack_miss_auprc": {
+      "min": 0.08869682485499426,
+      "median": 0.1175206276774313,
+      "max": 0.12891461366181411
+    },
+    "rf_disagreement_capture_1pct": {
+      "min": 1.0,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "rf_disagreement_capture_5pct": {
+      "min": 1.0,
+      "median": 1.0,
+      "max": 1.0
+    }
+  },
+  "per_seed_run_records": [
+    {
+      "run_id": "source-e1-seed-0-pilot",
+      "generated_utc": "2026-11-06T12:32:13.340093+00:00",
+      "configuration_id": "source-e1-lock-1",
+      "source_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+      "target_file_read": false,
+      "target_labels_read": false,
+      "seed": 0,
+      "train_rows": 1418952,
+      "calibration_rows": 271791,
+      "conformal_calibration_rows": 201510,
+      "source_test_rows": 473171,
+      "feature_count": 46,
+      "rf_parameters": {
+        "n_estimators": 200,
+        "min_samples_leaf": 5,
+        "criterion": "gini",
+        "max_depth": null,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "min_impurity_decrease": 0.0,
+        "bootstrap": true,
+        "oob_score": false,
+        "n_jobs": 1,
+        "verbose": 0,
+        "warm_start": false,
+        "class_weight": null,
+        "ccp_alpha": 0.0,
+        "max_samples": null,
+        "random_state": "one run per seed"
+      },
+      "fit_seconds": 226.19205140008125,
+      "source_test_results": {
+        "detector": {
+          "accuracy": 0.9999598453835928,
+          "attack_auprc": 0.9999995048956469,
+          "attack_auroc": 0.9999999716434415,
+          "attack_miss_rows": 10,
+          "generic_error_rows": 19,
+          "brier_score": 2.933293700483307e-05
+        },
+        "reliability": {
+          "confidence": {
+            "generic_error_auprc": 0.3255980447127246,
+            "attack_miss_auprc": 0.16852267172510277,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          },
+          "rf_disagreement": {
+            "generic_error_auprc": 0.225033655245777,
+            "attack_miss_auprc": 0.08869682485499426,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          }
+        }
+      },
+      "status": "single_seed_pilot_only; E1 ten-seed stability gate incomplete; target remains locked"
+    },
+    {
+      "run_id": "source-e1-seed-1",
+      "generated_utc": "2026-11-06T14:24:57.497789+00:00",
+      "configuration_id": "source-e1-lock-1",
+      "source_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+      "target_file_read": false,
+      "target_labels_read": false,
+      "seed": 1,
+      "train_rows": 1418952,
+      "calibration_rows": 271791,
+      "conformal_calibration_rows": 201510,
+      "source_test_rows": 473171,
+      "feature_count": 46,
+      "rf_parameters": {
+        "n_estimators": 200,
+        "min_samples_leaf": 5,
+        "criterion": "gini",
+        "max_depth": null,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "min_impurity_decrease": 0.0,
+        "bootstrap": true,
+        "oob_score": false,
+        "n_jobs": 1,
+        "verbose": 0,
+        "warm_start": false,
+        "class_weight": null,
+        "ccp_alpha": 0.0,
+        "max_samples": null,
+        "random_state": "one run per seed"
+      },
+      "fit_seconds": 6683.152559399954,
+      "source_test_results": {
+        "detector": {
+          "accuracy": 0.9999598453835928,
+          "attack_auprc": 0.9999995718448714,
+          "attack_auroc": 0.9999999754824831,
+          "attack_miss_rows": 10,
+          "generic_error_rows": 19,
+          "brier_score": 2.895183860493811e-05
+        },
+        "reliability": {
+          "confidence": {
+            "generic_error_auprc": 0.3863965520689018,
+            "attack_miss_auprc": 0.15734341829852014,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          },
+          "rf_disagreement": {
+            "generic_error_auprc": 0.2644495752895662,
+            "attack_miss_auprc": 0.101898273029045,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          }
+        }
+      },
+      "status": "single_seed_pilot_only; E1 ten-seed stability gate incomplete; target remains locked"
+    },
+    {
+      "run_id": "source-e1-seed-2",
+      "generated_utc": "2026-11-06T14:28:50.760604+00:00",
+      "configuration_id": "source-e1-lock-1",
+      "source_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+      "target_file_read": false,
+      "target_labels_read": false,
+      "seed": 2,
+      "train_rows": 1418952,
+      "calibration_rows": 271791,
+      "conformal_calibration_rows": 201510,
+      "source_test_rows": 473171,
+      "feature_count": 46,
+      "rf_parameters": {
+        "n_estimators": 200,
+        "min_samples_leaf": 5,
+        "criterion": "gini",
+        "max_depth": null,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "min_impurity_decrease": 0.0,
+        "bootstrap": true,
+        "oob_score": false,
+        "n_jobs": 1,
+        "verbose": 0,
+        "warm_start": false,
+        "class_weight": null,
+        "ccp_alpha": 0.0,
+        "max_samples": null,
+        "random_state": "one run per seed"
+      },
+      "fit_seconds": 219.3047663999023,
+      "source_test_results": {
+        "detector": {
+          "accuracy": 0.999968298987047,
+          "attack_auprc": 0.9999996343219268,
+          "attack_auroc": 0.9999999790597721,
+          "attack_miss_rows": 10,
+          "generic_error_rows": 15,
+          "brier_score": 2.680421182645699e-05
+        },
+        "reliability": {
+          "confidence": {
+            "generic_error_auprc": 0.2967114886760263,
+            "attack_miss_auprc": 0.16637079057853704,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          },
+          "rf_disagreement": {
+            "generic_error_auprc": 0.20242097653508,
+            "attack_miss_auprc": 0.12484731191322261,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          }
+        }
+      },
+      "status": "single_seed_pilot_only; E1 ten-seed stability gate incomplete; target remains locked"
+    },
+    {
+      "run_id": "source-e1-seed-3",
+      "generated_utc": "2026-11-06T14:39:31.994160+00:00",
+      "configuration_id": "source-e1-lock-1",
+      "source_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+      "target_file_read": false,
+      "target_labels_read": false,
+      "seed": 3,
+      "train_rows": 1418952,
+      "calibration_rows": 271791,
+      "conformal_calibration_rows": 201510,
+      "source_test_rows": 473171,
+      "feature_count": 46,
+      "rf_parameters": {
+        "n_estimators": 200,
+        "min_samples_leaf": 5,
+        "criterion": "gini",
+        "max_depth": null,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "min_impurity_decrease": 0.0,
+        "bootstrap": true,
+        "oob_score": false,
+        "n_jobs": 1,
+        "verbose": 0,
+        "warm_start": false,
+        "class_weight": null,
+        "ccp_alpha": 0.0,
+        "max_samples": null,
+        "random_state": "one run per seed"
+      },
+      "fit_seconds": 257.8331682999851,
+      "source_test_results": {
+        "detector": {
+          "accuracy": 0.9999619587844564,
+          "attack_auprc": 0.9999995551555221,
+          "attack_auroc": 0.9999999745227227,
+          "attack_miss_rows": 10,
+          "generic_error_rows": 18,
+          "brier_score": 2.792921951924778e-05
+        },
+        "reliability": {
+          "confidence": {
+            "generic_error_auprc": 0.3572208227259486,
+            "attack_miss_auprc": 0.16523408548149945,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          },
+          "rf_disagreement": {
+            "generic_error_auprc": 0.2751673448275652,
+            "attack_miss_auprc": 0.12891461366181411,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          }
+        }
+      },
+      "status": "single_seed_pilot_only; E1 ten-seed stability gate incomplete; target remains locked"
+    },
+    {
+      "run_id": "source-e1-seed-4",
+      "generated_utc": "2026-11-06T14:39:28.694186+00:00",
+      "configuration_id": "source-e1-lock-1",
+      "source_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+      "target_file_read": false,
+      "target_labels_read": false,
+      "seed": 4,
+      "train_rows": 1418952,
+      "calibration_rows": 271791,
+      "conformal_calibration_rows": 201510,
+      "source_test_rows": 473171,
+      "feature_count": 46,
+      "rf_parameters": {
+        "n_estimators": 200,
+        "min_samples_leaf": 5,
+        "criterion": "gini",
+        "max_depth": null,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "min_impurity_decrease": 0.0,
+        "bootstrap": true,
+        "oob_score": false,
+        "n_jobs": 1,
+        "verbose": 0,
+        "warm_start": false,
+        "class_weight": null,
+        "ccp_alpha": 0.0,
+        "max_samples": null,
+        "random_state": "one run per seed"
+      },
+      "fit_seconds": 254.30796810006723,
+      "source_test_results": {
+        "detector": {
+          "accuracy": 0.9999619587844564,
+          "attack_auprc": 0.9999995216312728,
+          "attack_auroc": 0.9999999726032018,
+          "attack_miss_rows": 10,
+          "generic_error_rows": 18,
+          "brier_score": 3.003181018985576e-05
+        },
+        "reliability": {
+          "confidence": {
+            "generic_error_auprc": 0.31062175992731544,
+            "attack_miss_auprc": 0.17474025974025975,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          },
+          "rf_disagreement": {
+            "generic_error_auprc": 0.25372891567133576,
+            "attack_miss_auprc": 0.11819391298893116,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          }
+        }
+      },
+      "status": "single_seed_pilot_only; E1 ten-seed stability gate incomplete; target remains locked"
+    },
+    {
+      "run_id": "source-e1-seed-5",
+      "generated_utc": "2026-11-06T14:39:40.578163+00:00",
+      "configuration_id": "source-e1-lock-1",
+      "source_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+      "target_file_read": false,
+      "target_labels_read": false,
+      "seed": 5,
+      "train_rows": 1418952,
+      "calibration_rows": 271791,
+      "conformal_calibration_rows": 201510,
+      "source_test_rows": 473171,
+      "feature_count": 46,
+      "rf_parameters": {
+        "n_estimators": 200,
+        "min_samples_leaf": 5,
+        "criterion": "gini",
+        "max_depth": null,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "min_impurity_decrease": 0.0,
+        "bootstrap": true,
+        "oob_score": false,
+        "n_jobs": 1,
+        "verbose": 0,
+        "warm_start": false,
+        "class_weight": null,
+        "ccp_alpha": 0.0,
+        "max_samples": null,
+        "random_state": "one run per seed"
+      },
+      "fit_seconds": 268.36811129993293,
+      "source_test_results": {
+        "detector": {
+          "accuracy": 0.9999640721853199,
+          "attack_auprc": 0.9999995506235033,
+          "attack_auroc": 0.9999999742609699,
+          "attack_miss_rows": 10,
+          "generic_error_rows": 17,
+          "brier_score": 2.8001969738667952e-05
+        },
+        "reliability": {
+          "confidence": {
+            "generic_error_auprc": 0.41285263376533027,
+            "attack_miss_auprc": 0.16459951789239824,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          },
+          "rf_disagreement": {
+            "generic_error_auprc": 0.23676119632018988,
+            "attack_miss_auprc": 0.11684734236593143,
+            "attack_miss_capture": {
+              "0.01": 1.0,
+              "0.05": 1.0,
+              "0.1": 1.0
+            }
+          }
+        }
+      },
+      "status": "single_seed_pilot_only; E1 ten-seed stability gate incomplete; target remains locked"
+    }
+  ],
+  "interpretation_limits": [
+    "Each run produced only ten attack misses; attack-miss AUPRC and budget capture have sparse positive events.",
+    "Seed 1 recorded a 6,683-second RF fit, compared with 219\u2013268 seconds for the other five. Keep this runtime anomaly; do not exclude the seed based on performance.",
+    "These are source-only UNSW metrics and do not support target-domain conclusions."
+  ]
+}

@@ -36,4 +36,23 @@ Disk-backed arrays are at ignored path `data/processed/source-e1-lock-1/`; do no
 
 - Bounded exact KD-tree distance benchmarks used deterministic subsets up to 800,000 of the 1,418,952 source-train references. Throughput at 800,000 was about 437 queries/s for 512 source-test queries; query-size scaling was near-linear. Full exact distance is estimated at 38–55 minutes and 1.0–1.5 GiB peak working set. The decision is to run the exact method once as a long single job; no approximation is authorized.
 - A 25% RF benchmark measured 42.4 seconds for one worker and 49.8 seconds for two concurrent workers (two jobs), with peak process working set 518MB and 537MB respectively. Two-worker throughput was 1.70×. Full RF runs use two concurrent seed workers with OpenMP/BLAS and estimator jobs capped at one.
-- The five-signal factorization is explicit in `reports/nf_v3_audit/source_e1_manifest.json`: distance is seed-independent and computed once. Isolation Forest is independent of RF outputs but uses the matching run seed for `random_state`, so it is fit once per configured seed. Confidence, disagreement, and 
+- The five-signal factorization is explicit in `reports/nf_v3_audit/source_e1_manifest.json`: distance is seed-independent and computed once. Isolation Forest is independent of RF outputs but uses the matching run seed for `random_state`, so it is fit once per configured seed. Confidence, disagreement, and conformal are RF-seed-dependent.
+- The full-pipeline subset smoke passed for all five score shapes and finite outputs. Its 2,000-row test prefix had no attack misses, so its ranking metrics are not interpreted.
+- The run manifest was frozen after benchmarks and smoke, before full E1 computation. Do not alter the signal definitions or thread plan without a documented, pre-run manifest revision.
+- The exact distance stage finished in 1,746.4s (29m06s), 271 source-test queries/s end-to-end. Each of seeds 0–9 completed with ten source-test attack misses. Seeds 0–5 exactly reused recovered probability, prediction, and disagreement arrays after a matching refit; seed 0's separate complete repeat matched all arrays and metrics exactly.
+- The source-only computational run is complete, but target evaluation remains locked. The frozen config has no numeric stability tolerance; the report records rank-correlation minima and capture ranges for project-level interpretation.
+
+## Successor next actions
+
+1. Review `SOURCE_E1_FINAL_REPORT.md` and record a project-level interpretation of the completed source-seed stability results. The original config deliberately defines no numeric tolerance.
+2. Do not begin target transfer until that stability interpretation is recorded and the E1 gate is deemed acceptable.
+3. Preserve seed 1's historical 6,683-second fit and seed 7's 1,484-second fit as runtime anomalies; do not exclude either result.
+
+## Known commits before the handoff commit
+
+- `380161a` — source-only config and disk-backed staging.
+- `0b8500d` — source-only stability procedure.
+- `0322474` — family-count source reconciliation.
+- `39a9f59` — memory feasibility estimate.
+
+Commit the handoff, compact results, and runner code. Never commit local matrices, per-row predictions, logs, model objects, or raw data.

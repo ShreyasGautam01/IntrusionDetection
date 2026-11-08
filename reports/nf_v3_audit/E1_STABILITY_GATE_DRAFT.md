@@ -29,4 +29,11 @@ The reporting procedure above makes seed variation visible but cannot determine 
 - whether any calibration or detector-performance metric is a hard gate or descriptive only; and
 - the treatment of ties in score rankings and review-budget cutoffs.
 
-The completed source-only results show stable detector metric
+The completed source-only results show stable detector metrics and stable 5% capture for confidence/disagreement, while seed-to-seed Spearman minima are 0.605 for confidence, 0.307 for disagreement, 0.592 for conformal, and 0.935 for Isolation Forest. Each seed has only ten attack misses. No numeric cutoffs are supplied by the frozen protocol, and none were added after seeing results. The target gate remains closed until the project-level interpretation is recorded.
+
+## Scope protections
+
+- This draft uses only the already-audited UNSW source split for E1. It does not evaluate CIC2018 or inspect CIC2018 labels.
+- It records the source-only gate procedure and current status; it does not authorize target evaluation.
+- It does not modify `research_proposal.md` or `methodology_final.md`.
+- The separate temporal and host/session controls remain separate analyses and are not mixed into the baseline seed-stability summary.
