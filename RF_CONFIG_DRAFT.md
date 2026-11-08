@@ -1,6 +1,6 @@
 # Random Forest Configuration Draft
 
-**Status:** Review proposal only. Not frozen; no estimator was instantiated or fit.
+**Status:** `rf-draft-4` remains a candidate for the full study. A separate source-only E1 execution config is recorded in `reports/nf_v3_audit/source_e1_config.json`; six partial source runs have occurred.
 **Configuration:** `rf-draft-4` (provenance, dataset hashes, project-spec hash, and lockfile hash are recorded in `rf_config_draft.json`).
 
 ## Fixed by the frozen methodology
@@ -23,7 +23,7 @@ Added `pyproject.toml` and `uv.lock`, then installed into the repository's Git-i
 
 Recreate the ignored environment with `uv sync --locked` using the pinned uv 0.11.19 executable.
 
-The config remains uninstantiated: no estimator was created or fit. The runtime lock only addresses software reproducibility; it does not freeze model/feature choices or unlock the target-label firewall.
+The `rf-draft-4` candidate remains uninstantiated as the final study configuration. The six source-only runs used the separately locked `source-e1-lock-1` settings. The runtime lock does not unlock target evaluation.
 
 ## Remaining pre-E1 decisions
 
@@ -32,6 +32,6 @@ The config remains uninstantiated: no estimator was created or fit. The runtime 
 3. Approve or revise this candidate parameter set and seed list, then pin the runtime.
 4. Review `reports/nf_v3_audit/E1_STABILITY_GATE_DRAFT.md` and approve numeric source-only stability tolerances before running E1; the draft defines reporting but does not invent thresholds absent from the frozen method.
 5. Freeze the source split, calibration procedure details, and all reliability-signal parameters.
-6. Run source-only E1; only after the gate passes may the freeze manifest be committed for final target evaluation.
+6. Complete and interpret the source-only E1 gate; only after it passes may the freeze manifest be committed for final target evaluation. Six seeds and three signal families remain.
 
 The defaults are cross-checked against the [official scikit-learn RandomForestClassifier API](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html). Defaults can change across library releases, so the API version and package version must be fixed in the final lock.

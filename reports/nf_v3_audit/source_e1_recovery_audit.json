@@ -1,0 +1,139 @@
+{
+  "report_id": "source-e1-partial-recovery-audit-1",
+  "configuration_id": "source-e1-lock-1",
+  "config_sha256": "23fcc21d6699f4e57cf3d96966836b8610773572ad7950330b84149818515a5f",
+  "prior_summary_config_sha256_matches": true,
+  "source_dataset": {
+    "name": "NF-UNSW-NB15-v3",
+    "sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+    "row_count": 2365424
+  },
+  "stage_manifest_sha256": "88c346a503ae606bb6478e0c86ba8478ffe8137509aa149681613c08402fc670",
+  "software": {
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "staged_arrays": {
+    "calibration_X.npy": {
+      "exists": true,
+      "bytes_match": true,
+      "sha256_match": true
+    },
+    "calibration_y.npy": {
+      "exists": true,
+      "bytes_match": true,
+      "sha256_match": true
+    },
+    "source_test_X.npy": {
+      "exists": true,
+      "bytes_match": true,
+      "sha256_match": true
+    },
+    "source_test_y.npy": {
+      "exists": true,
+      "bytes_match": true,
+      "sha256_match": true
+    },
+    "train_X.npy": {
+      "exists": true,
+      "bytes_match": true,
+      "sha256_match": true
+    },
+    "train_y.npy": {
+      "exists": true,
+      "bytes_match": true,
+      "sha256_match": true
+    }
+  },
+  "all_staged_arrays_match_manifest": true,
+  "source_test_rows": 473171,
+  "source_test_attack_rows": 25608,
+  "configured_reliability_signals": [
+    "confidence",
+    "feature_space_distance",
+    "isolation_forest",
+    "random_forest_disagreement",
+    "split_conformal"
+  ],
+  "signals_present_in_seed_0_to_5_artifacts": [
+    "confidence",
+    "random_forest_disagreement"
+  ],
+  "signals_missing_for_full_locked_configuration": [
+    "feature_space_distance",
+    "isolation_forest",
+    "split_conformal"
+  ],
+  "seeds": {
+    "0": {
+      "seed": 0,
+      "files_present": {
+        "metrics.json": true,
+        "prediction.npy": true,
+        "calibrated_probability.npy": true,
+        "rf_disagreement.npy": true
+      },
+      "files": {
+        "metrics": {
+          "bytes": 1947,
+          "sha256": "808ac246cacaf4ced5545f0fddb7b971cba63b55b3ab5a56c1a9269e03141d54"
+        },
+        "prediction": {
+          "bytes": 473299,
+          "sha256": "4ad09b60cbf75c121432a6e4bec5500e784c5fe698c4b000ec6da0a3bb1dd17c"
+        },
+        "calibrated_probability": {
+          "bytes": 1892812,
+          "sha256": "0a0b8185452abf0d5008f51644ab88e8217407e4b531bf8c9cba68aeb7ec3d22"
+        },
+        "rf_disagreement": {
+          "bytes": 1892812,
+          "sha256": "ae6c938bfe5ce62550a5e9fff9389fe2fc09779ae707261168ac76fee8e4f4d4"
+        }
+      },
+      "rows": 473171,
+      "features": 46,
+      "source_attack_rows": 25608,
+      "source_attack_miss_rows": 10,
+      "generic_error_rows": 19,
+      "fit_seconds": 226.19205140008125,
+      "identity_matches_locked_rf_subconfiguration": true,
+      "array_shapes_match_source_test": true,
+      "arrays_finite": true,
+      "predictions_match_probability_threshold": true,
+      "detector_metric_recompute_abs_diffs": {
+        "accuracy": 0.0,
+        "attack_auprc": 0.0,
+        "attack_auroc": 1.1102230246251565e-16,
+        "brier_score": 6.242454436125502e-13
+      },
+      "detector_metrics_match_with_float32_tolerance": true,
+      "reliability_metric_recompute": {
+        "confidence": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        },
+        "rf_disagreement": {
+          "miss_auprc_abs_diff": 0.0,
+          "generic_error_auprc_abs_diff": 0.0,
+          "capture_abs_diff": {
+            "0.01": 0.0,
+            "0.05": 0.0,
+            "0.1": 0.0
+          }
+        }
+      },
+      "reliability_metrics_match": true,
+      "verified_partial_artifact": true
+    },
+    "1": {
+      "seed": 1,
+      "files_present": {
+        "metrics.json": true,
+        "prediction.npy": true,
+        "calibrated_pr

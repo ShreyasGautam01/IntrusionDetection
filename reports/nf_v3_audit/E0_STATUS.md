@@ -1,6 +1,6 @@
 # E0/E0.5 completion status
 
-**Status:** Requested active-pair E0/E0.5 checks and source split controls are generated; review and pilot-lock gates remain. No model has been trained.
+**Status:** E0/E0.5 artifacts are complete. Source-only E1 is partially run for seeds 0–5 with RF detector, confidence, and disagreement metrics; the stability gate is incomplete and no target evaluation has occurred.
 **Active pair:** NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3.
 **ToN-IoT:** Excluded from the active project scope.
 
@@ -43,44 +43,16 @@ Remaining before the first pilot:
 4. Freeze the compact sensitivity mapping. Define the
    source-only E1 stability review criterion; the frozen protocol gives no
    numeric tolerance.
-5. Run the source-only in-domain E1 stability gate across the frozen seeds
-   before target-label evaluation. This gate has not been run.
+5. Complete source-only E1 across seeds 0–9 and all configured reliability
+   signals, then review seed stability before any target-label evaluation. At
+   handoff, only seeds 0–5 and three signal families are reported.
 6. Commit a freeze manifest binding dataset/config/registry hashes, then use
    the target-label firewall for final evaluation only.
 
-A review-only source E1 stability procedure is drafted in `E1_STABILITY_GATE_DRAFT.md`. It defines per-seed reporting and reproducibility checks but intentionally leaves numerical pass tolerances open for project-owner review; no E1 model has been run.
+The source E1 stability procedure is in `E1_STABILITY_GATE_DRAFT.md`. A partial source-only pilot has run; per-seed metrics and limitations are in `SOURCE_E1_PARTIAL_REPORT.md`. The ten-seed gate is incomplete, and target evaluation remains sealed.
 
 The family-count crosswalk now reconciles the existing local counts against the versioned NetFlow-v3 release paper and current UQ catalogue HTML. The local UNSW counts match the paper exactly; the live HTML page has three conflicting family cells and a prose attack total 54 below its own family-table sum. This source discrepancy is recorded in `FAMILY_MAPPING_DRAFT.md`, `family_mapping_draft.csv`, and `label_mapping_draft.md`; labels remain unchanged.
 
 The temporal control, session split, strict host-disjoint sensitivity, repeated
 flow-key check, and constants/domain-shortcut review are in
-`e0_source_controls.json` and `E0_SOURCE_CONTROL_REPORT.md`. The host result is
-reported as a bounded sensitivity because the retained host support is small;
-do not present it as broad host generalization.
-
-The source-only E1 feature matrices are staged on disk under the ignored
-`data/processed/source-e1-lock-1` path, using the locked 46-feature order and
-source-only replacements. Counts and hashes are summarized in
-`SOURCE_E1_STAGE_REPORT.md` and `source_e1_stage_report.json`. The RF fit has
-not started because only 2.5 GiB RAM was free after staging; CIC2018 remains
-unread by the E1 path.
-
-The deterministic UNSW-training-only median policy is implemented in
-`scripts/finite_value_policy.py`; fitted values and source-only counts are in
-`unsw_train_finite_replacements.json`. The same `apply_value` function is the
-inference transform. The source-only E1 model and reliability settings are
-consolidated in `source_e1_config.json`; this config does not unlock CIC2018 or
-authorize target evaluation. No raw dataset has been transformed or overwritten.
-
-`src/ids_research/target_lockbox.py` implements feature-only target streaming
-and now provides bounded batch output for target scoring. It fails closed on
-label access unless a matching freeze manifest is committed, clean, and
-descended from the current checkout. No freeze manifest exists yet, so target
-labels remain sealed.
-
-The dense-matrix lower bounds and chunking guidance are in
-`MEMORY_FEASIBILITY_DRAFT.md` and `memory_estimate_draft.json`. They use the
-current 46-column proposal and do not include model/workspace overhead; no
-memory benchmark or fit has been performed.
-
-The frozen `research_proposal.md` and `methodology_final.md` were not modified.
+`e0_source_controls.json` and `E0_SOURCE_CONTROL_

@@ -33,9 +33,9 @@ The concrete review proposal is in `rf_config_draft.json`, with rationale in
 `RF_CONFIG_DRAFT.md`. It records the method-fixed settings (200 trees and leaf
 size 5), proposes the documented classifier defaults for remaining tree
 parameters, proposes seeds 0–9, and sets single-job execution. These values
-are **not frozen**. A pinned `uv.lock` now resolves and installs scikit-learn
-1.9.1 and its dependencies into the ignored `.venv` on Python 3.14.7. The model
-has not been instantiated.
+are **not frozen**. A pinned `uv.lock` resolves scikit-learn 1.9.1. Six limited source-only
+RF runs used the separate `source-e1-lock-1` config; this is not the full
+reliability stack or target-transfer study.
 
 The frozen E1 gate also requires stable results across seeds without defining
 a numeric stability tolerance. Define and record that review criterion before
@@ -65,41 +65,10 @@ any E1 run.
   implemented and recorded before E1.
 - Finite-value replacements are fitted from UNSW baseline training rows only
   and applied unchanged at inference.
-- The draft memory bounds and staging recommendation are in
-  `reports/nf_v3_audit/MEMORY_FEASIBILITY_DRAFT.md`. They assume 46 float32
-  inputs and are not a peak-memory guarantee; target inference should use the
-  batch feature reader, while actual Random Forest training memory must be
-  measured during the later source-only E1 gate.
+- The source-only matrices are staged locally at `data/processed/source-e1-lock-1/`. Seeds 0–5 completed; current RSS stayed modest, but per-run peak memory was not recorded. The remaining seed runs and reliability signals are documented in `reports/nf_v3_audit/PROJECT_HANDOFF.md`.
 
 ## Required decisions before freezing
 
 1. Review and approve the explicit 46-column primary-set proposal in
    `reports/nf_v3_audit/primary_feature_set_draft.csv` (backed by
-   `primary_feature_set_draft.json`), including identifier treatment and
-   `FTP_COMMAND_RET_CODE` (constant in CIC2018, variable in UNSW). The full
-   registry retains all 53 fields.
-2. Review and freeze the eight-feature sensitivity crosswalk, especially its
-   derived values and identifier-like ports, before any fitting.
-3. Finalize the conservative family matrix from dataset documentation before
-   any family-level target analysis.
-4. Review the explicit candidate Random Forest parameters and seeds in
-   `rf_config_draft.json`; the isolated package runtime is pinned in `uv.lock`.
-5. Review `reports/nf_v3_audit/E1_STABILITY_GATE_DRAFT.md` and approve the
-   source-only E1 stability tolerances before running E1; the frozen method
-   requires stability but gives no numeric tolerance.
-6. Freeze the exact split/control used by the pilot and retain the temporal and
-   host/session controls as separate predeclared analyses.
-7. Complete the source-only in-domain E1 stability gate across the locked seeds
-   before any target-label evaluation is unlocked.
-8. Record exact dataset/config/registry hashes and a committed freeze manifest
-   that satisfies `target_label_firewall.md`.
-
-## Stop conditions
-
-- Do not run the Random Forest pilot until the decisions above are frozen.
-- Do not expose target labels to fitting, calibration, preprocessing,
-  thresholds, feature selection, seed/config selection, or method choice.
-- If source-only in-domain runs are unstable across seeds, resolve the
-  reproducibility issue before unlocking target evaluation.
-- Preserve all negative and failed results; do not tune after inspecting
-  target results.
+  

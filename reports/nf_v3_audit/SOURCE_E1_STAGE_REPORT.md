@@ -1,6 +1,6 @@
 # UNSW Source E1 Staging Report
 
-**Status:** Source-only partitions staged; Random Forest fitting has not started.
+**Status at report generation:** Source-only partitions staged; fitting had not yet started. Current partial results are in `SOURCE_E1_PARTIAL_REPORT.md`.
 **Config:** `source-e1-lock-1`
 **Source SHA-256:** `4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5` (rechecked against the audited file).
 **Target access:** None. CIC2018 files and labels were not opened.
@@ -19,4 +19,4 @@ The staged arrays total 437,604,208 bytes and are kept under the ignored local p
 
 ## Fit status
 
-The machine had 15.7 GiB total physical memory, with 1.9 GiB available before staging and 2.5 GiB afterward. This is insufficient assurance for the 200-tree forest because model and working memory have not been measured. Fitting did not start. The next execution step is the source-only E1 run when adequate memory is available; the target remains sealed. Machine-readable details and staged-file hashes are in `source_e1_stage_report.json`.
+At report generation, the machine had 15.7 GiB total physical memory, with 1.9 GiB available before staging and 2.5 GiB afterward. The user later instructed us to proceed; six source-only RF fits completed. Peak model memory was not instrumented. Machine-readable details and staged-file hashes are in `source_e1_stage_report.json`; current partial model results are in `source_e1_seed_results.json`. The target remains sealed.
