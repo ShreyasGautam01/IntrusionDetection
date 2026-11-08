@@ -63,6 +63,21 @@ def binary_scores(prob: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarr
     return p, p.argmax(axis=1).astype(np.uint8)
 
 
+def deterministic_smoke_sample(x: np.ndarray, y: np.ndarray, per_class: int) -> tuple[np.ndarray, np.ndarray]:
+    """Select an input-order-preserving class-present sample for plumbing smoke only."""
+    labels = np.unique(y)
+    if len(labels) != 2:
+        raise ValueError("Five-signal smoke requires both source classes in each partition")
+    selected = []
+    for label in labels:
+        rows = np.flatnonzero(y == label)
+        if len(rows) < per_class:
+            raise ValueError(f"Not enough source rows for smoke label {label}")
+        selected.append(rows[:per_class])
+    indices = np.sort(np.concatenate(selected))
+    return np.asarray(x[indices]), np.asarray(y[indices])
+
+
 def distance_full() -> None:
     """Exact deterministic 5-NN source-test distance with resumable query chunks."""
     cfg = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
@@ -213,9 +228,9 @@ def run_seed(seed: int, *, smoke: bool = False) -> dict:
     xte = np.load(DATA / "source_test_X.npy", mmap_mode="r")
     yte = np.asarray(np.load(DATA / "source_test_y.npy", mmap_mode="r"), dtype=np.uint8)
     if smoke:
-        xtr, ytr = xtr[:5000], ytr[:5000]
-        xcal, ycal = xcal[:2000], ycal[:2000]
-        xte, yte = xte[:2000], yte[:2000]
+        xtr, ytr = deterministic_smoke_sample(xtr, ytr, 2500)
+        xcal, ycal = deterministic_smoke_sample(xcal, ycal, 1000)
+        xte, yte = deterministic_smoke_sample(xte, yte, 1000)
     mask = cal_mask(xcal)
     model = rf_config(cfg, seed)
     tfit = time.perf_counter()
@@ -350,7 +365,7 @@ def main() -> None:
         result["stage_manifest_sha256"] = sha256(DATA / "stage_manifest.json")
         result["software"] = {"python": platform.python_version(), "numpy": np.__version__, "scikit_learn": sklearn.__version__}
         result["thread_limits"] = {"OpenMP": THREADS, "BLAS": THREADS, "RF_n_jobs": 1, "IsolationForest_n_jobs": 1}
-        result["note"] = "Plumbing-only deterministic subset; the 2,000 test-row prefix contains zero attack misses, so attack-miss metrics are not interpreted. No full-run outputs were written."
+        result["note"] = "Plumbing-only deterministic class-present source subset; metrics are not final E1 results. No full-run outputs were written."
         (ROOT / "reports/nf_v3_audit/source_e1_smoke_test.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(result, indent=2))
         return

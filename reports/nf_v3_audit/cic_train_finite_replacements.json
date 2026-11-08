@@ -1,0 +1,16 @@
+{
+  "policy": "Replace empty, NaN, and +/-Inf only with the median fitted on CIC source-train rows; 0.0 only if that source column has no finite training values.",
+  "source_file_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "source_dataset": "NF-CSE-CIC-IDS2018-v3",
+  "split_rule": "SHA-256 of canonical raw 53-feature strings; first 8 digest bytes interpreted big-endian modulo 100; train buckets 0-59, calibration 60-79, source_test 80-99",
+  "source_train_rows": 12068590,
+  "replacement_values": {
+    "SRC_TO_DST_SECOND_BYTES": 0.0,
+    "DST_TO_SRC_SECOND_BYTES": 0.0
+  },
+  "nonfinite_counts_by_feature_and_partition": {},
+  "fallback_used": {
+    "SRC_TO_DST_SECOND_BYTES": false,
+    "DST_TO_SRC_SECOND_BYTES": false
+  }
+}

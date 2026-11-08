@@ -1,0 +1,614 @@
+{
+  "report_id": "cic-source-e1-bounded-benchmark-1",
+  "generated_utc": "2026-11-08T19:13:30.299657+00:00",
+  "git_commit": "38cbf95268f88cff3d3b78956e1372e2cc0de31f",
+  "configuration_id": "source-e1-cic-lock-1",
+  "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "source_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "logical_cpu_count": 16,
+  "thread_limits": {
+    "OpenMP": 1,
+    "BLAS": 1,
+    "RF_n_jobs": 1
+  },
+  "measurement": "Windows process working set sampled every 50ms; process CPU time normalized by logical CPU count; system physical memory from GlobalMemoryStatusEx",
+  "system_memory_before": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 7655550976,
+    "memory_load_pct": 54
+  },
+  "system_memory_after": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 5394804736,
+    "memory_load_pct": 67
+  },
+  "benchmark_scope": "Bounded exact distance subsets and deterministic source-only RF sample; target dataset/labels not opened; benchmark outputs are not study results",
+  "distance": {
+    "scaler_fit_all_source_train": {
+      "wall_seconds": 4.928145400015637,
+      "process_cpu_seconds": 4.765625,
+      "cpu_core_equivalents": 0.9670219957359372,
+      "cpu_utilization_of_logical_capacity_pct": 6.043887473349607,
+      "baseline_working_set_bytes": 162172928,
+      "peak_working_set_bytes": 2401746944,
+      "peak_increment_bytes": 2239574016,
+      "rows": 12068590,
+      "block_rows": 100000,
+      "definition": "StandardScaler mean/variance fitted over every CIC source-train row using deterministic partial_fit blocks"
+    },
+    "reference_scaling": [
+      {
+        "reference_rows": 100000,
+        "query_rows": 512,
+        "feature_count": 46,
+        "reference_dtype": "float64",
+        "query_dtype": "float64",
+        "reference_indices_sha256": "0917debe5357aea2516e72c4dcfb759ea5d21aa9d1720a90b17884ad60921515",
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "reference_transform": {
+          "wall_seconds": 0.04847330000484362,
+          "process_cpu_seconds": 0.046875,
+          "cpu_core_equivalents": 0.9670272086966657,
+          "cpu_utilization_of_logical_capacity_pct": 6.04392005435416,
+          "baseline_working_set_bytes": 2385866752,
+          "peak_working_set_bytes": 2422669312,
+          "peak_increment_bytes": 36802560,
+          "reference_rows": 100000,
+          "rows_per_second": 2062991.378552887
+        },
+        "index_fit": {
+          "wall_seconds": 0.7722473000176251,
+          "process_cpu_seconds": 0.75,
+          "cpu_core_equivalents": 0.9711914822918548,
+          "cpu_utilization_of_logical_capacity_pct": 6.069946764324093,
+          "baseline_working_set_bytes": 2386141184,
+          "peak_working_set_bytes": 2426085376,
+          "peak_increment_bytes": 39944192
+        },
+        "query_transform": {
+          "wall_seconds": 0.0018874999950639904,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 2382884864,
+          "peak_working_set_bytes": 2385145856,
+          "peak_increment_bytes": 2260992,
+          "query_rows": 512
+        },
+        "query": {
+          "wall_seconds": 0.10837249999167398,
+          "process_cpu_seconds": 0.109375,
+          "cpu_core_equivalents": 1.0092505018192166,
+          "cpu_utilization_of_logical_capacity_pct": 6.307815636370103,
+          "baseline_working_set_bytes": 2426060800,
+          "peak_working_set_bytes": 2426118144,
+          "peak_increment_bytes": 57344
+        },
+        "query_rows_per_second": 4724.44577765887,
+        "mean_5nn_distance": 0.09455350179006947,
+        "definition": "exact sklearn KDTree Euclidean 5-NN over this deterministic subset of actual source-train rows"
+      },
+      {
+        "reference_rows": 250000,
+        "query_rows": 512,
+        "feature_count": 46,
+        "reference_dtype": "float64",
+        "query_dtype": "float64",
+        "reference_indices_sha256": "8fb3b36fb512f7f44e96e31a276c34b8f2deaafcf8d46aa40b3a286e4b40c9d4",
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "reference_transform": {
+          "wall_seconds": 0.11291830000118352,
+          "process_cpu_seconds": 0.078125,
+          "cpu_core_equivalents": 0.6918719109230403,
+          "cpu_utilization_of_logical_capacity_pct": 4.324199443269002,
+          "baseline_working_set_bytes": 2391969792,
+          "peak_working_set_bytes": 2483970048,
+          "peak_increment_bytes": 92000256,
+          "reference_rows": 250000,
+          "rows_per_second": 2213990.1149537293
+        },
+        "index_fit": {
+          "wall_seconds": 2.2899334999965504,
+          "process_cpu_seconds": 2.265625,
+          "cpu_core_equivalents": 0.9893846262362698,
+          "cpu_utilization_of_logical_capacity_pct": 6.183653913976686,
+          "baseline_working_set_bytes": 2388955136,
+          "peak_working_set_bytes": 2495123456,
+          "peak_increment_bytes": 106168320
+        },
+        "query_transform": {
+          "wall_seconds": 0.0018874999950639904,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 2382884864,
+          "peak_working_set_bytes": 2385145856,
+          "peak_increment_bytes": 2260992,
+          "query_rows": 512
+        },
+        "query": {
+          "wall_seconds": 0.390570999996271,
+          "process_cpu_seconds": 0.375,
+          "cpu_core_equivalents": 0.9601327287575891,
+          "cpu_utilization_of_logical_capacity_pct": 6.000829554734932,
+          "baseline_working_set_bytes": 2495098880,
+          "peak_working_set_bytes": 2495193088,
+          "peak_increment_bytes": 94208
+        },
+        "query_rows_per_second": 1310.9012189970283,
+        "mean_5nn_distance": 0.0691501212299205,
+        "definition": "exact sklearn KDTree Euclidean 5-NN over this deterministic subset of actual source-train rows"
+      },
+      {
+        "reference_rows": 500000,
+        "query_rows": 512,
+        "feature_count": 46,
+        "reference_dtype": "float64",
+        "query_dtype": "float64",
+        "reference_indices_sha256": "09d3e6921c67d1ff127fb0bd6ea999b821c6522b4aa8f80c6d797281c5cf19e7",
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "reference_transform": {
+          "wall_seconds": 0.237866599985864,
+          "process_cpu_seconds": 0.171875,
+          "cpu_core_equivalents": 0.7225688684759198,
+          "cpu_utilization_of_logical_capacity_pct": 4.516055427974499,
+          "baseline_working_set_bytes": 2405167104,
+          "peak_working_set_bytes": 2589192192,
+          "peak_increment_bytes": 184025088,
+          "reference_rows": 500000,
+          "rows_per_second": 2102018.526475403
+        },
+        "index_fit": {
+          "wall_seconds": 5.273068600014085,
+          "process_cpu_seconds": 5.15625,
+          "cpu_core_equivalents": 0.9778461823891741,
+          "cpu_utilization_of_logical_capacity_pct": 6.111538639932339,
+          "baseline_working_set_bytes": 2391105536,
+          "peak_working_set_bytes": 2604306432,
+          "peak_increment_bytes": 213200896
+        },
+        "query_transform": {
+          "wall_seconds": 0.0018874999950639904,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 2382884864,
+          "peak_working_set_bytes": 2385145856,
+          "peak_increment_bytes": 2260992,
+          "query_rows": 512
+        },
+        "query": {
+          "wall_seconds": 0.3354207999946084,
+          "process_cpu_seconds": 0.296875,
+          "cpu_core_equivalents": 0.8850822608638821,
+          "cpu_utilization_of_logical_capacity_pct": 5.531764130399263,
+          "baseline_working_set_bytes": 2604277760,
+          "peak_working_set_bytes": 2604302336,
+          "peak_increment_bytes": 24576
+        },
+        "query_rows_per_second": 1526.4408170519837,
+        "mean_5nn_distance": 0.04983917952094706,
+        "definition": "exact sklearn KDTree Euclidean 5-NN over this deterministic subset of actual source-train rows"
+      },
+      {
+        "reference_rows": 800000,
+        "query_rows": 512,
+        "feature_count": 46,
+        "reference_dtype": "float64",
+        "query_dtype": "float64",
+        "reference_indices_sha256": "845b9544c2c27661e927428f3d9e7d8a041fa6df3e5de154e3cbe5a8646fbefb",
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "reference_transform": {
+          "wall_seconds": 0.37243129999842495,
+          "process_cpu_seconds": 0.28125,
+          "cpu_core_equivalents": 0.7551728332210248,
+          "cpu_utilization_of_logical_capacity_pct": 4.7198302076314045,
+          "baseline_working_set_bytes": 2422677504,
+          "peak_working_set_bytes": 2717110272,
+          "peak_increment_bytes": 294432768,
+          "reference_rows": 800000,
+          "rows_per_second": 2148047.170050915
+        },
+        "index_fit": {
+          "wall_seconds": 8.736346500023501,
+          "process_cpu_seconds": 8.546875,
+          "cpu_core_equivalents": 0.9783122727534913,
+          "cpu_utilization_of_logical_capacity_pct": 6.11445170470932,
+          "baseline_working_set_bytes": 2393505792,
+          "peak_working_set_bytes": 2719514624,
+          "peak_increment_bytes": 326008832
+        },
+        "query_transform": {
+          "wall_seconds": 0.0018874999950639904,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 2382884864,
+          "peak_working_set_bytes": 2385145856,
+          "peak_increment_bytes": 2260992,
+          "query_rows": 512
+        },
+        "query": {
+          "wall_seconds": 0.5259467999858316,
+          "process_cpu_seconds": 0.5,
+          "cpu_core_equivalents": 0.9506664932907082,
+          "cpu_utilization_of_logical_capacity_pct": 5.941665583066926,
+          "baseline_working_set_bytes": 2719485952,
+          "peak_working_set_bytes": 2719510528,
+          "peak_increment_bytes": 24576
+        },
+        "query_rows_per_second": 973.4824891296852,
+        "mean_5nn_distance": 0.042168556700459665,
+        "definition": "exact sklearn KDTree Euclidean 5-NN over this deterministic subset of actual source-train rows"
+      },
+      {
+        "reference_rows": 1200000,
+        "query_rows": 512,
+        "feature_count": 46,
+        "reference_dtype": "float64",
+        "query_dtype": "float64",
+        "reference_indices_sha256": "5e357622510058595ac842d39daa39747a7b8501c3446c4f3b3feafb1c057bac",
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "reference_transform": {
+          "wall_seconds": 0.5416391000035219,
+          "process_cpu_seconds": 0.40625,
+          "cpu_core_equivalents": 0.7500381711685113,
+          "cpu_utilization_of_logical_capacity_pct": 4.687738569803196,
+          "baseline_working_set_bytes": 2428280832,
+          "peak_working_set_bytes": 2869907456,
+          "peak_increment_bytes": 441626624,
+          "reference_rows": 1200000,
+          "rows_per_second": 2215497.3671439104
+        },
+        "index_fit": {
+          "wall_seconds": 14.137243300006958,
+          "process_cpu_seconds": 13.765625,
+          "cpu_core_equivalents": 0.9737135244742675,
+          "cpu_utilization_of_logical_capacity_pct": 6.085709527964172,
+          "baseline_working_set_bytes": 2396708864,
+          "peak_working_set_bytes": 2898272256,
+          "peak_increment_bytes": 501563392
+        },
+        "query_transform": {
+          "wall_seconds": 0.0018874999950639904,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 2382884864,
+          "peak_working_set_bytes": 2385145856,
+          "peak_increment_bytes": 2260992,
+          "query_rows": 512
+        },
+        "query": {
+          "wall_seconds": 0.743300400004955,
+          "process_cpu_seconds": 0.75,
+          "cpu_core_equivalents": 1.0090133141257562,
+          "cpu_utilization_of_logical_capacity_pct": 6.306333213285977,
+          "baseline_working_set_bytes": 2898247680,
+          "peak_working_set_bytes": 2898276352,
+          "peak_increment_bytes": 28672
+        },
+        "query_rows_per_second": 688.8197557765163,
+        "mean_5nn_distance": 0.03996095301508512,
+        "definition": "exact sklearn KDTree Euclidean 5-NN over this deterministic subset of actual source-train rows"
+      },
+      {
+        "reference_rows": 1600000,
+        "query_rows": 512,
+        "feature_count": 46,
+        "reference_dtype": "float64",
+        "query_dtype": "float64",
+        "reference_indices_sha256": "15f9effab714cc11cdc2a05bb46072ccbd95e99b4059c480e18749764d45b4bb",
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "reference_transform": {
+          "wall_seconds": 0.7397589999891352,
+          "process_cpu_seconds": 0.53125,
+          "cpu_core_equivalents": 0.7181392859131183,
+          "cpu_utilization_of_logical_capacity_pct": 4.488370536956989,
+          "baseline_working_set_bytes": 2459852800,
+          "peak_working_set_bytes": 3048681472,
+          "peak_increment_bytes": 588828672,
+          "reference_rows": 1600000,
+          "rows_per_second": 2162866.5552206854
+        },
+        "index_fit": {
+          "wall_seconds": 18.518943900009617,
+          "process_cpu_seconds": 18.09375,
+          "cpu_core_equivalents": 0.9770400568031637,
+          "cpu_utilization_of_logical_capacity_pct": 6.106500355019774,
+          "baseline_working_set_bytes": 2399916032,
+          "peak_working_set_bytes": 3051831296,
+          "peak_increment_bytes": 651915264
+        },
+        "query_transform": {
+          "wall_seconds": 0.0018874999950639904,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 2382884864,
+          "peak_working_set_bytes": 2385145856,
+          "peak_increment_bytes": 2260992,
+          "query_rows": 512
+        },
+        "query": {
+          "wall_seconds": 1.7393473999982234,
+          "process_cpu_seconds": 1.671875,
+          "cpu_core_equivalents": 0.9612082094708094,
+          "cpu_utilization_of_logical_capacity_pct": 6.007551309192559,
+          "baseline_working_set_bytes": 3051806720,
+          "peak_working_set_bytes": 3051835392,
+          "peak_increment_bytes": 28672
+        },
+        "query_rows_per_second": 294.3632767097148,
+        "mean_5nn_distance": 0.02933986887259709,
+        "definition": "exact sklearn KDTree Euclidean 5-NN over this deterministic subset of actual source-train rows"
+      },
+      {
+        "reference_rows": 2000000,
+        "query_rows": 512,
+        "feature_count": 46,
+        "reference_dtype": "float64",
+        "query_dtype": "float64",
+        "reference_indices_sha256": "997dfcff35561ed14f5b92c5aee1c0f4ab48f18bb3151da37027d03ab2a68337",
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "reference_transform": {
+          "wall_seconds": 0.9089623999898322,
+          "process_cpu_seconds": 0.703125,
+          "cpu_core_equivalents": 0.7735468485911686,
+          "cpu_utilization_of_logical_capacity_pct": 4.834667803694804,
+          "baseline_working_set_bytes": 2466205696,
+          "peak_working_set_bytes": 3202232320,
+          "peak_increment_bytes": 736026624,
+          "reference_rows": 2000000,
+          "rows_per_second": 2200311.0359926573
+        },
+        "index_fit": {
+          "wall_seconds": 24.90376159999869,
+          "process_cpu_seconds": 24.46875,
+          "cpu_core_equivalents": 0.9825322934347913,
+          "cpu_utilization_of_logical_capacity_pct": 6.140826833967446,
+          "baseline_working_set_bytes": 2403065856,
+          "peak_working_set_bytes": 3255762944,
+          "peak_increment_bytes": 852697088
+        },
+        "query_transform": {
+          "wall_seconds": 0.0018874999950639904,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 2382884864,
+          "peak_working_set_bytes": 2385145856,
+          "peak_increment_bytes": 2260992,
+          "query_rows": 512
+        },
+        "query": {
+          "wall_seconds": 1.0508754999900702,
+          "process_cpu_seconds": 1.03125,
+          "cpu_core_equivalents": 0.9813246193385842,
+          "cpu_utilization_of_logical_capacity_pct": 6.133278870866151,
+          "baseline_working_set_bytes": 3255738368,
+          "peak_working_set_bytes": 3255767040,
+          "peak_increment_bytes": 28672
+        },
+        "query_rows_per_second": 487.2128049467686,
+        "mean_5nn_distance": 0.027360940592291105,
+        "definition": "exact sklearn KDTree Euclidean 5-NN over this deterministic subset of actual source-train rows"
+      },
+      {
+        "reference_rows": 2400000,
+        "query_rows": 512,
+        "feature_count": 46,
+        "reference_dtype": "float64",
+        "query_dtype": "float64",
+        "reference_indices_sha256": "67fe51177e0cd849fd692759bb082df3fb3b246effb9c0c018760103ab539fbb",
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "reference_transform": {
+          "wall_seconds": 6.173558100010268,
+          "process_cpu_seconds": 0.78125,
+          "cpu_core_equivalents": 0.1265477682956771,
+          "cpu_utilization_of_logical_capacity_pct": 0.7909235518479819,
+          "baseline_working_set_bytes": 2522939392,
+          "peak_working_set_bytes": 3406168064,
+          "peak_increment_bytes": 883228672,
+          "reference_rows": 2400000,
+          "rows_per_second": 388754.7442043201
+        },
+        "index_fit": {
+          "wall_seconds": 30.771021499997005,
+          "process_cpu_seconds": 30.015625,
+          "cpu_core_equivalents": 0.975451042468737,
+          "cpu_utilization_of_logical_capacity_pct": 6.096569015429607,
+          "baseline_working_set_bytes": 2406268928,
+          "peak_working_set_bytes": 3409326080,
+          "peak_increment_bytes": 1003057152
+        },
+        "query_transform": {
+          "wall_seconds": 0.0018874999950639904,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 2382884864,
+          "peak_working_set_bytes": 2385145856,
+          "peak_increment_bytes": 2260992,
+          "query_rows": 512
+        },
+        "query": {
+          "wall_seconds": 1.2460827000031713,
+          "process_cpu_seconds": 1.21875,
+          "cpu_core_equivalents": 0.9780650995290266,
+          "cpu_utilization_of_logical_capacity_pct": 6.112906872056416,
+          "baseline_working_set_bytes": 3409301504,
+          "peak_working_set_bytes": 3409326080,
+          "peak_increment_bytes": 24576
+        },
+        "query_rows_per_second": 410.88765617137364,
+        "mean_5nn_distance": 0.025228221119822054,
+        "definition": "exact sklearn KDTree Euclidean 5-NN over this deterministic subset of actual source-train rows"
+      }
+    ],
+    "query_scaling_at_max_reference": [
+      {
+        "reference_rows": 2400000,
+        "query_rows": 128,
+        "query_transform": {
+          "wall_seconds": 0.0010717999830376357,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 3409301504,
+          "peak_working_set_bytes": 3409838080,
+          "peak_increment_bytes": 536576
+        },
+        "timing": {
+          "wall_seconds": 0.2575348000100348,
+          "process_cpu_seconds": 0.265625,
+          "cpu_core_equivalents": 1.0314140069212003,
+          "cpu_utilization_of_logical_capacity_pct": 6.446337543257502,
+          "baseline_working_set_bytes": 3409838080,
+          "peak_working_set_bytes": 3409862656,
+          "peak_increment_bytes": 24576
+        },
+        "query_rows_per_second": 497.0202085116749,
+        "query_indices_sha256": "d3761fdc0331a9376551e61849a59b0d4626c8e9ac6e82c58d0df1d9f36d3a6a",
+        "mean_5nn_distance": 0.21099413962603938
+      },
+      {
+        "reference_rows": 2400000,
+        "query_rows": 512,
+        "query_transform": {
+          "wall_seconds": 0.0011049000022467226,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 3409838080,
+          "peak_working_set_bytes": 3409862656,
+          "peak_increment_bytes": 24576
+        },
+        "timing": {
+          "wall_seconds": 1.2281514999922365,
+          "process_cpu_seconds": 1.234375,
+          "cpu_core_equivalents": 1.0050673715806258,
+          "cpu_utilization_of_logical_capacity_pct": 6.281671072378911,
+          "baseline_working_set_bytes": 3409838080,
+          "peak_working_set_bytes": 3409862656,
+          "peak_increment_bytes": 24576
+        },
+        "query_rows_per_second": 416.886678885493,
+        "query_indices_sha256": "6251348f6529944f368284c217453a91193fd193d2077e1b392f5b86d6f82c96",
+        "mean_5nn_distance": 0.025228221119822054
+      },
+      {
+        "reference_rows": 2400000,
+        "query_rows": 2048,
+        "query_transform": {
+          "wall_seconds": 0.004285800008801743,
+          "process_cpu_seconds": 0.015625,
+          "cpu_core_equivalents": 3.645760410637676,
+          "cpu_utilization_of_logical_capacity_pct": 22.786002566485475,
+          "baseline_working_set_bytes": 3409850368,
+          "peak_working_set_bytes": 3418599424,
+          "peak_increment_bytes": 8749056
+        },
+        "timing": {
+          "wall_seconds": 4.901451899990207,
+          "process_cpu_seconds": 4.734375,
+          "cpu_core_equivalents": 0.9659127737251608,
+          "cpu_utilization_of_logical_capacity_pct": 6.036954835782256,
+          "baseline_working_set_bytes": 3418599424,
+          "peak_working_set_bytes": 3418632192,
+          "peak_increment_bytes": 32768
+        },
+        "query_rows_per_second": 417.8353764940735,
+        "query_indices_sha256": "19691ac11fcfba1a5419f5f31e0e005616e1a72ad22dd79c97bc98b8c0a74ef4",
+        "mean_5nn_distance": 0.027586239949993263
+      },
+      {
+        "reference_rows": 2400000,
+        "query_rows": 4096,
+        "query_transform": {
+          "wall_seconds": 0.006541600014315918,
+          "process_cpu_seconds": 0.0,
+          "cpu_core_equivalents": 0.0,
+          "cpu_utilization_of_logical_capacity_pct": 0.0,
+          "baseline_working_set_bytes": 3418607616,
+          "peak_working_set_bytes": 3437342720,
+          "peak_increment_bytes": 18735104
+        },
+        "timing": {
+          "wall_seconds": 10.046335199993337,
+          "process_cpu_seconds": 9.734375,
+          "cpu_core_equivalents": 0.9689478607090929,
+          "cpu_utilization_of_logical_capacity_pct": 6.055924129431831,
+          "baseline_working_set_bytes": 3437342720,
+          "peak_working_set_bytes": 3437375488,
+          "peak_increment_bytes": 32768
+        },
+        "query_rows_per_second": 407.7108635597503,
+        "query_indices_sha256": "bd33c609b6df055aa1adcee496e86f367aebb4b21d06feaae5572977b7b106db",
+        "mean_5nn_distance": 0.03370404930170273
+      }
+    ],
+    "full_reference_float64_bytes_lower_bound": 4441241120,
+    "source_train_rows": 12068590,
+    "source_test_rows": 4025148,
+    "reference_transform_block_rows": 20000,
+    "full_exact_definition": "all CIC source-train rows standardized by source-train-only StandardScaler; exact Euclidean distance to the five nearest rows; mean of five distances"
+  },
+  "random_forest": null,
+  "full_run_estimate": {
+    "method": "Tail-scaling envelope from largest bounded exact KDTree fits and per-query timings; not a guarantee",
+    "reference_growth_exponents_measured": {
+      "index_fit": [
+        1.3275071398427358,
+        1.1603374284912968
+      ],
+      "query_seconds_per_row": [
+        -2.258126466918325,
+        0.934509156762623
+      ]
+    },
+    "full_index_fit_seconds_estimate_range": [
+      200.47265392764632,
+      262.61259229681843
+    ],
+    "full_query_seconds_estimate_range": [
+      9796.225171391337,
+      44316.53607551498
+    ],
+    "full_scaler_fit_seconds_measured": 4.928145400015637,
+    "full_reference_transform_seconds_estimated": 31.044225645917884,
+    "full_query_transform_seconds_estimated": 14.838802402601232,
+    "full_total_seconds_estimate_range": [
+      10047.508998767518,
+      44629.95984126034
+    ],
+    "full_total_hours_estimate_range": [
+      2.7909747218798664,
+      12.39721106701676
+    ],
+    "full_exact_float64_reference_lower_bound_bytes": 4441241120,
+    "available_physical_memory_bytes_at_benchmark": 7655550976,
+    "sample_peak_increment_bytes_at_largest_reference": 1003057152,
+    "peak_increment_linear_extrapolation_bytes": 5043952297,
+    "query_scaling_throughput_rows_per_second": [
+      497.0202085116749,
+      416.886678885493,
+      417.8353764940735,
+      407.7108635597503
+    ],
+    "sample_baseline_working_set_bytes": 2406268928,
+    "projected_full_process_peak_working_set_bytes": 7450221225,
+    "projected_headroom_vs_available_bytes_at_benchmark_start": 205329751
+  },
+  "source_rows": {
+    "train": 12068590,
+    "calibration": 4021791,
+    "source_test": 4025148
+  }
+}

@@ -1,7 +1,7 @@
 # E0/E0.5 completion status
 
 **Status:** E0/E0.5 artifacts and the full UNSW source-only E1 computation are complete for seeds 0–9 and five signals. The qualitative gate recommendation is recorded in SOURCE_E1_GATE_INTERPRETATION.md and awaits project-owner acceptance. The CIC source-only E1 gate required for CIC→UNSW is not yet complete. No target evaluation has occurred.
-**Active pair:** NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3.
+**Active pair:** NF-UNSW-NB15-v3 ↔ NF-CSE-CIC-IDS2018-v3; each direction requires its own source-only E1 gate.
 **ToN-IoT:** Excluded from the active project scope.
 
 The inherited `REPORT.md`, `audit.json`, `schema.csv`, and
@@ -32,10 +32,10 @@ values from those attempts were used.
 Remaining before target evaluation:
 
 1. Obtain project-owner acceptance of the UNSW E1 interpretation.
-2. Prepare and benchmark the CIC source-only E1 pipeline before any full run; if exact computation is impractical, stop for owner review of a deterministic alternative.
-3. Complete, verify, and obtain acceptance of the CIC source-only E1 gate.
-4. Freeze the 46-feature registry, conservative family mapping, and direction-specific manifests before target scoring.
-5. Keep target labels sealed until a matching committed manifest validates.
+2. Review the CIC exact-distance benchmark decision and deterministic reference-bank proposal. No alternative or full CIC E1 run starts before approval.
+3. After method approval, freeze the CIC source-only E1 config and manifest, complete and verify seeds 0–9, then obtain acceptance of the CIC gate interpretation.
+4. Only after both source-gate interpretations are accepted, freeze the 46-feature registry, conservative family mapping, and direction-specific manifests before target scoring.
+5. Keep target labels sealed until the matching clean, committed manifest validates.
 
 
 The E1 evidence and conditional qualitative recommendation are in SOURCE_E1_GATE_INTERPRETATION.md; owner acceptance is pending. Full per-seed metrics remain in SOURCE_E1_FINAL_REPORT.md and source_e1_final_results.json. No post-hoc numeric threshold has been added, and target evaluation remains sealed.
@@ -48,10 +48,22 @@ flow-key check, and constants/domain-shortcut review are in
 reported as a bounded sensitivity because the retained host support is small;
 do not present it as broad host generalization.
 
-The source-only E1 feature matrices and full per-seed arrays remain local and
-ignored under `data/processed/source-e1-lock-1`. Ten seeds and all five
-signals have completed. Compact results are in `SOURCE_E1_FINAL_REPORT.md`
-and `source_e1_final_results.json`. CIC2018 remains unread by the E1 path.
+The complete UNSW source-only E1 matrices and per-seed arrays remain local and
+ignored under `data/processed/source-e1-lock-1`; seeds 0–9 and all five signals
+are complete, with compact results in `SOURCE_E1_FINAL_REPORT.md` and
+`source_e1_final_results.json`. CIC source arrays for the reverse-direction gate
+are separately staged and ignored under `data/processed/source-e1-cic-lock-1`.
+CIC labels were used only as CIC source labels; no CIC seed E1 job or target
+label evaluation has occurred.
+
+CIC staging hashes, bounded exact-distance measurements, RF concurrency
+results, runtime/memory estimates, smoke evidence, and the owner-review decision
+are in `CIC_SOURCE_E1_BENCHMARK_DECISION.md`,
+`CIC_SOURCE_E1_DISTANCE_BANK_REVIEW.md`, and their JSON evidence. Exact CIC
+5-NN was not launched at full scale because the measured resource estimate
+leaves inadequate available-memory headroom. No alternative was run or written
+into an experiment manifest. The CIC source-only five-signal smoke passed with
+finite outputs and no target access.
 
 The deterministic UNSW-training-only median policy is implemented in
 `scripts/finite_value_policy.py`; fitted values and source-only counts are in

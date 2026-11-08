@@ -1,9 +1,9 @@
 # Intrusion Detection Research — Project Handoff
 
-**Handoff time:** 2026-11-08
+**Handoff time:** 2026-11-09
 **Authoritative project folder:** D:\IntrusionDetection
 **Branch:** codex/e0-e05
-**Published head:** 28e01c8
+**Published baseline at continuation:** 38cbf95 (see branch history for the current published head)
 **Active project pair:** NF-UNSW-NB15-v3 ↔ NF-CSE-CIC-IDS2018-v3
 
 ## Guardrails
@@ -16,21 +16,23 @@
 
 ## Current state
 
-E0/E0.5 dataset, feature, split, family, and leakage-control artifacts are committed. Source-only UNSW E1 is complete for seeds 0–9 and all five reliability signals. The exact feature-distance result is shared across seeds. Seeds 0–5 recovered outputs were verified and reused; full outputs for seeds 0–9 remain local and ignored. The seed-0 repeat matched all seven arrays and metrics.
+The workspace is synchronized to `codex/e0-e05` at the published UNSW-gate interpretation milestone. UNSW source-only E1 is complete for seeds 0–9, with exact feature distance shared across seeds and a same-seed repeat. The qualitative interpretation recommends conditional acceptance for descriptive transfer; project-owner acceptance is pending, so target evaluation remains locked.
 
-The result and resource records are in reports/nf_v3_audit/SOURCE_E1_FINAL_REPORT.md, source_e1_final_results.json, and SOURCE_E1_BENCHMARK.md. The UNSW gate interpretation and conditional recommendation are in SOURCE_E1_GATE_INTERPRETATION.md; project-owner acceptance is pending. No target evaluation has occurred.
+CIC source staging for the reverse CIC → UNSW E1 gate is complete under the separate `source-e1-cic-lock-1` configuration. The label-blind 60/20/20 split produced 12,068,590 train, 4,021,791 calibration, and 4,025,148 source-test rows in the locked 46-feature order. All six staged arrays match their local ignored stage manifest and have finite features. CIC labels were used as source labels only. UNSW target files and labels were not read.
 
-The local checkout has been synchronized to the published branch. Backup ref backup/codex-e0-e05-pre-sync-2611acd preserves the prior local commit chain. Ignored E1 outputs were retained.
+Bounded exact CIC distance and RF concurrency benchmarks are committed in `reports/nf_v3_audit/CIC_SOURCE_E1_BENCHMARK_DECISION.md` and the accompanying JSON evidence. Exact distance is estimated at 2.8–12.4 hours, with a projected 7.45 GB peak process working set against 7.66 GB available before benchmarking; it was judged unsafe on the current memory state. A deterministic hash-priority reference-bank proposal is in `CIC_SOURCE_E1_DISTANCE_BANK_REVIEW.md`. The proposal has not been benchmarked or run. No CIC E1 seed jobs or final CIC experiment manifest have been started.
+
+The CIC five-signal smoke passed on deterministic class-present source subsets. It produced finite 2,000-row outputs for all five signals and did not access target files or labels. Error and attack-miss ranking metrics on that smoke subset are undefined and not interpreted.
+
+Ignored UNSW source E1 arrays, recovered seed 0–5 RF artifacts, and completed full outputs remain preserved. CIC source arrays are also local and ignored. No target evaluation has occurred.
 
 ## Next work
 
-1. Obtain project-owner acceptance or rejection of the UNSW E1 interpretation. Do not access target labels or begin transfer before acceptance.
-2. Prepare a CIC source-only config and disk-backed split using the same 46-feature order, label-blind SHA-256 60/20/20 split, source-only finite replacements, calibration/conformal split, RF settings, five-signal definitions, and seeds 0–9.
-3. Benchmark exact CIC source-train 5-NN distance on bounded subsets of the actual staged arrays, and benchmark one versus two RF workers with internal threads limited to one. Record wall time, CPU, peak memory, throughput, and full-run estimates before a full CIC E1 run.
-4. If the measured exact/computation plan is impractical, stop and prepare a deterministic, mathematically specified alternative for owner review. Do not change a manifest or launch an alternative before approval.
-5. Complete and integrity-check the CIC source-only E1 run, including a same-seed repeat, then obtain owner acceptance of its qualitative interpretation.
-6. Only after both source gates are accepted, finalize the 46-feature registry and conservative family mapping, benchmark target-feature scoring without labels, and commit one clean frozen manifest per direction before scoring.
-7. Use the feature-only target iterator for scoring; invoke the final label iterator only after the corresponding committed manifest validates. Preserve per-row outputs locally and commit compact provenance/results only.
+1. Review and accept or reject the UNSW E1 interpretation in `reports/nf_v3_audit/SOURCE_E1_GATE_INTERPRETATION.md`.
+2. Review the exact-distance resource decision and deterministic reference-bank proposal. If an alternative is approved, benchmark its deterministic bank sizes and feature-only approximation error before changing the CIC experiment manifest. If rejected, reassess exact execution only after adequate memory headroom is available.
+3. Freeze and commit the approved CIC source-E1 configuration/manifest before running its full five-signal gate. Verify seeds 0–9 and a same-seed repeat; then record a qualitative CIC gate interpretation for owner acceptance.
+4. Only after both source-gate interpretations are accepted, finalize the shared feature/family registry, benchmark target feature inference and exact target distance on feature-only subsets, and commit manifests for both directions.
+5. Score target features through the streaming feature-only iterator. Read target labels only after the corresponding clean, committed manifest validates. Preserve per-row outputs locally and commit compact provenance/results only.
 
 ## Experiment details already frozen
 
@@ -39,3 +41,8 @@ The UNSW source config is source-e1-lock-1: 46 predictive columns; remaining sev
 The exact UNSW distance used all 1,418,952 source-training references and 473,171 source-test queries, completing in 1,746.4 seconds. It was not approximated. Benchmark and concurrency evidence are committed. Distance is seed-independent; Isolation Forest is fit per seed because its locked random state follows the seed.
 
 The compact 8-feature representation is deferred to a later plan. No target transfer, ToN-IoT, XGBoost, or frozen-methodology changes are part of the current work.
+
+
+## CIC source-gate benchmark status
+
+The actual benchmark datasets, software versions, resource measurements, exact runtime envelope, and provisional two-worker RF choice are recorded in `reports/nf_v3_audit/CIC_SOURCE_E1_BENCHMARK_DECISION.md`. The stage config and finite-replacement provenance are `reports/nf_v3_audit/source_e1_cic_config.json` and `cic_train_finite_replacements.json`. No method change is active until the project owner reviews the candidate in `CIC_SOURCE_E1_DISTANCE_BANK_REVIEW.md`.
