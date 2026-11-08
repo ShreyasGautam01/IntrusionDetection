@@ -1,6 +1,6 @@
 # E0/E0.5 completion status
 
-**Status:** E0/E0.5 artifacts and the full source-only E1 computation are complete for seeds 0–9 and five signals. Target evaluation remains locked pending project-level interpretation of source-seed stability; no target evaluation has occurred.
+**Status:** E0/E0.5 artifacts and the full UNSW source-only E1 computation are complete for seeds 0–9 and five signals. The qualitative gate recommendation is recorded in SOURCE_E1_GATE_INTERPRETATION.md and awaits project-owner acceptance. The CIC source-only E1 gate required for CIC→UNSW is not yet complete. No target evaluation has occurred.
 **Active pair:** NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3.
 **ToN-IoT:** Excluded from the active project scope.
 
@@ -31,19 +31,14 @@ values from those attempts were used.
 
 Remaining before target evaluation:
 
-1. Review/freeze the 46-feature registry and family matrix for target analysis;
-   do not infer family equivalence or unseen attacks from draft mappings.
-2. Freeze the compact 8-feature sensitivity mapping before that sensitivity is
-   run.
-3. Record the project-level interpretation of the completed source E1 stability
-   results. The locked source config defines no numeric tolerance; do not invent
-   one after seeing these results.
-4. Commit the final target-transfer manifest binding the approved features,
-   family policy, source E1 config, and firewall conditions.
-5. Only after the source E1 gate is accepted and the final manifest is in place,
-   use the target-label firewall for target evaluation.
+1. Obtain project-owner acceptance of the UNSW E1 interpretation.
+2. Prepare and benchmark the CIC source-only E1 pipeline before any full run; if exact computation is impractical, stop for owner review of a deterministic alternative.
+3. Complete, verify, and obtain acceptance of the CIC source-only E1 gate.
+4. Freeze the 46-feature registry, conservative family mapping, and direction-specific manifests before target scoring.
+5. Keep target labels sealed until a matching committed manifest validates.
 
-The source E1 stability procedure and current decision are in `E1_STABILITY_GATE_DRAFT.md`. Full per-seed metrics and stability summaries are in `SOURCE_E1_FINAL_REPORT.md` and `source_e1_final_results.json`. Target evaluation remains sealed because no numeric tolerance was frozen and the rank-stability interpretation remains open.
+
+The E1 evidence and conditional qualitative recommendation are in SOURCE_E1_GATE_INTERPRETATION.md; owner acceptance is pending. Full per-seed metrics remain in SOURCE_E1_FINAL_REPORT.md and source_e1_final_results.json. No post-hoc numeric threshold has been added, and target evaluation remains sealed.
 
 The family-count crosswalk now reconciles the existing local counts against the versioned NetFlow-v3 release paper and current UQ catalogue HTML. The local UNSW counts match the paper exactly; the live HTML page has three conflicting family cells and a prose attack total 54 below its own family-table sum. This source discrepancy is recorded in `FAMILY_MAPPING_DRAFT.md`, `family_mapping_draft.csv`, and `label_mapping_draft.md`; labels remain unchanged.
 

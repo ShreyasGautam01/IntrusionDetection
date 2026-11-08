@@ -1,58 +1,41 @@
 # Intrusion Detection Research — Project Handoff
 
-**Handoff time:** 2026-11-06 14:41 UTC
-**Authoritative project folder:** `D:\IntrusionDetection`
-**Do not use:** `D:\ids_implementation_rebuilt` (deprecated copy).
-**Branch:** `codex/e0-e05`
-**GitHub:** https://github.com/ShreyasGautam01/IntrusionDetection
+**Handoff time:** 2026-11-08
+**Authoritative project folder:** D:\IntrusionDetection
+**Branch:** codex/e0-e05
+**Published head:** 28e01c8
+**Active project pair:** NF-UNSW-NB15-v3 ↔ NF-CSE-CIC-IDS2018-v3
 
 ## Guardrails
 
-- `research_proposal.md` and `methodology_final.md` are frozen; neither was changed.
-- Active pair: NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3. NF-ToN-IoT is excluded.
-- Raw data under `D:\NF-v3-datasets` are read-only and must never be committed.
-- No CIC2018 features or labels were accessed by the source-only E1 work. Keep target labels sealed until source E1 stability is complete and the committed freeze manifest is in place.
+- research_proposal.md and methodology_final.md are frozen and must not be modified.
+- NF-ToN-IoT-v3 and XGBoost are excluded from this continuation.
+- Raw datasets under D:\NF-v3-datasets are read-only and must never be committed.
+- Target scoring and target-label evaluation remain locked pending source-gate acceptance and committed direction manifests.
+- Preserve ignored source E1 arrays and outputs under data/processed/source-e1-lock-1; never clean or overwrite them.
 
 ## Current state
 
-E0/E0.5 audit, temporal/duplicate/split controls, feature registry, label mapping, source-only replacement policy, and target-label firewall are in `reports/nf_v3_audit/` and the repository root. Family-count discrepancy is documented; raw labels remain unchanged.
+E0/E0.5 dataset, feature, split, family, and leakage-control artifacts are committed. Source-only UNSW E1 is complete for seeds 0–9 and all five reliability signals. The exact feature-distance result is shared across seeds. Seeds 0–5 recovered outputs were verified and reused; full outputs for seeds 0–9 remain local and ignored. The seed-0 repeat matched all seven arrays and metrics.
 
-Source-only E1 is bound to `reports/nf_v3_audit/source_e1_config.json` (`source-e1-lock-1`): 46 shared candidate features; label-blind SHA-256 60/20/20 UNSW split; source-train finite replacements; 200-tree RF; minimum leaf 5; seeds 0–9.
+The result and resource records are in reports/nf_v3_audit/SOURCE_E1_FINAL_REPORT.md, source_e1_final_results.json, and SOURCE_E1_BENCHMARK.md. The UNSW gate interpretation and conditional recommendation are in SOURCE_E1_GATE_INTERPRETATION.md; project-owner acceptance is pending. No target evaluation has occurred.
 
-### Data staged locally
+The local checkout has been synchronized to the published branch. Backup ref backup/codex-e0-e05-pre-sync-2611acd preserves the prior local commit chain. Ignored E1 outputs were retained.
 
-Disk-backed arrays are at ignored path `data/processed/source-e1-lock-1/`; do not commit them. Rows: train 1,418,952, calibration 473,301, source test 473,171. Each matrix has 46 float32 columns; source labels are separate int8 arrays. Current UNSW source SHA-256 rechecked as `4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5`. Raw CSV was not modified.
+## Next work
 
-### E1 partial results
+1. Obtain project-owner acceptance or rejection of the UNSW E1 interpretation. Do not access target labels or begin transfer before acceptance.
+2. Prepare a CIC source-only config and disk-backed split using the same 46-feature order, label-blind SHA-256 60/20/20 split, source-only finite replacements, calibration/conformal split, RF settings, five-signal definitions, and seeds 0–9.
+3. Benchmark exact CIC source-train 5-NN distance on bounded subsets of the actual staged arrays, and benchmark one versus two RF workers with internal threads limited to one. Record wall time, CPU, peak memory, throughput, and full-run estimates before a full CIC E1 run.
+4. If the measured exact/computation plan is impractical, stop and prepare a deterministic, mathematically specified alternative for owner review. Do not change a manifest or launch an alternative before approval.
+5. Complete and integrity-check the CIC source-only E1 run, including a same-seed repeat, then obtain owner acceptance of its qualitative interpretation.
+6. Only after both source gates are accepted, finalize the 46-feature registry and conservative family mapping, benchmark target-feature scoring without labels, and commit one clean frozen manifest per direction before scoring.
+7. Use the feature-only target iterator for scoring; invoke the final label iterator only after the corresponding committed manifest validates. Preserve per-row outputs locally and commit compact provenance/results only.
 
-- Seeds 0–5 completed. Compact metrics: `reports/nf_v3_audit/SOURCE_E1_PARTIAL_REPORT.md` and `source_e1_seed_results.json`. Full per-row outputs remain local and ignored.
-- Implemented outputs cover RF detector metrics, source-sigmoid-calibrated confidence, and RF tree disagreement. kNN distance, split conformal reliability, and Isolation Forest are still not implemented.
-- On 2026-11-08, all stage-array hashes and seed 0–5 partial outputs were verified by `scripts/verify_source_e1_partial.py`; see `SOURCE_E1_RECOVERY_AUDIT.md` and `source_e1_recovery_audit.json`.
-- Every seed had 10 source-test attack misses. The 1% review capture was 100% for confidence and disagreement, but there are only ten events, so do not overinterpret it.
-- Seed 1 fit time is 6,683 seconds; other completed seeds took 219–268 seconds. Retain seed 1 and investigate the runtime anomaly; do not remove it based on model performance.
-- The earlier seed-0 full-stack attempt was stopped during exact distance search, but the subsequent bounded benchmark justified a long exact run. Full distance and five-signal outputs for seeds 0–9 are now complete; see `SOURCE_E1_FINAL_REPORT.md` and `source_e1_final_results.json`.
+## Experiment details already frozen
 
-### 2026-11-08 bounded benchmark and run lock
+The UNSW source config is source-e1-lock-1: 46 predictive columns; remaining seven raw columns retained as metadata/identifier roles; label-blind hash split; source-training-only finite replacement; 200-tree RF with minimum leaf size 5; seeds 0–9. Five signals are source-calibrated confidence, RF tree disagreement, exact mean Euclidean 5-NN distance, split conformal at alpha 0.10, and Isolation Forest.
 
-- Bounded exact KD-tree distance benchmarks used deterministic subsets up to 800,000 of the 1,418,952 source-train references. Throughput at 800,000 was about 437 queries/s for 512 source-test queries; query-size scaling was near-linear. Full exact distance is estimated at 38–55 minutes and 1.0–1.5 GiB peak working set. The decision is to run the exact method once as a long single job; no approximation is authorized.
-- A 25% RF benchmark measured 42.4 seconds for one worker and 49.8 seconds for two concurrent workers (two jobs), with peak process working set 518MB and 537MB respectively. Two-worker throughput was 1.70×. Full RF runs use two concurrent seed workers with OpenMP/BLAS and estimator jobs capped at one.
-- The five-signal factorization is explicit in `reports/nf_v3_audit/source_e1_manifest.json`: distance is seed-independent and computed once. Isolation Forest is independent of RF outputs but uses the matching run seed for `random_state`, so it is fit once per configured seed. Confidence, disagreement, and conformal are RF-seed-dependent.
-- The full-pipeline subset smoke passed for all five score shapes and finite outputs. Its 2,000-row test prefix had no attack misses, so its ranking metrics are not interpreted.
-- The run manifest was frozen after benchmarks and smoke, before full E1 computation. Do not alter the signal definitions or thread plan without a documented, pre-run manifest revision.
-- The exact distance stage finished in 1,746.4s (29m06s), 271 source-test queries/s end-to-end. Each of seeds 0–9 completed with ten source-test attack misses. Seeds 0–5 exactly reused recovered probability, prediction, and disagreement arrays after a matching refit; seed 0's separate complete repeat matched all arrays and metrics exactly.
-- The source-only computational run is complete, but target evaluation remains locked. The frozen config has no numeric stability tolerance; the report records rank-correlation minima and capture ranges for project-level interpretation.
+The exact UNSW distance used all 1,418,952 source-training references and 473,171 source-test queries, completing in 1,746.4 seconds. It was not approximated. Benchmark and concurrency evidence are committed. Distance is seed-independent; Isolation Forest is fit per seed because its locked random state follows the seed.
 
-## Successor next actions
-
-1. Review `SOURCE_E1_FINAL_REPORT.md` and record a project-level interpretation of the completed source-seed stability results. The original config deliberately defines no numeric tolerance.
-2. Do not begin target transfer until that stability interpretation is recorded and the E1 gate is deemed acceptable.
-3. Preserve seed 1's historical 6,683-second fit and seed 7's 1,484-second fit as runtime anomalies; do not exclude either result.
-
-## Known commits before the handoff commit
-
-- `380161a` — source-only config and disk-backed staging.
-- `0b8500d` — source-only stability procedure.
-- `0322474` — family-count source reconciliation.
-- `39a9f59` — memory feasibility estimate.
-
-Commit the handoff, compact results, and runner code. Never commit local matrices, per-row predictions, logs, model objects, or raw data.
+The compact 8-feature representation is deferred to a later plan. No target transfer, ToN-IoT, XGBoost, or frozen-methodology changes are part of the current work.

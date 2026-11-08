@@ -1,6 +1,6 @@
 # E1 Source-Only Stability Gate (Draft)
 
-**Status:** Full five-signal results for seeds 0–9 and an exact seed-0 repeat are complete. Numeric acceptance thresholds remain unspecified by the locked config; target evaluation remains locked pending project-level stability interpretation.
+**Status:** Full five-signal results for seeds 0–9 and an exact seed-0 repeat are complete. A qualitative conditional-acceptance recommendation is recorded in SOURCE_E1_GATE_INTERPRETATION.md; owner acceptance is pending. No numeric cutoff was added, and target evaluation remains locked.
 **Scope:** UNSW-only in-domain gate for the active UNSW → CIC2018 direction.
 **Target labels:** CIC2018 remains sealed; no target rows or labels are needed for this gate.
 **Prepared from:** frozen `methodology_final.md` E1 requirement and `rf_config_draft.json` (`rf-draft-4`); source file SHA-256 `4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5`.
@@ -22,14 +22,9 @@ The recovery checks are recorded in `SOURCE_E1_RECOVERY_AUDIT.md`. The completed
 
 ## Target-evaluation decision still required
 
-The reporting procedure above makes seed variation visible but cannot determine whether a particular spread is acceptable. Before target evaluation is unlocked, review and record a stability decision rule for at least:
+The project owner must accept or reject the qualitative recommendation in SOURCE_E1_GATE_INTERPRETATION.md before target evaluation. The recommendation records stable detector metrics and 5% capture for confidence/disagreement, variation in several signal rankings, and the limitation of ten attack misses per seed. It does not add numeric cutoffs or select a signal by across-seed average.
 
-- the maximum acceptable across-seed spread for source-test attack-miss AUPRC and capture at the primary review budget;
-- the minimum acceptable seed-to-seed rank agreement for attack-miss rankings;
-- whether any calibration or detector-performance metric is a hard gate or descriptive only; and
-- the treatment of ties in score rankings and review-budget cutoffs.
-
-The completed source-only results show stable detector metrics and stable 5% capture for confidence/disagreement, while seed-to-seed Spearman minima are 0.605 for confidence, 0.307 for disagreement, 0.592 for conformal, and 0.935 for Isolation Forest. Each seed has only ten attack misses. No numeric cutoffs are supplied by the frozen protocol, and none were added after seeing results. The target gate remains closed until the project-level interpretation is recorded.
+The CIC→UNSW direction also requires a complete CIC source-only E1 gate and its own accepted interpretation. Keep target labels sealed until both source gates are accepted and direction-specific manifests are committed.
 
 ## Scope protections
 
