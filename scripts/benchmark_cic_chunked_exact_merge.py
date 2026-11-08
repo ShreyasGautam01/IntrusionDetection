@@ -22,7 +22,8 @@ from benchmark_source_e1_cic import CORES, process_memory, sha256, system_memory
 DATA = ROOT / "data/processed/source-e1-cic-lock-1"
 WORK = DATA / "distance-bank-benchmark-v1"
 BANK_REPORT = ROOT / "reports/nf_v3_audit/cic_distance_bank_benchmark.json"
-OUTPUT = ROOT / "reports/nf_v3_audit/cic_chunked_exact_merge_benchmark.json"
+COMPRESSION_REPORT = ROOT / "reports/nf_v3_audit/cic_exact_duplicate_compression_benchmark.json"
+OUTPUT = ROOT / "reports/nf_v3_audit/cic_chunked_exact_merge_benchmark_validated.json"
 CHUNK_ROWS = 250_000
 QUERY_ROWS = 1_024
 
@@ -40,6 +41,7 @@ def main() -> None:
     if OUTPUT.exists():
         raise SystemExit(f"Refusing to overwrite benchmark evidence: {OUTPUT}")
     report = json.loads(BANK_REPORT.read_text(encoding="utf-8"))
+    compression = json.loads(COMPRESSION_REPORT.read_text(encoding="utf-8"))
     train = np.load(DATA / "train_X.npy", mmap_mode="r")
     query = np.load(DATA / "source_test_X.npy", mmap_mode="r")
     offsets = np.load(WORK / "bank_offsets_k500000.npy", allow_pickle=False)
@@ -102,6 +104,15 @@ def main() -> None:
     if not equivalent:
         raise RuntimeError("Chunk-merged distance scores differ from the raw 500k-reference exact baseline")
 
+    production_chunk_rows = 500_000
+    production_chunks = int(np.ceil(len(train) / production_chunk_rows))
+    one_chunk = compression["sample_results"][str(production_chunk_rows)]
+    query_seconds_per_chunk = one_chunk["projected_full_source_test_query_seconds"]
+    setup_seconds_per_chunk = sum(one_chunk[key]["wall_seconds"] for key in (
+        "unique_extraction", "unique_scaling", "kd_tree_fit_unique_rows"))
+    projected_query_seconds = production_chunks * query_seconds_per_chunk
+    projected_setup_seconds = production_chunks * setup_seconds_per_chunk
+    top_state_bytes = 2 * len(query) * 5 * (8 + 4)
     report_out = {
         "report_id": "cic-chunked-exact-5nn-merge-benchmark-1",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
@@ -136,18 +147,30 @@ def main() -> None:
                      "scipy": scipy.__version__, "scikit_learn": sklearn.__version__},
         "full_distance_estimate": {
             "source_train_rows": len(train), "source_test_rows": len(query),
-            "chunk_rows": CHUNK_ROWS, "chunks": int(np.ceil(len(train) / CHUNK_ROWS)),
-            "query_seconds_per_full_chunk_at_500k_benchmark": report["comparisons"]["500000"]["projected_full_source_test_query_seconds"],
-            "projected_query_seconds_for_all_chunks": int(np.ceil(len(train) / CHUNK_ROWS)) * report["comparisons"]["500000"]["projected_full_source_test_query_seconds"],
-            "projected_query_hours_for_all_chunks": int(np.ceil(len(train) / CHUNK_ROWS)) * report["comparisons"]["500000"]["projected_full_source_test_query_seconds"] / 3600,
-            "scope_note": "Projection uses the measured single 500k unique-reference query rate, multiplied by 25 independent 500k chunks. It excludes per-chunk dedup/fit and merge overhead; query rate may vary between chunks.",
+            "production_chunk_rows": production_chunk_rows, "production_chunks": production_chunks,
+            "query_seconds_per_full_source_test_at_measured_500k_unique_reference_rate": query_seconds_per_chunk,
+            "projected_query_seconds_for_all_chunks": projected_query_seconds,
+            "projected_query_hours_for_all_chunks": projected_query_seconds / 3600,
+            "measured_unique_extract_scale_and_fit_seconds_per_chunk": setup_seconds_per_chunk,
+            "projected_chunk_setup_seconds_for_all_chunks": projected_setup_seconds,
+            "projected_total_seconds_excluding_checkpoint_and_output_io": (
+                scaler_timing["wall_seconds"] + projected_query_seconds + projected_setup_seconds
+            ),
+            "projected_total_hours_excluding_checkpoint_and_output_io": (
+                scaler_timing["wall_seconds"] + projected_query_seconds + projected_setup_seconds
+            ) / 3600,
+            "two_slot_top_state_file_bytes": top_state_bytes,
+            "rough_projected_peak_working_set_bytes": (
+                compression["maximum_observed_timed_phase_peak_working_set_bytes"] + top_state_bytes
+            ),
+            "scope_note": "Projection uses the measured 500k duplicate-compressed reference index querying all source-test rows, multiplied by 25 planned 500k source-train chunks. It adds measured per-chunk unique extraction, transform, and index fit time. It excludes checkpoint and output I/O. Peak is a conservative additive estimate that includes two disk-backed top-five state slots; validate at startup before continuing a full run.",
         },
     }
     OUTPUT.write_text(json.dumps(report_out, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print(json.dumps({"output": str(OUTPUT), "equivalent": equivalent,
                       "maximum_absolute_difference": float(np.max(difference)),
                       "zero_count_exact_vs_chunked": [int(np.count_nonzero(raw_scores == 0)), int(np.count_nonzero(aggregate == 0))],
-                      "full_query_estimate_hours": report_out["full_distance_estimate"]["projected_query_hours_for_all_chunks"],
+                      "full_query_estimate_hours": report_out["full_distance_estimate"]["projected_total_hours_excluding_checkpoint_and_output_io"],
                       "max_peak_bytes": max_peak}, indent=2))
 
 
