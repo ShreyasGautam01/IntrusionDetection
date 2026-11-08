@@ -1,0 +1,111 @@
+{
+  "manifest_id": "source-e1-run-manifest-2026-11-08-1",
+  "status": "frozen-before-full-source-E1-runs",
+  "frozen_utc": "2026-11-08T12:39:39.532882+00:00",
+  "base_commit": "b3de73407cb45dbe82b3d2ce1de53e1ab99d0d3f",
+  "configuration_id": "source-e1-lock-1",
+  "configuration_sha256": "23fcc21d6699f4e57cf3d96966836b8610773572ad7950330b84149818515a5f",
+  "source_dataset": {
+    "name": "NF-UNSW-NB15-v3",
+    "sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+    "row_count": 2365424
+  },
+  "target_data_accessed": false,
+  "target_evaluation_unlocked": false,
+  "input_hashes": {
+    "stage_manifest_sha256": "88c346a503ae606bb6478e0c86ba8478ffe8137509aa149681613c08402fc670",
+    "staged_arrays": {
+      "calibration_X.npy": {
+        "bytes": 87087512,
+        "sha256": "a0c4b074920db989a28bce39002bedda95370fc3356268efd0ffd4627cc53dfa"
+      },
+      "calibration_y.npy": {
+        "bytes": 473429,
+        "sha256": "4f1caea57a24237cc149f6a9431d58c7ebef6319ec5b1e41cab12692593df1a2"
+      },
+      "source_test_X.npy": {
+        "bytes": 87063592,
+        "sha256": "9c1d7ebf5b6096fbb48bac59307f3d2a8e115cb3a99344c4a7d1ba8cd54d9cbb"
+      },
+      "source_test_y.npy": {
+        "bytes": 473299,
+        "sha256": "c2447ae5eee9d8154f395d29a3c04d9a5034c6012b2897855cda736a992050e9"
+      },
+      "train_X.npy": {
+        "bytes": 261087296,
+        "sha256": "74d935dd8cc57e97f7faf3beb9852c577822e3b64704d6c2851fd8857fe9ec37"
+      },
+      "train_y.npy": {
+        "bytes": 1419080,
+        "sha256": "34c75e2004ce23887f8acbdb54ca713e736282081f2b1ed27a13eb5eeacf9588"
+      }
+    },
+    "feature_registry_sha256": "3fa1c856f0ee858f072f8f0f85dff41c4bb1369fa3400ed3516a9642e591091d",
+    "finite_replacements_sha256": "ea7a93ac62c73fd7466c7312cdcc4eecae2e4bb5fb0e7ddee6e3441a7827705b",
+    "pyproject_sha256": "e66de14810689c7368f88717ac236a7d5034e70302e9bec8d0c22d3a6f62b798",
+    "uv_lock_sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1"
+  },
+  "split": {
+    "definition": {
+      "method": "SHA-256 of canonical raw 53-feature strings; first 8 digest bytes interpreted big-endian modulo 100",
+      "train_buckets": "0-59",
+      "calibration_buckets": "60-79",
+      "source_test_buckets": "80-99",
+      "rows": {
+        "train": 1418952,
+        "calibration": 473301,
+        "source_test": 473171
+      }
+    },
+    "calibration_subsplit": {
+      "probability_calibration_fit": "secondary SHA-256 of the canonical 46-feature float32 vector with fixed domain-separation string source-e1-cal-v1; first 8 digest bytes modulo 100 in 0-49",
+      "conformal_quantile_fit": "same secondary digest rule, buckets 50-99",
+      "duplicate_vectors": "identical 46-feature vectors remain in the same calibration subpartition"
+    },
+    "calibration_probability_rows": 271791,
+    "conformal_calibration_rows": 201510
+  },
+  "features": {
+    "count": 46,
+    "order": [
+      "PROTOCOL",
+      "L7_PROTO",
+      "IN_BYTES",
+      "OUT_BYTES",
+      "IN_PKTS",
+      "OUT_PKTS",
+      "FLOW_DURATION_MILLISECONDS",
+      "TCP_FLAGS",
+      "CLIENT_TCP_FLAGS",
+      "SERVER_TCP_FLAGS",
+      "DURATION_IN",
+      "DURATION_OUT",
+      "MIN_TTL",
+      "MAX_TTL",
+      "LONGEST_FLOW_PKT",
+      "SHORTEST_FLOW_PKT",
+      "MIN_IP_PKT_LEN",
+      "MAX_IP_PKT_LEN",
+      "SRC_TO_DST_SECOND_BYTES",
+      "DST_TO_SRC_SECOND_BYTES",
+      "RETRANSMITTED_IN_BYTES",
+      "RETRANSMITTED_IN_PKTS",
+      "RETRANSMITTED_OUT_BYTES",
+      "RETRANSMITTED_OUT_PKTS",
+      "SRC_TO_DST_AVG_THROUGHPUT",
+      "DST_TO_SRC_AVG_THROUGHPUT",
+      "NUM_PKTS_UP_TO_128_BYTES",
+      "NUM_PKTS_128_TO_256_BYTES",
+      "NUM_PKTS_256_TO_512_BYTES",
+      "NUM_PKTS_512_TO_1024_BYTES",
+      "NUM_PKTS_1024_TO_1514_BYTES",
+      "TCP_WIN_MAX_IN",
+      "TCP_WIN_MAX_OUT",
+      "ICMP_TYPE",
+      "ICMP_IPV4_TYPE",
+      "DNS_QUERY_TYPE",
+      "DNS_TTL_ANSWER",
+      "FTP_COMMAND_RET_CODE",
+      "SRC_TO_DST_IAT_MIN",
+      "SRC_TO_DST_IAT_MAX",
+    

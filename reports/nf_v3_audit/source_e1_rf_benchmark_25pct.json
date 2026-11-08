@@ -1,0 +1,67 @@
+{
+  "report_id": "source-e1-compute-benchmark-1",
+  "generated_utc": "2026-11-08T12:32:08.500000+00:00",
+  "git_commit": "b3de73407cb45dbe82b3d2ce1de53e1ab99d0d3f",
+  "configuration_id": "source-e1-lock-1",
+  "source_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+  "stage_manifest_sha256": "88c346a503ae606bb6478e0c86ba8478ffe8137509aa149681613c08402fc670",
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "logical_cpu_count": 16,
+  "thread_limits": {
+    "OpenMP": 1,
+    "BLAS": 1,
+    "RF_n_jobs": 1
+  },
+  "cpu_and_memory_measurement": "Windows GetProcessMemoryInfo working set sampled every 50 ms; CPU time from process_time, normalized by logical CPU count",
+  "benchmark_scope": "bounded source-only resource benchmark; no target files opened; no outputs used for study results",
+  "distance": null,
+  "random_forest": {
+    "1": {
+      "concurrent_workers": 1,
+      "per_worker_fit_seconds": [
+        42.415266700001666
+      ],
+      "worker_sample_rows": 354738,
+      "worker_sample_fraction": 0.25,
+      "feature_count": 46,
+      "sample_sha256": "b80963e8dbc64b6abbf967f9f090116d4a110d9ccf341dbf4a7a476690accbad",
+      "class_counts": {
+        "0": 335667,
+        "1": 19071
+      },
+      "wall_seconds": 42.41702449999866,
+      "process_cpu_seconds": 41.484375,
+      "cpu_utilization_of_logical_capacity_pct": 6.112577362657962,
+      "cpu_core_equivalents": 0.9780123780252741,
+      "baseline_working_set_bytes": 491253760,
+      "peak_working_set_bytes": 517840896,
+      "peak_increment_bytes": 26587136
+    },
+    "2": {
+      "concurrent_workers": 2,
+      "per_worker_fit_seconds": [
+        47.980225800012704,
+        49.790050999989035
+      ],
+      "worker_sample_rows": 354738,
+      "worker_sample_fraction": 0.25,
+      "feature_count": 46,
+      "sample_sha256": "b80963e8dbc64b6abbf967f9f090116d4a110d9ccf341dbf4a7a476690accbad",
+      "class_counts": {
+        "0": 335667,
+        "1": 19071
+      },
+      "wall_seconds": 49.79241889997502,
+      "process_cpu_seconds": 96.671875,
+      "cpu_utilization_of_logical_capacity_pct": 12.134361657820627,
+      "cpu_core_equivalents": 1.9414978652513004,
+      "baseline_working_set_bytes": 494280704,
+      "peak_working_set_bytes": 537284608,
+      "peak_increment_bytes": 43003904
+    }
+  }
+}
