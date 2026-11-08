@@ -1,0 +1,323 @@
+{
+  "report_id": "cic-source-e1-distance-bank-benchmark-validation-1",
+  "generated_utc": "2026-11-08T19:56:25.872386+00:00",
+  "git_commit": "4eaea7ddd317bce2ab16e4e9832cf87d112f5975",
+  "prior_benchmark_report_sha256": "bde4c4ec5ba31aa748c1b85f954bb8585ce6a3d5047f53533e865833d0fd784c",
+  "prior_bank_selection_reused": true,
+  "configuration_id": "source-e1-cic-lock-1",
+  "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "source_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "feature_hashes": {
+    "train_X.npy": "8fe6577352db2efcebaa6f2f8f254b8b98a8183359764ed399f8b3447c747e26",
+    "source_test_X.npy": "056648b14bd804d10cabe4575ff66359d7faf1dfc580cb176bd786ee9f1186d6"
+  },
+  "feature_order": [
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "OUT_BYTES",
+    "IN_PKTS",
+    "OUT_PKTS",
+    "FLOW_DURATION_MILLISECONDS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "labels_read": false,
+  "target_file_read": false,
+  "target_labels_read": false,
+  "definition": "All-source-train StandardScaler; bounded exact baseline uses 2.4M deterministic evenly spaced source-train references; bank candidates are deterministic hash-priority subsets; each score is mean Euclidean 5-NN distance in standardized 46-feature space.",
+  "source_train_rows": 12068590,
+  "source_test_rows": 4025148,
+  "scaler_fit_all_source_train": {
+    "wall_seconds": 5.048022199975094,
+    "process_cpu_seconds": 4.921875,
+    "cpu_core_equivalents": 0.9750105694908163,
+    "cpu_utilization_of_logical_capacity_pct": 6.093816059317603,
+    "baseline_working_set_bytes": 179933184,
+    "peak_working_set_bytes": 2429091840,
+    "peak_increment_bytes": 2249158656,
+    "rows": 12068590,
+    "scaler_parameters_sha256": "7ad1b9bf9f21fc9b9009b862cf98ac83e6b0119255d148ef1ca41839831ec560",
+    "parameter_order": [
+      "mean_",
+      "var_",
+      "scale_"
+    ],
+    "parameter_dtype": "little-endian float64"
+  },
+  "scaler_parameter_sha256": "7ad1b9bf9f21fc9b9009b862cf98ac83e6b0119255d148ef1ca41839831ec560",
+  "query_indices_sha256": "bd33c609b6df055aa1adcee496e86f367aebb4b21d06feaae5572977b7b106db",
+  "query_transform": {
+    "wall_seconds": 0.0077170999720692635,
+    "process_cpu_seconds": 0.0,
+    "cpu_core_equivalents": 0.0,
+    "cpu_utilization_of_logical_capacity_pct": 0.0,
+    "baseline_working_set_bytes": 2400669696,
+    "peak_working_set_bytes": 2421071872,
+    "peak_increment_bytes": 20402176
+  },
+  "bounded_exact_baseline": {
+    "reference_rows": 2400000,
+    "reference_indices_sha256": "67fe51177e0cd849fd692759bb082df3fb3b246effb9c0c018760103ab539fbb",
+    "query_rows": 4096,
+    "query_indices_sha256": "bd33c609b6df055aa1adcee496e86f367aebb4b21d06feaae5572977b7b106db",
+    "reference_transform": {
+      "wall_seconds": 1.1302607000106946,
+      "process_cpu_seconds": 0.84375,
+      "cpu_core_equivalents": 0.7465091903062864,
+      "cpu_utilization_of_logical_capacity_pct": 4.665682439414289,
+      "baseline_working_set_bytes": 2421223424,
+      "peak_working_set_bytes": 3304452096,
+      "peak_increment_bytes": 883228672
+    },
+    "index_fit": {
+      "wall_seconds": 32.38229499998852,
+      "process_cpu_seconds": 31.71875,
+      "cpu_core_equivalents": 0.9795090187403718,
+      "cpu_utilization_of_logical_capacity_pct": 6.121931367127324,
+      "baseline_working_set_bytes": 3304435712,
+      "peak_working_set_bytes": 3424428032,
+      "peak_increment_bytes": 119992320
+    },
+    "query": {
+      "wall_seconds": 10.217008899984648,
+      "process_cpu_seconds": 10.03125,
+      "cpu_core_equivalents": 0.9818186612341184,
+      "cpu_utilization_of_logical_capacity_pct": 6.13636663271324,
+      "baseline_working_set_bytes": 3424403456,
+      "peak_working_set_bytes": 3424563200,
+      "peak_increment_bytes": 159744
+    },
+    "query_rows_per_second": 400.9001107952597,
+    "score_summary": {
+      "finite": true,
+      "exact_zero_count": 1830,
+      "min": 0.0,
+      "p50": 0.00027128492229379266,
+      "p95": 0.13296877893299214,
+      "max": 4.349941768841229
+    },
+    "score_sha256": "8b5d8c60f99948576a82db93e289b49cb953f2c0c7959e175de076752395cab1"
+  },
+  "standardized_bank_transform_k500000": {
+    "wall_seconds": 0.2612360999919474,
+    "process_cpu_seconds": 0.1875,
+    "cpu_core_equivalents": 0.7177415372752068,
+    "cpu_utilization_of_logical_capacity_pct": 4.485884607970043,
+    "baseline_working_set_bytes": 2432929792,
+    "peak_working_set_bytes": 2616938496,
+    "peak_increment_bytes": 184008704
+  },
+  "comparisons": {
+    "100000": {
+      "rows": 100000,
+      "offsets_sha256": "ca3e1d8e90d74cba9734d2189cca428dfa84d48b03436df21b26a5a1eaf2f675",
+      "file_sha256": "44ef0bec07a93fb08c8423f51459e498714aa00cb7b12fff7898a991f6ffec7c",
+      "index_fit": {
+        "wall_seconds": 0.7668604999780655,
+        "process_cpu_seconds": 0.734375,
+        "cpu_core_equivalents": 0.9576383188611297,
+        "cpu_utilization_of_logical_capacity_pct": 5.9852394928820605,
+        "baseline_working_set_bytes": 2616942592,
+        "peak_working_set_bytes": 2619985920,
+        "peak_increment_bytes": 3043328
+      },
+      "query": {
+        "wall_seconds": 0.8584721000224818,
+        "process_cpu_seconds": 0.796875,
+        "cpu_core_equivalents": 0.92824798846594,
+        "cpu_utilization_of_logical_capacity_pct": 5.801549927912125,
+        "baseline_working_set_bytes": 2619961344,
+        "peak_working_set_bytes": 2620620800,
+        "peak_increment_bytes": 659456
+      },
+      "query_rows_per_second": 4771.267464478733,
+      "score_summary": {
+        "finite": true,
+        "exact_zero_count": 1310,
+        "min": 0.0,
+        "p50": 0.006542672124008766,
+        "p95": 0.5824830584982176,
+        "max": 13.563742779902029
+      },
+      "absolute_error_to_bounded_exact": {
+        "median": 0.004463095052805255,
+        "p95": 0.4109061523257763,
+        "mean": 0.08101818084223535,
+        "maximum": 12.941768497540247,
+        "median_absolute_error_divided_by_exact_score_median": 16.451688560751894,
+        "scope_note": "Absolute errors remain defined when the exact score is zero. No per-row relative-error mean is used because zero and near-zero exact scores make it unstable."
+      },
+      "spearman_rank_correlation_to_bounded_exact": 0.8277294289138459,
+      "projected_full_source_test_query_seconds": 843.6223770657452,
+      "projected_full_source_test_index_fit_plus_query_seconds": 844.3892375657233,
+      "same_seed_independent_repeat": null
+    },
+    "250000": {
+      "rows": 250000,
+      "offsets_sha256": "8bcd13dfbe2cf74478259a4834cfd4560dc6eb6159369fc87a4c184882cb9277",
+      "file_sha256": "03fe50f498706bbc601a310d30f745c2c622e34752fa57bce858965b37c84f5e",
+      "index_fit": {
+        "wall_seconds": 2.382348900020588,
+        "process_cpu_seconds": 2.328125,
+        "cpu_core_equivalents": 0.9772393119999679,
+        "cpu_utilization_of_logical_capacity_pct": 6.1077456999998,
+        "baseline_working_set_bytes": 2617737216,
+        "peak_working_set_bytes": 2631823360,
+        "peak_increment_bytes": 14086144
+      },
+      "query": {
+        "wall_seconds": 1.6190816000162158,
+        "process_cpu_seconds": 1.59375,
+        "cpu_core_equivalents": 0.9843543401296376,
+        "cpu_utilization_of_logical_capacity_pct": 6.1522146258102355,
+        "baseline_working_set_bytes": 2631798784,
+        "peak_working_set_bytes": 2631831552,
+        "peak_increment_bytes": 32768
+      },
+      "query_rows_per_second": 2529.829256264154,
+      "score_summary": {
+        "finite": true,
+        "exact_zero_count": 1452,
+        "min": 0.0,
+        "p50": 0.002483412855891802,
+        "p95": 0.41786808093211086,
+        "max": 8.714304360925599
+      },
+      "absolute_error_to_bounded_exact": {
+        "median": 0.001429197779083495,
+        "p95": 0.23543541583966993,
+        "mean": 0.046308242495677235,
+        "maximum": 8.092330078563817,
+        "median_absolute_error_divided_by_exact_score_median": 5.268253639012495,
+        "scope_note": "Absolute errors remain defined when the exact score is zero. No per-row relative-error mean is used because zero and near-zero exact scores make it unstable."
+      },
+      "spearman_rank_correlation_to_bounded_exact": 0.8847234050998609,
+      "projected_full_source_test_query_seconds": 1591.0749668315605,
+      "projected_full_source_test_index_fit_plus_query_seconds": 1593.457315731581,
+      "same_seed_independent_repeat": null
+    },
+    "500000": {
+      "rows": 500000,
+      "offsets_sha256": "bf87cbf232ce783c4a8dda25cd8a4100e39c48a71a5ace14e6150a6373f3ca7e",
+      "file_sha256": "f03854b37c59f409f7082a2f65bda67d862fdbf5272d4bae0f23de579f2d70f8",
+      "index_fit": {
+        "wall_seconds": 5.371680300013395,
+        "process_cpu_seconds": 5.1875,
+        "cpu_core_equivalents": 0.9657127212107288,
+        "cpu_utilization_of_logical_capacity_pct": 6.035704507567055,
+        "baseline_working_set_bytes": 2617745408,
+        "peak_working_set_bytes": 2646945792,
+        "peak_increment_bytes": 29200384
+      },
+      "query": {
+        "wall_seconds": 2.4582805999962147,
+        "process_cpu_seconds": 2.4375,
+        "cpu_core_equivalents": 0.9915466932472042,
+        "cpu_utilization_of_logical_capacity_pct": 6.197166832795027,
+        "baseline_working_set_bytes": 2646921216,
+        "peak_working_set_bytes": 2646945792,
+        "peak_increment_bytes": 24576
+      },
+      "query_rows_per_second": 1666.2052330422764,
+      "score_summary": {
+        "finite": true,
+        "exact_zero_count": 1565,
+        "min": 0.0,
+        "p50": 0.001214994340538097,
+        "p95": 0.3177769903799679,
+        "max": 4.988193997329484
+      },
+      "absolute_error_to_bounded_exact": {
+        "median": 0.000531386635872816,
+        "p95": 0.12090406494834435,
+        "mean": 0.025702575106427906,
+        "maximum": 2.499977655196439,
+        "median_absolute_error_divided_by_exact_score_median": 1.9587768880768897,
+        "scope_note": "Absolute errors remain defined when the exact score is zero. No per-row relative-error mean is used because zero and near-zero exact scores make it unstable."
+      },
+      "spearman_rank_correlation_to_bounded_exact": 0.9213133210508726,
+      "projected_full_source_test_query_seconds": 2415.7576270785066,
+      "projected_full_source_test_index_fit_plus_query_seconds": 2421.12930737852,
+      "same_seed_independent_repeat": {
+        "scores_bitwise_equal": true,
+        "first_sha256": "df3ca2f8b1e393516a1ec35710427d50d0f811c99f5f0930c554e60a8fd7400e",
+        "repeat_sha256": "df3ca2f8b1e393516a1ec35710427d50d0f811c99f5f0930c554e60a8fd7400e",
+        "repeat_query": {
+          "wall_seconds": 2.4804180999926757,
+          "process_cpu_seconds": 2.390625,
+          "cpu_core_equivalents": 0.9637992078863878,
+          "cpu_utilization_of_logical_capacity_pct": 6.023745049289924,
+          "baseline_working_set_bytes": 2646929408,
+          "peak_working_set_bytes": 2646953984,
+          "peak_increment_bytes": 24576
+        }
+      }
+    }
+  },
+  "maximum_observed_timed_phase_peak_working_set_bytes": 3424563200,
+  "system_memory_before": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 7955169280,
+    "memory_load_pct": 52
+  },
+  "system_memory_after": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 5730045952,
+    "memory_load_pct": 65
+  },
+  "logical_cpu_count": 16,
+  "thread_limits": {
+    "BLAS": 1,
+    "OpenMP": 1,
+    "KDTree_n_jobs": 1
+  },
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1"
+  },
+  "interpretation_note": "This validates only a bounded feature-only subset. It is not a comparison to the full 12.07M-reference exact signal, does not select a final K, and does not authorize a CIC E1 manifest or seed run. The first report's mean relative-error aggregation overflowed for zero/near-zero exact scores; this validation uses finite-checked scores, absolute error, and rank correlation instead.",
+  "validation_script_sha256": "ec1ed4159abc68254c91d4e28249cc1788af762590f25dcd5dd84df9e26e2766",
+  "generator_script_sha256_at_handoff": "9ceb4e9cb09749d0b677d625baf46facb7759e7d7cee41ab01cd92785916b716",
+  "code_provenance_note": "The first-pass generator was an uncommitted working-tree script and its score-aggregation lines were corrected after the run; its exact executed bytes were not archived. The deterministic selection rule and output offsets were revalidated by the hashed validation script; the original first-pass report hash is retained below. Use the committed validation script and retained offset-list hashes as the reproducible benchmark evidence."
+}
