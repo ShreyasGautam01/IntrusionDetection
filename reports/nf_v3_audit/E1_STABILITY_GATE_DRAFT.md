@@ -1,6 +1,6 @@
 # E1 Source-Only Stability Gate (Draft)
 
-**Status:** Seeds 0–5 partial outputs were integrity-checked and reproduced; the full five-signal, ten-seed gate is incomplete. No numeric acceptance threshold is frozen.
+**Status:** Full five-signal results for seeds 0–9 and an exact seed-0 repeat are complete. Numeric acceptance thresholds remain unspecified by the locked config; target evaluation remains locked pending project-level stability interpretation.
 **Scope:** UNSW-only in-domain gate for the active UNSW → CIC2018 direction.
 **Target labels:** CIC2018 remains sealed; no target rows or labels are needed for this gate.
 **Prepared from:** frozen `methodology_final.md` E1 requirement and `rf_config_draft.json` (`rf-draft-4`); source file SHA-256 `4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5`.
@@ -9,7 +9,7 @@
 
 The E1 section requires a source in-domain control that trains the Random Forest, calibrates probabilities, fits the reliability layers, and evaluates on held-out source test data. It calls for detector metrics, generic-error ranking, attack-miss ranking, calibration, and score-distribution outputs. The acceptance statement requires stable results across seeds but defines neither a numeric tolerance nor one summary statistic for stability.
 
-The partial run and its checks are recorded in `SOURCE_E1_PARTIAL_REPORT.md` and `SOURCE_E1_RECOVERY_AUDIT.md`. The original artifacts reproduce for the RF detector, confidence, and disagreement signals. They do not contain the configured kNN distance, split conformal, or Isolation Forest outputs. A separate exact distance computation did not finish within more than 12 minutes and produced no usable result. The full stability gate has not passed and no target-derived choice was made.
+The recovery checks are recorded in `SOURCE_E1_RECOVERY_AUDIT.md`. The completed five-signal results, all-seed summaries, rank agreement, review-set overlap, and exact repeat are recorded in `SOURCE_E1_FINAL_REPORT.md` and `source_e1_final_results.json`. The exact shared distance calculation took 1,746.4 seconds. The full computation is complete; target unlock is still pending because the frozen config provides no numeric stability tolerance and the source-only rank variation requires interpretation.
 
 ## Proposed reporting procedure
 
@@ -20,7 +20,7 @@ The partial run and its checks are recorded in `SOURCE_E1_PARTIAL_REPORT.md` and
 5. Repeat one fixed seed once in a clean process under the same locked runtime and input/config hashes. Compare predictions and metrics exactly; if they differ, stop for a reproducibility investigation before interpreting cross-seed variation.
 6. Keep all ten seed results, including failures. Do not exclude a seed based on performance. A failed run is classified using a predeclared technical invalid-run rule, documented with the raw error and rerun provenance.
 
-## Decision still required before target evaluation
+## Target-evaluation decision still required
 
 The reporting procedure above makes seed variation visible but cannot determine whether a particular spread is acceptable. Before target evaluation is unlocked, review and record a stability decision rule for at least:
 
@@ -29,4 +29,4 @@ The reporting procedure above makes seed variation visible but cannot determine 
 - whether any calibration or detector-performance metric is a hard gate or descriptive only; and
 - the treatment of ties in score rankings and review-budget cutoffs.
 
-No numeric cutoffs are proposed here because the frozen protocol supplies none, and inventing them without review would add an unapproved method
+The completed source-only results show stable detector metric

@@ -1,6 +1,6 @@
 # Random Forest Configuration Draft
 
-**Status:** `rf-draft-4` remains a candidate for the full study. A separate source-only E1 execution config is recorded in `reports/nf_v3_audit/source_e1_config.json`; six partial source runs have occurred.
+**Status:** `rf-draft-4` remains a candidate for the target-transfer study. The separate `source-e1-lock-1` source-only execution is complete for seeds 0–9; target evaluation remains locked pending stability interpretation.
 **Configuration:** `rf-draft-4` (provenance, dataset hashes, project-spec hash, and lockfile hash are recorded in `rf_config_draft.json`).
 
 ## Fixed by the frozen methodology
@@ -23,15 +23,14 @@ Added `pyproject.toml` and `uv.lock`, then installed into the repository's Git-i
 
 Recreate the ignored environment with `uv sync --locked` using the pinned uv 0.11.19 executable.
 
-The `rf-draft-4` candidate remains uninstantiated as the final study configuration. The six source-only runs used the separately locked `source-e1-lock-1` settings. The runtime lock does not unlock target evaluation.
+The `rf-draft-4` candidate remains uninstantiated as the final target-transfer configuration. The full source-only E1 used the separately locked `source-e1-lock-1` settings. The runtime lock does not unlock target evaluation.
 
-## Remaining pre-E1 decisions
+## Remaining decisions before target transfer
 
 1. Approve the exact primary predictive columns and the compact sensitivity mapping, including numeric port treatment.
 2. Review and freeze the family ontology and mapping policy before family-level reporting.
-3. Approve or revise this candidate parameter set and seed list, then pin the runtime.
-4. Review `reports/nf_v3_audit/E1_STABILITY_GATE_DRAFT.md` and approve numeric source-only stability tolerances before running E1; the draft defines reporting but does not invent thresholds absent from the frozen method.
-5. Freeze the source split, calibration procedure details, and all reliability-signal parameters.
-6. Complete and interpret the source-only E1 gate; only after it passes may the freeze manifest be committed for final target evaluation. Six seeds and three signal families remain.
+3. Review the completed source-only E1 stability evidence in `reports/nf_v3_audit/SOURCE_E1_FINAL_REPORT.md`; the frozen source config specifies no numeric tolerance.
+4. Freeze the target-transfer feature, family, split, and representation decisions and commit a target firewall manifest.
+5. Keep target evaluation locked until the source-only stability interpretation is recorded and accepted.
 
 The defaults are cross-checked against the [official scikit-learn RandomForestClassifier API](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html). Defaults can change across library releases, so the API version and package version must be fixed in the final lock.

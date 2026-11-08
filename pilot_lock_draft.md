@@ -1,12 +1,12 @@
 # First Random Forest pilot lock — working draft
 
-**Status:** Not frozen; target labels remain sealed.
+**Status:** Target-transfer lock remains unfrozen; source-only E1 is complete and target labels remain sealed.
 **Repository branch:** `codex/e0-e05`.
 **Active direction:** NF-UNSW-NB15-v3 → NF-CSE-CIC-IDS2018-v3.
 **ToN-IoT-v3:** Excluded.
 
-This draft translates the frozen protocol into a reviewable pilot checklist.
-It does not authorize training or target evaluation. The frozen proposal and
+This draft translates the frozen protocol into a reviewable target-transfer
+checklist. It does not authorize target evaluation. The frozen proposal and
 `methodology_final.md` remain unchanged.
 
 ## Protocol-defined settings
@@ -37,9 +37,10 @@ are **not frozen**. A pinned `uv.lock` resolves scikit-learn 1.9.1. Six limited 
 RF runs used the separate `source-e1-lock-1` config; this is not the full
 reliability stack or target-transfer study.
 
-The frozen E1 gate also requires stable results across seeds without defining
-a numeric stability tolerance. Define and record that review criterion before
-any E1 run.
+The frozen E1 gate requires stable results across seeds but defines no numeric
+tolerance. The ten-seed results and exact seed-0 repeat are in
+`reports/nf_v3_audit/SOURCE_E1_FINAL_REPORT.md`; record the project-level
+interpretation before target evaluation.
 
 ## Current E0/E0.5 settings and cautions
 
@@ -65,10 +66,6 @@ any E1 run.
   implemented and recorded before E1.
 - Finite-value replacements are fitted from UNSW baseline training rows only
   and applied unchanged at inference.
-- The source-only matrices are staged locally at `data/processed/source-e1-lock-1/`. Seeds 0–5 completed; current RSS stayed modest, but per-run peak memory was not recorded. The remaining seed runs and reliability signals are documented in `reports/nf_v3_audit/PROJECT_HANDOFF.md`.
+- The source-only matrices and full per-seed arrays are local/ignored at `data/processed/source-e1-lock-1/`. Seeds 0–9 and all five signals completed under `source-e1-lock-1`; bounded resource measurements and the full-run summary are in the source E1 benchmark/final report.
 
-## Required decisions before freezing
-
-1. Review and approve the explicit 46-column primary-set proposal in
-   `reports/nf_v3_audit/primary_feature_set_draft.csv` (backed by
-  
+## Required decisions before target tr
