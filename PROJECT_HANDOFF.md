@@ -48,5 +48,5 @@ The exact distance and RF concurrency envelope is in `CIC_SOURCE_E1_BENCHMARK_DE
 
 ## Next-account checkpoint
 
-The latest published branch head is `9d1447c5c2a325ef83a72007bcf29bdda687dc48`. The source manifest is committed and descends from its lock commit. Full CIC distance and RF seed jobs remain unstarted. Do not begin target transfer. Local `git status` and `git diff` currently fail with “this operation must be run in a work tree” even though `git rev-parse` resolves the expected repository; reconcile the local Git status issue before continuing and preserve ignored outputs.
+The CIC exact-distance manifest is committed and descends from its code lock commit. The local checkout was backed up and synchronized to the published branch at `52a4d17` without cleaning ignored artifacts. Manifest preflight, code compilation, and six staged-array hash/size checks pass. Full CIC distance and RF seed jobs remain unstarted. The distance runner requires at least 4.20 GB available physical memory; repeated readings on 2026-11-09 ranged from 3.82 to 4.03 GB, so no computation was launched. Keep the frozen manifest and method unchanged; resume with a resource check and start the exact distance only when its committed safety floor is met. Do not begin target transfer.
 
