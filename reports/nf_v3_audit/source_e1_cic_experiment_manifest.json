@@ -1,0 +1,327 @@
+{
+  "manifest_id": "source-e1-cic-experiment-v1",
+  "status": "frozen",
+  "created_utc": "2026-11-09T07:05:31.406302+00:00",
+  "direction": "cic-to-unsw",
+  "lock_commit": "bfbe880c4c05f408774d244d407a108736bf4d8f",
+  "configuration_id": "source-e1-cic-lock-1",
+  "configuration_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "source_dataset_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "source_row_count": 20115529,
+  "split_definition": {
+    "method": "SHA-256 of canonical raw 53-feature strings; first 8 digest bytes interpreted big-endian modulo 100",
+    "train_buckets": "0-59",
+    "calibration_buckets": "60-79",
+    "source_test_buckets": "80-99",
+    "rows": {
+      "train": 12068590,
+      "calibration": 4021791,
+      "source_test": 4025148
+    },
+    "definition": "SHA-256 of canonical raw 53-feature strings; first 8 digest bytes interpreted big-endian modulo 100; train buckets 0-59, calibration 60-79, source_test 80-99"
+  },
+  "split_hashes": {
+    "calibration_X.npy": {
+      "sha256": "f1611f59c3f64b49f7d69fe7329cba7babc42c7456e7a5fea13a6ab669f622b9",
+      "bytes": 740009672
+    },
+    "calibration_y.npy": {
+      "sha256": "2a9b723a639ec63e71db1e31c0485fcec9bcc5b128ea359a6bbc3c7e9908002e",
+      "bytes": 4021919
+    },
+    "source_test_X.npy": {
+      "sha256": "056648b14bd804d10cabe4575ff66359d7faf1dfc580cb176bd786ee9f1186d6",
+      "bytes": 740627360
+    },
+    "source_test_y.npy": {
+      "sha256": "c46214db3d1eebd5490c5bd69f68816f81463021174645ac13aba4d29021e8d6",
+      "bytes": 4025276
+    },
+    "train_X.npy": {
+      "sha256": "8fe6577352db2efcebaa6f2f8f254b8b98a8183359764ed399f8b3447c747e26",
+      "bytes": 2220620688
+    },
+    "train_y.npy": {
+      "sha256": "62991f194230e0ee049acd0556f8ef7baa119c95ee59979d41887b3336e2305c",
+      "bytes": 12068718
+    }
+  },
+  "feature_count": 46,
+  "feature_order": [
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "OUT_BYTES",
+    "IN_PKTS",
+    "OUT_PKTS",
+    "FLOW_DURATION_MILLISECONDS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "feature_registry_sha256": "3fa1c856f0ee858f072f8f0f85dff41c4bb1369fa3400ed3516a9642e591091d",
+  "excluded_metadata_columns": [
+    "IPV4_SRC_ADDR",
+    "IPV4_DST_ADDR",
+    "L4_SRC_PORT",
+    "L4_DST_PORT",
+    "DNS_QUERY_ID",
+    "FLOW_START_MILLISECONDS",
+    "FLOW_END_MILLISECONDS"
+  ],
+  "preprocessing": {
+    "finite_policy_file": "scripts/finite_value_policy.py",
+    "replacement_values_file": "reports/nf_v3_audit/cic_train_finite_replacements.json",
+    "replacement_values_sha256": "aa832483365c36d89fa43c29eaadac93c7fb65bb954802f010c3fa8e3109c286",
+    "fit_partition": "CIC source-train only",
+    "values": {
+      "SRC_TO_DST_SECOND_BYTES": 0.0,
+      "DST_TO_SRC_SECOND_BYTES": 0.0
+    },
+    "empty_nan_inf_rule": "replace with fitted source-train finite median; use 0.0 only if no finite source-train observations",
+    "target_preprocessing": "not run"
+  },
+  "reliability_signals": {
+    "confidence": {
+      "score": "1 - max(source-calibrated class probabilities)",
+      "higher_means": "more deserving of review"
+    },
+    "random_forest_disagreement": {
+      "score": "1 - maximum per-class fraction of the 200 tree predictions",
+      "higher_means": "more deserving of review"
+    },
+    "feature_space_distance": {
+      "reference": "CIC source-train only",
+      "scaler": "StandardScaler fit only on CIC source-train",
+      "metric": "Euclidean",
+      "neighbors": 5,
+      "score": "mean distance to the 5 nearest source-train reference rows",
+      "higher_means": "more deserving of review"
+    },
+    "split_conformal": {
+      "calibration": "disjoint conformal_quantile_fit subset of CIC source calibration partition",
+      "alpha": 0.1,
+      "nonconformity": "1 - calibrated probability assigned to the true source-calibration class",
+      "quantile": "finite-sample split-conformal order statistic at ceil((n+1)*(1-alpha))/n",
+      "prediction_set": "include each binary class whose nonconformity is at or below the frozen calibration quantile",
+      "scalar_review_score": "(prediction_set_size - 1) / (2 - 1)",
+      "higher_means": "more deserving of review"
+    },
+    "isolation_forest": {
+      "fit_data": "CIC source-train only",
+      "n_estimators": 100,
+      "max_samples": 256,
+      "max_features": 1.0,
+      "contamination": "auto",
+      "bootstrap": false,
+      "random_state": "same run seed",
+      "score": "negative sklearn score_samples, higher means more anomalous and more deserving of review"
+    }
+  },
+  "random_forest": {
+    "class": "sklearn.ensemble.RandomForestClassifier",
+    "parameters": {
+      "n_estimators": 200,
+      "min_samples_leaf": 5,
+      "criterion": "gini",
+      "max_depth": null,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "max_features": "sqrt",
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "bootstrap": true,
+      "oob_score": false,
+      "n_jobs": 1,
+      "verbose": 0,
+      "warm_start": false,
+      "class_weight": null,
+      "ccp_alpha": 0.0,
+      "max_samples": null,
+      "random_state": "one run per seed"
+    },
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "software_lock": "uv.lock"
+  },
+  "calibration": {
+    "calibration_partition_source": "CIC calibration split only",
+    "disjoint_subsets": {
+      "probability_calibration_fit": "secondary SHA-256 of the canonical 46-feature float32 vector with fixed domain-separation string source-e1-cal-v1; first 8 digest bytes modulo 100 in 0-49",
+      "conformal_quantile_fit": "same secondary digest rule, buckets 50-99",
+      "duplicate_vectors": "identical 46-feature vectors remain in the same calibration subpartition"
+    },
+    "probability_method": "sigmoid/Platt calibration fit on probability_calibration_fit subset only",
+    "conformal_calibration": "fit split-conformal quantile on disjoint conformal_quantile_fit subset only, using probabilities from the frozen Platt calibrator",
+    "target_recalibration": false,
+    "calibration_probability_rows": 1995918,
+    "conformal_calibration_rows": 2025873
+  },
+  "e1_reporting": {
+    "per_seed": "detector metrics, generic-error ranking, attack-miss ranking, calibration, score distributions",
+    "across_seed_summary": [
+      "median",
+      "IQR",
+      "minimum",
+      "maximum"
+    ],
+    "target_eval_allowed_after_this_run": false,
+    "acceptance_rule": "Report CIC source-only stability; target transfer remains locked pending project-level interpretation.",
+    "primary_source_endpoints": [
+      "attack-miss AUPRC",
+      "attack-miss capture at 5% review"
+    ],
+    "additional_review_budgets": [
+      0.01,
+      0.05,
+      0.1
+    ],
+    "generic_error_endpoint": "AUPRC for ranking incorrect source-test predictions as positive events",
+    "stability_numeric_tolerance": "not imposed; source-only metrics and across-seed spreads are reported, and target evaluation remains locked pending stability-gate review"
+  },
+  "distance_execution": {
+    "mathematically_equivalent": true,
+    "approximation": false,
+    "definition": "For each source-test row, mean Euclidean distance in source-train-standardized 46-feature space to the five nearest original CIC source-train rows.",
+    "scaler_fit": "All original CIC source-train rows, StandardScaler.partial_fit in 100000-row input-order blocks.",
+    "reference_chunk_rows": 500000,
+    "reference_chunk_order": "Consecutive source-train input offsets, starting at zero.",
+    "duplicate_compression": "Within each chunk, np.unique(axis=0, return_counts=True) over finite float32 feature rows; integer multiplicity is retained exactly.",
+    "per_chunk_search": "Fit one sklearn KDTree on the standardized unique rows and retrieve the five nearest distinct vectors per query.",
+    "merge": "Merge prior and current chunk candidates by stable ascending distance; retain the best five distinct candidate entries with counts capped at five. Sum the first five original-reference distances by multiplicity and divide by five.",
+    "equivalence_argument": "No chunk can contribute a global top-five reference beyond its five nearest distinct vectors; a sixth distinct vector is no closer than five vectors from that chunk. Equal-distance boundary ties have identical distances. Per-row multiplicities reproduce repeated original reference rows.",
+    "query_batch_rows": 2048,
+    "output_dtype": "float32",
+    "kd_tree_leaf_size": 30,
+    "distance_threads": 1,
+    "distance_shared_across_rf_seeds": true,
+    "output_path_ignored_locally": "data/processed/source-e1-cic-lock-1/full_runs/common/feature_space_distance.npy",
+    "resume_state": "Two disk-backed top-five distance/count state slots with per-reference-chunk atomic checkpoint."
+  },
+  "resource_decision": {
+    "full_distance_estimated_hours": 3.6195168193321816,
+    "projected_peak_working_set_bytes": 3101156384,
+    "minimum_available_memory_bytes": 4200000000,
+    "rf_concurrent_workers": 1,
+    "rf_internal_threads": 1,
+    "rf_concurrency_rationale": "The 2%-data two-worker sample improved pair throughput 1.74x, but full-data per-forest memory was not measured. Use one CIC worker to limit peak memory on the 12.07M-row source split."
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "label_use": "CIC labels are source labels for this source-only gate. No UNSW labels or feature data are accessed.",
+  "randomness": "No new random sampling is used by the distance implementation. RF and IsolationForest use their frozen run seed; all other transformations and calibration sub-splits follow the source config.",
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1"
+  },
+  "software_lock_sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1",
+  "code_sha256": {
+    "scripts/run_source_e1_complete.py": "0d721ce59d8fcb41637c9a24328069210423feb905087d343bd34d61ac591ede",
+    "scripts/cic_exact_chunked_5nn.py": "fd6b39f4739dabcf59bbbf7871f97e645335e255d97ce11bcb5d07f4e597a980",
+    "scripts/finite_value_policy.py": "47f15fe59a2eb4c933945ea454fb4aaccb22fad8247061cc08eb4ca9d2e6b386",
+    "scripts/benchmark_cic_exact_duplicate_compression.py": "1751b02c81e81198a0d75d89bf04ded49e3ab5752d4a93d089aeabf30e87afcb",
+    "scripts/benchmark_cic_chunked_exact_merge.py": "66b6cae8073e78b834392694f75a88c3eb2f81c365e16dbf8b396df9d1180718",
+    "scripts/create_source_e1_cic_manifest.py": "8f2414002bd948399de9429a4a92d70696684e821822acc9f801561e40510ba4"
+  },
+  "benchmark_reports": {
+    "reports/nf_v3_audit/cic_distance_bank_benchmark.json": "c478b09cbc6b0e24d12f9143f3f36e0ef5d3f4f8767788b1532e7d19ac66d6a3",
+    "reports/nf_v3_audit/cic_distance_bank_benchmark_validation.json": "5ba2f5ce187ac56f0f006e94024669bf96871ce5a3123097575e95d66808dd56",
+    "reports/nf_v3_audit/cic_exact_duplicate_compression_benchmark.json": "9096db8fded92bac3676ef8a016f3e322687549bb8fe43ba38efe09b5c8ec5ef",
+    "reports/nf_v3_audit/cic_chunked_exact_merge_benchmark_preliminary_superseded.json": "d5099dfead3937300bd9fbc41ef4bb5214fe494c4c42de6b249230ddcb46cf9f",
+    "reports/nf_v3_audit/cic_chunked_exact_merge_benchmark_validated.json": "44b393b51e179a4deb17439422197ffa760cf331bbdaff5d35b6a27e88a038fe"
+  },
+  "smoke_evidence": {
+    "path": "reports/nf_v3_audit/source_e1_smoke_cic-to-unsw_chunked_5signal.json",
+    "sha256": "719163bf3893e87c3a1f8f5a373190a46dc8ddf7813d3ea427a6905578262d23",
+    "rows": 2000,
+    "score_shapes": {
+      "confidence": [
+        2000
+      ],
+      "random_forest_disagreement": [
+        2000
+      ],
+      "feature_space_distance": [
+        2000
+      ],
+      "split_conformal": [
+        2000
+      ],
+      "isolation_forest": [
+        2000
+      ]
+    }
+  },
+  "target_access": {
+    "features_read": false,
+    "labels_read": false
+  },
+  "scope_exclusions": [
+    "ToN-IoT",
+    "XGBoost",
+    "8-feature sensitivity"
+  ],
+  "frozen_documents_unchanged": [
+    "research_proposal.md",
+    "methodology_final.md"
+  ]
+}
