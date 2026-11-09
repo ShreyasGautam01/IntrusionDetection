@@ -1,9 +1,11 @@
 {
-  "manifest_id": "source-e1-cic-experiment-v1",
+  "manifest_id": "source-e1-cic-experiment-v2",
   "status": "frozen",
-  "created_utc": "2026-11-09T07:05:31.406302+00:00",
+  "created_utc": "2026-11-09T08:17:31.310328+00:00",
   "direction": "cic-to-unsw",
-  "lock_commit": "bfbe880c4c05f408774d244d407a108736bf4d8f",
+  "lock_commit": "dae4f20279d375df14a8cd1e8398222c8691df4c",
+  "supersedes_manifest_sha256": "33611a20f419a9a653d98b8112141f9f86a0d2a2dd2d661b7e94849cd5753a28",
+  "supersedes_lock_commit": "bfbe880c4c05f408774d244d407a108736bf4d8f",
   "configuration_id": "source-e1-cic-lock-1",
   "configuration_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
   "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
@@ -275,12 +277,13 @@
   },
   "software_lock_sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1",
   "code_sha256": {
-    "scripts/run_source_e1_complete.py": "0d721ce59d8fcb41637c9a24328069210423feb905087d343bd34d61ac591ede",
-    "scripts/cic_exact_chunked_5nn.py": "fd6b39f4739dabcf59bbbf7871f97e645335e255d97ce11bcb5d07f4e597a980",
+    "scripts/run_source_e1_complete.py": "6f2d9669db8439716fe2425bdbc37297101fb8f53bca813a57969228c6bb4e34",
+    "scripts/cic_exact_chunked_5nn.py": "a4188fa9ab6c8f8e01af105ab4d78e8f028082b091c122aa20f998338a4dbe12",
     "scripts/finite_value_policy.py": "47f15fe59a2eb4c933945ea454fb4aaccb22fad8247061cc08eb4ca9d2e6b386",
     "scripts/benchmark_cic_exact_duplicate_compression.py": "1751b02c81e81198a0d75d89bf04ded49e3ab5752d4a93d089aeabf30e87afcb",
     "scripts/benchmark_cic_chunked_exact_merge.py": "66b6cae8073e78b834392694f75a88c3eb2f81c365e16dbf8b396df9d1180718",
-    "scripts/create_source_e1_cic_manifest.py": "8f2414002bd948399de9429a4a92d70696684e821822acc9f801561e40510ba4"
+    "scripts/create_source_e1_cic_manifest.py": "4457c1d9ccc8ad7372f421c2beae465ba5bd124005d064f9c9bbd741f62cd047",
+    "scripts/migrate_cic_exact_distance_checkpoint.py": "04861c0e5946bb7b7dce993fcc68ae72670db76ec44729aaed52f0833aed9978"
   },
   "benchmark_reports": {
     "reports/nf_v3_audit/cic_distance_bank_benchmark.json": "c478b09cbc6b0e24d12f9143f3f36e0ef5d3f4f8767788b1532e7d19ac66d6a3",
