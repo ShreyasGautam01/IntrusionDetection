@@ -1,12 +1,12 @@
 {
   "report_id": "cic-source-e1-exact-distance-runtime-checkpoint-v1",
-  "generated_utc": "2026-11-09T10:22:36+00:00",
+  "generated_utc": "2026-11-09T12:01:14+00:00",
   "status": "in_progress",
   "configuration_id": "source-e1-cic-lock-1",
   "direction": "cic-to-unsw",
   "experiment_manifest_sha256": "eda7ccef2fbbc50f8a69a9b93cadd39176a1e318c2ece3792f4bdbb0dd71e1d9",
   "manifest_lock_commit": "dae4f20279d375df14a8cd1e8398222c8691df4c",
-  "completed_reference_chunks": 10,
+  "completed_reference_chunks": 15,
   "total_reference_chunks": 25,
   "source_train_rows": 12068590,
   "source_test_rows": 4025148,
@@ -21,7 +21,12 @@
     800.7607393999933,
     833.259741899994,
     796.3879095999873,
-    917.1433258999896
+    917.1433258999896,
+    810.6640295000107,
+    708.4879700999882,
+    916.1130172999983,
+    888.9788241999922,
+    1016.3639994999976
   ],
   "chunk_unique_reference_rows": [
     194792,
@@ -33,11 +38,16 @@
     285517,
     360089,
     293448,
-    289164
+    289164,
+    163348,
+    263195,
+    279120,
+    274201,
+    273417
   ],
-  "mean_query_seconds_per_chunk": 847.2030360999983,
-  "projected_total_hours_using_completed_chunk_mean": 5.883354417361099,
-  "projected_remaining_hours_using_completed_chunk_mean": 3.5300126504166593,
+  "mean_query_seconds_per_chunk": 854.1758801066646,
+  "projected_total_hours_using_completed_chunk_mean": 5.931776945185171,
+  "projected_remaining_hours_using_completed_chunk_mean": 2.3727107780740684,
   "observed_peak_process_working_set_bytes": 3440746496,
   "checkpoint_path_ignored_locally": "data/processed/source-e1-cic-lock-1/full_runs/common/feature_space_distance.checkpoint.json",
   "checkpoint_migration": "Manifest v1 duplicate records were pair-validated, active state arrays validated, then deduplicated and rebound to manifest v2; distance_definition_changed=false.",
@@ -45,9 +55,10 @@
   "target_labels_read": false,
   "labels_read": false,
   "source_seeds_started": false,
-  "checkpoint_updated_utc": "2026-11-09T10:20:59.678578+00:00",
-  "mean_query_throughput_rows_per_second": 4751.101953705579,
-  "last_completed_chunk_query_rows_per_second": 4388.788411069923,
-  "last_completed_chunk_cpu_core_equivalents": 0.9759924918186772,
-  "last_completed_chunk_cpu_utilization_of_logical_capacity_pct": 6.0999530738667325
+  "checkpoint_updated_utc": "2026-11-09T11:59:32.383684+00:00",
+  "mean_query_throughput_rows_per_second": 4712.317560989151,
+  "last_completed_chunk_query_rows_per_second": 3960.340982148305,
+  "last_completed_chunk_cpu_core_equivalents": 0.9711395233258676,
+  "last_completed_chunk_cpu_utilization_of_logical_capacity_pct": 6.069622020786673,
+  "chunk_11_resume_note": "Two low-memory interruptions after checkpoint 10 both preserved all completed chunks; chunk 11 then completed successfully. Interrupted attempt time is excluded from per-chunk query timings and runtime projection."
 }
