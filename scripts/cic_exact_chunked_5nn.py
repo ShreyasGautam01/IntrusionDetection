@@ -253,7 +253,6 @@ def compute_cic_feature_distance(config: dict, config_path: Path, data_dir: Path
             "query_cpu_utilization_of_logical_capacity_pct": 100 * query_cpu / max(query_wall * (os.cpu_count() or 1), 1e-12),
             "process_working_set_after_chunk_bytes": process_memory(),
         }
-        chunk_records.append(record)
         _write_checkpoint(checkpoint_path, {**identity, "completed_chunks": completed_chunks,
                                             "active_slot": active_slot,
                                             "scaler_parameters_sha256": scaler_timing["parameters_sha256"],

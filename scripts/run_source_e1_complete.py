@@ -79,6 +79,16 @@ def require_cic_manifest(cfg: dict) -> tuple[str | None, str | None]:
             or not manifest.get("distance_execution", {}).get("mathematically_equivalent", False)
             or manifest.get("target_access") != {"features_read": False, "labels_read": False}):
         raise RuntimeError("CIC experiment manifest does not bind the current direction/config/stage")
+    for name, expected in manifest.get("code_sha256", {}).items():
+        path = ROOT / name
+        if not path.is_file() or sha256(path) != expected:
+            raise RuntimeError(f"CIC experiment manifest code hash mismatch: {name}")
+    for name, expected in manifest.get("benchmark_reports", {}).items():
+        path = ROOT / name
+        if not path.is_file() or sha256(path) != expected:
+            raise RuntimeError(f"CIC experiment manifest benchmark hash mismatch: {name}")
+    if manifest.get("software_lock_sha256") != sha256(ROOT / "uv.lock"):
+        raise RuntimeError("CIC experiment manifest software-lock hash mismatch")
     if not lock_commit or subprocess.run(
         ["git", "merge-base", "--is-ancestor", lock_commit, "HEAD"], cwd=ROOT
     ).returncode != 0:

@@ -27,9 +27,19 @@ def sha256(path: Path) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--lock-commit", required=True)
+    ap.add_argument("--supersede-existing", action="store_true")
     args = ap.parse_args()
-    if OUTPUT.exists():
+    previous = None
+    previous_sha256 = None
+    if OUTPUT.exists() and not args.supersede_existing:
         raise SystemExit(f"Refusing to overwrite a frozen CIC manifest: {OUTPUT}")
+    if OUTPUT.exists():
+        previous_sha256 = sha256(OUTPUT)
+        previous = json.loads(OUTPUT.read_text(encoding="utf-8"))
+        if (previous.get("status") != "frozen"
+                or previous.get("configuration_id") != "source-e1-cic-lock-1"
+                or previous.get("direction") != "cic-to-unsw"):
+            raise RuntimeError("Existing CIC manifest is not a compatible frozen manifest")
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     dirty = subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()
     if head != args.lock_commit or dirty:
@@ -76,6 +86,7 @@ def main() -> None:
         "scripts/benchmark_cic_exact_duplicate_compression.py",
         "scripts/benchmark_cic_chunked_exact_merge.py",
         "scripts/create_source_e1_cic_manifest.py",
+        "scripts/migrate_cic_exact_distance_checkpoint.py",
     ]
     distance_benchmarks = [
         "reports/nf_v3_audit/cic_distance_bank_benchmark.json",
@@ -85,11 +96,13 @@ def main() -> None:
         "reports/nf_v3_audit/cic_chunked_exact_merge_benchmark_validated.json",
     ]
     manifest = {
-        "manifest_id": "source-e1-cic-experiment-v1",
+        "manifest_id": "source-e1-cic-experiment-v2" if previous else "source-e1-cic-experiment-v1",
         "status": "frozen",
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "direction": "cic-to-unsw",
         "lock_commit": args.lock_commit,
+        "supersedes_manifest_sha256": previous_sha256,
+        "supersedes_lock_commit": previous.get("lock_commit") if previous else None,
         "configuration_id": cfg["configuration_id"],
         "configuration_sha256": sha256(CONFIG),
         "stage_manifest_sha256": sha256(STAGE),
