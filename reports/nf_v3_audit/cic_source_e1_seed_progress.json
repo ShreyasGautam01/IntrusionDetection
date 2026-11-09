@@ -1,0 +1,90 @@
+{
+  "report_id": "cic-source-e1-seed-progress-v1",
+  "generated_utc": "2026-11-09T17:11:49+00:00",
+  "direction": "cic-to-unsw",
+  "status": "in_progress",
+  "configuration_id": "source-e1-cic-lock-1",
+  "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "experiment_manifest_sha256": "eda7ccef2fbbc50f8a69a9b93cadd39176a1e318c2ece3792f4bdbb0dd71e1d9",
+  "manifest_lock_commit": "dae4f20279d375df14a8cd1e8398222c8691df4c",
+  "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "source_dataset_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "shared_feature_distance_sha256": "16f25ebc8a4f53e09b3143e997bb520525d464da677dd23f8610fcaeff5d8d8e",
+  "source_test_rows": 4025148,
+  "feature_count": 46,
+  "requested_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "completed_seed_ids": [
+    0
+  ],
+  "completed_seed_count": 1,
+  "completed_seeds": [
+    {
+      "seed": 0,
+      "run_id": "source-e1-cic-to-unsw-seed-0-full",
+      "generated_utc": "2026-11-09T17:08:56.796461+00:00",
+      "metrics_sha256": "8822e3766c2ac580adc3b64b45105d76d61dc33235322d1e74c22a9a5f2bd707",
+      "fit_seconds": 6431.001929499966,
+      "detector_summary": {
+        "accuracy": 0.9929334275410494,
+        "attack_auprc": 0.9761213076162967,
+        "attack_auroc": 0.9898057454291288,
+        "attack_miss_rows": 26487,
+        "generic_error_rows": 28444,
+        "brier_score": 0.006812866777181625
+      },
+      "recovered_partial_artifacts": null,
+      "signal_names": [
+        "confidence",
+        "random_forest_disagreement",
+        "feature_space_distance",
+        "split_conformal",
+        "isolation_forest"
+      ],
+      "signal_dependencies": {
+        "confidence": "RF seed + calibrator",
+        "random_forest_disagreement": "RF seed",
+        "feature_space_distance": "shared source-train scaler/reference; seed-independent",
+        "split_conformal": "RF seed + source calibration predictions",
+        "isolation_forest": "source train; random_state=0; independent of RF predictions but seed-varied by frozen config"
+      },
+      "artifact_sha256": {
+        "calibrated_probability.npy": "f23e5c9dbf581bc37013b892e02eb5b1cc311baa470bb5497f6acc1dc1598b14",
+        "confidence.npy": "98e0491781a9cfbae3f80dc4a3508d53ee9157eebdd17483fc0bd83d344957a2",
+        "feature_space_distance.npy": "16f25ebc8a4f53e09b3143e997bb520525d464da677dd23f8610fcaeff5d8d8e",
+        "isolation_forest.npy": "26bdb39be664c6fc26a43cc4e7c6045b32e2e253d003072cfd7220c62443e0ef",
+        "prediction.npy": "0f8feda0ba9e590f454a06987b3c912ffbef7c7c687731fffc9a0e615dca9b00",
+        "random_forest_disagreement.npy": "2aa8821226aed5c4674cc0f99949d7b22472ff0199f44139082d0263c60c90b9",
+        "split_conformal.npy": "78eb3325cd0fe8b617d2e2ec6ed0c3fd90193d87539302883cec814236e19f6a"
+      }
+    }
+  ],
+  "worker_count": 1,
+  "thread_limits": {
+    "OpenMP": 1,
+    "BLAS": 1,
+    "RF_n_jobs": 1,
+    "IsolationForest_n_jobs": 1
+  },
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "source_labels_used": true,
+  "target_file_read": false,
+  "target_labels_read": false,
+  "stability_gate_complete": false,
+  "target_transfer_allowed": false,
+  "note": "Seed 0 five-signal source-only output hash verified; all seven arrays have 4,025,148 finite rows. Existing seed 0–5 directories are UNSW-source artifacts and were left untouched; no CIC per-seed artifacts existed before this run."
+}
