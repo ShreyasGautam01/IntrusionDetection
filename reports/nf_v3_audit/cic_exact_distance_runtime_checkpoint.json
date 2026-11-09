@@ -1,0 +1,38 @@
+{
+  "report_id": "cic-source-e1-exact-distance-runtime-checkpoint-v1",
+  "generated_utc": "2026-11-09T09:11:57.435028+00:00",
+  "status": "in_progress",
+  "configuration_id": "source-e1-cic-lock-1",
+  "direction": "cic-to-unsw",
+  "experiment_manifest_sha256": "eda7ccef2fbbc50f8a69a9b93cadd39176a1e318c2ece3792f4bdbb0dd71e1d9",
+  "manifest_lock_commit": "dae4f20279d375df14a8cd1e8398222c8691df4c",
+  "completed_reference_chunks": 5,
+  "total_reference_chunks": 25,
+  "source_train_rows": 12068590,
+  "source_test_rows": 4025148,
+  "distance_definition": "exact mean Euclidean distance to the five nearest original source-train rows after source-train StandardScaler",
+  "chunk_query_wall_seconds": [
+    992.2387638000073,
+    575.4696118000138,
+    770.4327079000068,
+    939.5251066000201,
+    981.6568528999924
+  ],
+  "chunk_unique_reference_rows": [
+    194792,
+    231348,
+    274643,
+    254727,
+    273102
+  ],
+  "mean_query_seconds_per_chunk": 851.8646086000081,
+  "projected_total_hours_using_completed_chunk_mean": 5.915726448611167,
+  "projected_remaining_hours_using_completed_chunk_mean": 4.732581158888934,
+  "observed_peak_process_working_set_bytes": 3238232064,
+  "checkpoint_path_ignored_locally": "data/processed/source-e1-cic-lock-1/full_runs/common/feature_space_distance.checkpoint.json",
+  "checkpoint_migration": "Manifest v1 duplicate records were pair-validated, active state arrays validated, then deduplicated and rebound to manifest v2; distance_definition_changed=false.",
+  "target_file_read": false,
+  "target_labels_read": false,
+  "labels_read": false,
+  "source_seeds_started": false
+}
