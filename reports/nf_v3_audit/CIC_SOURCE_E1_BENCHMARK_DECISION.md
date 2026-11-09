@@ -2,7 +2,7 @@
 
 **Date:** 2026-11-09 local run; benchmark clock recorded in UTC in the JSON evidence.
 **Direction:** CIC → UNSW source-only E1 gate.
-**Status:** Exact five-signal E1 is not launched. The distance decision requires project-owner review before an alternative or final CIC E1 manifest is created. Target evaluation remains sealed.
+**Status:** The original monolithic exact KDTree fit was too close to available-memory limits. Follow-up exact duplicate-compression and multi-chunk benchmarks support a mathematically equivalent, memory-bounded implementation with an estimated 3.62-hour distance runtime and roughly 3.10 GB projected peak. The CIC experiment manifest is being frozen before seed runs. Target evaluation remains sealed.
 
 ## Frozen inputs and staging
 
@@ -71,10 +71,12 @@ Two workers gave 1.74× pair throughput, with a measured peak increment of 143 M
 
 `source_e1_smoke_cic-to-unsw_seed0.json` records a deterministic class-present source sample (2,500 rows per class for training; 1,000 per class for calibration and source test). All five outputs had shape `(2000,)` and finite values. The smoke used exact 5-NN distance on the bounded training sample, and reports no target-file or target-label access. The smoke test had zero detector errors/misses, so its error-ranking endpoints are not interpreted. The first smoke attempt on the raw prefix exposed a one-class RF sample; the final plumbing test corrects this by selecting class-present rows only for smoke, with the frozen full-run split unchanged.
 
-## Candidate deterministic distance alternative for review
+## Follow-up exact-preserving implementation
 
-See `CIC_SOURCE_E1_DISTANCE_BANK_REVIEW.md`. It specifies a label-blind, seed-independent hash-priority source-train reference bank and the resulting approximate score. It is not mathematically identical to all-reference 5-NN. It has not been benchmarked or run, and is not in the CIC experiment config or manifest. Owner approval is required before any bank-size/accuracy benchmark or final E1 run using it.
+`CIC_SOURCE_E1_DISTANCE_BANK_REVIEW.md` records the bounded bank comparison and the selected exact alternative. Repeated vectors are collapsed within deterministic 500,000-row source-train chunks and their exact integer multiplicities are carried into the top-five merge. Raw-versus-weighted and two-chunk-versus-raw comparisons matched within `6.94e-18` maximum absolute error on 1,024 source-test rows, with equal zero-distance counts. The formula remains the exact five nearest original source-train rows; no approximation was selected.
+
+The measured full-distance projection is about 3.62 hours and 3.10 GB peak, including the two disk-backed merge-state slots. The runtime projection excludes checkpoint and output I/O. The full job has not started. The source E1 manifest and a production startup memory check are required before launching it.
 
 ## Gate state
 
-UNSW E1 seeds 0–9 and their exact-distance artifact remain complete and untouched from the published prior milestone. CIC E1 seeds 0–9 have **not** been run; no CIC five-signal final results exist. This source gate is incomplete, the UNSW interpretation still awaits owner acceptance, and neither transfer direction is ready for target evaluation.
+UNSW E1 seeds 0–9 and their exact-distance artifact remain complete and untouched from the published prior milestone. The UNSW gate interpretation was accepted for descriptive use on 2026-11-09. CIC E1 seeds 0–9 have **not** been run; no CIC five-signal final results exist. The CIC source gate is incomplete, so neither transfer direction is ready for target evaluation.

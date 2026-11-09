@@ -1,0 +1,309 @@
+{
+  "report_id": "cic-exact-duplicate-compression-bounded-benchmark-1",
+  "generated_utc": "2026-11-08T20:16:30.426426+00:00",
+  "git_commit": "9a7886206e26f2d734888a2b8eb8e9b433e08c38",
+  "benchmark_script_sha256": "1751b02c81e81198a0d75d89bf04ded49e3ab5752d4a93d089aeabf30e87afcb",
+  "configuration_id": "source-e1-cic-lock-1",
+  "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "source_feature_hashes": {
+    "train_X.npy": "8fe6577352db2efcebaa6f2f8f254b8b98a8183359764ed399f8b3447c747e26",
+    "source_test_X.npy": "056648b14bd804d10cabe4575ff66359d7faf1dfc580cb176bd786ee9f1186d6"
+  },
+  "feature_order": [
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "OUT_BYTES",
+    "IN_PKTS",
+    "OUT_PKTS",
+    "FLOW_DURATION_MILLISECONDS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "features": 46,
+  "source_train_rows": 12068590,
+  "source_test_rows": 4025148,
+  "labels_read": false,
+  "target_file_read": false,
+  "target_labels_read": false,
+  "definition": "Exact equivalence by collapsing bitwise-identical finite float32 source-train feature rows and retaining integer multiplicity. For each query, retrieve the five nearest distinct rows and expand each distance by its source multiplicity until five reference rows are represented; this equals the original all-row 5-NN mean whenever at least five distinct rows exist.",
+  "implementation_note": "Scaler remains fitted on all original CIC source-train rows. Compression is applied to reference rows after the frozen finite-value preprocessing. No approximation is introduced; duplicated reference vectors are represented by exact integer counts.",
+  "scaler_fit_all_source_train": {
+    "wall_seconds": 5.165536699991208,
+    "process_cpu_seconds": 5.046875,
+    "cpu_core_equivalents": 0.9770281953487215,
+    "cpu_utilization_of_logical_capacity_pct": 6.106426220929509,
+    "baseline_working_set_bytes": 160231424,
+    "peak_working_set_bytes": 2391371776,
+    "peak_increment_bytes": 2231140352,
+    "rows": 12068590,
+    "parameters_sha256": "7ad1b9bf9f21fc9b9009b862cf98ac83e6b0119255d148ef1ca41839831ec560"
+  },
+  "query_sample": {
+    "rows": 1024,
+    "indices_sha256": "62ee1e0fff989122c3eb36986c5ddb75c5cd5df6bd5da0703efcb58f8a13e2a7",
+    "transform": {
+      "wall_seconds": 0.0025467000086791813,
+      "process_cpu_seconds": 0.0,
+      "cpu_core_equivalents": 0.0,
+      "cpu_utilization_of_logical_capacity_pct": 0.0,
+      "baseline_working_set_bytes": 2380996608,
+      "peak_working_set_bytes": 2385989632,
+      "peak_increment_bytes": 4993024
+    }
+  },
+  "sample_results": {
+    "100000": {
+      "sample_rows": 100000,
+      "unique_rows": 64592,
+      "unique_fraction": 0.64592,
+      "duplicate_row_fraction": 0.35407999999999995,
+      "sample_offsets_sha256": "ca3e1d8e90d74cba9734d2189cca428dfa84d48b03436df21b26a5a1eaf2f675",
+      "unique_rows_sha256": "ab3ec431fefaed4cc8359077e1aeb27bc84dd7fb7b8e1e2a50a0ed7389472cae",
+      "multiplicity_sha256": "48ceff508bfc3a9c0749dd8d61bb3e36be8dbf6fe871490dce5643479b486dad",
+      "unique_extraction": {
+        "wall_seconds": 0.35845890000928193,
+        "process_cpu_seconds": 0.359375,
+        "cpu_core_equivalents": 1.0025556625618568,
+        "cpu_utilization_of_logical_capacity_pct": 6.265972891011605,
+        "baseline_working_set_bytes": 2386808832,
+        "peak_working_set_bytes": 2423668736,
+        "peak_increment_bytes": 36859904
+      },
+      "unique_scaling": {
+        "wall_seconds": 0.011354099988238886,
+        "process_cpu_seconds": 0.015625,
+        "cpu_core_equivalents": 1.3761548705916906,
+        "cpu_utilization_of_logical_capacity_pct": 8.600967941198066,
+        "baseline_working_set_bytes": 2400350208,
+        "peak_working_set_bytes": 2424123392,
+        "peak_increment_bytes": 23773184
+      },
+      "kd_tree_fit_unique_rows": {
+        "wall_seconds": 0.43144490002305247,
+        "process_cpu_seconds": 0.421875,
+        "cpu_core_equivalents": 0.9778189520317864,
+        "cpu_utilization_of_logical_capacity_pct": 6.111368450198665,
+        "baseline_working_set_bytes": 2424123392,
+        "peak_working_set_bytes": 2427260928,
+        "peak_increment_bytes": 3137536
+      },
+      "kd_tree_query_weighted_scores": {
+        "wall_seconds": 0.07880009998916648,
+        "process_cpu_seconds": 0.078125,
+        "cpu_core_equivalents": 0.9914327521251965,
+        "cpu_utilization_of_logical_capacity_pct": 6.196454700782478,
+        "baseline_working_set_bytes": 2427236352,
+        "peak_working_set_bytes": 2427301888,
+        "peak_increment_bytes": 65536
+      },
+      "weighted_query_rows_per_second": 12994.907368655377,
+      "projected_full_source_test_query_seconds": 309.7481102257749,
+      "weighted_score_zero_count": 314,
+      "weighted_score_p50": 0.008422873833533278,
+      "weighted_score_p95": 0.6578796697105606
+    },
+    "250000": {
+      "sample_rows": 250000,
+      "unique_rows": 152210,
+      "unique_fraction": 0.60884,
+      "duplicate_row_fraction": 0.39115999999999995,
+      "sample_offsets_sha256": "8bcd13dfbe2cf74478259a4834cfd4560dc6eb6159369fc87a4c184882cb9277",
+      "unique_rows_sha256": "28b87370baf795215ca1a92f314094fceb31b593614c1b65e69a1778d83beb3a",
+      "multiplicity_sha256": "c0a94161a2376d010f2a9ecfc819ffef0c947987f3049a99374655d712281837",
+      "unique_extraction": {
+        "wall_seconds": 1.0251552000117954,
+        "process_cpu_seconds": 1.0,
+        "cpu_core_equivalents": 0.9754620568558732,
+        "cpu_utilization_of_logical_capacity_pct": 6.096637855349208,
+        "baseline_working_set_bytes": 2390728704,
+        "peak_working_set_bytes": 2512756736,
+        "peak_increment_bytes": 122028032
+      },
+      "unique_scaling": {
+        "wall_seconds": 0.02406719999271445,
+        "process_cpu_seconds": 0.015625,
+        "cpu_core_equivalents": 0.649223840111436,
+        "cpu_utilization_of_logical_capacity_pct": 4.057649000696475,
+        "baseline_working_set_bytes": 2419965952,
+        "peak_working_set_bytes": 2475982848,
+        "peak_increment_bytes": 56016896
+      },
+      "kd_tree_fit_unique_rows": {
+        "wall_seconds": 1.1114663000043947,
+        "process_cpu_seconds": 1.0625,
+        "cpu_core_equivalents": 0.9559444132456367,
+        "cpu_utilization_of_logical_capacity_pct": 5.97465258278523,
+        "baseline_working_set_bytes": 2475986944,
+        "peak_working_set_bytes": 2483261440,
+        "peak_increment_bytes": 7274496
+      },
+      "kd_tree_query_weighted_scores": {
+        "wall_seconds": 0.11065139999845996,
+        "process_cpu_seconds": 0.109375,
+        "cpu_core_equivalents": 0.9884646737548939,
+        "cpu_utilization_of_logical_capacity_pct": 6.177904210968087,
+        "baseline_working_set_bytes": 2483236864,
+        "peak_working_set_bytes": 2483265536,
+        "peak_increment_bytes": 28672
+      },
+      "weighted_query_rows_per_second": 9254.288694171533,
+      "projected_full_source_test_query_seconds": 434.9494740244151,
+      "weighted_score_zero_count": 350,
+      "weighted_score_p50": 0.0026957130598209466,
+      "weighted_score_p95": 0.48557631395316764
+    },
+    "500000": {
+      "sample_rows": 500000,
+      "unique_rows": 291036,
+      "unique_fraction": 0.582072,
+      "duplicate_row_fraction": 0.41792799999999997,
+      "sample_offsets_sha256": "bf87cbf232ce783c4a8dda25cd8a4100e39c48a71a5ace14e6150a6373f3ca7e",
+      "unique_rows_sha256": "d9c063584bbf8a32c0577ee0e6be86dad8895b2e7e6932b452efac40fc09a658",
+      "multiplicity_sha256": "520d4e877ec98368c357236d5705248d0baf948fa44bc4d951148cfc2d97ce98",
+      "unique_extraction": {
+        "wall_seconds": 2.272672799997963,
+        "process_cpu_seconds": 2.1875,
+        "cpu_core_equivalents": 0.9625230697537985,
+        "cpu_utilization_of_logical_capacity_pct": 6.015769185961241,
+        "baseline_working_set_bytes": 2392743936,
+        "peak_working_set_bytes": 2618138624,
+        "peak_increment_bytes": 225394688
+      },
+      "unique_scaling": {
+        "wall_seconds": 0.047474400023929775,
+        "process_cpu_seconds": 0.046875,
+        "cpu_core_equivalents": 0.9873742475180805,
+        "cpu_utilization_of_logical_capacity_pct": 6.171089046988002,
+        "baseline_working_set_bytes": 2448633856,
+        "peak_working_set_bytes": 2555736064,
+        "peak_increment_bytes": 107102208
+      },
+      "kd_tree_fit_unique_rows": {
+        "wall_seconds": 2.417972199997166,
+        "process_cpu_seconds": 2.390625,
+        "cpu_core_equivalents": 0.9886900271238858,
+        "cpu_utilization_of_logical_capacity_pct": 6.179312669524286,
+        "baseline_working_set_bytes": 2555740160,
+        "peak_working_set_bytes": 2570162176,
+        "peak_increment_bytes": 14422016
+      },
+      "kd_tree_query_weighted_scores": {
+        "wall_seconds": 0.13133780000498518,
+        "process_cpu_seconds": 0.140625,
+        "cpu_core_equivalents": 1.0707123158349106,
+        "cpu_utilization_of_logical_capacity_pct": 6.69195197396819,
+        "baseline_working_set_bytes": 2570137600,
+        "peak_working_set_bytes": 2570162176,
+        "peak_increment_bytes": 24576
+      },
+      "weighted_query_rows_per_second": 7796.689147839633,
+      "projected_full_source_test_query_seconds": 516.2637529438146,
+      "weighted_score_zero_count": 388,
+      "weighted_score_p50": 0.0012922696872133205,
+      "weighted_score_p95": 0.34155004999213257,
+      "bounded_equivalence_check": {
+        "reference_rows": 500000,
+        "unique_reference_rows": 291036,
+        "query_rows": 1024,
+        "raw_exact_fit": {
+          "wall_seconds": 5.455361500004074,
+          "process_cpu_seconds": 5.265625,
+          "cpu_core_equivalents": 0.9652201783504297,
+          "cpu_utilization_of_logical_capacity_pct": 6.032626114690186,
+          "baseline_working_set_bytes": 2831769600,
+          "peak_working_set_bytes": 2860965888,
+          "peak_increment_bytes": 29196288
+        },
+        "raw_exact_query": {
+          "wall_seconds": 0.6362260000023525,
+          "process_cpu_seconds": 0.640625,
+          "cpu_core_equivalents": 1.0069142097267814,
+          "cpu_utilization_of_logical_capacity_pct": 6.293213810792384,
+          "baseline_working_set_bytes": 2860941312,
+          "peak_working_set_bytes": 2860982272,
+          "peak_increment_bytes": 40960
+        },
+        "raw_reference_transform": {
+          "wall_seconds": 0.08172800001921132,
+          "process_cpu_seconds": 0.078125,
+          "cpu_core_equivalents": 0.9559147413571312,
+          "cpu_utilization_of_logical_capacity_pct": 5.97446713348207,
+          "baseline_working_set_bytes": 2647764992,
+          "peak_working_set_bytes": 2831765504,
+          "peak_increment_bytes": 184000512
+        },
+        "raw_score_sha256": "ec701204212a037c871ac766528d0800847547e9b5b4721957cb1f3f29646ca4",
+        "weighted_score_sha256": "894762067c4d307fc973254e933b0c8f9331006393eec775059568a7e989cdde",
+        "allclose_rtol_1e-12_atol_1e-12": true,
+        "maximum_absolute_difference": 6.938893903907228e-18,
+        "exact_zero_count": 388,
+        "weighted_zero_count": 388,
+        "scores_bitwise_equal": false
+      }
+    }
+  },
+  "maximum_observed_timed_phase_peak_working_set_bytes": 2618138624,
+  "process_working_set_at_end_bytes": 2618138624,
+  "system_memory_before": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 7551008768,
+    "memory_load_pct": 55
+  },
+  "system_memory_after": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 5207703552,
+    "memory_load_pct": 69
+  },
+  "logical_cpu_count": 16,
+  "thread_limits": {
+    "BLAS": 1,
+    "OpenMP": 1,
+    "KDTree_n_jobs": 1
+  },
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1"
+  },
+  "scope_note": "Bounded feature-only benchmark on deterministic hash-priority subsets of the staged CIC source-train arrays. Full source unique-row count and full indexed run have not been measured. No final CIC manifest or E1 seed run is authorized by this benchmark alone."
+}

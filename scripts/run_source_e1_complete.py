@@ -29,6 +29,61 @@ COMMON = RUNS / "common"
 LOG = DATA / "runlogs" / "source-e1-full.log"
 WORKERS = 2
 THREADS = 1
+DIRECTION = "unsw-to-cic"
+
+
+def configure_direction(direction: str) -> None:
+    """Select the source-only E1 config/data for the requested transfer direction."""
+    global DATA, CONFIG_PATH, RUNS, COMMON, LOG, DIRECTION, WORKERS
+    if direction == "unsw-to-cic":
+        DATA = ROOT / "data/processed/source-e1-lock-1"
+        CONFIG_PATH = ROOT / "reports/nf_v3_audit/source_e1_config.json"
+        WORKERS = 2
+    elif direction == "cic-to-unsw":
+        DATA = ROOT / "data/processed/source-e1-cic-lock-1"
+        CONFIG_PATH = ROOT / "reports/nf_v3_audit/source_e1_cic_config.json"
+        WORKERS = 1
+    else:
+        raise ValueError(f"Unsupported source direction: {direction}")
+    DIRECTION = direction
+    RUNS = DATA / "full_runs"
+    COMMON = RUNS / "common"
+    LOG = DATA / "runlogs" / "source-e1-full.log"
+
+
+def require_cic_manifest(cfg: dict) -> tuple[str | None, str | None]:
+    if DIRECTION != "cic-to-unsw":
+        return None, None
+    import subprocess
+
+    manifest_path = ROOT / "reports/nf_v3_audit/source_e1_cic_experiment_manifest.json"
+    if not manifest_path.exists():
+        raise RuntimeError("CIC full source runs require the committed source E1 experiment manifest")
+    relative = manifest_path.relative_to(ROOT).as_posix()
+    tracked = subprocess.run(["git", "ls-files", "--error-unmatch", relative], cwd=ROOT,
+                             capture_output=True, text=True)
+    dirty = subprocess.run(["git", "status", "--porcelain", "--", relative], cwd=ROOT,
+                           capture_output=True, text=True)
+    whole_tree_dirty = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
+                                      capture_output=True, text=True)
+    if tracked.returncode != 0 or dirty.stdout.strip() or whole_tree_dirty.stdout.strip():
+        raise RuntimeError("CIC experiment manifest is not committed and clean")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    lock_commit = manifest.get("lock_commit")
+    if (manifest.get("direction") != DIRECTION
+            or manifest.get("status") != "frozen"
+            or manifest.get("configuration_id") != cfg["configuration_id"]
+            or manifest.get("configuration_sha256") != sha256(CONFIG_PATH)
+            or manifest.get("stage_manifest_sha256") != sha256(DATA / "stage_manifest.json")
+            or manifest.get("source_dataset_sha256") != cfg["source_dataset"]["sha256"]
+            or not manifest.get("distance_execution", {}).get("mathematically_equivalent", False)
+            or manifest.get("target_access") != {"features_read": False, "labels_read": False}):
+        raise RuntimeError("CIC experiment manifest does not bind the current direction/config/stage")
+    if not lock_commit or subprocess.run(
+        ["git", "merge-base", "--is-ancestor", lock_commit, "HEAD"], cwd=ROOT
+    ).returncode != 0:
+        raise RuntimeError("CIC experiment manifest is not descended from its lock commit")
+    return sha256(manifest_path), lock_commit
 
 
 def sha256(path: Path) -> str:
@@ -81,6 +136,15 @@ def deterministic_smoke_sample(x: np.ndarray, y: np.ndarray, per_class: int) -> 
 def distance_full() -> None:
     """Exact deterministic 5-NN source-test distance with resumable query chunks."""
     cfg = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    if cfg["configuration_id"] == "source-e1-cic-lock-1":
+        from cic_exact_chunked_5nn import compute_cic_feature_distance
+
+        manifest_sha256, lock_commit = require_cic_manifest(cfg)
+        event("distance: CIC exact chunked duplicate-compression path; no approximation")
+        result = compute_cic_feature_distance(cfg, CONFIG_PATH, DATA, COMMON,
+                                              manifest_sha256, lock_commit)
+        event(f"distance: CIC {result['status']}; score_sha256={result.get('score_sha256')}")
+        return
     COMMON.mkdir(parents=True, exist_ok=True)
     final = COMMON / "feature_space_distance.npy"
     meta_path = COMMON / "feature_space_distance.json"
@@ -209,18 +273,23 @@ def metric_bundle(y: np.ndarray, pred: np.ndarray, probability: np.ndarray, scor
         captures = {}
         for budget in (.01, .05, .10):
             n = max(1, int(np.ceil(len(y) * budget)))
-            captures[str(budget)] = float(misses[order[:n]].sum() / max(1, int(misses.sum())))
+            captures[str(budget)] = (float(misses[order[:n]].sum() / int(misses.sum()))
+                                     if misses.any() else None)
         signals[name] = {
-            "generic_error_auprc": float(average_precision_score(errors.astype(np.uint8), risk)),
-            "attack_miss_auprc": float(average_precision_score(misses.astype(np.uint8), risk)),
+            "generic_error_auprc": (float(average_precision_score(errors.astype(np.uint8), risk))
+                                    if errors.any() else None),
+            "attack_miss_auprc": (float(average_precision_score(misses.astype(np.uint8), risk))
+                                  if misses.any() else None),
+            "ranking_endpoints_defined": bool(errors.any() and misses.any()),
             "attack_miss_capture": captures,
             "score_distribution": {"min": float(np.min(risk)), "p25": float(np.quantile(risk, .25)), "median": float(np.median(risk)), "p75": float(np.quantile(risk, .75)), "max": float(np.max(risk)), "mean": float(np.mean(risk)), "std": float(np.std(risk))},
         }
     return {"detector": detector, "reliability": signals}
 
 
-def run_seed(seed: int, *, smoke: bool = False) -> dict:
+def run_seed(seed: int, *, smoke: bool = False, repeat: bool = False) -> dict:
     cfg = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    manifest_sha256, manifest_lock_commit = require_cic_manifest(cfg) if not smoke else (None, None)
     xtr = np.load(DATA / "train_X.npy", mmap_mode="r")
     ytr = np.load(DATA / "train_y.npy", mmap_mode="r")
     xcal = np.load(DATA / "calibration_X.npy", mmap_mode="r")
@@ -254,7 +323,7 @@ def run_seed(seed: int, *, smoke: bool = False) -> dict:
         raw_conf = np.clip(model.predict_proba(xconf)[:, 1], 1e-7, 1 - 1e-7)
         pconf = calibrator.predict_proba(np.log(raw_conf / (1 - raw_conf)).reshape(-1, 1))[:, 1]
     recovered = None
-    if not smoke and seed < 6:
+    if not smoke and seed < 6 and (DATA / f"seed-{seed}" / "metrics.json").exists():
         old = DATA / f"seed-{seed}"
         old_metrics = json.loads((old / "metrics.json").read_text(encoding="utf-8"))
         old_probability = np.load(old / "calibrated_probability.npy", mmap_mode="r")
@@ -311,10 +380,10 @@ def run_seed(seed: int, *, smoke: bool = False) -> dict:
     if smoke:
         if any(v.shape != yte.shape for v in scores.values()):
             raise RuntimeError("Smoke output shape mismatch")
-        return {"seed": seed, "rows": len(yte), "features": int(xtr.shape[1]), "fit_seconds": fit_seconds, "conformal_quantile": q, "score_shapes": {k: list(v.shape) for k, v in scores.items()}, "all_finite": True, "target_access": False, "metrics": metric_bundle(yte, pred, probability, scores)}
+        return {"direction": DIRECTION, "seed": seed, "rows": len(yte), "features": int(xtr.shape[1]), "fit_seconds": fit_seconds, "conformal_quantile": q, "score_shapes": {k: list(v.shape) for k, v in scores.items()}, "all_finite": True, "target_access": False, "metrics": metric_bundle(yte, pred, probability, scores)}
 
-    final_dir = RUNS / f"seed-{seed}"
-    partial_dir = RUNS / f"seed-{seed}.partial"
+    final_dir = (RUNS / "repeats" / f"seed-{seed}-repeat-1") if repeat else (RUNS / f"seed-{seed}")
+    partial_dir = final_dir.with_name(final_dir.name + ".partial")
     if final_dir.exists() or partial_dir.exists():
         raise RuntimeError(f"Refusing to overwrite or resume unreviewed output for seed {seed}")
     partial_dir.mkdir(parents=True)
@@ -323,13 +392,18 @@ def run_seed(seed: int, *, smoke: bool = False) -> dict:
     for name, values in scores.items():
         np.save(partial_dir / f"{name}.npy", np.asarray(values, dtype=np.float32))
     report = {
-        "run_id": f"source-e1-seed-{seed}-full", "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "run_id": f"source-e1-{DIRECTION}-seed-{seed}-full" + ("-repeat-1" if repeat else ""),
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "direction": DIRECTION,
+        "same_seed_repeat": repeat,
         "configuration_id": cfg["configuration_id"], "config_sha256": sha256(CONFIG_PATH),
+        "experiment_manifest_sha256": manifest_sha256, "manifest_lock_commit": manifest_lock_commit,
         "stage_manifest_sha256": sha256(DATA / "stage_manifest.json"), "source_sha256": cfg["source_dataset"]["sha256"],
         "target_file_read": False, "target_labels_read": False, "seed": seed,
         "train_rows": len(ytr), "calibration_probability_rows": int(mask.sum()), "conformal_calibration_rows": len(yconf),
         "source_test_rows": len(yte), "feature_count": int(xtr.shape[1]), "feature_order": cfg["features"]["columns"],
         "rf_parameters": {**cfg["random_forest"]["parameters"], "random_state": seed},
+        "worker_count": WORKERS,
         "thread_limits": {"OpenMP": THREADS, "BLAS": THREADS, "RF_n_jobs": 1, "IsolationForest_n_jobs": 1},
         "software": {"python": platform.python_version(), "numpy": np.__version__, "scikit_learn": sklearn.__version__},
         "fit_seconds": fit_seconds, "calibration": {"method": "Platt sigmoid", "conformal_quantile": q, "alpha": alpha, "quantile_index_zero_based": qidx},
@@ -345,13 +419,55 @@ def run_seed(seed: int, *, smoke: bool = False) -> dict:
     return report
 
 
+def verify_seed_repeat(seed: int) -> dict:
+    primary = RUNS / f"seed-{seed}"
+    repeat = RUNS / "repeats" / f"seed-{seed}-repeat-1"
+    if not (primary / "metrics.json").exists() or not (repeat / "metrics.json").exists():
+        raise RuntimeError("Both primary and repeat seed artifacts must exist")
+    files = ["prediction.npy", "calibrated_probability.npy", "confidence.npy",
+             "random_forest_disagreement.npy", "feature_space_distance.npy",
+             "split_conformal.npy", "isolation_forest.npy"]
+    compared = {}
+    for name in files:
+        left, right = primary / name, repeat / name
+        if not left.exists() or not right.exists():
+            raise RuntimeError(f"Repeat comparison is missing {name}")
+        a, b = np.load(left, mmap_mode="r"), np.load(right, mmap_mode="r")
+        same_shape = a.shape == b.shape
+        equal = bool(same_shape and np.array_equal(a, b))
+        finite = bool(np.isfinite(a).all() and np.isfinite(b).all())
+        compared[name] = {"shape": list(a.shape), "shape_match": same_shape,
+                          "exact_array_match": equal, "both_finite": finite,
+                          "primary_sha256": sha256(left), "repeat_sha256": sha256(right)}
+        if not (same_shape and equal and finite):
+            raise RuntimeError(f"Same-seed repeat mismatch: {name}")
+    manifest_path = ROOT / "reports/nf_v3_audit/source_e1_cic_experiment_manifest.json"
+    result = {
+        "report_id": f"source-e1-{DIRECTION}-same-seed-repeat-1",
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "direction": DIRECTION, "seed": seed, "files": compared,
+        "experiment_manifest_sha256": sha256(manifest_path) if manifest_path.exists() else None,
+        "target_file_read": False, "target_labels_read": False,
+        "conclusion": "All saved source-test signal arrays, calibrated probabilities, and predictions exactly match the independent repeat.",
+    }
+    path = ROOT / "reports/nf_v3_audit" / f"{DIRECTION.replace('-', '_')}_same_seed_repeat.json"
+    if path.exists():
+        raise RuntimeError(f"Refusing to overwrite repeat evidence: {path}")
+    path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    return result
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--direction", choices=("unsw-to-cic", "cic-to-unsw"), default="unsw-to-cic")
     group = ap.add_mutually_exclusive_group(required=True)
     group.add_argument("--distance", action="store_true")
     group.add_argument("--smoke", action="store_true")
     group.add_argument("--seeds", nargs="+", type=int)
+    group.add_argument("--repeat-seed", type=int)
+    group.add_argument("--verify-repeat-seed", type=int)
     args = ap.parse_args()
+    configure_direction(args.direction)
     if args.distance:
         distance_full()
         return
@@ -363,11 +479,31 @@ def main() -> None:
         result["configuration_id"] = cfg["configuration_id"]
         result["config_sha256"] = sha256(CONFIG_PATH)
         result["stage_manifest_sha256"] = sha256(DATA / "stage_manifest.json")
+        result["target_file_read"] = False
+        result["target_labels_read"] = False
         result["software"] = {"python": platform.python_version(), "numpy": np.__version__, "scikit_learn": sklearn.__version__}
         result["thread_limits"] = {"OpenMP": THREADS, "BLAS": THREADS, "RF_n_jobs": 1, "IsolationForest_n_jobs": 1}
+        result["worker_count"] = WORKERS
         result["note"] = "Plumbing-only deterministic class-present source subset; metrics are not final E1 results. No full-run outputs were written."
-        (ROOT / "reports/nf_v3_audit/source_e1_smoke_test.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        smoke_name = ("source_e1_smoke_cic-to-unsw_chunked_5signal.json"
+                      if DIRECTION == "cic-to-unsw" else "source_e1_smoke_test.json")
+        smoke_path = ROOT / "reports/nf_v3_audit" / smoke_name
+        if smoke_path.exists():
+            raise RuntimeError(f"Refusing to overwrite existing smoke evidence: {smoke_path}")
+        smoke_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(result, indent=2))
+        return
+    if args.repeat_seed is not None:
+        if args.repeat_seed not in range(10):
+            raise SystemExit("Repeat seed must be in 0..9")
+        RUNS.mkdir(parents=True, exist_ok=True)
+        result = run_seed(args.repeat_seed, repeat=True)
+        print(json.dumps({"repeat_seed_completed": args.repeat_seed, "report": result}, indent=2))
+        return
+    if args.verify_repeat_seed is not None:
+        if args.verify_repeat_seed not in range(10):
+            raise SystemExit("Repeat seed must be in 0..9")
+        print(json.dumps(verify_seed_repeat(args.verify_repeat_seed), indent=2))
         return
     seeds = args.seeds
     if len(seeds) != len(set(seeds)) or any(s not in range(10) for s in seeds):

@@ -1,6 +1,7 @@
 """Integrity-check and summarize completed source-only E1 outputs."""
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -36,15 +37,38 @@ def stats(values: list[float]) -> dict:
     return {"median": float(np.median(a)), "q1": float(np.quantile(a, .25)), "q3": float(np.quantile(a, .75)), "iqr": float(np.quantile(a, .75) - np.quantile(a, .25)), "min": float(np.min(a)), "max": float(np.max(a))}
 
 
-def summarize() -> dict:
-    y = np.asarray(np.load(DATA / "source_test_y.npy", mmap_mode="r"), dtype=np.uint8)
+def summarize(direction: str = "unsw-to-cic") -> dict:
+    if direction == "unsw-to-cic":
+        data_dir = ROOT / "data/processed/source-e1-lock-1"
+        config_path = REPORTS / "source_e1_config.json"
+        manifest_path = REPORTS / "source_e1_manifest.json"
+        configuration_id = "source-e1-lock-1"
+        repeat_folder_name = "repro/seed-0"
+    elif direction == "cic-to-unsw":
+        data_dir = ROOT / "data/processed/source-e1-cic-lock-1"
+        config_path = REPORTS / "source_e1_cic_config.json"
+        manifest_path = REPORTS / "source_e1_cic_experiment_manifest.json"
+        configuration_id = "source-e1-cic-lock-1"
+        repeat_folder_name = "repeats/seed-0-repeat-1"
+    else:
+        raise ValueError(f"Unsupported source E1 direction: {direction}")
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest_direction = manifest.get("direction", "unsw-to-cic" if direction == "unsw-to-cic" else None)
+    valid_status = (manifest.get("status") in ("frozen", "frozen-before-full-source-E1-runs")
+                    if direction == "unsw-to-cic" else manifest.get("status") == "frozen")
+    if manifest_direction != direction or not valid_status:
+        raise RuntimeError("Source E1 manifest direction/status mismatch")
+    data = data_dir
+    runs = data_dir / "full_runs"
+    y = np.asarray(np.load(data / "source_test_y.npy", mmap_mode="r"), dtype=np.uint8)
     miss_counts = int(y.sum())
     per_seed = {}
     score_arrays = {name: [] for name in SIGNALS}
     metric_arrays: dict[str, list[float]] = {}
     valid = True
     for seed in range(10):
-        folder = RUNS / f"seed-{seed}"
+        folder = runs / f"seed-{seed}"
         metrics_path = folder / "metrics.json"
         m = json.loads(metrics_path.read_text(encoding="utf-8"))
         values = {name: np.load(folder / filename, mmap_mode="r") for name, filename in FILES.items()}
@@ -53,7 +77,11 @@ def summarize() -> dict:
         hashes = {filename: sha256(folder / filename) for filename in FILES.values()}
         hash_match = all(hashes[name] == m["artifact_sha256"].get(name) for name in FILES.values())
         source_results = m["source_test_results"]
-        identity_ok = (m.get("seed") == seed and m.get("configuration_id") == "source-e1-lock-1" and m.get("target_file_read") is False and m.get("target_labels_read") is False and m.get("source_test_rows") == len(y) and m.get("feature_count") == 46)
+        identity_ok = (m.get("seed") == seed and m.get("direction", "unsw-to-cic") == direction
+                       and m.get("configuration_id") == configuration_id
+                       and (direction == "unsw-to-cic" or m.get("experiment_manifest_sha256") == sha256(manifest_path))
+                       and m.get("target_file_read") is False and m.get("target_labels_read") is False
+                       and m.get("source_test_rows") == len(y) and m.get("feature_count") == 46)
         ok = all(checks.values()) and all(finite.values()) and hash_match and identity_ok
         valid &= ok
         pred = np.asarray(values["prediction"], dtype=np.uint8)
@@ -71,19 +99,24 @@ def summarize() -> dict:
         key_values = {f"detector.{k}": v for k, v in detector.items() if isinstance(v, (float, int)) and k not in ("attack_miss_rows", "generic_error_rows")}
         for name in SIGNALS:
             risk = np.asarray(values[name], dtype=np.float32)
-            key_values[f"{name}.generic_error_auprc"] = float(average_precision_score(errors.astype(np.uint8), risk))
-            key_values[f"{name}.attack_miss_auprc"] = float(average_precision_score(misses.astype(np.uint8), risk))
+            generic_ap = float(average_precision_score(errors.astype(np.uint8), risk)) if errors.any() else None
+            miss_ap = float(average_precision_score(misses.astype(np.uint8), risk)) if misses.any() else None
+            key_values[f"{name}.generic_error_auprc"] = generic_ap
+            key_values[f"{name}.attack_miss_auprc"] = miss_ap
             score_arrays[name].append(risk)
             order = np.argsort(-risk, kind="mergesort")
             for budget in (.01, .05, .10):
                 n = max(1, int(np.ceil(len(y) * budget)))
-                capture = float(misses[order[:n]].sum() / max(1, int(misses.sum())))
+                capture = float(misses[order[:n]].sum() / int(misses.sum())) if misses.any() else None
                 key_values[f"{name}.capture_{budget}"] = capture
             stored = source_results["reliability"][name]
-            if abs(key_values[f"{name}.attack_miss_auprc"] - float(stored["attack_miss_auprc"])) > 1e-12:
+            stored_miss_ap = stored.get("attack_miss_auprc")
+            if ((miss_ap is None) != (stored_miss_ap is None)
+                    or (miss_ap is not None and abs(miss_ap - float(stored_miss_ap)) > 1e-12)):
                 ok = valid = False
         for k, v in key_values.items():
-            metric_arrays.setdefault(k, []).append(float(v))
+            if v is not None:
+                metric_arrays.setdefault(k, []).append(float(v))
         per_seed[str(seed)] = {
             "integrity_verified": bool(ok),
             "file_hashes_match_metrics": bool(hash_match),
@@ -124,20 +157,21 @@ def summarize() -> dict:
         top_set_stability[name] = budget_stability
 
     summaries = {key: stats(values) for key, values in metric_arrays.items()}
-    repeat_folder = RUNS / "repro" / "seed-0"
+    repeat_folder = runs / repeat_folder_name
     repeat_metrics = json.loads((repeat_folder / "metrics.json").read_text(encoding="utf-8"))
-    original_metrics = json.loads((RUNS / "seed-0" / "metrics.json").read_text(encoding="utf-8"))
+    original_metrics = json.loads((runs / "seed-0" / "metrics.json").read_text(encoding="utf-8"))
     repeat_hashes = {}
     for filename in FILES.values():
-        left, right = RUNS / "seed-0" / filename, repeat_folder / filename
+        left, right = runs / "seed-0" / filename, repeat_folder / filename
         repeat_hashes[filename] = {"original_sha256": sha256(left), "repeat_sha256": sha256(right), "exact_match": sha256(left) == sha256(right)}
     repeat_exact = all(v["exact_match"] for v in repeat_hashes.values()) and original_metrics["source_test_results"] == repeat_metrics["source_test_results"]
     return {
-        "report_id": "source-e1-final-results-1",
+        "report_id": f"source-e1-{direction}-final-results-1",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "configuration_id": "source-e1-lock-1",
-        "manifest_sha256": sha256(REPORTS / "source_e1_manifest.json"),
-        "source_dataset_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+        "direction": direction,
+        "configuration_id": configuration_id,
+        "manifest_sha256": sha256(manifest_path),
+        "source_dataset_sha256": config["source_dataset"]["sha256"],
         "source_test_rows": n,
         "source_test_attack_rows": miss_counts,
         "complete_seed_count": len(per_seed),
@@ -155,8 +189,12 @@ def summarize() -> dict:
 
 
 def main() -> None:
-    result = summarize()
-    out = REPORTS / "source_e1_final_results.json"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--direction", choices=("unsw-to-cic", "cic-to-unsw"), default="unsw-to-cic")
+    args = parser.parse_args()
+    result = summarize(args.direction)
+    out_name = "source_e1_cic_final_results.json" if args.direction == "cic-to-unsw" else "source_e1_final_results.json"
+    out = REPORTS / out_name
     out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"report": str(out), "seeds": result["complete_seed_count"], "integrity": result["all_per_seed_outputs_integrity_verified"], "repeat_exact": result["same_seed_reproducibility"]["exact_all_score_prediction_arrays_and_metrics"], "target_transfer_ready": False}, indent=2))
 

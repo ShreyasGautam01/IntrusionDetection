@@ -1,0 +1,211 @@
+{
+  "report_id": "cic-chunked-exact-5nn-merge-benchmark-preliminary-superseded",
+  "generated_utc": "2026-11-08T20:24:56.949328+00:00",
+  "git_commit": "3b2281ac0d37193c6f15fa7da334140eac06b03f",
+  "benchmark_script_sha256": "308ece90e12ef9244adf401acd53e501ebb3a0089b0b2a92326b74960c529e3e",
+  "configuration_id": "source-e1-cic-lock-1",
+  "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "source_train_sha256": "8fe6577352db2efcebaa6f2f8f254b8b98a8183359764ed399f8b3447c747e26",
+  "source_test_sha256": "056648b14bd804d10cabe4575ff66359d7faf1dfc580cb176bd786ee9f1186d6",
+  "labels_read": false,
+  "target_file_read": false,
+  "target_labels_read": false,
+  "definition": "Exact mean Euclidean 5-NN over all raw references, represented as per-chunk unique feature rows with exact integer multiplicities. For each chunk keep its five nearest distinct rows; merge distance/count candidates and retain the best five. No approximation is introduced.",
+  "chunk_rows": 250000,
+  "chunks_benchmarked": 2,
+  "query_rows": 1024,
+  "query_indices_sha256": "62ee1e0fff989122c3eb36986c5ddb75c5cd5df6bd5da0703efcb58f8a13e2a7",
+  "scaler_fit_all_source_train": {
+    "wall_seconds": 5.230671900004381,
+    "process_cpu_seconds": 5.203125,
+    "cpu_core_equivalents": 0.9947335828874379,
+    "cpu_utilization_of_logical_capacity_pct": 6.217084893046486,
+    "baseline_working_set_bytes": 164364288,
+    "peak_working_set_bytes": 2385113088,
+    "peak_increment_bytes": 2220748800,
+    "rows": 12068590,
+    "parameters_sha256": "7ad1b9bf9f21fc9b9009b862cf98ac83e6b0119255d148ef1ca41839831ec560"
+  },
+  "query_transform": {
+    "wall_seconds": 0.002466000005370006,
+    "process_cpu_seconds": 0.015625,
+    "cpu_core_equivalents": 6.336171924563957,
+    "cpu_utilization_of_logical_capacity_pct": 39.601074528524734,
+    "baseline_working_set_bytes": 2385141760,
+    "peak_working_set_bytes": 2389987328,
+    "peak_increment_bytes": 4845568
+  },
+  "chunks": [
+    {
+      "chunk_id": 0,
+      "reference_rows": 250000,
+      "unique_rows": 152210,
+      "unique_fraction": 0.60884,
+      "sample_offsets_sha256": "8bcd13dfbe2cf74478259a4834cfd4560dc6eb6159369fc87a4c184882cb9277",
+      "unique_extraction": {
+        "wall_seconds": 0.9577511000097729,
+        "process_cpu_seconds": 0.953125,
+        "cpu_core_equivalents": 0.9951698306483535,
+        "cpu_utilization_of_logical_capacity_pct": 6.219811441552209,
+        "baseline_working_set_bytes": 2436059136,
+        "peak_working_set_bytes": 2502709248,
+        "peak_increment_bytes": 66650112
+      },
+      "standardize": {
+        "wall_seconds": 0.025958900019759312,
+        "process_cpu_seconds": 0.03125,
+        "cpu_core_equivalents": 1.203826047182786,
+        "cpu_utilization_of_logical_capacity_pct": 7.5239127948924125,
+        "baseline_working_set_bytes": 2465984512,
+        "peak_working_set_bytes": 2522005504,
+        "peak_increment_bytes": 56020992
+      },
+      "kd_tree_fit": {
+        "wall_seconds": 1.1253952999832109,
+        "process_cpu_seconds": 1.109375,
+        "cpu_core_equivalents": 0.9857647353037197,
+        "cpu_utilization_of_logical_capacity_pct": 6.161029595648247,
+        "baseline_working_set_bytes": 2522005504,
+        "peak_working_set_bytes": 2529378304,
+        "peak_increment_bytes": 7372800
+      },
+      "query": {
+        "wall_seconds": 0.11609630001476035,
+        "process_cpu_seconds": 0.125,
+        "cpu_core_equivalents": 1.076692366458773,
+        "cpu_utilization_of_logical_capacity_pct": 6.729327290367332,
+        "baseline_working_set_bytes": 2529353728,
+        "peak_working_set_bytes": 2529411072,
+        "peak_increment_bytes": 57344
+      },
+      "query_rows_per_second": 8820.26386603027,
+      "merge": {
+        "wall_seconds": 0.0,
+        "process_cpu_seconds": 0.0,
+        "peak_working_set_bytes": 2522157056
+      }
+    },
+    {
+      "chunk_id": 1,
+      "reference_rows": 250000,
+      "unique_rows": 152707,
+      "unique_fraction": 0.610828,
+      "sample_offsets_sha256": "414d8422d1d51616e97a27ba1c134fd81692e69b961b7bff0121a1adc2ed4e15",
+      "unique_extraction": {
+        "wall_seconds": 0.9618749999790452,
+        "process_cpu_seconds": 0.9375,
+        "cpu_core_equivalents": 0.9746588694169448,
+        "cpu_utilization_of_logical_capacity_pct": 6.091617933855905,
+        "baseline_working_set_bytes": 2436911104,
+        "peak_working_set_bytes": 2482937856,
+        "peak_increment_bytes": 46026752
+      },
+      "standardize": {
+        "wall_seconds": 0.028833799995481968,
+        "process_cpu_seconds": 0.03125,
+        "cpu_core_equivalents": 1.0837974878405423,
+        "cpu_utilization_of_logical_capacity_pct": 6.77373429900339,
+        "baseline_working_set_bytes": 2466242560,
+        "peak_working_set_bytes": 2522439680,
+        "peak_increment_bytes": 56197120
+      },
+      "kd_tree_fit": {
+        "wall_seconds": 1.1207634000165854,
+        "process_cpu_seconds": 1.109375,
+        "cpu_core_equivalents": 0.9898387117063094,
+        "cpu_utilization_of_logical_capacity_pct": 6.186491948164434,
+        "baseline_working_set_bytes": 2522439680,
+        "peak_working_set_bytes": 2529718272,
+        "peak_increment_bytes": 7278592
+      },
+      "query": {
+        "wall_seconds": 0.1118529999803286,
+        "process_cpu_seconds": 0.09375,
+        "cpu_core_equivalents": 0.8381536482390964,
+        "cpu_utilization_of_logical_capacity_pct": 5.238460301494353,
+        "baseline_working_set_bytes": 2529693696,
+        "peak_working_set_bytes": 2529718272,
+        "peak_increment_bytes": 24576
+      },
+      "query_rows_per_second": 9154.872915166237,
+      "merge": {
+        "wall_seconds": 0.0007589000160805881,
+        "process_cpu_seconds": 0.0,
+        "cpu_core_equivalents": 0.0,
+        "cpu_utilization_of_logical_capacity_pct": 0.0,
+        "baseline_working_set_bytes": 2522439680,
+        "peak_working_set_bytes": 2522468352,
+        "peak_increment_bytes": 28672
+      }
+    }
+  ],
+  "raw_exact_reference_check": {
+    "reference_rows": 500000,
+    "query_rows": 1024,
+    "reference_fit": {
+      "wall_seconds": 5.439156599983107,
+      "process_cpu_seconds": 5.421875,
+      "cpu_core_equivalents": 0.9968227427055215,
+      "cpu_utilization_of_logical_capacity_pct": 6.230142141909509,
+      "baseline_working_set_bytes": 2666942464,
+      "peak_working_set_bytes": 2696142848,
+      "peak_increment_bytes": 29200384
+    },
+    "reference_query": {
+      "wall_seconds": 0.6378119000000879,
+      "process_cpu_seconds": 0.625,
+      "cpu_core_equivalents": 0.979912729756083,
+      "cpu_utilization_of_logical_capacity_pct": 6.1244545609755185,
+      "baseline_working_set_bytes": 2696118272,
+      "peak_working_set_bytes": 2696146944,
+      "peak_increment_bytes": 28672
+    },
+    "reference_transform": {
+      "wall_seconds": 0.08320729999104515,
+      "process_cpu_seconds": 0.078125,
+      "cpu_core_equivalents": 0.9389200227432917,
+      "cpu_utilization_of_logical_capacity_pct": 5.868250142145572,
+      "baseline_working_set_bytes": 2482929664,
+      "peak_working_set_bytes": 2666938368,
+      "peak_increment_bytes": 184008704
+    },
+    "exact_score_sha256": "ec701204212a037c871ac766528d0800847547e9b5b4721957cb1f3f29646ca4",
+    "chunk_merged_score_sha256": "59c1b806aa0c95d273282ea5a7100fec695869b98b26f2c96e404870d6a9597b",
+    "allclose_rtol_1e-12_atol_1e-12": true,
+    "scores_bitwise_equal": false,
+    "maximum_absolute_difference": 6.938893903907228e-18,
+    "exact_zero_count": 388,
+    "merged_zero_count": 388
+  },
+  "max_timed_phase_peak_working_set_bytes": 2529718272,
+  "system_memory_before": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 7289524224,
+    "memory_load_pct": 56
+  },
+  "system_memory_after": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 4941459456,
+    "memory_load_pct": 70
+  },
+  "logical_cpu_count": 16,
+  "thread_limits": {
+    "BLAS": 1,
+    "OpenMP": 1,
+    "KDTree_n_jobs": 1
+  },
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1"
+  },
+  "full_distance_estimate": {
+    "valid": false,
+    "superseded_by": "cic_chunked_exact_merge_benchmark_validated.json",
+    "reason": "Chunk size and throughput basis were mismatched; do not use the former total."
+  },
+  "projection_status": "Superseded: the first estimate multiplied the 500k-reference query time by 49 planned 250k chunks. The validated report uses 25 planned 500k chunks and duplicate-compressed throughput.",
+  "incorrect_preliminary_projection_hours": 32.881145479679674
+}

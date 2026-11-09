@@ -1,0 +1,153 @@
+{
+  "direction": "cic-to-unsw",
+  "seed": 0,
+  "rows": 2000,
+  "features": 46,
+  "fit_seconds": 0.35216000000946224,
+  "conformal_quantile": 6.597633550597948e-11,
+  "score_shapes": {
+    "confidence": [
+      2000
+    ],
+    "random_forest_disagreement": [
+      2000
+    ],
+    "feature_space_distance": [
+      2000
+    ],
+    "split_conformal": [
+      2000
+    ],
+    "isolation_forest": [
+      2000
+    ]
+  },
+  "all_finite": true,
+  "target_access": false,
+  "metrics": {
+    "detector": {
+      "accuracy": 1.0,
+      "attack_auprc": 1.0,
+      "attack_auroc": 1.0,
+      "attack_miss_rows": 0,
+      "generic_error_rows": 0,
+      "brier_score": 5.257844009065593e-07
+    },
+    "reliability": {
+      "confidence": {
+        "generic_error_auprc": null,
+        "attack_miss_auprc": null,
+        "ranking_endpoints_defined": false,
+        "attack_miss_capture": {
+          "0.01": null,
+          "0.05": null,
+          "0.1": null
+        },
+        "score_distribution": {
+          "min": 0.0,
+          "p25": 0.0,
+          "median": 0.0001487135887145996,
+          "p75": 0.0001487135887145996,
+          "max": 0.0187833309173584,
+          "mean": 0.0001407924573868513,
+          "std": 0.0007113102474249899
+        }
+      },
+      "random_forest_disagreement": {
+        "generic_error_auprc": null,
+        "attack_miss_auprc": null,
+        "ranking_endpoints_defined": false,
+        "attack_miss_capture": {
+          "0.01": null,
+          "0.05": null,
+          "0.1": null
+        },
+        "score_distribution": {
+          "min": 0.0,
+          "p25": 0.0,
+          "median": 0.0,
+          "p75": 0.0,
+          "max": 0.09500002861022949,
+          "mean": 0.0006274997140280902,
+          "std": 0.004485392011702061
+        }
+      },
+      "feature_space_distance": {
+        "generic_error_auprc": null,
+        "attack_miss_auprc": null,
+        "ranking_endpoints_defined": false,
+        "attack_miss_capture": {
+          "0.01": null,
+          "0.05": null,
+          "0.1": null
+        },
+        "score_distribution": {
+          "min": 0.0,
+          "p25": 0.0,
+          "median": 0.0,
+          "p75": 0.1513327658176422,
+          "max": 29.215208053588867,
+          "mean": 0.42503461241722107,
+          "std": 1.869319200515747
+        }
+      },
+      "split_conformal": {
+        "generic_error_auprc": null,
+        "attack_miss_auprc": null,
+        "ranking_endpoints_defined": false,
+        "attack_miss_capture": {
+          "0.01": null,
+          "0.05": null,
+          "0.1": null
+        },
+        "score_distribution": {
+          "min": -1.0,
+          "p25": -1.0,
+          "median": -1.0,
+          "p75": 0.0,
+          "max": 0.0,
+          "mean": -0.546999990940094,
+          "std": 0.49778613448143005
+        }
+      },
+      "isolation_forest": {
+        "generic_error_auprc": null,
+        "attack_miss_auprc": null,
+        "ranking_endpoints_defined": false,
+        "attack_miss_capture": {
+          "0.01": null,
+          "0.05": null,
+          "0.1": null
+        },
+        "score_distribution": {
+          "min": 0.3231602907180786,
+          "p25": 0.3231602907180786,
+          "median": 0.335899293422699,
+          "p75": 0.4190884232521057,
+          "max": 0.7029935717582703,
+          "mean": 0.3899015486240387,
+          "std": 0.09281051158905029
+        }
+      }
+    }
+  },
+  "report_id": "source-e1-full-pipeline-smoke-1",
+  "generated_utc": "2026-11-08T20:37:10.030270+00:00",
+  "configuration_id": "source-e1-cic-lock-1",
+  "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "target_file_read": false,
+  "target_labels_read": false,
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "thread_limits": {
+    "OpenMP": 1,
+    "BLAS": 1,
+    "RF_n_jobs": 1,
+    "IsolationForest_n_jobs": 1
+  },
+  "note": "Plumbing-only deterministic class-present source subset; metrics are not final E1 results. No full-run outputs were written."
+}
