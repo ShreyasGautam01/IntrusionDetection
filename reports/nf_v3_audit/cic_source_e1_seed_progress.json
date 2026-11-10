@@ -1,6 +1,6 @@
 {
   "report_id": "cic-source-e1-seed-progress-v1",
-  "generated_utc": "2026-11-10T20:46:53.631233+00:00",
+  "generated_utc": "2026-11-10T22:39:04.792937+00:00",
   "direction": "cic-to-unsw",
   "status": "in_progress",
   "configuration_id": "source-e1-cic-lock-1",
@@ -26,9 +26,10 @@
   ],
   "completed_seed_ids": [
     0,
-    1
+    1,
+    2
   ],
-  "completed_seed_count": 2,
+  "completed_seed_count": 3,
   "completed_seeds": [
     {
       "seed": 0,
@@ -106,6 +107,45 @@
         "prediction.npy": "b2f29999e0eb42f4db3dccbc08bc35d4113a1f7f7226cd8ea9f90ba5ff293e30",
         "random_forest_disagreement.npy": "3c624448cd0ec2eededd65fdc0e1a7ed100590f2983e0e4877ac359787c3287c",
         "split_conformal.npy": "f9ce804ec0149345cf7de00f5028a70445a485b92ac21136d486baadfd418899"
+      }
+    },
+    {
+      "seed": 2,
+      "run_id": "source-e1-cic-to-unsw-seed-2-full",
+      "generated_utc": "2026-11-10T22:37:43.882451+00:00",
+      "metrics_sha256": "74de6e4b5a8e9a5c7f724671fa4a19d6469258b9d70fc01c9a634b54eaae7c7b",
+      "fit_seconds": 6369.5086352,
+      "detector_summary": {
+        "accuracy": 0.9929413775592848,
+        "attack_auprc": 0.9761417082551603,
+        "attack_auroc": 0.989799330567353,
+        "attack_miss_rows": 26434,
+        "generic_error_rows": 28412,
+        "brier_score": 0.0068107470870018005
+      },
+      "recovered_partial_artifacts": null,
+      "signal_names": [
+        "confidence",
+        "random_forest_disagreement",
+        "feature_space_distance",
+        "split_conformal",
+        "isolation_forest"
+      ],
+      "signal_dependencies": {
+        "confidence": "RF seed + calibrator",
+        "random_forest_disagreement": "RF seed",
+        "feature_space_distance": "shared source-train scaler/reference; seed-independent",
+        "split_conformal": "RF seed + source calibration predictions",
+        "isolation_forest": "source train; random_state=2; independent of RF predictions but seed-varied by frozen config"
+      },
+      "artifact_sha256": {
+        "calibrated_probability.npy": "403b559a3ae0d179a877ebf55b9666d635363e5bdb61b08cffe2f93ecb95ac18",
+        "confidence.npy": "ceef853e513d7d33a0dfb10ffb61b7e78589d16eeedb5fd6eb118d8d26028833",
+        "feature_space_distance.npy": "16f25ebc8a4f53e09b3143e997bb520525d464da677dd23f8610fcaeff5d8d8e",
+        "isolation_forest.npy": "f281425323751683ba2ce51d446d15e53b1ae6686930843a7cfa96b6b435a82f",
+        "prediction.npy": "bf5d3d2c10b2f1c959d20e16071b22de4d3973a88a81db5622cf31bb0e3f6c3a",
+        "random_forest_disagreement.npy": "adf75f2a500e49aef5aede412366897436245717c7fc5a3822092edf814fe9f3",
+        "split_conformal.npy": "2f678d7d126a9bb182227c5274a3eed1cb4ee9b510c03c6f5051db400d6b14ca"
       }
     }
   ],
