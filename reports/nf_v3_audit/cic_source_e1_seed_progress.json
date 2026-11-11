@@ -1,6 +1,6 @@
 {
   "report_id": "cic-source-e1-seed-progress-v1",
-  "generated_utc": "2026-11-10T22:39:04.792937+00:00",
+  "generated_utc": "2026-11-11T04:09:11.719077+00:00",
   "direction": "cic-to-unsw",
   "status": "in_progress",
   "configuration_id": "source-e1-cic-lock-1",
@@ -27,9 +27,10 @@
   "completed_seed_ids": [
     0,
     1,
-    2
+    2,
+    3
   ],
-  "completed_seed_count": 3,
+  "completed_seed_count": 4,
   "completed_seeds": [
     {
       "seed": 0,
@@ -147,6 +148,45 @@
         "random_forest_disagreement.npy": "adf75f2a500e49aef5aede412366897436245717c7fc5a3822092edf814fe9f3",
         "split_conformal.npy": "2f678d7d126a9bb182227c5274a3eed1cb4ee9b510c03c6f5051db400d6b14ca"
       }
+    },
+    {
+      "seed": 3,
+      "run_id": "source-e1-cic-to-unsw-seed-3-full",
+      "generated_utc": "2026-11-11T04:07:32.670557+00:00",
+      "fit_seconds": 19349.9096522,
+      "recovered_partial_artifacts": null,
+      "signal_dependencies": {
+        "confidence": "RF seed + calibrator",
+        "random_forest_disagreement": "RF seed",
+        "feature_space_distance": "shared source-train scaler/reference; seed-independent",
+        "split_conformal": "RF seed + source calibration predictions",
+        "isolation_forest": "source train; random_state=3; independent of RF predictions but seed-varied by frozen config"
+      },
+      "artifact_sha256": {
+        "calibrated_probability.npy": "523b1875691ffbadf569e8d4e584a2ff52f0ed543b7012e8dba774ccb967d04c",
+        "confidence.npy": "cca73320ad0b7f13b336a60820df4f3448680a917a7ce14b8dc23ba8ac395bb6",
+        "feature_space_distance.npy": "16f25ebc8a4f53e09b3143e997bb520525d464da677dd23f8610fcaeff5d8d8e",
+        "isolation_forest.npy": "edfad2a75a8a32ae4cc0856001ef7741864de7355c7fcdd2d673922eae7480b8",
+        "prediction.npy": "45d20db065251b3066a94cd561d3de5aade59e940ca802ec0e4f92bcb7bdada8",
+        "random_forest_disagreement.npy": "6e1a8f6e046a70b5074e0c406a1c36b7b3df1c6a4c2eb2b66c187e4b5ddf5158",
+        "split_conformal.npy": "28a2a6ff2f3eeaf32bf1feacbd4c0063d14b34391eab71e6f649ede0b1929b98"
+      },
+      "metrics_sha256": "cdd9cf8bf9c26cc7851fe79d430f0353e20d5e43716be8c90569f3cbd554c836",
+      "detector_summary": {
+        "accuracy": 0.9929401353689356,
+        "attack_auprc": 0.9761013827732685,
+        "attack_auroc": 0.9897612772041494,
+        "attack_miss_rows": 26441,
+        "generic_error_rows": 28417,
+        "brier_score": 0.006810495629906654
+      },
+      "signal_names": [
+        "confidence",
+        "random_forest_disagreement",
+        "feature_space_distance",
+        "split_conformal",
+        "isolation_forest"
+      ]
     }
   ],
   "worker_count": 1,
@@ -167,5 +207,6 @@
   "stability_gate_complete": false,
   "target_transfer_allowed": false,
   "note": "Seed 0 five-signal source-only output hash verified; all seven arrays have 4,025,148 finite rows. Existing seed 0\u00e2\u20ac\u201c5 directories are UNSW-source artifacts and were left untouched; no CIC per-seed artifacts existed before this run.",
-  "checkpoint_policy": "One hash-verified compact entry is committed after each completed CIC seed; per-row arrays and models remain ignored locally."
+  "checkpoint_policy": "One hash-verified compact entry is committed after each completed CIC seed; per-row arrays and models remain ignored locally.",
+  "target_transfer_started": false
 }
