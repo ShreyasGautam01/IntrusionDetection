@@ -1,6 +1,6 @@
 {
   "report_id": "cic-source-e1-seed-progress-v1",
-  "generated_utc": "2026-11-11T07:57:40.043844+00:00",
+  "generated_utc": "2026-11-11T09:51:07.496027+00:00",
   "direction": "cic-to-unsw",
   "status": "in_progress",
   "configuration_id": "source-e1-cic-lock-1",
@@ -30,9 +30,10 @@
     2,
     3,
     4,
-    5
+    5,
+    6
   ],
-  "completed_seed_count": 6,
+  "completed_seed_count": 7,
   "completed_seeds": [
     {
       "seed": 0,
@@ -259,6 +260,45 @@
         "attack_miss_rows": 26473,
         "generic_error_rows": 28445,
         "brier_score": 0.006810521241277456
+      },
+      "signal_names": [
+        "confidence",
+        "random_forest_disagreement",
+        "feature_space_distance",
+        "split_conformal",
+        "isolation_forest"
+      ]
+    },
+    {
+      "seed": 6,
+      "run_id": "source-e1-cic-to-unsw-seed-6-full",
+      "generated_utc": "2026-11-11T09:49:27.705308+00:00",
+      "fit_seconds": 6382.2784035,
+      "recovered_partial_artifacts": null,
+      "signal_dependencies": {
+        "confidence": "RF seed + calibrator",
+        "random_forest_disagreement": "RF seed",
+        "feature_space_distance": "shared source-train scaler/reference; seed-independent",
+        "split_conformal": "RF seed + source calibration predictions",
+        "isolation_forest": "source train; random_state=6; independent of RF predictions but seed-varied by frozen config"
+      },
+      "artifact_sha256": {
+        "calibrated_probability.npy": "ec20e8ab4ab0b3675a811ac727b438c98f68fd6884f6e91d9eaa1666638bc248",
+        "confidence.npy": "c2044ab5c41c82aef98aa6be7911ccb3fcd49885d537a63a20b99ab01a53c0b2",
+        "feature_space_distance.npy": "16f25ebc8a4f53e09b3143e997bb520525d464da677dd23f8610fcaeff5d8d8e",
+        "isolation_forest.npy": "33c0d4a604b01a7eff092d0b13904af65a66fe8d5f6b5be5e55a149621149ace",
+        "prediction.npy": "edb8f40b42c57a40fc50f51b97a0cecebe4a761274f42b257c31c1ddde4d4fe6",
+        "random_forest_disagreement.npy": "e2959059e2ef44abb99995d9e578d385be25038d55beaf9a2a730626400fb77d",
+        "split_conformal.npy": "184f17614ebd14749ebb342a27847be19b109aff9de8366df445ba5fe21a75ed"
+      },
+      "metrics_sha256": "49f5ba6a23d8c464110ca4493d6787f511dfa8463634673097faf6d59a1cdc09",
+      "detector_summary": {
+        "accuracy": 0.9929339244171891,
+        "attack_auprc": 0.9761258346480803,
+        "attack_auroc": 0.9898131612620873,
+        "attack_miss_rows": 26477,
+        "generic_error_rows": 28442,
+        "brier_score": 0.006811029743403196
       },
       "signal_names": [
         "confidence",
