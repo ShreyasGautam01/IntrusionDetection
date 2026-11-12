@@ -211,6 +211,8 @@ def build_manifest(direction: str, lock_commit: str) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--write", action="store_true")
+    parser.add_argument("--rewrite-existing", action="store_true",
+                        help="Regenerate committed manifests after a validated lockbox/schema fix")
     args = parser.parse_args()
     if not args.write:
         raise SystemExit("Review generation requires explicit --write")
@@ -224,11 +226,17 @@ def main() -> None:
     if frozen_diff.returncode != 0:
         raise SystemExit("Frozen proposal/methodology documents have a diff; refusing to freeze")
     lock_commit = git("rev-parse", "HEAD")
+    manifests = {}
     for direction, out in MANIFEST_PATHS.items():
         if out.exists():
-            raise FileExistsError(f"Refusing to overwrite transfer manifest: {out}")
-        manifest = build_manifest(direction, lock_commit)
-        out.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+            if not args.rewrite_existing:
+                raise FileExistsError(f"Refusing to overwrite transfer manifest: {out}")
+            old = json.loads(out.read_text(encoding="utf-8"))
+            if old.get("direction") != direction or old.get("status") != "frozen":
+                raise ValueError(f"Existing manifest is not a frozen record for {direction}: {out}")
+        manifests[direction] = build_manifest(direction, lock_commit)
+    for direction, out in MANIFEST_PATHS.items():
+        out.write_text(json.dumps(manifests[direction], indent=2) + "\n", encoding="utf-8")
         print(json.dumps({"path": str(out), "direction": direction,
                           "lock_commit": lock_commit,
                           "manifest_sha256": sha256_file(out),

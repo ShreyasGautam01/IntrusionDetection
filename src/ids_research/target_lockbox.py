@@ -201,10 +201,14 @@ def verify_freeze_manifest(
             raise ValueError(f'Feature registry predictor order differs for {dataset}')
         labels = [r for r in rows if r['transfer_role'] in
                   ('binary_target_label', 'attack_family_target_label')]
+        metadata = [r for r in rows if r not in predictors and r not in labels]
         if ({r['raw_column'] for r in labels} != TARGET_COLUMNS
-                or any(r['used_for_prediction'] != 'no' for r in rows if r not in predictors)):
+                or any(r['used_for_prediction'] != 'evaluation only after manifest validation'
+                       for r in labels)
+                or any(r['used_for_prediction'] != 'no' for r in metadata)):
             raise ValueError(f'Feature registry metadata/label roles are invalid for {dataset}')
-        if any(r['used_for_prediction'] not in ('yes', 'no') for r in rows):
+        if any(r['used_for_prediction'] not in
+               ('yes', 'no', 'evaluation only after manifest validation') for r in rows):
             raise ValueError(f'Feature registry contains an invalid prediction role for {dataset}')
     with family_registry.open('r', encoding='utf-8-sig', newline='') as stream:
         families = list(csv.DictReader(stream))

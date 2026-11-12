@@ -275,7 +275,7 @@ class FreezeManifestTests(unittest.TestCase):
                                    ("Attack", "attack_family_target_label")):
                     writer.writerow({"dataset": dataset, "raw_column": name,
                                      "transfer_role": role, "e1_feature_order": "",
-                                     "used_for_prediction": "no"})
+                                     "used_for_prediction": "evaluation only after manifest validation"})
         self.family_registry = self.root / "family_registry.csv"
         self.family_registry.write_text(
             "dataset,unseen_family_claim\nSRC,withheld\nTGT,withheld\n", encoding="utf-8")
