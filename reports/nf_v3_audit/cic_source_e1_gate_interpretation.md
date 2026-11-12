@@ -25,8 +25,10 @@ Confidence has the strongest observed miss capture at 5% and consistent review r
 
 ## Recommendation
 
-**PASS for descriptive source-only E1 analysis, pending owner acceptance.** The detector and reproducibility evidence are stable enough to proceed with the planned interpretation, while the signal results do not support a blanket claim that all five methods capture misses equally or produce equally stable rankings. No numerical pass threshold was specified in the frozen configuration, so this recommendation is qualitative and does not introduce one.
+**PASS for descriptive source-only E1 analysis.** The detector and reproducibility evidence are stable enough to proceed with the planned interpretation, while the signal results do not support a blanket claim that all five methods capture misses equally or produce equally stable rankings. No numerical pass threshold was specified in the frozen configuration, so this recommendation is qualitative and does not introduce one.
 
-**Transfer remains gated.** Do not begin target evaluation until the owner accepts this interpretation. Target transfer is not authorized by this report alone.
+## Owner decision
+
+On 2026-11-12, the project owner accepted the recommendation for descriptive source-only E1 analysis. This closes the CIC source-gate interpretation. Target labels remain sealed until both direction manifests are committed and validated; feature-only target benchmarking may proceed under the approved transfer plan.
 
 See `source_e1_cic_final_results.json` for per-seed metrics, stability intervals, ranking correlations, and review-set overlaps; see `cic_to_unsw_same_seed_repeat.json` for the exact repeat comparison.
