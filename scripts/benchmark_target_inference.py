@@ -174,12 +174,28 @@ def fit_or_load_seed(ctx, seed: int, batch_rows: int) -> tuple[object, object, o
                 raise ValueError(f"Cached {name} model hash failed")
         model, calibrator, isolation = (joblib.load(model_path), joblib.load(calibrator_path),
                                          joblib.load(isolation_path))
-        source_check, source_check_timing = timed(lambda: compare_source_outputs(
-            ctx, seed, model, calibrator, isolation, source_test, seed_dir, batch_rows))
-        source_check["timing"] = source_check_timing
-        event(f"{ctx.direction} seed {seed}: cached models match source E1 outputs")
+        source_check = metadata.get("source_test_verification", {})
+        expected_source_outputs = {
+            "prediction.npy", "calibrated_probability.npy",
+            "random_forest_disagreement.npy", "isolation_forest.npy",
+        }
+        expected_rows = int(json.loads(ctx.stage_manifest.read_text(encoding="utf-8"))
+                            ["partition_rows"]["source_test"])
+        verified_cache = (
+            set(source_check.get("exact_match", {})) == expected_source_outputs
+            and all(source_check["exact_match"].values())
+            and source_check.get("rows_verified") == expected_rows
+        )
+        if not verified_cache:
+            event(f"{ctx.direction} seed {seed}: cache lacks valid source E1 attestation; verifying now")
+            source_check, source_check_timing = timed(lambda: compare_source_outputs(
+                ctx, seed, model, calibrator, isolation, source_test, seed_dir, batch_rows))
+            source_check["timing"] = source_check_timing
+            metadata["source_test_verification"] = source_check
+            metadata_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+        else:
+            event(f"{ctx.direction} seed {seed}: reusing hash-verified source E1 comparison")
         metadata["cache_reused"] = True
-        metadata["source_test_verification"] = source_check
         return model, calibrator, isolation, metadata
 
     if model_dir.exists():
