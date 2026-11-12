@@ -1,0 +1,191 @@
+{
+  "report_id": "target-inference-benchmark-cic-to-unsw-seed-0-v1",
+  "generated_utc": "2026-11-12T08:03:48.223985+00:00",
+  "direction": "cic-to-unsw",
+  "seed": 0,
+  "source_dataset_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "target_dataset_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+  "source_e1_metrics_sha256": "8822e3766c2ac580adc3b64b45105d76d61dc33235322d1e74c22a9a5f2bd707",
+  "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "feature_registry_sha256": "6eabb354c37149b3f37580b27d71b1b5be24b2fa4efb81cd5647b15c309999d7",
+  "feature_order": [
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "OUT_BYTES",
+    "IN_PKTS",
+    "OUT_PKTS",
+    "FLOW_DURATION_MILLISECONDS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "target_sample": {
+    "row_offsets": [
+      0,
+      39999
+    ],
+    "rows": 40000,
+    "batch_rows": 8192,
+    "feature_columns_only": true,
+    "parse_timing": {
+      "wall_seconds": 0.7877103999780957,
+      "process_cpu_seconds": 0.765625,
+      "cpu_core_equivalents": 0.9719625385437214,
+      "cpu_utilization_of_logical_capacity_pct": 6.074765865898259,
+      "baseline_working_set_bytes": 1327267840,
+      "peak_working_set_bytes": 1358905344,
+      "peak_increment_bytes": 31637504
+    },
+    "labels_selected_or_used": false
+  },
+  "model_cache": {
+    "path": "data\\processed\\target-transfer-v1\\cic-to-unsw\\verified_models\\seed-0",
+    "verified_models": {
+      "random_forest": "e98d1930112cd90a175c6d50ecc6b6c066d67cd57238504a161098c53e57dec7",
+      "calibrator": "4788f5a71a27f9ca313ce4c7711f6ddf06a36e284b7adf71dd6bc14713c3beb6",
+      "isolation_forest": "a766887a41085a76ebb339364481902d9260604702c295009d7f191f7c3c164f"
+    },
+    "source_test_verification": {
+      "exact_match": {
+        "prediction.npy": true,
+        "calibrated_probability.npy": true,
+        "random_forest_disagreement.npy": true,
+        "isolation_forest.npy": true
+      },
+      "rows_verified": 4025148,
+      "batch_rows": 8192,
+      "row_blocks": 492
+    },
+    "cache_reused": false,
+    "RF_fit_timing": {
+      "wall_seconds": 7519.985471799999,
+      "process_cpu_seconds": 6650.0,
+      "cpu_core_equivalents": 0.8843102190738997,
+      "cpu_utilization_of_logical_capacity_pct": 5.5269388692118735,
+      "baseline_working_set_bytes": 902909952,
+      "peak_working_set_bytes": 4343848960,
+      "peak_increment_bytes": 3440939008
+    },
+    "calibrator_fit_timing": {
+      "wall_seconds": 0.6821289000217803,
+      "process_cpu_seconds": 0.59375,
+      "cpu_core_equivalents": 0.8704366579117842,
+      "cpu_utilization_of_logical_capacity_pct": 5.440229111948651,
+      "baseline_working_set_bytes": 4235489280,
+      "peak_working_set_bytes": 4307845120,
+      "peak_increment_bytes": 72355840
+    },
+    "IsolationForest_fit_timing": {
+      "wall_seconds": 8.877881500025978,
+      "process_cpu_seconds": 8.46875,
+      "cpu_core_equivalents": 0.9539156385422828,
+      "cpu_utilization_of_logical_capacity_pct": 5.9619727408892675,
+      "baseline_working_set_bytes": 4246294528,
+      "peak_working_set_bytes": 4548501504,
+      "peak_increment_bytes": 302206976
+    }
+  },
+  "target_inference": {
+    "timing": {
+      "rf_probability_wall_seconds": 0.45700069997110404,
+      "rf_disagreement_wall_seconds": 0.7346278999466449,
+      "isolation_forest_wall_seconds": 0.1349636999948416
+    },
+    "overall_timing": {
+      "wall_seconds": 1.3325017000024673,
+      "process_cpu_seconds": 1.296875,
+      "cpu_core_equivalents": 0.973263298649149,
+      "cpu_utilization_of_logical_capacity_pct": 6.082895616557181,
+      "baseline_working_set_bytes": 1337544704,
+      "peak_working_set_bytes": 1337589760,
+      "peak_increment_bytes": 45056
+    },
+    "rows_per_second": {
+      "rf_probability": 87527.21823517815,
+      "rf_disagreement": 54449.33414985349,
+      "isolation_forest": 296375.9885178669
+    },
+    "combined_rows_per_second": 30152.443974411435,
+    "full_target_one_seed_seconds": {
+      "rf_probability": 27.02501059321122,
+      "rf_disagreement": 43.442661640084815,
+      "isolation_forest": 7.981159377414954
+    },
+    "full_target_all_10_seeds_seconds": {
+      "rf_probability": 270.2501059321122,
+      "rf_disagreement": 434.42661640084816,
+      "isolation_forest": 79.81159377414954
+    },
+    "projection_formula": "bounded target feature inference wall time \u00d7 (full target row count / bounded rows); all-seed projection multiplies one-seed estimate by ten"
+  },
+  "system_memory_before_run": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 8064360448,
+    "memory_load_pct": 52
+  },
+  "system_memory_after_run": {
+    "total_physical_bytes": 16849293312,
+    "available_physical_bytes": 5543845888,
+    "memory_load_pct": 67
+  },
+  "logical_cpu_count": 16,
+  "thread_limits": {
+    "BLAS": 1,
+    "OpenMP": 1,
+    "RF_n_jobs": 1,
+    "IsolationForest_n_jobs": 1
+  },
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1",
+    "joblib": "1.6.0"
+  },
+  "code_commit": "f14c66cd53980cc8f25aa1375ce0e2b69cbe938b",
+  "code_sha256": {
+    "benchmark_script": "0fca0371e5cacb2140bad4f555deb19ff5da23143ad0aadf04a2dbf263572c7c",
+    "source_e1_runner": "6f2d9669db8439716fe2425bdbc37297101fb8f53bca813a57969228c6bb4e34",
+    "target_transfer_common": "46b451c543d2f4c5c3f5ce6ce10c24f9f2b422766f99b6b213db181bf02a18f7",
+    "target_lockbox": "a1f8ac4cae7c33edd49284534013004de7f9104ccf50c8416b704671aa97f9a7"
+  },
+  "all_finite": true,
+  "target_labels_read": false
+}
