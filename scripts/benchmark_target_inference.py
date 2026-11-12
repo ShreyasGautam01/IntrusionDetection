@@ -37,6 +37,10 @@ from target_transfer_common import (  # noqa: E402
 THREADS = 1
 
 
+def event(message: str) -> None:
+    print(f"{datetime.now(timezone.utc).isoformat()} {message}", flush=True)
+
+
 def source_identity(ctx, seed: int, metrics: dict) -> dict:
     stage = json.loads(ctx.stage_manifest.read_text(encoding="utf-8"))
     seed_dir = ctx.source_e1_seed_root / f"seed-{seed}"
@@ -144,6 +148,7 @@ def fit_or_load_seed(ctx, seed: int, batch_rows: int) -> tuple[object, object, o
     if any(existing) and not all(existing):
         raise RuntimeError(f"Partial verified model cache exists; preserving {model_dir}")
     if all(existing):
+        event(f"{ctx.direction} seed {seed}: loading previously verified model cache")
         metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
         if metadata.get("identity") != identity:
             raise ValueError("Cached source models belong to different frozen inputs/configuration")
@@ -156,6 +161,7 @@ def fit_or_load_seed(ctx, seed: int, batch_rows: int) -> tuple[object, object, o
                                          joblib.load(isolation_path))
         source_check = compare_source_outputs(ctx, seed, model, calibrator, isolation,
                                              source_test, seed_dir, batch_rows)
+        event(f"{ctx.direction} seed {seed}: cached models match source E1 outputs")
         metadata["cache_reused"] = True
         metadata["source_test_verification"] = source_check
         return model, calibrator, isolation, metadata
@@ -167,9 +173,11 @@ def fit_or_load_seed(ctx, seed: int, batch_rows: int) -> tuple[object, object, o
     if int(mask.sum()) != int(metrics["calibration_probability_rows"]):
         raise ValueError("Source calibration hash split differs from the saved E1 result")
     model = e1.rf_config(cfg, seed)
+    event(f"{ctx.direction} seed {seed}: fitting frozen RF on {len(source_train)} source rows")
     with threadpool_limits(limits=THREADS):
         model_fit, timing = timed(lambda: model.fit(source_train, source_y))
         del model_fit
+    event(f"{ctx.direction} seed {seed}: RF fit complete in {timing['wall_seconds']:.1f}s; fitting calibrator")
         raw_cal = np.clip(model.predict_proba(calibration_x[mask])[:, 1], 1e-7, 1 - 1e-7)
         logits_cal = np.log(raw_cal / (1 - raw_cal)).reshape(-1, 1)
         calibrator = LogisticRegression(C=1.0, solver="lbfgs", max_iter=1000, random_state=seed)
@@ -194,12 +202,14 @@ def fit_or_load_seed(ctx, seed: int, batch_rows: int) -> tuple[object, object, o
     with threadpool_limits(limits=THREADS):
         isolation_fit, iso_timing = timed(lambda: isolation.fit(source_train))
         del isolation_fit
+    event(f"{ctx.direction} seed {seed}: Isolation Forest fit complete in {iso_timing['wall_seconds']:.1f}s")
     iso_tmp = isolation_path.with_suffix(".joblib.tmp")
     joblib.dump(isolation, iso_tmp, compress=0)
     os.replace(iso_tmp, isolation_path)
 
     source_check = compare_source_outputs(ctx, seed, model, calibrator, isolation,
                                          source_test, seed_dir, batch_rows)
+    event(f"{ctx.direction} seed {seed}: exact source E1 verification passed")
     metadata = {
         "identity": identity,
         "model_sha256": {"random_forest": sha256_file(model_path),
@@ -221,6 +231,7 @@ def run_benchmark(direction: str, seed: int, query_rows: int, batch_rows: int) -
         raise ValueError("Seed is not declared in the frozen direction configuration")
     memory_before = system_memory()
     model, calibrator, isolation, model_meta = fit_or_load_seed(ctx, seed, batch_rows)
+    event(f"{direction} seed {seed}: reading {query_rows} target rows with predictor columns only")
     sample = np.empty((query_rows, len(ctx.feature_order)), dtype=np.float32)
     written = 0
     replacements = source_replacements(ctx)
@@ -237,6 +248,7 @@ def run_benchmark(direction: str, seed: int, query_rows: int, batch_rows: int) -
         if written != query_rows:
             raise ValueError(f"Target feature iterator produced {written} rows; expected {query_rows}")
     _, parse_timing = timed(parse_sample)
+    event(f"{direction} seed {seed}: target feature sample parsed in {parse_timing['wall_seconds']:.1f}s; benchmarking inference")
 
     timings = {"rf_probability_wall_seconds": 0.0, "rf_disagreement_wall_seconds": 0.0,
                "isolation_forest_wall_seconds": 0.0}
@@ -273,6 +285,7 @@ def run_benchmark(direction: str, seed: int, query_rows: int, batch_rows: int) -
     all_finite, inference_measure = timed(infer_sample)
     if not all_finite:
         raise RuntimeError("Target feature inference produced non-finite outputs")
+    event(f"{direction} seed {seed}: bounded target inference complete in {inference_measure['wall_seconds']:.1f}s")
     target_rows = int(ctx.target_record["row_count_excluding_header"])
     inference_total = sum(timings.values())
     code_paths = {
