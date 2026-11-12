@@ -1,9 +1,9 @@
 {
   "manifest_id": "target-transfer-cic-to-unsw-v1",
   "status": "frozen",
-  "generated_utc": "2026-11-12T08:11:52.664307+00:00",
+  "generated_utc": "2026-11-12T09:28:41.475070+00:00",
   "direction": "cic-to-unsw",
-  "lock_commit": "b94a8c935d9a96e0abde500049994ebc1ed7eac1",
+  "lock_commit": "b3d9e3906655904e5c0ae29d1e2c8812b63e222b",
   "configuration_id": "source-e1-cic-lock-1",
   "source_dataset": "NF-CSE-CIC-IDS2018-v3",
   "target_dataset": "NF-UNSW-NB15-v3",
@@ -247,7 +247,7 @@
   },
   "software_lock_sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1",
   "code_sha256": {
-    "scripts/freeze_target_transfer_manifests.py": "0903e022eede5871ae9445ba3ee14adc48160b1cf6228b092b070acd61faeffb",
+    "scripts/freeze_target_transfer_manifests.py": "b9385b9f46e571c57ef8384448864c6cfee87aa03c4f6207408ecab2b2b0041b",
     "scripts/score_target_transfer.py": "3704c2755f8b06aa3f02ed024fbddd704fe801b65bdf65f723f04e30e0fd1edf",
     "scripts/evaluate_target_transfer.py": "765d7391dfcc926643a2362a1051745a4d3a96b9937e726532f3ee847254d2ef",
     "scripts/benchmark_target_distance.py": "f3845b311492aa4dd6da927512821c8a1d86e16a0168847fea05563d856d6fca",
@@ -259,10 +259,10 @@
     "scripts/benchmark_source_e1_cic.py": "afc1ab36c39bac797ca6d3e5f41e1948c63237162074a1eb5b1650d14e018796",
     "scripts/cic_exact_chunked_5nn.py": "a4188fa9ab6c8f8e01af105ab4d78e8f028082b091c122aa20f998338a4dbe12",
     "scripts/finite_value_policy.py": "47f15fe59a2eb4c933945ea454fb4aaccb22fad8247061cc08eb4ca9d2e6b386",
-    "src/ids_research/target_lockbox.py": "6f15f64e32a29f23587bd87a3dea547d6b75e765871a02fdb5ae67149e659051",
+    "src/ids_research/target_lockbox.py": "409947640cec2aa04f1387c4042ec75feb8ed57e733f6a5f2ee8f6f1b4f6eb18",
     "src/ids_research/transfer_scoring.py": "c0221895755bb0cde48447ba674e7ed73626564198b76b0d031286b21a527a94",
     "src/ids_research/review_ranking.py": "ca9da4f50c33cd5958a510d679f873780a53aa31511272e1f06db910f0657afa",
-    "tests/test_transfer_firewall.py": "4fd4d139d27e20e241cef2adc95851aa4a788025b56b9eac1d615ab2fd31ab4a"
+    "tests/test_transfer_firewall.py": "91ae4d17296175bc35840b4f44790b19acf3e736838d859edb4f7da2be4c72b9"
   },
   "smoke_evidence": {
     "path": "reports/nf_v3_audit/target_transfer_smoke_cic_to_unsw.json",
