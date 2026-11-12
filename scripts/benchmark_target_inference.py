@@ -178,14 +178,12 @@ def fit_or_load_seed(ctx, seed: int, batch_rows: int) -> tuple[object, object, o
         model_fit, timing = timed(lambda: model.fit(source_train, source_y))
         del model_fit
     event(f"{ctx.direction} seed {seed}: RF fit complete in {timing['wall_seconds']:.1f}s; fitting calibrator")
+    with threadpool_limits(limits=THREADS):
         raw_cal = np.clip(model.predict_proba(calibration_x[mask])[:, 1], 1e-7, 1 - 1e-7)
         logits_cal = np.log(raw_cal / (1 - raw_cal)).reshape(-1, 1)
         calibrator = LogisticRegression(C=1.0, solver="lbfgs", max_iter=1000, random_state=seed)
         calibrator_fit, calibration_timing = timed(lambda: calibrator.fit(logits_cal, calibration_y[mask]))
         del calibrator_fit
-    rf_meta = {"identity": identity, "RF_fit_timing": timing,
-               "calibrator_fit_timing": calibration_timing,
-               "created_utc": datetime.now(timezone.utc).isoformat()}
     rf_tmp = model_path.with_suffix(".joblib.tmp")
     cal_tmp = calibrator_path.with_suffix(".joblib.tmp")
     joblib.dump(model, rf_tmp, compress=0)
