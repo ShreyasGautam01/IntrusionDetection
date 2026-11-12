@@ -41,6 +41,21 @@ def event(message: str) -> None:
     print(f"{datetime.now(timezone.utc).isoformat()} {message}", flush=True)
 
 
+def benchmark_code_provenance() -> dict:
+    code_paths = {
+        "benchmark_script": ROOT / "scripts/benchmark_target_inference.py",
+        "source_e1_runner": ROOT / "scripts/run_source_e1_complete.py",
+        "target_transfer_common": ROOT / "scripts/target_transfer_common.py",
+        "target_lockbox": ROOT / "src/ids_research/target_lockbox.py",
+    }
+    return {
+        "code_commit": subprocess.check_output(
+            ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True
+        ).strip(),
+        "code_sha256": {name: sha256_file(path) for name, path in code_paths.items()},
+    }
+
+
 def source_identity(ctx, seed: int, metrics: dict) -> dict:
     stage = json.loads(ctx.stage_manifest.read_text(encoding="utf-8"))
     seed_dir = ctx.source_e1_seed_root / f"seed-{seed}"
@@ -224,6 +239,7 @@ def fit_or_load_seed(ctx, seed: int, batch_rows: int) -> tuple[object, object, o
 
 
 def run_benchmark(direction: str, seed: int, query_rows: int, batch_rows: int) -> dict:
+    code_provenance = benchmark_code_provenance()
     ctx = resolve_direction(direction)
     if seed not in ctx.config["random_forest"]["seeds"]:
         raise ValueError("Seed is not declared in the frozen direction configuration")
@@ -286,12 +302,6 @@ def run_benchmark(direction: str, seed: int, query_rows: int, batch_rows: int) -
     event(f"{direction} seed {seed}: bounded target inference complete in {inference_measure['wall_seconds']:.1f}s")
     target_rows = int(ctx.target_record["row_count_excluding_header"])
     inference_total = sum(timings.values())
-    code_paths = {
-        "benchmark_script": ROOT / "scripts/benchmark_target_inference.py",
-        "source_e1_runner": ROOT / "scripts/run_source_e1_complete.py",
-        "target_transfer_common": ROOT / "scripts/target_transfer_common.py",
-        "target_lockbox": ROOT / "src/ids_research/target_lockbox.py",
-    }
     return {
         "report_id": f"target-inference-benchmark-{direction}-seed-{seed}-v1",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
@@ -333,8 +343,7 @@ def run_benchmark(direction: str, seed: int, query_rows: int, batch_rows: int) -
                                                                    "IsolationForest_n_jobs": 1},
         "software": {"python": platform.python_version(), "numpy": np.__version__,
                      "scikit_learn": sklearn.__version__, "joblib": joblib.__version__},
-        "code_commit": subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip(),
-        "code_sha256": {name: sha256_file(path) for name, path in code_paths.items()},
+        **code_provenance,
         "all_finite": all_finite, "target_labels_read": False,
     }
 
