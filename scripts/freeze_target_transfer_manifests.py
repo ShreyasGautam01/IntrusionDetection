@@ -73,6 +73,11 @@ def build_manifest(direction: str, lock_commit: str) -> dict:
     if (source_hash != ctx.config["source_dataset"]["sha256"]
             or target_hash != ctx.target_record["sha256"]):
         raise ValueError(f"Source or target bytes differ from the audited direction: {direction}")
+    config_sha = sha256_file(ctx.config_path)
+    stage_sha = sha256_file(ctx.stage_manifest)
+    e1_manifest_sha = sha256_file(ctx.source_e1_manifest)
+    e1_results_sha = sha256_file(ctx.source_e1_results)
+    code_hashes = {relative: sha256_file(ROOT / relative) for relative in CODE_PATHS}
     distance_path = DISTANCE_BENCHMARKS[direction]
     inference_path = INFERENCE_BENCHMARKS[direction]
     smoke_path = SMOKE_REPORTS[direction]
@@ -101,11 +106,6 @@ def build_manifest(direction: str, lock_commit: str) -> dict:
                     or any(code_hashes.get(relative) != smoke_code.get(relative)
                            for relative in required_smoke_code)):
                 raise ValueError("Target five-signal smoke evidence is incomplete, stale, or non-finite")
-    config_sha = sha256_file(ctx.config_path)
-    stage_sha = sha256_file(ctx.stage_manifest)
-    e1_manifest_sha = sha256_file(ctx.source_e1_manifest)
-    e1_results_sha = sha256_file(ctx.source_e1_results)
-    code_hashes = {relative: sha256_file(ROOT / relative) for relative in CODE_PATHS}
     e1_manifest = json.loads(ctx.source_e1_manifest.read_text(encoding="utf-8"))
     e1_results = json.loads(ctx.source_e1_results.read_text(encoding="utf-8"))
     if (e1_manifest.get("configuration_sha256") != config_sha
