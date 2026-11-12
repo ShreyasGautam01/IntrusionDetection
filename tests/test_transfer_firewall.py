@@ -17,10 +17,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from ids_research.review_ranking import stable_review_selections
+from ids_research.review_ranking import ranked_binary_event_metrics, stable_review_selections
+from ids_research.transfer_scoring import reliability_score_batch
 from ids_research.target_lockbox import (
     iter_final_evaluation_labels,
     iter_target_feature_batches,
+    validate_both_transfer_manifests,
     verify_freeze_manifest,
 )
 from target_exact_knn import benchmark_exact_case
@@ -102,6 +104,20 @@ class ReviewRankingTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             stable_review_selections(np.asarray([1.0]), (-0.1,))
 
+    def test_grouped_auprc_and_floor_budget_capture_match_sklearn(self) -> None:
+        from sklearn.metrics import average_precision_score
+        scores = np.asarray([.9, .8, .8, .6, .6, .1], dtype=np.float32)
+        errors = np.asarray([0, 1, 0, 1, 0, 0], dtype=np.uint8)
+        misses = np.asarray([1, 0, 0, 1, 0, 0], dtype=np.uint8)
+        result = ranked_binary_event_metrics(scores, errors, misses, (.5,))
+        self.assertAlmostEqual(result["generic_error_auprc"],
+                               average_precision_score(errors, scores))
+        self.assertAlmostEqual(result["attack_miss_auprc"],
+                               average_precision_score(misses, scores))
+        self.assertEqual(result["review_budgets"]["0.5"]["selected_rows"], 3)
+        self.assertEqual(result["review_budgets"]["0.5"]["cutoff_tie_count"], 2)
+        self.assertEqual(result["review_budgets"]["0.5"]["attack_miss_rows_captured"], 1)
+
 
 class ExactDistanceTests(unittest.TestCase):
     def test_duplicate_compression_and_chunk_merge_match_raw_exact_five_nn(self) -> None:
@@ -122,6 +138,49 @@ class ExactDistanceTests(unittest.TestCase):
         self.assertLessEqual(float(np.max(np.abs(expected - result["scores"]))), 1e-6)
 
 
+class ReliabilityBatchTests(unittest.TestCase):
+    def test_five_scores_match_the_frozen_formulas(self) -> None:
+        class Tree:
+            def __init__(self, prediction):
+                self.prediction = np.asarray(prediction, dtype=np.uint8)
+
+            def predict(self, features):
+                return self.prediction[:len(features)]
+
+        class Model:
+            estimators_ = [Tree([1, 0]), Tree([1, 0]), Tree([0, 0])]
+
+            def predict_proba(self, features):
+                p = np.asarray([.8, .3], dtype=np.float64)[:len(features)]
+                return np.column_stack((p, 1 - p))
+
+        class Calibrator:
+            def predict_proba(self, logits):
+                p = 1 / (1 + np.exp(-logits[:, 0]))
+                return np.column_stack((p, 1 - p))
+
+        class Isolation:
+            def score_samples(self, features):
+                return np.asarray([-.1, -.9])[:len(features)]
+
+        scores = reliability_score_batch(
+            Model(), Calibrator(), Isolation(), np.ones((2, 46), dtype=np.float32),
+            conformal_quantile=.21)
+        np.testing.assert_allclose(scores["confidence"], [.2, .3], atol=1e-6)
+        np.testing.assert_allclose(scores["random_forest_disagreement"], [1 / 3, 0], atol=1e-6)
+        np.testing.assert_array_equal(scores["split_conformal"], [0, -1])
+        np.testing.assert_allclose(scores["isolation_forest"], [.1, .9], atol=1e-6)
+        self.assertEqual(scores["calibrated_probability"].shape, (2,))
+
+    def test_rejects_malformed_or_non_finite_features(self) -> None:
+        with self.assertRaisesRegex(ValueError, "float32 feature matrix"):
+            reliability_score_batch(None, None, None, np.ones((1, 46), dtype=np.float64),
+                                    conformal_quantile=.1)
+        with self.assertRaisesRegex(ValueError, "non-finite"):
+            reliability_score_batch(None, None, None, np.full((1, 46), np.nan, dtype=np.float32),
+                                    conformal_quantile=.1)
+
+
 class FreezeManifestTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory(dir=ROOT)
@@ -136,6 +195,11 @@ class FreezeManifestTests(unittest.TestCase):
         self.target_file = self.root / "target.csv"
         self.source_file.write_text("source-only-bytes\n", encoding="utf-8")
         self.target_file.write_text("f00,Label,Attack\n1,0,Benign\n", encoding="utf-8")
+        self.code_file = self.root / "scripts" / "locked.py"
+        self.code_file.parent.mkdir()
+        self.code_file.write_text("locked transfer implementation\n", encoding="utf-8")
+        self.gate_report = self.root / "gate_interpretation.md"
+        self.gate_report.write_text("## Owner decision\nOwner accepted source-only gate.\n", encoding="utf-8")
         self.config_file = self.root / "config.json"
         self.feature_order = [f"f{i:02d}" for i in range(46)]
         self.config_file.write_text(json.dumps({
@@ -158,7 +222,7 @@ class FreezeManifestTests(unittest.TestCase):
         }), encoding="utf-8")
         self.e1_results = self.root / "source_results.json"
         self.e1_results.write_text(json.dumps({
-            "direction": "src-to-tgt", "complete_seed_count": 10,
+            "direction": "src-to-tgt", "configuration_id": "cfg-v1", "complete_seed_count": 10,
             "all_per_seed_outputs_integrity_verified": True,
             "manifest_sha256": sha(self.e1_manifest),
         }), encoding="utf-8")
@@ -172,11 +236,40 @@ class FreezeManifestTests(unittest.TestCase):
                     writer.writerow({"dataset": dataset, "raw_column": name,
                                      "transfer_role": "predictor", "e1_feature_order": i,
                                      "used_for_prediction": "yes"})
+                for i in range(5):
+                    writer.writerow({"dataset": dataset, "raw_column": f"id{i:02d}",
+                                     "transfer_role": "identifier", "e1_feature_order": "",
+                                     "used_for_prediction": "no"})
+                for i in range(2):
+                    writer.writerow({"dataset": dataset, "raw_column": f"meta{i:02d}",
+                                     "transfer_role": "split_metadata", "e1_feature_order": "",
+                                     "used_for_prediction": "no"})
+                for name, role in (("Label", "binary_target_label"),
+                                   ("Attack", "attack_family_target_label")):
+                    writer.writerow({"dataset": dataset, "raw_column": name,
+                                     "transfer_role": role, "e1_feature_order": "",
+                                     "used_for_prediction": "no"})
         self.family_registry = self.root / "family_registry.csv"
         self.family_registry.write_text(
             "dataset,unseen_family_claim\nSRC,withheld\nTGT,withheld\n", encoding="utf-8")
         self.family_matrix = self.root / "family_matrix.csv"
-        self.family_matrix.write_text("source,target\n", encoding="utf-8")
+        self.family_matrix.write_text(
+            "source_family,target_family,relation,unseen_family_claim\n"
+            "LocalA,LocalB,no_documented_equivalence,withheld_without_crosswalk\n",
+            encoding="utf-8")
+        self.bench_distance = self.root / "distance_benchmark.json"
+        self.bench_inference = self.root / "inference_benchmark.json"
+        common_benchmark = {
+            "direction": "src-to-tgt", "source_dataset_sha256": sha(self.source_file),
+            "target_dataset_sha256": sha(self.target_file),
+            "config_sha256": sha(self.config_file), "target_labels_read": False,
+        }
+        self.bench_distance.write_text(json.dumps({**common_benchmark,
+                                                  "report_id": "target-exact-distance-src-to-tgt-v1"}),
+                                       encoding="utf-8")
+        self.bench_inference.write_text(json.dumps({**common_benchmark,
+                                                    "report_id": "target-inference-src-to-tgt-v1"}),
+                                        encoding="utf-8")
         (self.root / "lock.txt").write_text("locked\n", encoding="utf-8")
         git(self.root, "add", ".")
         git(self.root, "commit", "-q", "-m", "lock transfer inputs")
@@ -188,14 +281,20 @@ class FreezeManifestTests(unittest.TestCase):
             "source_stage_manifest_sha256": sha(self.stage),
             "source_e1_manifest_sha256": sha(self.e1_manifest),
             "source_e1_results_sha256": sha(self.e1_results),
+            "source_gate_interpretation_sha256": sha(self.gate_report),
             "feature_registry_sha256": sha(self.feature_registry),
             "family_registry_sha256": sha(self.family_registry),
             "family_pair_matrix_sha256": sha(self.family_matrix),
             "source_dataset": "SRC", "target_dataset": "TGT",
             "feature_order": self.feature_order, "target_labels_read": False,
+            "source_gate_accepted": True,
             "software": {"python": __import__("platform").python_version(),
                          "numpy": np.__version__, "scikit_learn": sklearn.__version__},
-            "benchmarks": [{"target_labels_read": False}],
+            "benchmarks": {
+                "distance_benchmark.json": sha(self.bench_distance),
+                "inference_benchmark.json": sha(self.bench_inference),
+            },
+            "code_sha256": {"scripts/locked.py": sha(self.code_file)},
         }
         self.manifest_path.write_text(json.dumps(self.manifest, indent=2) + "\n", encoding="utf-8")
         git(self.root, "add", "manifests/transfer_src_to_tgt.json")
@@ -210,6 +309,7 @@ class FreezeManifestTests(unittest.TestCase):
             source_file=self.source_file, target_file=self.target_file,
             config_file=self.config_file, source_stage_manifest=self.stage,
             source_e1_manifest=self.e1_manifest, source_e1_results=self.e1_results,
+            source_gate_interpretation=self.gate_report,
             feature_registry=self.feature_registry, family_registry=self.family_registry,
             family_pair_matrix=self.family_matrix,
         )
@@ -229,7 +329,7 @@ class FreezeManifestTests(unittest.TestCase):
         uncommitted.write_text(json.dumps(self.manifest), encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "must be committed"):
             self.validate(uncommitted)
-        dirty = {**self.manifest, "benchmarks": [{"target_labels_read": False, "changed": True}]}
+        dirty = {**self.manifest, "benchmarks": {**self.manifest["benchmarks"], "draft_note": "changed"}}
         self.manifest_path.write_text(json.dumps(dirty), encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "uncommitted or differs"):
             self.validate()
@@ -240,6 +340,31 @@ class FreezeManifestTests(unittest.TestCase):
         self.target_file.write_text("changed bytes\n", encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "Target dataset hash"):
             self.validate()
+
+    def test_stale_code_and_benchmark_fail_closed(self) -> None:
+        self.code_file.write_text("changed implementation\n", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "Code file differs"):
+            self.validate()
+        self.code_file.write_text("locked transfer implementation\n", encoding="utf-8")
+        self.bench_distance.write_text("{}\n", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "Benchmark evidence hash"):
+            self.validate()
+
+    def test_both_direction_locks_are_required_before_label_iterator(self) -> None:
+        with self.assertRaisesRegex(ValueError, "Both core transfer manifests"):
+            validate_both_transfer_manifests(
+                {"unsw-to-cic": {}}, repository_root=self.root)
+        with self.assertRaisesRegex(ValueError, "Both direction manifests"):
+            list(iter_final_evaluation_labels(
+                self.target_file, manifest_path=self.manifest_path,
+                repository_root=self.root, direction="src-to-tgt",
+                source_file=self.source_file, config_file=self.config_file,
+                source_stage_manifest=self.stage, source_e1_manifest=self.e1_manifest,
+                source_e1_results=self.e1_results,
+                source_gate_interpretation=self.gate_report,
+                feature_registry=self.feature_registry, family_registry=self.family_registry,
+                family_pair_matrix=self.family_matrix, validated_locks=None,
+            ))
 
 
 if __name__ == "__main__":
