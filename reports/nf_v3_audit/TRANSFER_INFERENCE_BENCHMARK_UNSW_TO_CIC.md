@@ -1,0 +1,9 @@
+# Target inference benchmark: UNSW → CIC
+
+The bounded seed 0 model rebuild and feature-only target benchmark passed. The frozen RF, source-fitted Platt calibrator, and seed 0 Isolation Forest were refit under one worker and one internal thread, then matched the saved source E1 outputs exactly across all 473,171 source-test rows for prediction, calibrated probability, RF disagreement, and Isolation Forest score. The models were hash-verified and retained in the ignored local cache for later scoring.
+
+The benchmark parsed and scored the first 40,000 CIC target rows using the frozen 46 predictors only, in 8,192-row batches. Target labels were not selected or used. Parsing took 0.72 seconds. Target inference took 0.31 seconds for calibrated RF probability, 0.63 seconds for tree disagreement, and 0.16 seconds for Isolation Forest score, totaling 1.11 seconds or about 36,343 rows/second. At 20,115,529 CIC target rows, linear projections are about 158 seconds, 317 seconds, and 79 seconds per seed for those three computations, or **5,535 seconds (1.54 hours) for all ten seeds**. This excludes source-model refits, distance computation, and label evaluation.
+
+The seed 0 RF source fit took 208.3 seconds (about one CPU core; peak process working set 607 MB). Isolation Forest fit took 1.13 seconds (553 MB peak process working set). The measured target inference process peaked at 175 MB working set; feature parsing peaked at 189 MB. The projection is based on the first contiguous 40,000 rows and should be treated as a planning estimate, not a full-target guarantee.
+
+Evidence is in [`target_inference_benchmark_unsw_to_cic_seed0.json`](target_inference_benchmark_unsw_to_cic_seed0.json). The report records code commit `fb86aa8645f67c5acdd4160ccf755ffd99db0d6a`, code hashes, source E1 hashes, model-cache hashes, software versions, thread limits, CPU, and memory measurements.
