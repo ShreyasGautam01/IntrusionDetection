@@ -1,0 +1,298 @@
+{
+  "report_id": "target-exact-distance-benchmark-unsw-to-cic-v1",
+  "generated_utc": "2026-11-12T05:35:09.582151+00:00",
+  "direction": "unsw-to-cic",
+  "source_dataset": "NF-UNSW-NB15-v3",
+  "target_dataset": "NF-CSE-CIC-IDS2018-v3",
+  "source_dataset_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+  "target_dataset_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "target_rows": 20115529,
+  "source_train_rows": 1418952,
+  "source_train_sha256": "74d935dd8cc57e97f7faf3beb9852c577822e3b64704d6c2851fd8857fe9ec37",
+  "source_stage_manifest_sha256": "88c346a503ae606bb6478e0c86ba8478ffe8137509aa149681613c08402fc670",
+  "direction_config_sha256": "23fcc21d6699f4e57cf3d96966836b8610773572ad7950330b84149818515a5f",
+  "source_e1_distance_sha256": "6149f6600428e995b8f880de60262bea25642e60a99969b713f6aa843e30c05f",
+  "feature_registry_sha256": "6eabb354c37149b3f37580b27d71b1b5be24b2fa4efb81cd5647b15c309999d7",
+  "code_commit": "333f920be21f714499dbad4c6543f7d2a2aa841c",
+  "code_sha256": {
+    "benchmark_script": "f3845b311492aa4dd6da927512821c8a1d86e16a0168847fea05563d856d6fca",
+    "exact_distance_module": "7b0c7cad07dbe855817b5dea066dfbf489bd497c2c748d3a4f4b0dbcc1a3e204",
+    "target_transfer_common": "46b451c543d2f4c5c3f5ce6ce10c24f9f2b422766f99b6b213db181bf02a18f7",
+    "target_lockbox": "a1f8ac4cae7c33edd49284534013004de7f9104ccf50c8416b704671aa97f9a7"
+  },
+  "feature_order": [
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "OUT_BYTES",
+    "IN_PKTS",
+    "OUT_PKTS",
+    "FLOW_DURATION_MILLISECONDS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "target_feature_sample": {
+    "method": "first contiguous input rows; zero-based stable offsets",
+    "row_offsets": [
+      0,
+      39999
+    ],
+    "rows": 40000,
+    "batch_size": 8192,
+    "labels_selected_or_used": false,
+    "stream_timing": {
+      "wall_seconds": 0.7194394999823999,
+      "process_cpu_seconds": 0.71875,
+      "cpu_core_equivalents": 0.999041615059478,
+      "cpu_utilization_of_logical_capacity_pct": 6.244010094121737,
+      "baseline_working_set_bytes": 158244864,
+      "peak_working_set_bytes": 183676928,
+      "peak_increment_bytes": 25432064
+    }
+  },
+  "target_file_byte_hash_timing": {
+    "wall_seconds": 11.20640579998144,
+    "process_cpu_seconds": 11.046875,
+    "cpu_core_equivalents": 0.9857643206190424,
+    "cpu_utilization_of_logical_capacity_pct": 6.161027003869015,
+    "baseline_working_set_bytes": 158179328,
+    "peak_working_set_bytes": 175046656,
+    "peak_increment_bytes": 16867328,
+    "labels_parsed_or_used": false
+  },
+  "distance_definition": "mean Euclidean distance to the five nearest original source-training rows after source-training StandardScaler",
+  "implementation": "exact KDTree query over per-chunk unique source rows with integer duplicate multiplicities and exact top-five merge",
+  "distance_parameters": {
+    "neighbors": 5,
+    "metric": "euclidean",
+    "leaf_size": 30,
+    "chunk_rows": 500000,
+    "query_batch_rows": 2048,
+    "n_jobs": 1,
+    "BLAS_threads": 1,
+    "OpenMP_threads": 1,
+    "scaler_provenance": {
+      "method": "reuse exact source E1 StandardScaler parameters",
+      "parameters_sha256": "1304b7c4a00296cd56572dd6e9c88e3beb973ed119a6f8278fa1130b201a7404",
+      "source_e1_scaler_json_sha256": "63ae69caeee6d834afe0db9cd6558c07e641689028fa26583b76e9d3a769eafa",
+      "source_e1_distance_metadata_sha256": "d40888831f4f3c82d12910627f2be0b0b40e0d2832755c5da58d6bf86979b065",
+      "source_e1_distance_sha256": "6149f6600428e995b8f880de60262bea25642e60a99969b713f6aa843e30c05f"
+    }
+  },
+  "benchmark_trials": [
+    {
+      "reference_rows": 100000,
+      "query_rows": 2500,
+      "reference_chunk_rows": 500000,
+      "reference_chunk_count": 1,
+      "reference_chunks": [
+        {
+          "start": 0,
+          "end_exclusive": 100000,
+          "unique_reference_rows": 59193,
+          "duplicate_compression_ratio": 1.6893889480175022,
+          "unique_seconds": 0.3366471999906935,
+          "scale_seconds": 0.016277699993224815,
+          "index_fit_seconds": 0.3298900999943726,
+          "query_seconds": 0.22174530001939274
+        }
+      ],
+      "unique_extraction_seconds": 0.3366471999906935,
+      "scaler_and_index_seconds": 0.3461677999875974,
+      "query_seconds": 0.22174530001939274,
+      "wall_seconds": 0.9045602999976836,
+      "process_cpu_seconds": 0.890625,
+      "cpu_core_equivalents": 0.9845943935437811,
+      "cpu_utilization_of_logical_capacity_pct": 6.153714959648632,
+      "query_rows_per_second": 11274.196115008355,
+      "peak_working_set_bytes": 225136640,
+      "all_finite": true
+    },
+    {
+      "reference_rows": 250000,
+      "query_rows": 5000,
+      "reference_chunk_rows": 500000,
+      "reference_chunk_count": 1,
+      "reference_chunks": [
+        {
+          "start": 0,
+          "end_exclusive": 250000,
+          "unique_reference_rows": 137821,
+          "duplicate_compression_ratio": 1.8139470762801024,
+          "unique_seconds": 0.997340300003998,
+          "scale_seconds": 0.02864990002126433,
+          "index_fit_seconds": 0.972896600025706,
+          "query_seconds": 0.618262500007404
+        }
+      ],
+      "unique_extraction_seconds": 0.997340300003998,
+      "scaler_and_index_seconds": 1.0015465000469703,
+      "query_seconds": 0.618262500007404,
+      "wall_seconds": 2.6171493000583723,
+      "process_cpu_seconds": 2.59375,
+      "cpu_core_equivalents": 0.9910592414204835,
+      "cpu_utilization_of_logical_capacity_pct": 6.194120258878022,
+      "query_rows_per_second": 8087.179798128016,
+      "peak_working_set_bytes": 301867008,
+      "all_finite": true
+    },
+    {
+      "reference_rows": 500000,
+      "query_rows": 10000,
+      "reference_chunk_rows": 500000,
+      "reference_chunk_count": 1,
+      "reference_chunks": [
+        {
+          "start": 0,
+          "end_exclusive": 500000,
+          "unique_reference_rows": 259279,
+          "duplicate_compression_ratio": 1.9284245928131472,
+          "unique_seconds": 2.1955490999971516,
+          "scale_seconds": 0.04854359998716973,
+          "index_fit_seconds": 2.079346499987878,
+          "query_seconds": 1.756513900036225
+        }
+      ],
+      "unique_extraction_seconds": 2.1955490999971516,
+      "scaler_and_index_seconds": 2.1278900999750476,
+      "query_seconds": 1.756513900036225,
+      "wall_seconds": 6.079953100008424,
+      "process_cpu_seconds": 6.0,
+      "cpu_core_equivalents": 0.9868497176387243,
+      "cpu_utilization_of_logical_capacity_pct": 6.167810735242027,
+      "query_rows_per_second": 5693.094714362219,
+      "peak_working_set_bytes": 422887424,
+      "all_finite": true
+    },
+    {
+      "reference_rows": 500000,
+      "query_rows": 20000,
+      "reference_chunk_rows": 500000,
+      "reference_chunk_count": 1,
+      "reference_chunks": [
+        {
+          "start": 0,
+          "end_exclusive": 500000,
+          "unique_reference_rows": 259279,
+          "duplicate_compression_ratio": 1.9284245928131472,
+          "unique_seconds": 2.2077456999977585,
+          "scale_seconds": 0.04696509998757392,
+          "index_fit_seconds": 2.0327588000218384,
+          "query_seconds": 4.530805300018983
+        }
+      ],
+      "unique_extraction_seconds": 2.2077456999977585,
+      "scaler_and_index_seconds": 2.0797239000094123,
+      "query_seconds": 4.530805300018983,
+      "wall_seconds": 8.818274900026154,
+      "process_cpu_seconds": 8.59375,
+      "cpu_core_equivalents": 0.974538682160443,
+      "cpu_utilization_of_logical_capacity_pct": 6.090866763502769,
+      "query_rows_per_second": 4414.226318644989,
+      "peak_working_set_bytes": 423895040,
+      "all_finite": true
+    },
+    {
+      "reference_rows": 1000000,
+      "query_rows": 40000,
+      "reference_chunk_rows": 500000,
+      "reference_chunk_count": 2,
+      "reference_chunks": [
+        {
+          "start": 0,
+          "end_exclusive": 500000,
+          "unique_reference_rows": 259279,
+          "duplicate_compression_ratio": 1.9284245928131472,
+          "unique_seconds": 2.2452952999738045,
+          "scale_seconds": 0.046011999977054074,
+          "index_fit_seconds": 2.032142699987162,
+          "query_seconds": 9.734700900065945
+        },
+        {
+          "start": 500000,
+          "end_exclusive": 1000000,
+          "unique_reference_rows": 260092,
+          "duplicate_compression_ratio": 1.922396690401858,
+          "unique_seconds": 2.1731399999989662,
+          "scale_seconds": 0.05010590000892989,
+          "index_fit_seconds": 2.068861300009303,
+          "query_seconds": 7.296402200154262
+        }
+      ],
+      "unique_extraction_seconds": 4.418435299972771,
+      "scaler_and_index_seconds": 4.197121899982449,
+      "query_seconds": 17.031103100220207,
+      "wall_seconds": 25.646660300175427,
+      "process_cpu_seconds": 25.078125,
+      "cpu_core_equivalents": 0.9778319947501493,
+      "cpu_utilization_of_logical_capacity_pct": 6.111449967188433,
+      "query_rows_per_second": 2348.644110990251,
+      "peak_working_set_bytes": 517234688,
+      "all_finite": true
+    }
+  ],
+  "full_runtime_projection": {
+    "low_seconds": 19346.10521329978,
+    "high_seconds": 36690.44187055781,
+    "full_source_reference_chunks": 3,
+    "target_query_rows": 20115529,
+    "formula": "measured per-reference-chunk wall time \u00d7 (full target query rows / bounded query rows) \u00d7 full source reference chunk count",
+    "scope": "exact distance computation only; target feature staging and model inference reported separately"
+  },
+  "hardware": {
+    "logical_cpu_count": 16,
+    "system_memory_before_run": {
+      "total_physical_bytes": 16849293312,
+      "available_physical_bytes": 8243773440,
+      "memory_load_pct": 51
+    },
+    "system_memory_after_run": {
+      "total_physical_bytes": 16849293312,
+      "available_physical_bytes": 8057913344,
+      "memory_load_pct": 52
+    }
+  },
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "target_labels_read": false
+}
