@@ -26,6 +26,7 @@ from ids_research.target_lockbox import (
     verify_freeze_manifest,
 )
 from target_exact_knn import benchmark_exact_case
+from score_target_transfer import capacity_requirements
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 
@@ -179,6 +180,22 @@ class ReliabilityBatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "non-finite"):
             reliability_score_batch(None, None, None, np.full((1, 46), np.nan, dtype=np.float32),
                                     conformal_quantile=.1)
+
+
+class TransferCapacityTests(unittest.TestCase):
+    def test_model_cache_reserve_scales_from_measured_seed_zero_size(self) -> None:
+        plan = capacity_requirements(
+            target_rows=1000, seed_count=10, seed0_model_cache_bytes=1_200_000_000,
+            missing_model_cache_seeds=9,
+        )
+        self.assertEqual(plan["model_cache_reserve_bytes"], 13_500_000_000)
+        self.assertEqual(plan["missing_model_cache_seeds"], 9)
+        complete = capacity_requirements(
+            target_rows=1000, seed_count=10, seed0_model_cache_bytes=1_200_000_000,
+            missing_model_cache_seeds=0,
+        )
+        self.assertEqual(complete["model_cache_reserve_bytes"], 0)
+        self.assertGreater(plan["headroom_bytes"], complete["headroom_bytes"])
 
 
 class FreezeManifestTests(unittest.TestCase):

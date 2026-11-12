@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import shutil
 import subprocess
@@ -78,20 +79,55 @@ def lock_specs() -> dict[str, dict]:
     return result
 
 
-def check_output_capacity(root: Path, target_rows: int, seed_count: int = 10) -> dict:
+def capacity_requirements(target_rows: int, seed_count: int, seed0_model_cache_bytes: int,
+                          missing_model_cache_seeds: int, *, extra_headroom_bytes: int = 2_000_000_000,
+                          model_cache_safety_factor: float = 1.25) -> dict:
     # target matrix + exact 5-NN two-slot distance/count states + result + five scores per seed
     bytes_per_row = 46 * 4 + 5 * (2 * 8 + 2 * 4) + 4 + len(SCORE_FILES) * 4 * seed_count
     estimated = target_rows * bytes_per_row
+    model_reserve = math.ceil(seed0_model_cache_bytes * missing_model_cache_seeds
+                              * model_cache_safety_factor)
+    required = math.ceil(estimated * 1.2) + model_reserve + extra_headroom_bytes
+    return {"estimated_bytes": estimated, "headroom_bytes": required,
+            "model_cache_reserve_bytes": model_reserve,
+            "model_cache_reference_bytes": seed0_model_cache_bytes,
+            "model_cache_safety_factor": model_cache_safety_factor,
+            "missing_model_cache_seeds": missing_model_cache_seeds,
+            "extra_headroom_bytes": extra_headroom_bytes,
+            "bytes_per_target_row": bytes_per_row}
+
+
+def check_output_capacity(root: Path, target_rows: int, model_cache_root: Path,
+                          seed_count: int = 10) -> dict:
+    required_files = ("random_forest.joblib", "calibrator.joblib", "isolation_forest.joblib",
+                      "verified_models.json")
+    seed0_dir = model_cache_root / "seed-0"
+    seed0_files = [seed0_dir / name for name in required_files]
+    if not all(path.is_file() for path in seed0_files):
+        raise RuntimeError(f"A complete verified seed-0 model cache is required for disk planning: {seed0_dir}")
+    seed0_bytes = sum(path.stat().st_size for path in seed0_files)
+    complete_cache_seeds = set()
+    for seed in range(seed_count):
+        seed_dir = model_cache_root / f"seed-{seed}"
+        files = [seed_dir / name for name in required_files]
+        present = [path.is_file() for path in files]
+        if any(present) and not all(present):
+            raise RuntimeError(f"Partial model cache blocks resource planning; preserving {seed_dir}")
+        if all(present):
+            complete_cache_seeds.add(seed)
+    plan = capacity_requirements(
+        target_rows, seed_count, seed0_bytes,
+        seed_count - len(complete_cache_seeds),
+    )
     disk = shutil.disk_usage(root)
-    required_with_headroom = int(estimated * 1.2) + 2_000_000_000
-    if disk.free < required_with_headroom:
+    plan["available_bytes"] = disk.free
+    if disk.free < plan["headroom_bytes"]:
         raise OSError(
-            f"Insufficient output disk space: need at least {required_with_headroom} bytes "
-            f"including 20% headroom and 2 GB model-cache reserve; available {disk.free}"
+            f"Insufficient output disk space: need at least {plan['headroom_bytes']} bytes "
+            f"including 20% output headroom, {plan['model_cache_reserve_bytes']} bytes for "
+            f"remaining model caches, and {plan['extra_headroom_bytes']} bytes extra; available {disk.free}"
         )
-    return {"estimated_bytes": estimated, "headroom_bytes": required_with_headroom,
-            "model_cache_reserve_bytes": 2_000_000_000,
-            "available_bytes": disk.free, "bytes_per_target_row": bytes_per_row}
+    return plan
 
 
 def verify_source_stage_arrays(ctx) -> dict[str, str]:
@@ -420,7 +456,8 @@ def run(direction: str, manifest_path: Path, batch_rows: int) -> None:
     if batch_rows < 1 or batch_rows > int(manifest["max_target_batch_rows"]):
         raise ValueError("Scoring batch size exceeds the bound frozen in the manifest")
     rows = int(ctx.target_record["row_count_excluding_header"])
-    disk_need = check_output_capacity(ROOT, rows, seed_count=10)
+    disk_need = check_output_capacity(
+        ROOT, rows, DATA_ROOT / direction / "verified_models", seed_count=10)
     event(f"{direction}: locks validated; disk plan {disk_need['estimated_bytes']} bytes; staging target predictors")
     target_features, feature_meta = stage_target_features(ctx, manifest_sha, batch_rows)
     distance, distance_meta = compute_shared_distance(ctx, manifest_sha, target_features, feature_meta)
