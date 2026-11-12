@@ -182,8 +182,10 @@ def fit_or_load_seed(ctx, seed: int, batch_rows: int) -> tuple[object, object, o
         return model, calibrator, isolation, metadata
 
     if model_dir.exists():
-        raise RuntimeError(f"Model cache path exists without a complete cache; preserving {model_dir}")
-    model_dir.mkdir(parents=True)
+        if any(model_dir.iterdir()):
+            raise RuntimeError(f"Partial model cache exists; preserving {model_dir}")
+    else:
+        model_dir.mkdir(parents=True)
     mask = e1.cal_mask(calibration_x)
     if int(mask.sum()) != int(metrics["calibration_probability_rows"]):
         raise ValueError("Source calibration hash split differs from the saved E1 result")

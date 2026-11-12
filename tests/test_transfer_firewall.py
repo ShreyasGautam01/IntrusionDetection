@@ -270,6 +270,18 @@ class FreezeManifestTests(unittest.TestCase):
         self.bench_inference.write_text(json.dumps({**common_benchmark,
                                                     "report_id": "target-inference-src-to-tgt-v1"}),
                                         encoding="utf-8")
+        self.smoke_report = self.root / "smoke_benchmark.json"
+        self.smoke_report.write_text(json.dumps({
+            **common_benchmark, "report_id": "target-transfer-five-signal-smoke-src-to-tgt-v1",
+            "all_finite": True, "rows": 256,
+            "signals": ["confidence", "random_forest_disagreement", "feature_space_distance",
+                        "split_conformal", "isolation_forest"],
+            "source_e1_verification": {"exact_match": {
+                "prediction.npy": True, "calibrated_probability.npy": True,
+                "random_forest_disagreement.npy": True, "isolation_forest.npy": True}},
+        }), encoding="utf-8")
+        self.software_lock = self.root / "uv.lock"
+        self.software_lock.write_text("locked software\n", encoding="utf-8")
         (self.root / "lock.txt").write_text("locked\n", encoding="utf-8")
         git(self.root, "add", ".")
         git(self.root, "commit", "-q", "-m", "lock transfer inputs")
@@ -288,12 +300,21 @@ class FreezeManifestTests(unittest.TestCase):
             "source_dataset": "SRC", "target_dataset": "TGT",
             "feature_order": self.feature_order, "target_labels_read": False,
             "source_gate_accepted": True,
+            "seeds": list(range(10)), "max_target_batch_rows": 8192,
+            "distance_parameters": {"neighbors": 5, "metric": "euclidean", "exact": True,
+                                    "reference_chunk_rows": 500000, "query_batch_rows": 2048},
+            "review_budgets": [0.01, 0.05, 0.10],
+            "software_lock_sha256": sha(self.software_lock),
             "software": {"python": __import__("platform").python_version(),
                          "numpy": np.__version__, "scikit_learn": sklearn.__version__},
             "benchmarks": {
                 "distance_benchmark.json": sha(self.bench_distance),
                 "inference_benchmark.json": sha(self.bench_inference),
+                "smoke_benchmark.json": sha(self.smoke_report),
             },
+            "smoke_evidence": {"path": "smoke_benchmark.json",
+                               "sha256": sha(self.smoke_report), "rows": 256,
+                               "target_labels_read": False},
             "code_sha256": {"scripts/locked.py": sha(self.code_file)},
         }
         self.manifest_path.write_text(json.dumps(self.manifest, indent=2) + "\n", encoding="utf-8")

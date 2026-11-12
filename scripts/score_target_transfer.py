@@ -83,14 +83,30 @@ def check_output_capacity(root: Path, target_rows: int, seed_count: int = 10) ->
     bytes_per_row = 46 * 4 + 5 * (2 * 8 + 2 * 4) + 4 + len(SCORE_FILES) * 4 * seed_count
     estimated = target_rows * bytes_per_row
     disk = shutil.disk_usage(root)
-    required_with_headroom = int(estimated * 1.2)
+    required_with_headroom = int(estimated * 1.2) + 2_000_000_000
     if disk.free < required_with_headroom:
         raise OSError(
             f"Insufficient output disk space: need at least {required_with_headroom} bytes "
-            f"including 20% headroom; available {disk.free}"
+            f"including 20% headroom and 2 GB model-cache reserve; available {disk.free}"
         )
     return {"estimated_bytes": estimated, "headroom_bytes": required_with_headroom,
+            "model_cache_reserve_bytes": 2_000_000_000,
             "available_bytes": disk.free, "bytes_per_target_row": bytes_per_row}
+
+
+def verify_source_stage_arrays(ctx) -> dict[str, str]:
+    """Check every staged source array against the committed stage manifest once per direction run."""
+    stage = json.loads(ctx.stage_manifest.read_text(encoding="utf-8"))
+    verified = {}
+    for name, metadata in stage["files"].items():
+        path = ctx.data_dir / name
+        if path.stat().st_size != int(metadata["bytes"]):
+            raise ValueError(f"Source stage array byte count changed: {name}")
+        actual = sha256_file(path)
+        if actual != metadata["sha256"]:
+            raise ValueError(f"Source stage array hash differs from its manifest: {name}")
+        verified[name] = actual
+    return verified
 
 
 def stage_target_features(ctx, manifest_sha: str, batch_rows: int) -> tuple[np.ndarray, dict]:
@@ -383,6 +399,7 @@ def run(direction: str, manifest_path: Path, batch_rows: int) -> None:
     validated_locks = validate_both_transfer_manifests(specs, repository_root=ROOT)
     del validated_locks
     ctx = resolve_direction(direction)
+    source_stage_hashes = verify_source_stage_arrays(ctx)
     manifest_sha = sha256_file(manifest_path)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if batch_rows < 1 or batch_rows > int(manifest["max_target_batch_rows"]):
@@ -409,6 +426,7 @@ def run(direction: str, manifest_path: Path, batch_rows: int) -> None:
                  "disk_capacity_plan": disk_need,
                  "target_feature_array_sha256": feature_meta["array_sha256"],
                  "shared_distance_sha256": distance_meta["score_sha256"],
+                 "verified_source_stage_file_sha256": source_stage_hashes,
                  "expected_seeds": expected_seeds, "completed_seeds": [],
                  "target_labels_read": False}
         completed = {}
@@ -441,17 +459,24 @@ def run(direction: str, manifest_path: Path, batch_rows: int) -> None:
     event(f"{direction}: all target feature-only scores complete; labels remain sealed")
 
 
-def run_smoke(direction: str, manifest_path: Path, batch_rows: int,
+def run_smoke(direction: str, manifest_path: Path | None, batch_rows: int,
               smoke_rows: int, output_path: Path | None) -> None:
-    if direction not in MANIFESTS or manifest_path.resolve() != MANIFESTS[direction].resolve():
+    if direction not in MANIFESTS or (manifest_path is not None
+            and manifest_path.resolve() != MANIFESTS[direction].resolve()):
         raise ValueError("Smoke direction and frozen manifest path do not match")
-    specs = lock_specs()
-    validate_both_transfer_manifests(specs, repository_root=ROOT)
+    if manifest_path is not None:
+        specs = lock_specs()
+        validate_both_transfer_manifests(specs, repository_root=ROOT)
     ctx = resolve_direction(direction)
-    manifest_sha = sha256_file(manifest_path)
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if batch_rows < 1 or batch_rows > int(manifest["max_target_batch_rows"]):
-        raise ValueError("Smoke batch size exceeds the bound frozen in the manifest")
+    verified_source_stage_hashes = verify_source_stage_arrays(ctx)
+    manifest_sha = sha256_file(manifest_path) if manifest_path is not None else None
+    if manifest_path is not None:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        max_batch = int(manifest["max_target_batch_rows"])
+    else:
+        max_batch = 8192
+    if batch_rows < 1 or batch_rows > max_batch:
+        raise ValueError("Smoke batch size exceeds the configured bound")
     if smoke_rows < 1 or smoke_rows > 4096:
         raise ValueError("Smoke sample must be between one and 4,096 rows")
     model, calibrator, isolation, model_meta = fit_or_load_seed(ctx, 0, batch_rows)
@@ -492,6 +517,10 @@ def run_smoke(direction: str, manifest_path: Path, batch_rows: int,
         "report_id": f"target-transfer-five-signal-smoke-{direction}-v1",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "direction": direction, "manifest_sha256": manifest_sha,
+        "source_dataset_sha256": ctx.config["source_dataset"]["sha256"],
+        "target_dataset_sha256": ctx.target_record["sha256"],
+        "config_sha256": sha256_file(ctx.config_path),
+        "feature_registry_sha256": sha256_file(REGISTRY),
         "target_row_offsets": [0, smoke_rows - 1], "rows": smoke_rows,
         "feature_order": list(ctx.feature_order), "signals": list(SIGNALS),
         "signal_shapes": {name: list(value.shape) for name, value in scores.items()},
@@ -499,8 +528,18 @@ def run_smoke(direction: str, manifest_path: Path, batch_rows: int,
         "distance_reference_rows": reference_rows,
         "distance_benchmark": {k: v for k, v in exact.items() if k != "scores"},
         "source_scaler_provenance": scaler_provenance,
+        "verified_source_stage_file_sha256": verified_source_stage_hashes,
         "source_e1_verification": model_meta["source_test_verification"],
         "target_labels_read": False,
+        "manifest_status": "validated" if manifest_path is not None else "pre-freeze feature-only smoke",
+        "code_commit": __import__("subprocess").check_output(
+            ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip(),
+        "code_sha256": {
+            "scripts/score_target_transfer.py": sha256_file(ROOT / "scripts/score_target_transfer.py"),
+            "scripts/target_exact_knn.py": sha256_file(ROOT / "scripts/target_exact_knn.py"),
+            "scripts/target_transfer_common.py": sha256_file(ROOT / "scripts/target_transfer_common.py"),
+            "src/ids_research/transfer_scoring.py": sha256_file(ROOT / "src/ids_research/transfer_scoring.py"),
+        },
         "selection": "first contiguous target feature rows; no target label or family columns selected",
     }
     out = output_path or REPORTS / f"target_transfer_smoke_{direction.replace('-', '_')}.json"
@@ -513,7 +552,7 @@ def run_smoke(direction: str, manifest_path: Path, batch_rows: int,
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--direction", required=True, choices=sorted(MANIFESTS))
-    parser.add_argument("--manifest", required=True, type=Path)
+    parser.add_argument("--manifest", type=Path)
     parser.add_argument("--batch-size", type=int, default=8192)
     parser.add_argument("--smoke-only", action="store_true")
     parser.add_argument("--smoke-rows", type=int, default=256)
@@ -523,6 +562,8 @@ def main() -> None:
         run_smoke(args.direction, args.manifest, args.batch_size,
                   args.smoke_rows, args.output)
     else:
+        if args.manifest is None:
+            raise SystemExit("Full scoring requires the committed direction manifest")
         run(args.direction, args.manifest, args.batch_size)
 
 

@@ -74,7 +74,8 @@ def verify_freeze_manifest(
         'feature_registry_sha256', 'family_registry_sha256',
         'family_pair_matrix_sha256', 'source_dataset', 'target_dataset',
         'feature_order', 'target_labels_read', 'source_gate_accepted',
-        'software', 'benchmarks',
+        'software', 'software_lock_sha256', 'benchmarks', 'seeds',
+        'max_target_batch_rows', 'distance_parameters', 'review_budgets', 'smoke_evidence',
     )
     missing = [key for key in required if key not in manifest
                or manifest[key] is None or manifest[key] == '']
@@ -92,6 +93,21 @@ def verify_freeze_manifest(
         raise ValueError('Freeze manifest reports target-label access before the lock')
     if manifest['source_gate_accepted'] is not True:
         raise ValueError('Both source-only E1 gate interpretations must be accepted before transfer')
+    if manifest['seeds'] != list(range(10)):
+        raise ValueError('Transfer manifest must preserve the frozen source seed set 0–9')
+    if (not isinstance(manifest['max_target_batch_rows'], int)
+            or isinstance(manifest['max_target_batch_rows'], bool)
+            or manifest['max_target_batch_rows'] < 1):
+        raise ValueError('Manifest target batch bound is invalid')
+    if manifest['review_budgets'] != [0.01, 0.05, 0.10]:
+        raise ValueError('Transfer manifest review budgets differ from the frozen protocol')
+    distance_parameters = manifest['distance_parameters']
+    if (distance_parameters.get('neighbors') != 5
+            or distance_parameters.get('metric') != 'euclidean'
+            or distance_parameters.get('exact') is not True
+            or distance_parameters.get('reference_chunk_rows') != 500_000
+            or distance_parameters.get('query_batch_rows') != 2048):
+        raise ValueError('Transfer manifest does not retain the frozen exact distance definition')
     if sha256_file(source_file) != manifest['source_sha256']:
         raise ValueError('Source dataset hash differs from the frozen manifest')
     if sha256_file(target_file) != manifest['target_sha256']:
@@ -138,11 +154,15 @@ def verify_freeze_manifest(
     if source_feature_order is None:
         source_feature_order = source_manifest.get('features', {}).get('order')
     source_dataset_info = source_manifest.get('source_dataset', {})
+    source_manifest_name = source_dataset_info.get(
+        'name', source_manifest.get('source_dataset_name', config['source_dataset']['name']))
+    source_manifest_hash = source_dataset_info.get(
+        'sha256', source_manifest.get('source_dataset_sha256'))
     if (source_manifest.get('configuration_id') != config['configuration_id']
             or source_manifest.get('configuration_sha256') != manifest['config_sha256']
             or source_feature_order != manifest['feature_order']
-            or source_dataset_info.get('name') != manifest['source_dataset']
-            or source_dataset_info.get('sha256') != manifest['source_sha256']):
+            or source_manifest_name != manifest['source_dataset']
+            or source_manifest_hash != manifest['source_sha256']):
         raise ValueError('Source E1 manifest differs from the direction configuration')
     if (source_results.get('direction') not in (None, direction)
             or source_results.get('configuration_id') != config['configuration_id']
@@ -159,6 +179,9 @@ def verify_freeze_manifest(
     }
     if expected_software != actual_software:
         raise ValueError('Runtime software versions differ from the transfer manifest')
+    software_lock_root = repository_root.resolve()
+    if sha256_file(software_lock_root / 'uv.lock') != manifest['software_lock_sha256']:
+        raise ValueError('Software lock differs from the transfer manifest')
 
     with feature_registry.open('r', encoding='utf-8-sig', newline='') as stream:
         registry_rows = list(csv.DictReader(stream))
@@ -263,6 +286,25 @@ def verify_freeze_manifest(
     if (not any('distance' in report_id for report_id in benchmark_ids)
             or not any('inference' in report_id for report_id in benchmark_ids)):
         raise ValueError('Freeze manifest requires exact-distance and target-inference benchmark evidence')
+    smoke = manifest['smoke_evidence']
+    if (not isinstance(smoke, dict) or smoke.get('target_labels_read') is not False
+            or smoke.get('path') not in manifest['benchmarks']
+            or manifest['benchmarks'].get(smoke.get('path')) != smoke.get('sha256')):
+        raise ValueError('Freeze manifest does not bind its feature-only five-signal smoke evidence')
+    smoke_report = json.loads((root / smoke['path']).read_text(encoding='utf-8'))
+    smoke_source_checks = smoke_report.get('source_e1_verification', {}).get('exact_match', {})
+    if (smoke_report.get('direction') != direction
+            or smoke_report.get('source_dataset_sha256') != manifest['source_sha256']
+            or smoke_report.get('target_dataset_sha256') != manifest['target_sha256']
+            or smoke_report.get('config_sha256') != manifest['config_sha256']
+            or smoke_report.get('target_labels_read') is not False
+            or smoke_report.get('all_finite') is not True
+            or smoke_report.get('rows') != smoke.get('rows')
+            or set(smoke_report.get('signals', [])) != {
+                'confidence', 'random_forest_disagreement', 'feature_space_distance',
+                'split_conformal', 'isolation_forest'}
+            or not smoke_source_checks or not all(smoke_source_checks.values())):
+        raise ValueError('Five-signal smoke report does not match the frozen direction')
     if _git(root, 'status', '--porcelain'):
         raise ValueError('Freeze manifest validation requires a clean tracked checkout')
     return manifest
