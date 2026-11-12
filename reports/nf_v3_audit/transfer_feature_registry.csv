@@ -1,0 +1,111 @@
+dataset,raw_column_order,raw_column,transfer_role,e1_feature_order,used_for_prediction,preprocessing_rule,notes
+NF-UNSW-NB15-v3,1,FLOW_START_MILLISECONDS,split_metadata,,no,excluded from E1 predictors,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+NF-UNSW-NB15-v3,2,FLOW_END_MILLISECONDS,split_metadata,,no,excluded from E1 predictors,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+NF-UNSW-NB15-v3,3,IPV4_SRC_ADDR,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,4,L4_SRC_PORT,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,5,IPV4_DST_ADDR,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,6,L4_DST_PORT,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,7,PROTOCOL,predictor,1,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,8,L7_PROTO,predictor,2,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,9,IN_BYTES,predictor,3,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,10,IN_PKTS,predictor,5,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,11,OUT_BYTES,predictor,4,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,12,OUT_PKTS,predictor,6,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,13,TCP_FLAGS,predictor,8,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,14,CLIENT_TCP_FLAGS,predictor,9,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,15,SERVER_TCP_FLAGS,predictor,10,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,16,FLOW_DURATION_MILLISECONDS,predictor,7,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,17,DURATION_IN,predictor,11,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,18,DURATION_OUT,predictor,12,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,19,MIN_TTL,predictor,13,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,20,MAX_TTL,predictor,14,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,21,LONGEST_FLOW_PKT,predictor,15,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,22,SHORTEST_FLOW_PKT,predictor,16,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,23,MIN_IP_PKT_LEN,predictor,17,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,24,MAX_IP_PKT_LEN,predictor,18,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,25,SRC_TO_DST_SECOND_BYTES,predictor,19,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,26,DST_TO_SRC_SECOND_BYTES,predictor,20,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,27,RETRANSMITTED_IN_BYTES,predictor,21,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,28,RETRANSMITTED_IN_PKTS,predictor,22,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,29,RETRANSMITTED_OUT_BYTES,predictor,23,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,30,RETRANSMITTED_OUT_PKTS,predictor,24,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,31,SRC_TO_DST_AVG_THROUGHPUT,predictor,25,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,32,DST_TO_SRC_AVG_THROUGHPUT,predictor,26,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,33,NUM_PKTS_UP_TO_128_BYTES,predictor,27,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,34,NUM_PKTS_128_TO_256_BYTES,predictor,28,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,35,NUM_PKTS_256_TO_512_BYTES,predictor,29,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,36,NUM_PKTS_512_TO_1024_BYTES,predictor,30,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,37,NUM_PKTS_1024_TO_1514_BYTES,predictor,31,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,38,TCP_WIN_MAX_IN,predictor,32,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,39,TCP_WIN_MAX_OUT,predictor,33,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,40,ICMP_TYPE,predictor,34,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,41,ICMP_IPV4_TYPE,predictor,35,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,42,DNS_QUERY_ID,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-UNSW-NB15-v3,43,DNS_QUERY_TYPE,predictor,36,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,44,DNS_TTL_ANSWER,predictor,37,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,45,FTP_COMMAND_RET_CODE,predictor,38,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,46,SRC_TO_DST_IAT_MIN,predictor,39,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,47,SRC_TO_DST_IAT_MAX,predictor,40,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,48,SRC_TO_DST_IAT_AVG,predictor,41,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,49,SRC_TO_DST_IAT_STDDEV,predictor,42,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,50,DST_TO_SRC_IAT_MIN,predictor,43,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,51,DST_TO_SRC_IAT_MAX,predictor,44,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,52,DST_TO_SRC_IAT_AVG,predictor,45,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,53,DST_TO_SRC_IAT_STDDEV,predictor,46,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-UNSW-NB15-v3,54,Label,binary_target_label,,evaluation only after manifest validation,never a predictor or preprocessing input,Never predictive
+NF-UNSW-NB15-v3,55,Attack,attack_family_target_label,,evaluation only after manifest validation,never a predictor or preprocessing input,Never predictive
+NF-CSE-CIC-IDS2018-v3,1,FLOW_START_MILLISECONDS,split_metadata,,no,excluded from E1 predictors,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+NF-CSE-CIC-IDS2018-v3,2,FLOW_END_MILLISECONDS,split_metadata,,no,excluded from E1 predictors,Retain for chronology/complete-flow checks; raw absolute value excluded pending lock
+NF-CSE-CIC-IDS2018-v3,3,IPV4_SRC_ADDR,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,4,L4_SRC_PORT,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,5,IPV4_DST_ADDR,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,6,L4_DST_PORT,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,7,PROTOCOL,predictor,1,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,8,L7_PROTO,predictor,2,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,9,IN_BYTES,predictor,3,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,10,IN_PKTS,predictor,5,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,11,OUT_BYTES,predictor,4,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,12,OUT_PKTS,predictor,6,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,13,TCP_FLAGS,predictor,8,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,14,CLIENT_TCP_FLAGS,predictor,9,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,15,SERVER_TCP_FLAGS,predictor,10,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,16,FLOW_DURATION_MILLISECONDS,predictor,7,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,17,DURATION_IN,predictor,11,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,18,DURATION_OUT,predictor,12,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,19,MIN_TTL,predictor,13,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,20,MAX_TTL,predictor,14,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,21,LONGEST_FLOW_PKT,predictor,15,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,22,SHORTEST_FLOW_PKT,predictor,16,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,23,MIN_IP_PKT_LEN,predictor,17,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,24,MAX_IP_PKT_LEN,predictor,18,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,25,SRC_TO_DST_SECOND_BYTES,predictor,19,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,26,DST_TO_SRC_SECOND_BYTES,predictor,20,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,27,RETRANSMITTED_IN_BYTES,predictor,21,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,28,RETRANSMITTED_IN_PKTS,predictor,22,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,29,RETRANSMITTED_OUT_BYTES,predictor,23,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,30,RETRANSMITTED_OUT_PKTS,predictor,24,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,31,SRC_TO_DST_AVG_THROUGHPUT,predictor,25,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,32,DST_TO_SRC_AVG_THROUGHPUT,predictor,26,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,33,NUM_PKTS_UP_TO_128_BYTES,predictor,27,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,34,NUM_PKTS_128_TO_256_BYTES,predictor,28,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,35,NUM_PKTS_256_TO_512_BYTES,predictor,29,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,36,NUM_PKTS_512_TO_1024_BYTES,predictor,30,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,37,NUM_PKTS_1024_TO_1514_BYTES,predictor,31,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,38,TCP_WIN_MAX_IN,predictor,32,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,39,TCP_WIN_MAX_OUT,predictor,33,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,40,ICMP_TYPE,predictor,34,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,41,ICMP_IPV4_TYPE,predictor,35,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,42,DNS_QUERY_ID,identifier,,no,excluded from E1 predictors,Identifier-like; retain for audit/split only pending explicit review
+NF-CSE-CIC-IDS2018-v3,43,DNS_QUERY_TYPE,predictor,36,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,44,DNS_TTL_ANSWER,predictor,37,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,45,FTP_COMMAND_RET_CODE,predictor,38,yes,source-training finite replacement per direction; no target fitting,"Candidate; do not silently drop; constant zero in CIC2018, variable in UNSW; possible domain-specific feature"
+NF-CSE-CIC-IDS2018-v3,46,SRC_TO_DST_IAT_MIN,predictor,39,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,47,SRC_TO_DST_IAT_MAX,predictor,40,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,48,SRC_TO_DST_IAT_AVG,predictor,41,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,49,SRC_TO_DST_IAT_STDDEV,predictor,42,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,50,DST_TO_SRC_IAT_MIN,predictor,43,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,51,DST_TO_SRC_IAT_MAX,predictor,44,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,52,DST_TO_SRC_IAT_AVG,predictor,45,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,53,DST_TO_SRC_IAT_STDDEV,predictor,46,yes,source-training finite replacement per direction; no target fitting,Candidate; do not silently drop
+NF-CSE-CIC-IDS2018-v3,54,Label,binary_target_label,,evaluation only after manifest validation,never a predictor or preprocessing input,Never predictive
+NF-CSE-CIC-IDS2018-v3,55,Attack,attack_family_target_label,,evaluation only after manifest validation,never a predictor or preprocessing input,Never predictive
