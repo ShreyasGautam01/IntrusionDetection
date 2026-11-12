@@ -8,8 +8,10 @@ import json
 import math
 import os
 import platform
+import subprocess
 import sys
 import time
+import joblib
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -19,6 +21,7 @@ from sklearn.preprocessing import StandardScaler
 from threadpoolctl import threadpool_limits
 
 ROOT = Path(__file__).resolve().parents[1]
+REPORTS = ROOT / "reports/nf_v3_audit"
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 from benchmark_source_e1_cic import system_memory, timed  # noqa: E402
@@ -38,15 +41,55 @@ def load_source_scaler(ctx: DirectionContext, source_train: np.ndarray) -> tuple
     stage = json.loads(ctx.stage_manifest.read_text(encoding="utf-8"))
     if (distance.get("train_X_sha256") != stage["files"]["train_X.npy"]["sha256"]
             or distance.get("config_sha256") != sha256_file(ctx.config_path)
-            or distance.get("neighbors") != 5 or distance.get("metric") != "euclidean"):
+            or distance.get("neighbors") != 5
+            or str(distance.get("metric", "")).lower() != "euclidean"):
         raise ValueError("Source E1 distance provenance does not match current source arrays/config")
     if ctx.direction == "cic-to-unsw":
         from cic_exact_chunked_5nn import fit_source_scaler
-        scaler, timing = fit_source_scaler(source_train)
-        if scaler_parameter_hash(scaler) != distance.get("scaler_parameters_sha256"):
-            raise ValueError("Refitted CIC source scaler differs from the exact E1 distance scaler")
+        cache_dir = ROOT / "data/processed/target-transfer-v1" / ctx.direction / "cache"
+        cache_path = cache_dir / "source_distance_scaler.joblib"
+        cache_meta_path = cache_dir / "source_distance_scaler.json"
+        cache_identity = {
+            "direction": ctx.direction,
+            "configuration_id": ctx.config["configuration_id"],
+            "config_sha256": sha256_file(ctx.config_path),
+            "stage_manifest_sha256": sha256_file(ctx.stage_manifest),
+            "train_X_sha256": sha256_file(ctx.data_dir / "train_X.npy"),
+            "source_e1_distance_metadata_sha256": sha256_file(distance_path),
+            "scaler_parameters_sha256": distance.get("scaler_parameters_sha256"),
+            "software": {"python": platform.python_version(), "numpy": np.__version__,
+                         "scikit_learn": sklearn.__version__, "joblib": joblib.__version__},
+        }
+        if cache_path.exists() and cache_meta_path.exists():
+            cache_meta = json.loads(cache_meta_path.read_text(encoding="utf-8"))
+            if any(cache_meta.get(k) != v for k, v in cache_identity.items()):
+                raise ValueError("Cached CIC source scaler belongs to different frozen inputs")
+            if cache_meta.get("scaler_cache_sha256") != sha256_file(cache_path):
+                raise ValueError("Cached CIC source scaler file hash differs from its metadata")
+            scaler = joblib.load(cache_path)
+            if scaler_parameter_hash(scaler) != distance.get("scaler_parameters_sha256"):
+                raise ValueError("Cached CIC source scaler differs from the exact E1 distance scaler")
+            timing = cache_meta.get("fit_timing", {})
+            cache_reused = True
+        elif cache_path.exists() or cache_meta_path.exists() or (cache_dir / "source_distance_scaler.joblib.tmp").exists():
+            raise RuntimeError("Partial CIC scaler cache exists; preserving it for inspection")
+        else:
+            scaler, timing = fit_source_scaler(source_train)
+            if scaler_parameter_hash(scaler) != distance.get("scaler_parameters_sha256"):
+                raise ValueError("Refitted CIC source scaler differs from the exact E1 distance scaler")
+            cache_dir.mkdir(parents=True, exist_ok=True)
+            temporary = cache_dir / "source_distance_scaler.joblib.tmp"
+            joblib.dump(scaler, temporary, compress=0)
+            os.replace(temporary, cache_path)
+            cache_meta = {**cache_identity, "fit_timing": timing,
+                          "scaler_cache_sha256": sha256_file(cache_path),
+                          "created_utc": datetime.now(timezone.utc).isoformat()}
+            cache_meta_path.write_text(json.dumps(cache_meta, indent=2) + "\n", encoding="utf-8")
+            cache_reused = False
         provenance = {"method": "StandardScaler.partial_fit over source-train blocks",
-                      "timing": timing, "source_e1_distance_metadata_sha256": sha256_file(distance_path)}
+                      "timing": timing, "cache_reused": cache_reused,
+                      "source_e1_distance_metadata_sha256": sha256_file(distance_path),
+                      "scaler_cache_sha256": sha256_file(cache_path)}
     else:
         scaler_path = ctx.source_e1_seed_root / "common/scaler.json"
         info = json.loads(scaler_path.read_text(encoding="utf-8"))
@@ -98,6 +141,7 @@ def sample_target_features(ctx: DirectionContext, n_rows: int, batch_size: int) 
 
 
 def build_benchmark(ctx: DirectionContext, max_query_rows: int, batch_size: int) -> dict:
+    memory_before = system_memory()
     target_path = ctx.target_file
     actual_target_hash, hash_timing = None, None
 
@@ -153,6 +197,12 @@ def build_benchmark(ctx: DirectionContext, max_query_rows: int, batch_size: int)
                   "target_query_rows": target_rows,
                   "formula": "measured per-reference-chunk wall time × (full target query rows / bounded query rows) × full source reference chunk count",
                   "scope": "exact distance computation only; target feature staging and model inference reported separately"}
+    code_files = {
+        "benchmark_script": ROOT / "scripts/benchmark_target_distance.py",
+        "exact_distance_module": ROOT / "scripts/target_exact_knn.py",
+        "target_transfer_common": ROOT / "scripts/target_transfer_common.py",
+        "target_lockbox": ROOT / "src/ids_research/target_lockbox.py",
+    }
     return {
         "report_id": f"target-exact-distance-benchmark-{ctx.direction}-v1",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
@@ -168,6 +218,8 @@ def build_benchmark(ctx: DirectionContext, max_query_rows: int, batch_size: int)
         "direction_config_sha256": sha256_file(ctx.config_path),
         "source_e1_distance_sha256": scaler_provenance["source_e1_distance_sha256"],
         "feature_registry_sha256": sha256_file(REGISTRY),
+        "code_commit": subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip(),
+        "code_sha256": {name: sha256_file(path) for name, path in code_files.items()},
         "feature_order": list(ctx.feature_order),
         "target_feature_sample": {"method": "first contiguous input rows; zero-based stable offsets",
                                   "row_offsets": [0, query_limit - 1], "rows": query_limit,
@@ -182,7 +234,9 @@ def build_benchmark(ctx: DirectionContext, max_query_rows: int, batch_size: int)
                                  "scaler_provenance": scaler_provenance},
         "benchmark_trials": cases,
         "full_runtime_projection": projection,
-        "hardware": {"logical_cpu_count": os.cpu_count(), "system_memory": system_memory()},
+        "hardware": {"logical_cpu_count": os.cpu_count(),
+                     "system_memory_before_run": memory_before,
+                     "system_memory_after_run": system_memory()},
         "software": {"python": platform.python_version(), "numpy": np.__version__,
                      "scikit_learn": sklearn.__version__},
         "target_labels_read": False,
