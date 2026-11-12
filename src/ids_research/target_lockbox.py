@@ -145,8 +145,11 @@ def verify_freeze_manifest(
         raise ValueError('Freeze manifest feature order differs from the frozen E1 configuration')
     stage_target_read = stage.get('target_file_read', stage.get('target_data_accessed', False))
     stage_labels_read = stage.get('target_labels_read', stage.get('target_label_accessed', False))
+    stage_config_sha = stage.get('configuration_sha256')
+    stage_source_sha = stage.get('source_dataset', {}).get('sha256')
     if (stage.get('configuration_id') != config['configuration_id']
-            or stage.get('configuration_sha256') != manifest['config_sha256']
+            or (stage_config_sha is not None and stage_config_sha != manifest['config_sha256'])
+            or (stage_source_sha is not None and stage_source_sha != manifest['source_sha256'])
             or stage.get('feature_order') != manifest['feature_order']
             or stage_target_read is not False or stage_labels_read is not False):
         raise ValueError('Source-stage provenance differs from the direction configuration')
