@@ -1,8 +1,8 @@
 {
   "report_id": "cic-source-e1-seed-progress-v1",
-  "generated_utc": "2026-11-11T19:37:06.137986+00:00",
+  "generated_utc": "2026-11-12T04:37:27.200932+00:00",
   "direction": "cic-to-unsw",
-  "status": "in_progress",
+  "status": "awaiting_owner_acceptance",
   "configuration_id": "source-e1-cic-lock-1",
   "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
   "experiment_manifest_sha256": "eda7ccef2fbbc50f8a69a9b93cadd39176a1e318c2ece3792f4bdbb0dd71e1d9",
@@ -446,7 +446,21 @@
   "target_labels_read": false,
   "stability_gate_complete": false,
   "target_transfer_allowed": false,
-  "note": "Seed 0 five-signal source-only output hash verified; all seven arrays have 4,025,148 finite rows. Existing seed 0\u00e2\u20ac\u201c5 directories are UNSW-source artifacts and were left untouched; no CIC per-seed artifacts existed before this run.",
+  "note": "All ten CIC source-only seed outputs are complete, hash-verified, finite, shape-verified, and manifest-bound. Seed 0 repeat exactly matches all saved arrays and source-test metrics. Qualitative recommendation is pass for descriptive source-only analysis pending owner acceptance; target transfer remains blocked. The repeat completion event could not append to the ignored run log after output save, but its saved artifacts and built-in repeat verification pass.",
   "checkpoint_policy": "One hash-verified compact entry is committed after each completed CIC seed; per-row arrays and models remain ignored locally.",
-  "target_transfer_started": false
+  "target_transfer_started": false,
+  "source_results_complete": true,
+  "stability_interpretation_pending_owner_acceptance": true,
+  "source_gate_recommendation": "pass_for_descriptive_source_only_analysis_pending_owner_acceptance",
+  "same_seed_reproducibility": {
+    "seed": 0,
+    "exact_all_seven_arrays_and_source_test_metrics": true,
+    "repeat_fit_seconds": 24607.630087000012,
+    "verification_report": "reports/nf_v3_audit/cic_to_unsw_same_seed_repeat.json",
+    "verification_report_sha256": "3cc279c3c4698e0b9a98095be6fdf71d71debc9d64e3c3801639a9eaa7d6b738"
+  },
+  "final_results_report": "reports/nf_v3_audit/source_e1_cic_final_results.json",
+  "final_results_report_sha256": "80e45213768c93c3bbd65f8f019ad5063c94b7df951ce874f53ec07df60f6725",
+  "gate_interpretation_report": "reports/nf_v3_audit/cic_source_e1_gate_interpretation.md",
+  "gate_interpretation_report_sha256": "76d062c28d4e48ea3323d460322283f58c4aafac0bbb8f3d13fefe3cc09ac722"
 }

@@ -1,0 +1,82 @@
+{
+  "report_id": "source-e1-cic-to-unsw-same-seed-repeat-1",
+  "generated_utc": "2026-11-12T04:33:05.547477+00:00",
+  "direction": "cic-to-unsw",
+  "seed": 0,
+  "files": {
+    "prediction.npy": {
+      "shape": [
+        4025148
+      ],
+      "shape_match": true,
+      "exact_array_match": true,
+      "both_finite": true,
+      "primary_sha256": "0f8feda0ba9e590f454a06987b3c912ffbef7c7c687731fffc9a0e615dca9b00",
+      "repeat_sha256": "0f8feda0ba9e590f454a06987b3c912ffbef7c7c687731fffc9a0e615dca9b00"
+    },
+    "calibrated_probability.npy": {
+      "shape": [
+        4025148
+      ],
+      "shape_match": true,
+      "exact_array_match": true,
+      "both_finite": true,
+      "primary_sha256": "f23e5c9dbf581bc37013b892e02eb5b1cc311baa470bb5497f6acc1dc1598b14",
+      "repeat_sha256": "f23e5c9dbf581bc37013b892e02eb5b1cc311baa470bb5497f6acc1dc1598b14"
+    },
+    "confidence.npy": {
+      "shape": [
+        4025148
+      ],
+      "shape_match": true,
+      "exact_array_match": true,
+      "both_finite": true,
+      "primary_sha256": "98e0491781a9cfbae3f80dc4a3508d53ee9157eebdd17483fc0bd83d344957a2",
+      "repeat_sha256": "98e0491781a9cfbae3f80dc4a3508d53ee9157eebdd17483fc0bd83d344957a2"
+    },
+    "random_forest_disagreement.npy": {
+      "shape": [
+        4025148
+      ],
+      "shape_match": true,
+      "exact_array_match": true,
+      "both_finite": true,
+      "primary_sha256": "2aa8821226aed5c4674cc0f99949d7b22472ff0199f44139082d0263c60c90b9",
+      "repeat_sha256": "2aa8821226aed5c4674cc0f99949d7b22472ff0199f44139082d0263c60c90b9"
+    },
+    "feature_space_distance.npy": {
+      "shape": [
+        4025148
+      ],
+      "shape_match": true,
+      "exact_array_match": true,
+      "both_finite": true,
+      "primary_sha256": "16f25ebc8a4f53e09b3143e997bb520525d464da677dd23f8610fcaeff5d8d8e",
+      "repeat_sha256": "16f25ebc8a4f53e09b3143e997bb520525d464da677dd23f8610fcaeff5d8d8e"
+    },
+    "split_conformal.npy": {
+      "shape": [
+        4025148
+      ],
+      "shape_match": true,
+      "exact_array_match": true,
+      "both_finite": true,
+      "primary_sha256": "78eb3325cd0fe8b617d2e2ec6ed0c3fd90193d87539302883cec814236e19f6a",
+      "repeat_sha256": "78eb3325cd0fe8b617d2e2ec6ed0c3fd90193d87539302883cec814236e19f6a"
+    },
+    "isolation_forest.npy": {
+      "shape": [
+        4025148
+      ],
+      "shape_match": true,
+      "exact_array_match": true,
+      "both_finite": true,
+      "primary_sha256": "26bdb39be664c6fc26a43cc4e7c6045b32e2e253d003072cfd7220c62443e0ef",
+      "repeat_sha256": "26bdb39be664c6fc26a43cc4e7c6045b32e2e253d003072cfd7220c62443e0ef"
+    }
+  },
+  "experiment_manifest_sha256": "eda7ccef2fbbc50f8a69a9b93cadd39176a1e318c2ece3792f4bdbb0dd71e1d9",
+  "target_file_read": false,
+  "target_labels_read": false,
+  "conclusion": "All saved source-test signal arrays, calibrated probabilities, and predictions exactly match the independent repeat."
+}
