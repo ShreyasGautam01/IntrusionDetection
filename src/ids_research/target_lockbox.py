@@ -293,6 +293,15 @@ def verify_freeze_manifest(
         raise ValueError('Freeze manifest does not bind its feature-only five-signal smoke evidence')
     smoke_report = json.loads((root / smoke['path']).read_text(encoding='utf-8'))
     smoke_source_checks = smoke_report.get('source_e1_verification', {}).get('exact_match', {})
+    smoke_code = smoke_report.get('code_sha256', {})
+    required_smoke_code = {
+        'scripts/score_target_transfer.py', 'scripts/target_exact_knn.py',
+        'scripts/target_transfer_common.py', 'src/ids_research/transfer_scoring.py',
+    }
+    if (not required_smoke_code.issubset(smoke_code)
+            or any(manifest['code_sha256'].get(path) != smoke_code.get(path)
+                   for path in required_smoke_code)):
+        raise ValueError('Five-signal smoke code does not match the frozen scoring implementation')
     if (smoke_report.get('direction') != direction
             or smoke_report.get('source_dataset_sha256') != manifest['source_sha256']
             or smoke_report.get('target_dataset_sha256') != manifest['target_sha256']

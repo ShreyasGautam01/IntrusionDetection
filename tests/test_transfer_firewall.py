@@ -198,6 +198,16 @@ class FreezeManifestTests(unittest.TestCase):
         self.code_file = self.root / "scripts" / "locked.py"
         self.code_file.parent.mkdir()
         self.code_file.write_text("locked transfer implementation\n", encoding="utf-8")
+        self.smoke_code_paths = (
+            "scripts/score_target_transfer.py", "scripts/target_exact_knn.py",
+            "scripts/target_transfer_common.py", "src/ids_research/transfer_scoring.py",
+        )
+        self.smoke_code = {}
+        for relative in self.smoke_code_paths:
+            code_path = self.root / relative
+            code_path.parent.mkdir(parents=True, exist_ok=True)
+            code_path.write_text("locked smoke implementation\n", encoding="utf-8")
+            self.smoke_code[relative] = sha(code_path)
         self.gate_report = self.root / "gate_interpretation.md"
         self.gate_report.write_text("## Owner decision\nOwner accepted source-only gate.\n", encoding="utf-8")
         self.config_file = self.root / "config.json"
@@ -279,6 +289,7 @@ class FreezeManifestTests(unittest.TestCase):
             "source_e1_verification": {"exact_match": {
                 "prediction.npy": True, "calibrated_probability.npy": True,
                 "random_forest_disagreement.npy": True, "isolation_forest.npy": True}},
+            "code_sha256": self.smoke_code,
         }), encoding="utf-8")
         self.software_lock = self.root / "uv.lock"
         self.software_lock.write_text("locked software\n", encoding="utf-8")
@@ -315,7 +326,7 @@ class FreezeManifestTests(unittest.TestCase):
             "smoke_evidence": {"path": "smoke_benchmark.json",
                                "sha256": sha(self.smoke_report), "rows": 256,
                                "target_labels_read": False},
-            "code_sha256": {"scripts/locked.py": sha(self.code_file)},
+            "code_sha256": {"scripts/locked.py": sha(self.code_file), **self.smoke_code},
         }
         self.manifest_path.write_text(json.dumps(self.manifest, indent=2) + "\n", encoding="utf-8")
         git(self.root, "add", "manifests/transfer_src_to_tgt.json")

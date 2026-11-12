@@ -86,13 +86,21 @@ def build_manifest(direction: str, lock_commit: str) -> dict:
                 or evidence.get("target_dataset_sha256") != target_hash
                 or evidence.get("target_labels_read") is not False):
             raise ValueError(f"Benchmark evidence does not match the feature-only transfer plan: {path}")
-        if name == "five-signal smoke" and (
-                evidence.get("all_finite") is not True
-                or set(evidence.get("signals", [])) != {
-                    "confidence", "random_forest_disagreement", "feature_space_distance",
-                    "split_conformal", "isolation_forest"}
-                or evidence.get("rows", 0) < 1):
-            raise ValueError("Target five-signal smoke evidence is incomplete or non-finite")
+        if name == "five-signal smoke":
+            required_smoke_code = {
+                "scripts/score_target_transfer.py", "scripts/target_exact_knn.py",
+                "scripts/target_transfer_common.py", "src/ids_research/transfer_scoring.py",
+            }
+            smoke_code = evidence.get("code_sha256", {})
+            if (evidence.get("all_finite") is not True
+                    or set(evidence.get("signals", [])) != {
+                        "confidence", "random_forest_disagreement", "feature_space_distance",
+                        "split_conformal", "isolation_forest"}
+                    or evidence.get("rows", 0) < 1
+                    or not required_smoke_code.issubset(smoke_code)
+                    or any(code_hashes.get(relative) != smoke_code.get(relative)
+                           for relative in required_smoke_code)):
+                raise ValueError("Target five-signal smoke evidence is incomplete, stale, or non-finite")
     config_sha = sha256_file(ctx.config_path)
     stage_sha = sha256_file(ctx.stage_manifest)
     e1_manifest_sha = sha256_file(ctx.source_e1_manifest)

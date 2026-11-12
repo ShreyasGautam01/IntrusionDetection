@@ -222,15 +222,26 @@ def compute_shared_distance(ctx, manifest_sha: str, target_features: np.ndarray,
     return distance, distance_meta
 
 
-def seed_identity(ctx, seed: int, manifest_sha: str, feature_meta: dict,
-                  distance_meta: dict, model_meta: dict) -> dict:
+def expected_seed_identity(ctx, seed: int, manifest_sha: str, feature_meta: dict,
+                           distance_meta: dict) -> dict:
+    source_metrics = ctx.source_e1_seed_root / f"seed-{seed}" / "metrics.json"
+    if not source_metrics.is_file():
+        raise FileNotFoundError(source_metrics)
     return {
         "direction": ctx.direction, "seed": seed, "manifest_sha256": manifest_sha,
-        "source_e1_metrics_sha256": model_meta["identity"]["source_e1_metrics_sha256"],
+        "source_e1_metrics_sha256": sha256_file(source_metrics),
         "target_feature_array_sha256": feature_meta["array_sha256"],
         "shared_distance_sha256": distance_meta["score_sha256"],
         "feature_order": list(ctx.feature_order),
     }
+
+
+def seed_identity(ctx, seed: int, manifest_sha: str, feature_meta: dict,
+                  distance_meta: dict, model_meta: dict) -> dict:
+    identity = expected_seed_identity(ctx, seed, manifest_sha, feature_meta, distance_meta)
+    if identity["source_e1_metrics_sha256"] != model_meta["identity"]["source_e1_metrics_sha256"]:
+        raise ValueError("Verified model cache and current source E1 metrics differ")
+    return identity
 
 
 def summarize_array(path: Path, rows: int, batch_rows: int) -> dict:
@@ -259,11 +270,15 @@ def verify_completed_seed(final_dir: Path, identity: dict, rows: int,
         raise FileNotFoundError(metrics_path)
     metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
     exact_source_check = metrics.get("source_test_verification", {}).get("exact_match", {})
+    expected_source_outputs = {
+        "prediction.npy", "calibrated_probability.npy",
+        "random_forest_disagreement.npy", "isolation_forest.npy",
+    }
     if (metrics.get("identity") != identity
             or metrics.get("target_labels_read") is not False
             or metrics.get("target_rows") != rows
             or metrics.get("signals") != list(SIGNALS)
-            or not exact_source_check
+            or set(exact_source_check) != expected_source_outputs
             or not all(exact_source_check.values())):
         raise ValueError("Completed transfer seed is bound to another lock or reports target-label access")
     scores = {}
@@ -416,8 +431,13 @@ def run(direction: str, manifest_path: Path, batch_rows: int) -> None:
         state = json.loads(progress.read_text(encoding="utf-8"))
         if (state.get("direction") != direction
                 or state.get("manifest_sha256") != manifest_sha
-                or state.get("both_manifest_sha256") != both_manifest_hashes):
-            raise ValueError("Existing progress checkpoint belongs to another lock")
+                or state.get("both_manifest_sha256") != both_manifest_hashes
+                or state.get("target_feature_array_sha256") != feature_meta["array_sha256"]
+                or state.get("shared_distance_sha256") != distance_meta["score_sha256"]
+                or state.get("verified_source_stage_file_sha256") != source_stage_hashes
+                or state.get("expected_seeds") != expected_seeds
+                or state.get("target_labels_read") is not False):
+            raise ValueError("Existing progress checkpoint belongs to another lock or changed inputs")
         completed = {int(record["seed"]): record for record in state.get("completed_seeds", [])}
     else:
         state = {"report_id": f"target-transfer-progress-{direction}-v1",
@@ -431,10 +451,14 @@ def run(direction: str, manifest_path: Path, batch_rows: int) -> None:
                  "target_labels_read": False}
         completed = {}
     for seed in expected_seeds:
+        expected_identity = expected_seed_identity(
+            ctx, seed, manifest_sha, feature_meta, distance_meta)
         if seed in completed:
             final_dir = DATA_ROOT / direction / "scores" / f"seed-{seed}"
             identity = json.loads((final_dir / "metrics.json").read_text(encoding="utf-8"))["identity"]
-            record = verify_completed_seed(final_dir, identity, rows, batch_rows)
+            if identity != expected_identity:
+                raise ValueError(f"Saved seed {seed} outputs belong to different transfer inputs")
+            record = verify_completed_seed(final_dir, expected_identity, rows, batch_rows)
             if record["metrics_sha256"] != completed[seed]["metrics_sha256"]:
                 raise ValueError(f"Saved seed {seed} progress hash no longer matches disk outputs")
             event(f"{direction} seed {seed}: already complete and hash-verified; skipping")
@@ -442,7 +466,9 @@ def run(direction: str, manifest_path: Path, batch_rows: int) -> None:
         final_dir = DATA_ROOT / direction / "scores" / f"seed-{seed}"
         if final_dir.exists():
             metrics = json.loads((final_dir / "metrics.json").read_text(encoding="utf-8"))
-            record = verify_completed_seed(final_dir, metrics["identity"], rows, batch_rows)
+            if metrics.get("identity") != expected_identity:
+                raise ValueError(f"Existing seed {seed} outputs belong to different transfer inputs")
+            record = verify_completed_seed(final_dir, expected_identity, rows, batch_rows)
         else:
             event(f"{direction} seed {seed}: verified source model and scoring target rows")
             record = score_one_seed(ctx, seed, manifest_sha, target_features,
