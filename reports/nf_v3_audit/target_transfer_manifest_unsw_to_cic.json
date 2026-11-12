@@ -1,0 +1,278 @@
+{
+  "manifest_id": "target-transfer-unsw-to-cic-v1",
+  "status": "frozen",
+  "generated_utc": "2026-11-12T08:11:38.796384+00:00",
+  "direction": "unsw-to-cic",
+  "lock_commit": "b94a8c935d9a96e0abde500049994ebc1ed7eac1",
+  "configuration_id": "source-e1-lock-1",
+  "source_dataset": "NF-UNSW-NB15-v3",
+  "target_dataset": "NF-CSE-CIC-IDS2018-v3",
+  "source_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+  "target_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "source_rows": 2365424,
+  "target_rows": 20115529,
+  "config_sha256": "23fcc21d6699f4e57cf3d96966836b8610773572ad7950330b84149818515a5f",
+  "source_stage_manifest_sha256": "88c346a503ae606bb6478e0c86ba8478ffe8137509aa149681613c08402fc670",
+  "source_e1_manifest_sha256": "3649fb5088a56e2e82475d8160c5032c1f90262baa9c2268f8c0ddd1a9e7176d",
+  "source_e1_results_sha256": "438446f3226d52beac67516da789ececf5a348e5a2fc3c89afa5d93b14a91717",
+  "source_gate_interpretation_sha256": "bd16a384f8d1cb1a3e639f45d689bd9ead1514a4f864d8cba935a19fe98a9622",
+  "source_gate_accepted": true,
+  "feature_registry_sha256": "6eabb354c37149b3f37580b27d71b1b5be24b2fa4efb81cd5647b15c309999d7",
+  "family_registry_sha256": "1a518dc4b369a476d97a5e0e3350ee59373e23b2e4976863568967c4580c4c6b",
+  "family_pair_matrix_sha256": "dd597ae2fc43932a96142f856d1bb0bb1501b62ff68171004bc3d7185a5d4a0e",
+  "feature_order": [
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "OUT_BYTES",
+    "IN_PKTS",
+    "OUT_PKTS",
+    "FLOW_DURATION_MILLISECONDS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "feature_registry_roles": {
+    "predictors": 46,
+    "identifiers": 5,
+    "split_metadata": 2,
+    "binary_target_label": 1,
+    "attack_family_target_label": 1
+  },
+  "family_mapping_decision": "Only the documented DoS-to-DoS category is shared; ambiguous and undocumented families remain dataset-local, and unseen-family claims are withheld.",
+  "preprocessing": {
+    "replacement_values_file": "reports/nf_v3_audit/unsw_train_finite_replacements.json",
+    "replacement_values_sha256": "ea7a93ac62c73fd7466c7312cdcc4eecae2e4bb5fb0e7ddee6e3441a7827705b",
+    "replacement_fit_partition": "source train only",
+    "target_fitted_preprocessing": false
+  },
+  "reliability_signals": {
+    "confidence": {
+      "score": "1 - max(source-calibrated class probabilities)",
+      "higher_means": "more deserving of review"
+    },
+    "random_forest_disagreement": {
+      "score": "1 - maximum per-class fraction of the 200 tree predictions",
+      "higher_means": "more deserving of review"
+    },
+    "feature_space_distance": {
+      "reference": "UNSW source-train only",
+      "scaler": "StandardScaler fit on UNSW source-train only",
+      "metric": "Euclidean",
+      "neighbors": 5,
+      "score": "mean distance to the 5 nearest source-train reference rows",
+      "higher_means": "more deserving of review"
+    },
+    "split_conformal": {
+      "calibration": "disjoint conformal_quantile_fit subset of UNSW source calibration partition",
+      "alpha": 0.1,
+      "nonconformity": "1 - calibrated probability assigned to the true source-calibration class",
+      "quantile": "finite-sample split-conformal order statistic at ceil((n+1)*(1-alpha))/n",
+      "prediction_set": "include each binary class whose nonconformity is at or below the frozen calibration quantile",
+      "scalar_review_score": "(prediction_set_size - 1) / (2 - 1)",
+      "higher_means": "more deserving of review"
+    },
+    "isolation_forest": {
+      "fit_data": "UNSW source-train only",
+      "n_estimators": 100,
+      "max_samples": 256,
+      "max_features": 1.0,
+      "contamination": "auto",
+      "bootstrap": false,
+      "random_state": "same run seed",
+      "score": "negative sklearn score_samples, higher means more anomalous and more deserving of review"
+    }
+  },
+  "random_forest": {
+    "class": "sklearn.ensemble.RandomForestClassifier",
+    "parameters": {
+      "n_estimators": 200,
+      "min_samples_leaf": 5,
+      "criterion": "gini",
+      "max_depth": null,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "max_features": "sqrt",
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "bootstrap": true,
+      "oob_score": false,
+      "n_jobs": 1,
+      "verbose": 0,
+      "warm_start": false,
+      "class_weight": null,
+      "ccp_alpha": 0.0,
+      "max_samples": null,
+      "random_state": "one run per seed"
+    },
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "software_lock": "uv.lock"
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "concurrency": {
+    "direction_order": [
+      "unsw-to-cic",
+      "cic-to-unsw"
+    ],
+    "seed_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "simultaneous_workers": 1,
+    "RF_n_jobs": 1,
+    "IsolationForest_n_jobs": 1,
+    "BLAS_threads": 1,
+    "OpenMP_threads": 1,
+    "target_scoring_batch_rows_max": 8192
+  },
+  "max_target_batch_rows": 8192,
+  "distance_parameters": {
+    "definition": "Mean Euclidean distance to the five nearest original source-training rows after source-training StandardScaler",
+    "exact": true,
+    "neighbors": 5,
+    "metric": "euclidean",
+    "algorithm": "scikit-learn KDTree over per-chunk unique rows with integer multiplicities and exact top-five merge",
+    "reference_chunk_rows": 500000,
+    "query_batch_rows": 2048,
+    "n_jobs": 1,
+    "BLAS_threads": 1,
+    "OpenMP_threads": 1,
+    "mathematically_equivalent_duplicate_compression": true,
+    "scaler_fit_partition": "source train only",
+    "computed_once_per_source_direction": true
+  },
+  "model_factorization": {
+    "confidence": "RF seed and source-fitted calibrator dependent",
+    "random_forest_disagreement": "RF seed dependent",
+    "feature_space_distance": "source train/representation dependent, RF seed independent; compute once per direction",
+    "split_conformal": "RF seed and source-fitted conformal quantile dependent",
+    "isolation_forest": "source train and configured seed dependent; fit once per direction and seed"
+  },
+  "benchmarks": {
+    "reports/nf_v3_audit/target_exact_distance_benchmark_unsw_to_cic.json": "fc2e8a5d7d2c3225aa2cb198189a645ab7087818421d1c24ec657dadd93b03ad",
+    "reports/nf_v3_audit/target_inference_benchmark_unsw_to_cic_seed0.json": "82ff9f5e87a373cbde0a10892e6462869d4b65e0ac9a610ad583c1f7e7f41df7",
+    "reports/nf_v3_audit/target_transfer_smoke_unsw_to_cic_v2.json": "07d90f298211c86290a85472f75c9fb9740e1d1e9eb593470b3920ed5eaaaf57"
+  },
+  "benchmark_decision": "Measured exact duplicate-compressed distance is practical as a sequential long single-job computation; no approximation selected.",
+  "full_distance_projection_seconds": {
+    "low_seconds": 19346.10521329978,
+    "high_seconds": 36690.44187055781,
+    "full_source_reference_chunks": 3,
+    "target_query_rows": 20115529,
+    "formula": "measured per-reference-chunk wall time \u00d7 (full target query rows / bounded query rows) \u00d7 full source reference chunk count",
+    "scope": "exact distance computation only; target feature staging and model inference reported separately"
+  },
+  "target_labels_read": false,
+  "review_budgets": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "ranking": {
+    "selected_rows": "floor(budget * target_rows)",
+    "tie_break": "stable ascending input row offset",
+    "cutoff_tie_count": "number of full-target scores equal to the selection cutoff"
+  },
+  "target_evaluation": "locked until both direction manifests are committed and validated",
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "software_lock_sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1",
+  "code_sha256": {
+    "scripts/freeze_target_transfer_manifests.py": "0903e022eede5871ae9445ba3ee14adc48160b1cf6228b092b070acd61faeffb",
+    "scripts/score_target_transfer.py": "3704c2755f8b06aa3f02ed024fbddd704fe801b65bdf65f723f04e30e0fd1edf",
+    "scripts/evaluate_target_transfer.py": "765d7391dfcc926643a2362a1051745a4d3a96b9937e726532f3ee847254d2ef",
+    "scripts/benchmark_target_distance.py": "f3845b311492aa4dd6da927512821c8a1d86e16a0168847fea05563d856d6fca",
+    "scripts/benchmark_target_inference.py": "c2613215764ea524570ab109136689cf78e3df7293a971e010dabb84d34bdc41",
+    "scripts/target_exact_knn.py": "7b0c7cad07dbe855817b5dea066dfbf489bd497c2c748d3a4f4b0dbcc1a3e204",
+    "scripts/target_transfer_common.py": "46b451c543d2f4c5c3f5ce6ce10c24f9f2b422766f99b6b213db181bf02a18f7",
+    "scripts/run_source_e1_complete.py": "6f2d9669db8439716fe2425bdbc37297101fb8f53bca813a57969228c6bb4e34",
+    "scripts/run_source_e1_direction.py": "1f013bca658247b3a809b184dedcdced6c144d4a2bdcd7ed1735b2fb615d3d3a",
+    "scripts/benchmark_source_e1_cic.py": "afc1ab36c39bac797ca6d3e5f41e1948c63237162074a1eb5b1650d14e018796",
+    "scripts/cic_exact_chunked_5nn.py": "a4188fa9ab6c8f8e01af105ab4d78e8f028082b091c122aa20f998338a4dbe12",
+    "scripts/finite_value_policy.py": "47f15fe59a2eb4c933945ea454fb4aaccb22fad8247061cc08eb4ca9d2e6b386",
+    "src/ids_research/target_lockbox.py": "6f15f64e32a29f23587bd87a3dea547d6b75e765871a02fdb5ae67149e659051",
+    "src/ids_research/transfer_scoring.py": "c0221895755bb0cde48447ba674e7ed73626564198b76b0d031286b21a527a94",
+    "src/ids_research/review_ranking.py": "ca9da4f50c33cd5958a510d679f873780a53aa31511272e1f06db910f0657afa",
+    "tests/test_transfer_firewall.py": "4fd4d139d27e20e241cef2adc95851aa4a788025b56b9eac1d615ab2fd31ab4a"
+  },
+  "smoke_evidence": {
+    "path": "reports/nf_v3_audit/target_transfer_smoke_unsw_to_cic_v2.json",
+    "sha256": "07d90f298211c86290a85472f75c9fb9740e1d1e9eb593470b3920ed5eaaaf57",
+    "rows": 256,
+    "target_labels_read": false
+  },
+  "scope_exclusions": [
+    "ToN-IoT",
+    "XGBoost",
+    "8-feature sensitivity"
+  ]
+}
