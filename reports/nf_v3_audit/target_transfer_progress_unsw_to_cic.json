@@ -1,0 +1,60 @@
+{
+  "report_id": "target-transfer-progress-unsw-to-cic-v1",
+  "direction": "unsw-to-cic",
+  "manifest_sha256": "be7fff545cb1fe7a6ed08c74370169abffc9ac7c7cf603990cdf73718fb8973f",
+  "both_manifest_sha256": {
+    "cic-to-unsw": "313850caa0310ea8fea6a6b894cfa446a2e7772c5b0bf9f1952001511ec08d35",
+    "unsw-to-cic": "be7fff545cb1fe7a6ed08c74370169abffc9ac7c7cf603990cdf73718fb8973f"
+  },
+  "disk_capacity_plan": {
+    "estimated_bytes": 10218688732,
+    "headroom_bytes": 14303625217,
+    "model_cache_reserve_bytes": 41198738,
+    "model_cache_reference_bytes": 3662110,
+    "model_cache_safety_factor": 1.25,
+    "missing_model_cache_seeds": 9,
+    "extra_headroom_bytes": 2000000000,
+    "bytes_per_target_row": 508,
+    "available_bytes": 124259917824
+  },
+  "target_feature_array_sha256": "416c689ab47b8ff099b01619633942d4c3d8405b1218af85d5a4ce18616e3226",
+  "shared_distance_sha256": "8cff83b50614410ddb06c9b6ef55cb551b2840156aa09d4794ab291bef109c5d",
+  "verified_source_stage_file_sha256": {
+    "calibration_X.npy": "a0c4b074920db989a28bce39002bedda95370fc3356268efd0ffd4627cc53dfa",
+    "calibration_y.npy": "4f1caea57a24237cc149f6a9431d58c7ebef6319ec5b1e41cab12692593df1a2",
+    "source_test_X.npy": "9c1d7ebf5b6096fbb48bac59307f3d2a8e115cb3a99344c4a7d1ba8cd54d9cbb",
+    "source_test_y.npy": "c2447ae5eee9d8154f395d29a3c04d9a5034c6012b2897855cda736a992050e9",
+    "train_X.npy": "74d935dd8cc57e97f7faf3beb9852c577822e3b64704d6c2851fd8857fe9ec37",
+    "train_y.npy": "34c75e2004ce23887f8acbdb54ca713e736282081f2b1ed27a13eb5eeacf9588"
+  },
+  "expected_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "completed_seeds": [
+    {
+      "seed": 0,
+      "metrics_sha256": "2b13ea6c309464f6850efdae4f4e5cc01fc963f96a3a910b9207c4864e233950",
+      "score_sha256": {
+        "calibrated_probability.npy": "f16c2587fcddad73eb70ace2f0e281a77f7da2803bcfc01d6048957de4f19693",
+        "confidence.npy": "45ee0204703368ec7facdcdc66ad84344841dc778b948de667cbb560ab51a392",
+        "random_forest_disagreement.npy": "b7ec3fbd6336bb4e485e4f831c2c22fc1def37c421b67867271e9924a2e2e2c2",
+        "split_conformal.npy": "df376d344ce3cd7a693b2e8655aa5d6726311cb1789e81180e4829505ce36694",
+        "isolation_forest.npy": "74e4155fd917923364c21b2d8d0a0aba894f73abe590da93d463ddebd57b1ec0"
+      },
+      "rows": 20115529,
+      "target_labels_read": false
+    }
+  ],
+  "target_labels_read": false,
+  "last_completed_seed": 0,
+  "completed_utc": "2026-11-15T03:51:39.077485+00:00"
+}
