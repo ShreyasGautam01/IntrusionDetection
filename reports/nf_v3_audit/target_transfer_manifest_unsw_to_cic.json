@@ -1,9 +1,9 @@
 {
   "manifest_id": "target-transfer-unsw-to-cic-v1",
   "status": "frozen",
-  "generated_utc": "2026-11-12T09:30:44.458261+00:00",
+  "generated_utc": "2026-11-15T06:28:46.941982+00:00",
   "direction": "unsw-to-cic",
-  "lock_commit": "d15a471335ca6c927dfa27f0c569b3bf4b86c00f",
+  "lock_commit": "32c8198fee9b77f80568e839288d9e234d0c9df7",
   "configuration_id": "source-e1-lock-1",
   "source_dataset": "NF-UNSW-NB15-v3",
   "target_dataset": "NF-CSE-CIC-IDS2018-v3",
@@ -217,7 +217,7 @@
   "benchmarks": {
     "reports/nf_v3_audit/target_exact_distance_benchmark_unsw_to_cic.json": "fc2e8a5d7d2c3225aa2cb198189a645ab7087818421d1c24ec657dadd93b03ad",
     "reports/nf_v3_audit/target_inference_benchmark_unsw_to_cic_seed0.json": "82ff9f5e87a373cbde0a10892e6462869d4b65e0ac9a610ad583c1f7e7f41df7",
-    "reports/nf_v3_audit/target_transfer_smoke_unsw_to_cic_v2.json": "07d90f298211c86290a85472f75c9fb9740e1d1e9eb593470b3920ed5eaaaf57"
+    "reports/nf_v3_audit/target_transfer_smoke_unsw_to_cic_v3.json": "41738da8bbfcbdb117ded6957ea5ddb77bf5a450f0b6c123a9f8ea6de52f7d3f"
   },
   "benchmark_decision": "Measured exact duplicate-compressed distance is practical as a sequential long single-job computation; no approximation selected.",
   "full_distance_projection_seconds": {
@@ -247,8 +247,8 @@
   },
   "software_lock_sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1",
   "code_sha256": {
-    "scripts/freeze_target_transfer_manifests.py": "b9385b9f46e571c57ef8384448864c6cfee87aa03c4f6207408ecab2b2b0041b",
-    "scripts/score_target_transfer.py": "3704c2755f8b06aa3f02ed024fbddd704fe801b65bdf65f723f04e30e0fd1edf",
+    "scripts/freeze_target_transfer_manifests.py": "fc5b75f4065921651e2831bc680507ab13e906880a824e8b3bdac377d5b85d39",
+    "scripts/score_target_transfer.py": "5f05b1528df005962fd7d17c48aef8466f98f7538043e978c1227e4a5e74d32b",
     "scripts/evaluate_target_transfer.py": "765d7391dfcc926643a2362a1051745a4d3a96b9937e726532f3ee847254d2ef",
     "scripts/benchmark_target_distance.py": "f3845b311492aa4dd6da927512821c8a1d86e16a0168847fea05563d856d6fca",
     "scripts/benchmark_target_inference.py": "c2613215764ea524570ab109136689cf78e3df7293a971e010dabb84d34bdc41",
@@ -265,8 +265,8 @@
     "tests/test_transfer_firewall.py": "91ae4d17296175bc35840b4f44790b19acf3e736838d859edb4f7da2be4c72b9"
   },
   "smoke_evidence": {
-    "path": "reports/nf_v3_audit/target_transfer_smoke_unsw_to_cic_v2.json",
-    "sha256": "07d90f298211c86290a85472f75c9fb9740e1d1e9eb593470b3920ed5eaaaf57",
+    "path": "reports/nf_v3_audit/target_transfer_smoke_unsw_to_cic_v3.json",
+    "sha256": "41738da8bbfcbdb117ded6957ea5ddb77bf5a450f0b6c123a9f8ea6de52f7d3f",
     "rows": 256,
     "target_labels_read": false
   },
