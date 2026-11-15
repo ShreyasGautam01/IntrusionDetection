@@ -1,0 +1,169 @@
+{
+  "report_id": "target-transfer-five-signal-smoke-cic-to-unsw-v1",
+  "generated_utc": "2026-11-15T06:28:13.949788+00:00",
+  "direction": "cic-to-unsw",
+  "manifest_sha256": null,
+  "source_dataset_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "target_dataset_sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+  "config_sha256": "ace3a131113d1c56f8488b2dcea562154829eceeff75b57bb38da1d8505c8124",
+  "feature_registry_sha256": "6eabb354c37149b3f37580b27d71b1b5be24b2fa4efb81cd5647b15c309999d7",
+  "target_row_offsets": [
+    0,
+    255
+  ],
+  "rows": 256,
+  "feature_order": [
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "OUT_BYTES",
+    "IN_PKTS",
+    "OUT_PKTS",
+    "FLOW_DURATION_MILLISECONDS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "signals": [
+    "confidence",
+    "random_forest_disagreement",
+    "feature_space_distance",
+    "split_conformal",
+    "isolation_forest"
+  ],
+  "signal_shapes": {
+    "calibrated_probability": [
+      256
+    ],
+    "confidence": [
+      256
+    ],
+    "random_forest_disagreement": [
+      256
+    ],
+    "split_conformal": [
+      256
+    ],
+    "isolation_forest": [
+      256
+    ],
+    "feature_space_distance": [
+      256
+    ]
+  },
+  "all_finite": true,
+  "distance_reference_rows": 100000,
+  "distance_benchmark": {
+    "reference_rows": 100000,
+    "query_rows": 256,
+    "reference_chunk_rows": 500000,
+    "reference_chunk_count": 1,
+    "reference_chunks": [
+      {
+        "start": 0,
+        "end_exclusive": 100000,
+        "unique_reference_rows": 59777,
+        "duplicate_compression_ratio": 1.6728842196831557,
+        "unique_seconds": 0.35079090000363067,
+        "scale_seconds": 0.009830900002270937,
+        "index_fit_seconds": 0.3689900999888778,
+        "query_seconds": 0.09953829998266883
+      }
+    ],
+    "unique_extraction_seconds": 0.35079090000363067,
+    "scaler_and_index_seconds": 0.3788209999911487,
+    "query_seconds": 0.09953829998266883,
+    "wall_seconds": 0.8291501999774482,
+    "process_cpu_seconds": 0.8125,
+    "cpu_core_equivalents": 0.9799189580152051,
+    "cpu_utilization_of_logical_capacity_pct": 6.124493487595032,
+    "query_rows_per_second": 2571.8743442933383,
+    "peak_working_set_bytes": 1426939904,
+    "all_finite": true
+  },
+  "source_scaler_provenance": {
+    "method": "StandardScaler.partial_fit over source-train blocks",
+    "timing": {
+      "wall_seconds": 5.1276553999923635,
+      "process_cpu_seconds": 5.0625,
+      "cpu_core_equivalents": 0.9872933348850899,
+      "cpu_utilization_of_logical_capacity_pct": 6.1705833430318116,
+      "baseline_working_set_bytes": 171245568,
+      "peak_working_set_bytes": 2414235648,
+      "peak_increment_bytes": 2242990080,
+      "rows": 12068590,
+      "block_rows": 100000,
+      "definition": "StandardScaler statistics fitted on all original CIC source-train rows with deterministic partial_fit blocks",
+      "parameters_sha256": "7ad1b9bf9f21fc9b9009b862cf98ac83e6b0119255d148ef1ca41839831ec560"
+    },
+    "cache_reused": true,
+    "source_e1_distance_metadata_sha256": "47d83d4a6ee17301bc3ee8dd8b0ce5dbf830d718cf04742b537609f3e0fdfe2e",
+    "scaler_cache_sha256": "1cedd36db249f60a046f1adf85217e1e6738d4f8980a4deff61c4dbf89981474",
+    "source_e1_distance_sha256": "16f25ebc8a4f53e09b3143e997bb520525d464da677dd23f8610fcaeff5d8d8e"
+  },
+  "verified_source_stage_file_sha256": {
+    "calibration_X.npy": "f1611f59c3f64b49f7d69fe7329cba7babc42c7456e7a5fea13a6ab669f622b9",
+    "calibration_y.npy": "2a9b723a639ec63e71db1e31c0485fcec9bcc5b128ea359a6bbc3c7e9908002e",
+    "source_test_X.npy": "056648b14bd804d10cabe4575ff66359d7faf1dfc580cb176bd786ee9f1186d6",
+    "source_test_y.npy": "c46214db3d1eebd5490c5bd69f68816f81463021174645ac13aba4d29021e8d6",
+    "train_X.npy": "8fe6577352db2efcebaa6f2f8f254b8b98a8183359764ed399f8b3447c747e26",
+    "train_y.npy": "62991f194230e0ee049acd0556f8ef7baa119c95ee59979d41887b3336e2305c"
+  },
+  "source_e1_verification": {
+    "exact_match": {
+      "prediction.npy": true,
+      "calibrated_probability.npy": true,
+      "random_forest_disagreement.npy": true,
+      "isolation_forest.npy": true
+    },
+    "rows_verified": 4025148,
+    "batch_rows": 8192,
+    "row_blocks": 492
+  },
+  "target_labels_read": false,
+  "manifest_status": "pre-freeze feature-only smoke",
+  "code_commit": "904aad0afc88950171251e593332a4508c4fbf00",
+  "code_sha256": {
+    "scripts/score_target_transfer.py": "5f05b1528df005962fd7d17c48aef8466f98f7538043e978c1227e4a5e74d32b",
+    "scripts/target_exact_knn.py": "7b0c7cad07dbe855817b5dea066dfbf489bd497c2c748d3a4f4b0dbcc1a3e204",
+    "scripts/target_transfer_common.py": "46b451c543d2f4c5c3f5ce6ce10c24f9f2b422766f99b6b213db181bf02a18f7",
+    "src/ids_research/transfer_scoring.py": "c0221895755bb0cde48447ba674e7ed73626564198b76b0d031286b21a527a94"
+  },
+  "selection": "first contiguous target feature rows; no target label or family columns selected"
+}

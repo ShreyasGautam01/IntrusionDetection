@@ -35,8 +35,8 @@ INFERENCE_BENCHMARKS = {
     "cic-to-unsw": REPORTS / "target_inference_benchmark_cic_to_unsw_seed0.json",
 }
 SMOKE_REPORTS = {
-    "unsw-to-cic": REPORTS / "target_transfer_smoke_unsw_to_cic_v2.json",
-    "cic-to-unsw": REPORTS / "target_transfer_smoke_cic_to_unsw.json",
+    "unsw-to-cic": REPORTS / "target_transfer_smoke_unsw_to_cic_v3.json",
+    "cic-to-unsw": REPORTS / "target_transfer_smoke_cic_to_unsw_v2.json",
 }
 CODE_PATHS = (
     "scripts/freeze_target_transfer_manifests.py",
