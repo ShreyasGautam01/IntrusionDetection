@@ -1,10 +1,10 @@
 {
   "report_id": "target-transfer-progress-unsw-to-cic-v1",
   "direction": "unsw-to-cic",
-  "manifest_sha256": "be7fff545cb1fe7a6ed08c74370169abffc9ac7c7cf603990cdf73718fb8973f",
+  "manifest_sha256": "73c4fe3b2a667e68df7a491a3a8baa7a0d5aa70a08518b996796c56f1a38fd6f",
   "both_manifest_sha256": {
-    "cic-to-unsw": "313850caa0310ea8fea6a6b894cfa446a2e7772c5b0bf9f1952001511ec08d35",
-    "unsw-to-cic": "be7fff545cb1fe7a6ed08c74370169abffc9ac7c7cf603990cdf73718fb8973f"
+    "cic-to-unsw": "1677641a6bc31ab177ae7218350781749775c18c803f8ea74a6595302a4adade",
+    "unsw-to-cic": "73c4fe3b2a667e68df7a491a3a8baa7a0d5aa70a08518b996796c56f1a38fd6f"
   },
   "disk_capacity_plan": {
     "estimated_bytes": 10218688732,
@@ -42,7 +42,7 @@
   "completed_seeds": [
     {
       "seed": 0,
-      "metrics_sha256": "2b13ea6c309464f6850efdae4f4e5cc01fc963f96a3a910b9207c4864e233950",
+      "metrics_sha256": "9602251afd94de15580bf12af718b477190102b0d2b0d490542c5401b1833a4f",
       "score_sha256": {
         "calibrated_probability.npy": "f16c2587fcddad73eb70ace2f0e281a77f7da2803bcfc01d6048957de4f19693",
         "confidence.npy": "45ee0204703368ec7facdcdc66ad84344841dc778b948de667cbb560ab51a392",
@@ -55,7 +55,7 @@
     },
     {
       "seed": 1,
-      "metrics_sha256": "50788ad7a1a7e58230197fdbd9292346451162c9926ccdc71db7b9daeb0b6ded",
+      "metrics_sha256": "8b0afd4f5d197747cd7f54ea11d8be041acb0af08d7c650cbfb7d76009d7853a",
       "score_sha256": {
         "calibrated_probability.npy": "ea9ebc3283eccddaa81b656226fe58fd63a2f9f26de9ba7079daafaf2e1fe41a",
         "confidence.npy": "40f4a3f9340bf38db719bf21fff5557b95463c7b194d8b0ed0ddbe56af317be3",
@@ -68,7 +68,7 @@
     },
     {
       "seed": 2,
-      "metrics_sha256": "1ce6e7167e4bd22c41da1693ce8b09cbd11a8107cec35352cf8723271c38f8e9",
+      "metrics_sha256": "d6e2cafdd3dcab399306d008f0bc268b82650dbb6036b4b12ebf15dec31c8b6b",
       "score_sha256": {
         "calibrated_probability.npy": "b736810fc980ab53de6484dd2d4882da8123129a3975d2bcc29775199a6e77a6",
         "confidence.npy": "927c3e7c067ce8f4eb77d5e055d2258a3dd6e2f94c79602baaea2ac1dedea1f6",
@@ -78,9 +78,22 @@
       },
       "rows": 20115529,
       "target_labels_read": false
+    },
+    {
+      "seed": 3,
+      "metrics_sha256": "a323a0cecd33e33efee656512d754c53dcc60e8e5634962cd02e2e2fecc4c361",
+      "score_sha256": {
+        "calibrated_probability.npy": "278d7af8e9fab116a7d64afea6ca6de576a0a97abaaea6a013b2c00fd9243d87",
+        "confidence.npy": "ded3d719151024dce8405273431068ca31b595f013f8db058718989054310e0d",
+        "random_forest_disagreement.npy": "e31a59052756329d6756079317a739cba7ac3e81b0084ca672225ee7fab7909f",
+        "split_conformal.npy": "48b6b074d69bd97475cd1e387610db2f17422bffd93b6aa51909d5e63ddd2147",
+        "isolation_forest.npy": "c238d41277a140adfeac8bd9fa0ddd8fc602983f73573b06a74cd9f9e9b38dc5"
+      },
+      "rows": 20115529,
+      "target_labels_read": false
     }
   ],
   "target_labels_read": false,
-  "last_completed_seed": 2,
-  "completed_utc": "2026-11-15T05:25:15.416199+00:00"
+  "last_completed_seed": 3,
+  "completed_utc": "2026-11-15T06:29:57.866398+00:00"
 }
