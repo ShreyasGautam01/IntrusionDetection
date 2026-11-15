@@ -395,6 +395,11 @@ def score_one_seed(ctx, seed: int, manifest_sha: str, target_features: np.ndarra
     _, timing = timed(score_remaining)
     for array in arrays.values():
         array.flush()
+        # Windows refuses to rename the containing directory while any NPY
+        # memory map is open. Explicitly close every mapping before promotion.
+        array._mmap.close()
+    del array
+    arrays.clear()
     del arrays
     score_metadata = {name: summarize_array(path, len(target_features), batch_rows)
                       for name, path in output_paths.items()}
