@@ -1,0 +1,60 @@
+{
+  "report_id": "target-transfer-progress-cic-to-unsw-v1",
+  "direction": "cic-to-unsw",
+  "manifest_sha256": "1677641a6bc31ab177ae7218350781749775c18c803f8ea74a6595302a4adade",
+  "both_manifest_sha256": {
+    "cic-to-unsw": "1677641a6bc31ab177ae7218350781749775c18c803f8ea74a6595302a4adade",
+    "unsw-to-cic": "73c4fe3b2a667e68df7a491a3a8baa7a0d5aa70a08518b996796c56f1a38fd6f"
+  },
+  "disk_capacity_plan": {
+    "estimated_bytes": 1201635392,
+    "headroom_bytes": 17038345035,
+    "model_cache_reserve_bytes": 13596382564,
+    "model_cache_reference_bytes": 1208567339,
+    "model_cache_safety_factor": 1.25,
+    "missing_model_cache_seeds": 9,
+    "extra_headroom_bytes": 2000000000,
+    "bytes_per_target_row": 508,
+    "available_bytes": 120600424448
+  },
+  "target_feature_array_sha256": "39eb408d2944615893afb716351439230fa542e37c8420742406eb3b8973e604",
+  "shared_distance_sha256": "36879f11e3255cdc42000948722aa149aea498aee98ea10ad3f4fc77cfa9d311",
+  "verified_source_stage_file_sha256": {
+    "calibration_X.npy": "f1611f59c3f64b49f7d69fe7329cba7babc42c7456e7a5fea13a6ab669f622b9",
+    "calibration_y.npy": "2a9b723a639ec63e71db1e31c0485fcec9bcc5b128ea359a6bbc3c7e9908002e",
+    "source_test_X.npy": "056648b14bd804d10cabe4575ff66359d7faf1dfc580cb176bd786ee9f1186d6",
+    "source_test_y.npy": "c46214db3d1eebd5490c5bd69f68816f81463021174645ac13aba4d29021e8d6",
+    "train_X.npy": "8fe6577352db2efcebaa6f2f8f254b8b98a8183359764ed399f8b3447c747e26",
+    "train_y.npy": "62991f194230e0ee049acd0556f8ef7baa119c95ee59979d41887b3336e2305c"
+  },
+  "expected_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "completed_seeds": [
+    {
+      "seed": 0,
+      "metrics_sha256": "54dc99b7c7054b5259004f9b5dce8c918bb62a5b48c8643a721316a34e615b76",
+      "score_sha256": {
+        "calibrated_probability.npy": "6daabd587a2e8fa58d06dd7d64fe071885d49dd01d47681993dc332bd4cfb8ee",
+        "confidence.npy": "9803204b1c730a489d5d5612fd3f93ac32f0a074e70bc4433dde147a1d7c1d8a",
+        "random_forest_disagreement.npy": "4d5a3ca66bb85eb460334b0b4e1d1330adffbcd8119822a1f4b665a8073ec9f8",
+        "split_conformal.npy": "270e0e803f72e0aa6c27121eb229e1d40f8e06e04bac88ede299affa9acba473",
+        "isolation_forest.npy": "dd573c9d548a2f265df71cb2a8ca63b91b6f1c606aa6d852977cc3025889b1cc"
+      },
+      "rows": 2365424,
+      "target_labels_read": false
+    }
+  ],
+  "target_labels_read": false,
+  "last_completed_seed": 0,
+  "completed_utc": "2026-11-16T09:58:48.758921+00:00"
+}
