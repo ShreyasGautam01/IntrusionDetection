@@ -1,0 +1,275 @@
+{
+  "report_id": "cic-rf-internal-njobs-benchmark-v1",
+  "generated_utc": "2026-11-16T19:48:51.410807+00:00",
+  "git_commit": "ac18dbc25dfb528fbcba8ec7ba4dc2d7925b8d92",
+  "direction": "cic-to-unsw",
+  "seed": 3,
+  "source_dataset_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+  "source_stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
+  "source_train_sha256": "8fe6577352db2efcebaa6f2f8f254b8b98a8183359764ed399f8b3447c747e26",
+  "source_train_rows": 12068590,
+  "feature_order": [
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "OUT_BYTES",
+    "IN_PKTS",
+    "OUT_PKTS",
+    "FLOW_DURATION_MILLISECONDS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "parameters": {
+    "n_estimators": 200,
+    "min_samples_leaf": 5,
+    "criterion": "gini",
+    "max_depth": null,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "min_impurity_decrease": 0.0,
+    "bootstrap": true,
+    "oob_score": false,
+    "n_jobs": 1,
+    "verbose": 0,
+    "warm_start": false,
+    "class_weight": null,
+    "ccp_alpha": 0.0,
+    "max_samples": null,
+    "random_state": 3,
+    "n_jobs_values": [
+      1,
+      2,
+      4
+    ]
+  },
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "thread_limits": {
+    "BLAS": 1,
+    "OpenMP": 1
+  },
+  "target_access": {
+    "target_file_read": false,
+    "target_labels_read": false
+  },
+  "observed_full_scale_reference_fit": {
+    "seed": 1,
+    "RF_fit_wall_seconds": 16407.478613200015,
+    "model_metadata_sha256": "66f20b21961cc9bc1bcb3f8f136b874aafc90daad86f62380dcc2215318f783a",
+    "source_test_exact": true
+  },
+  "measurement_note": "Process-tree working set and CPU plus system-wide CPU and available physical RAM are sampled every 100 ms. Process-tree working set sums may count shared pages more than once; system-wide minimum available RAM is reported separately. Predictions are evaluated with n_jobs=1 so the comparison isolates fit parallelism.",
+  "runs": [
+    {
+      "n_jobs": 1,
+      "wall_seconds": 63.262645500013605,
+      "main_process_cpu_seconds": 66.828125,
+      "main_process_cpu_core_equivalents": 1.0563599494109936,
+      "sample_rows": 241371,
+      "sample_fraction": 0.02,
+      "sample_indices_sha256": "0a776153f2060312942f97a9216be33a46f472b9c258c741b0e4e909b8ce19d1",
+      "validation_source_test_rows": 4096,
+      "validation_offsets_sha256": "bd33c609b6df055aa1adcee496e86f367aebb4b21d06feaae5572977b7b106db",
+      "tree_structure_sha256": "357344001be66e2dacc75bae46e2cb9c81eaf3c979bb27479ea07628688477d8",
+      "probability_sha256": "e50e5dd363667f067b3ee54894b27c935450b64787c4bd3420fec96a7ae29016",
+      "disagreement_sha256": "780a83e9281a28080e592a6104fd06d31f0b91dfe9ee973eee61d887479ada87",
+      "finite_outputs": true,
+      "system_memory_before": {
+        "total_physical_bytes": 16849293312,
+        "available_physical_bytes": 4721340416,
+        "memory_load_pct": 71
+      },
+      "system_memory_after": {
+        "total_physical_bytes": 16849293312,
+        "available_physical_bytes": 4661743616,
+        "memory_load_pct": 72
+      },
+      "system_resource_samples": {
+        "process_tree_peak_working_set_bytes": 1139986432,
+        "process_tree_working_set_baseline_bytes": 1067737088,
+        "process_tree_peak_increment_bytes": 72249344,
+        "process_tree_peak_cpu_core_equivalents": 1.4212853510840076,
+        "process_tree_mean_cpu_core_equivalents": 1.0562775174814303,
+        "process_tree_mean_cpu_utilization_pct_of_logical_capacity": 6.601734484258939,
+        "process_tree_peak_cpu_utilization_pct_of_logical_capacity": 8.883033444275048,
+        "minimum_system_available_physical_bytes": 4622516224,
+        "peak_system_memory_load_pct": 72,
+        "mean_system_cpu_utilization_pct": 10.854933304610825,
+        "peak_system_cpu_utilization_pct": 41.80327868852459,
+        "logical_cpu_count": 16,
+        "monitor_samples": 548,
+        "observed_process_tree_pids": [
+          37748
+        ]
+      },
+      "full_source_train_fit_projection": {
+        "linear_seconds": 3163.142758885737,
+        "nlogn_seconds": 4161.545810579173,
+        "projection_note": "sample-fit extrapolation only; actual full-seed time is authoritative"
+      },
+      "equivalence": {
+        "reference_n_jobs": null,
+        "tree_structure_exact": true,
+        "probability_exact": true,
+        "disagreement_exact": true
+      }
+    },
+    {
+      "n_jobs": 2,
+      "wall_seconds": 36.40212009998504,
+      "main_process_cpu_seconds": 74.078125,
+      "main_process_cpu_core_equivalents": 2.0349947969110307,
+      "sample_rows": 241371,
+      "sample_fraction": 0.02,
+      "sample_indices_sha256": "0a776153f2060312942f97a9216be33a46f472b9c258c741b0e4e909b8ce19d1",
+      "validation_source_test_rows": 4096,
+      "validation_offsets_sha256": "bd33c609b6df055aa1adcee496e86f367aebb4b21d06feaae5572977b7b106db",
+      "tree_structure_sha256": "357344001be66e2dacc75bae46e2cb9c81eaf3c979bb27479ea07628688477d8",
+      "probability_sha256": "e50e5dd363667f067b3ee54894b27c935450b64787c4bd3420fec96a7ae29016",
+      "disagreement_sha256": "780a83e9281a28080e592a6104fd06d31f0b91dfe9ee973eee61d887479ada87",
+      "finite_outputs": true,
+      "system_memory_before": {
+        "total_physical_bytes": 16849293312,
+        "available_physical_bytes": 4661710848,
+        "memory_load_pct": 72
+      },
+      "system_memory_after": {
+        "total_physical_bytes": 16849293312,
+        "available_physical_bytes": 4819390464,
+        "memory_load_pct": 71
+      },
+      "system_resource_samples": {
+        "process_tree_peak_working_set_bytes": 1148948480,
+        "process_tree_working_set_baseline_bytes": 1070055424,
+        "process_tree_peak_increment_bytes": 78893056,
+        "process_tree_peak_cpu_core_equivalents": 2.425905304370958,
+        "process_tree_mean_cpu_core_equivalents": 2.0356956023217956,
+        "process_tree_mean_cpu_utilization_pct_of_logical_capacity": 12.723097514511222,
+        "process_tree_peak_cpu_utilization_pct_of_logical_capacity": 15.161908152318487,
+        "minimum_system_available_physical_bytes": 4644941824,
+        "peak_system_memory_load_pct": 72,
+        "mean_system_cpu_utilization_pct": 17.465566078762283,
+        "peak_system_cpu_utilization_pct": 29.6875,
+        "logical_cpu_count": 16,
+        "monitor_samples": 312,
+        "observed_process_tree_pids": [
+          37748
+        ]
+      },
+      "full_source_train_fit_projection": {
+        "linear_seconds": 1820.1120375582755,
+        "nlogn_seconds": 2394.605682404794,
+        "projection_note": "sample-fit extrapolation only; actual full-seed time is authoritative"
+      },
+      "speedup_vs_n_jobs_1": 1.7378835443169587,
+      "equivalence": {
+        "reference_n_jobs": 1,
+        "tree_structure_exact": true,
+        "probability_exact": true,
+        "disagreement_exact": true,
+        "probability_max_abs_difference": 0.0,
+        "disagreement_max_abs_difference": 0.0
+      }
+    },
+    {
+      "n_jobs": 4,
+      "wall_seconds": 23.072689799999353,
+      "main_process_cpu_seconds": 92.75,
+      "main_process_cpu_core_equivalents": 4.019904085912107,
+      "sample_rows": 241371,
+      "sample_fraction": 0.02,
+      "sample_indices_sha256": "0a776153f2060312942f97a9216be33a46f472b9c258c741b0e4e909b8ce19d1",
+      "validation_source_test_rows": 4096,
+      "validation_offsets_sha256": "bd33c609b6df055aa1adcee496e86f367aebb4b21d06feaae5572977b7b106db",
+      "tree_structure_sha256": "357344001be66e2dacc75bae46e2cb9c81eaf3c979bb27479ea07628688477d8",
+      "probability_sha256": "e50e5dd363667f067b3ee54894b27c935450b64787c4bd3420fec96a7ae29016",
+      "disagreement_sha256": "780a83e9281a28080e592a6104fd06d31f0b91dfe9ee973eee61d887479ada87",
+      "finite_outputs": true,
+      "system_memory_before": {
+        "total_physical_bytes": 16849293312,
+        "available_physical_bytes": 4819382272,
+        "memory_load_pct": 71
+      },
+      "system_memory_after": {
+        "total_physical_bytes": 16849293312,
+        "available_physical_bytes": 4836708352,
+        "memory_load_pct": 71
+      },
+      "system_resource_samples": {
+        "process_tree_peak_working_set_bytes": 1173368832,
+        "process_tree_working_set_baseline_bytes": 1068163072,
+        "process_tree_peak_increment_bytes": 105205760,
+        "process_tree_peak_cpu_core_equivalents": 4.858178021905587,
+        "process_tree_mean_cpu_core_equivalents": 4.025705056392129,
+        "process_tree_mean_cpu_utilization_pct_of_logical_capacity": 25.160656602450803,
+        "process_tree_peak_cpu_utilization_pct_of_logical_capacity": 30.36361263690992,
+        "minimum_system_available_physical_bytes": 4780609536,
+        "peak_system_memory_load_pct": 71,
+        "mean_system_cpu_utilization_pct": 31.86657903930518,
+        "peak_system_cpu_utilization_pct": 69.44444444444444,
+        "logical_cpu_count": 16,
+        "monitor_samples": 193,
+        "observed_process_tree_pids": [
+          37748
+        ]
+      },
+      "full_source_train_fit_projection": {
+        "linear_seconds": 1153.6383136059187,
+        "nlogn_seconds": 1517.7685791840538,
+        "projection_note": "sample-fit extrapolation only; actual full-seed time is authoritative"
+      },
+      "speedup_vs_n_jobs_1": 2.741884281737077,
+      "equivalence": {
+        "reference_n_jobs": 1,
+        "tree_structure_exact": true,
+        "probability_exact": true,
+        "disagreement_exact": true,
+        "probability_max_abs_difference": 0.0,
+        "disagreement_max_abs_difference": 0.0
+      }
+    }
+  ],
+  "benchmark_script_sha256": "03c8a8617c7a74d2a8f21cea04be675e8669fe2afdda58caa559f9ddec667520"
+}
