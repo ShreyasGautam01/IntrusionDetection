@@ -52,9 +52,22 @@
       },
       "rows": 2365424,
       "target_labels_read": false
+    },
+    {
+      "seed": 1,
+      "metrics_sha256": "b68591e970ef7144958d8ebdc00d0b2c839f58371875a9ae031df24a708dcebf",
+      "score_sha256": {
+        "calibrated_probability.npy": "d2d5551c9028017b0724ea70b977243c50c1909172f0e301dde1a58ce278252d",
+        "confidence.npy": "99625aeee753e209e4cad29ce0b746acd7de258c440b8fbfe5625c61a5770d16",
+        "random_forest_disagreement.npy": "c0ec27105291a5b748c4a5635489888adc39f5341a01217118dea80990ee8fcc",
+        "split_conformal.npy": "f92b25f0a335f70930ac24dc58632024ec30f33ca879b83c738164cdfdd53ff5",
+        "isolation_forest.npy": "493c8c21d93e5706791c5979ed4a056a7c035d37518b39aff16598ab810b7eb0"
+      },
+      "rows": 2365424,
+      "target_labels_read": false
     }
   ],
   "target_labels_read": false,
-  "last_completed_seed": 0,
-  "completed_utc": "2026-11-16T09:58:48.758921+00:00"
+  "last_completed_seed": 1,
+  "completed_utc": "2026-11-16T14:44:55.678892+00:00"
 }
