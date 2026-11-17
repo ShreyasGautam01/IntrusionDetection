@@ -200,11 +200,34 @@
         "model_cache_metadata_sha256": "8971e8f6f574a10111cd62a2856c924a6e3fb475f0549e7f37a7bfe0ca31ad63",
         "execution_profile_sha256": "c0b837fbb393311601d94cd51e4263cf25ff22656a47b848b881c93117b8042e"
       }
+    },
+    {
+      "seed": 7,
+      "metrics_sha256": "c61fe3b26f8aab9a77d58e2af8bdd762d44775715db9e64d8192672bb51b4200",
+      "score_sha256": {
+        "calibrated_probability.npy": "297a567f68cfdb108de92b41098c1acc0a0c00b01b5597e29d7af6d9fa6050bd",
+        "confidence.npy": "c6222e4ec0d1ae00e3adc4c1876457a0d1e462cce3c1c16a85f32c0e23b5fad9",
+        "random_forest_disagreement.npy": "1a0389797b175760fc07d5323c0a561872eaa2d760f1629268316ae705e0f526",
+        "split_conformal.npy": "3f070c2762ee150204cfe8526036c00ee87afc0621e103b41b6badfd550eb012",
+        "isolation_forest.npy": "8052d03bca125133dab4c5097ef52c3a5efa57c632d881733fbf77ec75437b60"
+      },
+      "rows": 2365424,
+      "target_labels_read": false,
+      "RF_execution": {
+        "seed": 7,
+        "RF_fit_n_jobs": 10,
+        "RF_prediction_n_jobs": 1,
+        "BLAS_threads": 1,
+        "OpenMP_threads": 1,
+        "source_test_exact": true,
+        "model_cache_metadata_sha256": "3ac989ed0f66ffcafcbee7c5a673977972bc38f719dce477a10e67657ba9603c",
+        "execution_profile_sha256": "c0b837fbb393311601d94cd51e4263cf25ff22656a47b848b881c93117b8042e"
+      }
     }
   ],
   "target_labels_read": false,
-  "last_completed_seed": 6,
-  "completed_utc": "2026-11-17T10:57:06.193586+00:00",
+  "last_completed_seed": 7,
+  "completed_utc": "2026-11-17T11:33:29.950173+00:00",
   "RF_execution_amendment": {
     "benchmark_report_sha256": "a69106ac4c4a4d6bd584afbc62bcc6239afb6734b5c6bb63c17b0e29ac399fb1",
     "execution_profile_sha256": "c0b837fbb393311601d94cd51e4263cf25ff22656a47b848b881c93117b8042e",
