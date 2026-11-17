@@ -1,7 +1,7 @@
 {
-  "profile_id": "cic-to-unsw-rf-fit-parallelism-v1",
+  "profile_id": "cic-to-unsw-rf-fit-parallelism-v2",
   "direction": "cic-to-unsw",
-  "selected_rf_fit_n_jobs": 4,
+  "selected_rf_fit_n_jobs": 10,
   "RF_prediction_n_jobs": 1,
   "frozen_config_n_jobs": 1,
   "BLAS_threads": 1,
@@ -11,18 +11,16 @@
     "minimum_system_available_physical_bytes": 2000000000,
     "minimum_parallel_speedup_vs_n_jobs_1": 1.2
   },
-  "selected_benchmark_wall_seconds": 23.072689799999353,
-  "selected_speedup_vs_n_jobs_1": 2.741884281737077,
+  "selected_benchmark_wall_seconds": 17.639885999960825,
+  "selected_speedup_vs_n_jobs_1": 3.5863409491509244,
   "selected_tree_structure_sha256": "357344001be66e2dacc75bae46e2cb9c81eaf3c979bb27479ea07628688477d8",
   "selected_equivalence": {
     "reference_n_jobs": 1,
     "tree_structure_exact": true,
     "probability_exact": true,
-    "disagreement_exact": true,
-    "probability_max_abs_difference": 0.0,
-    "disagreement_max_abs_difference": 0.0
+    "disagreement_exact": true
   },
-  "selected_minimum_available_physical_bytes": 4780609536,
+  "selected_minimum_available_physical_bytes": 2867023872,
   "source_dataset_sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
   "source_stage_manifest_sha256": "a0c3e3f618f35c5bbed7ad1fb3b252f06f215b2146a79aa511b9574f4f414665",
   "source_train_sha256": "8fe6577352db2efcebaa6f2f8f254b8b98a8183359764ed399f8b3447c747e26",
@@ -74,11 +72,12 @@
     "DST_TO_SRC_IAT_AVG",
     "DST_TO_SRC_IAT_STDDEV"
   ],
-  "benchmark_report_path": "reports/nf_v3_audit/cic_rf_n_jobs_benchmark.json",
-  "benchmark_report_sha256": "5ab5d92cb7fd9229da9bd2058286aba4885cd2bf5e1d1036bdd6df88c61f0b16",
-  "benchmark_commit": "ac18dbc25dfb528fbcba8ec7ba4dc2d7925b8d92",
+  "benchmark_report_path": "reports/nf_v3_audit/cic_rf_n_jobs_production_execution_evidence_v2.json",
+  "benchmark_report_sha256": "a69106ac4c4a4d6bd584afbc62bcc6239afb6734b5c6bb63c17b0e29ac399fb1",
+  "benchmark_commit": "benchmark reports from bounded CIC RF execution-equivalence runs",
   "target_labels_read": false,
   "full_seed_source_e1_verification_required": true,
   "failure_policy": "If any full-seed refit fails exact source-E1 verification, stop the parallel runner and resume remaining seeds with frozen n_jobs=1.",
-  "sha256": "35497fe471084cf05c478a106334a475b3bfcd2451c79d5a46bd946f38757af5"
+  "execution_decision": "Use RF fit n_jobs=10 for CIC-to-UNSW transfer; this is an execution-only override. Frozen scientific RF config remains n_jobs=1.",
+  "sha256": "c0b837fbb393311601d94cd51e4263cf25ff22656a47b848b881c93117b8042e"
 }
