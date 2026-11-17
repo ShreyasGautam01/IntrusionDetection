@@ -1,0 +1,66 @@
+{
+  "spec_id": "bidirectional-transfer-offline-evaluation-spec-v1",
+  "authorization": "Offline evaluation of completed target score arrays may read target Label and Attack only after both committed transfer manifests validate. No labels enter fitting, preprocessing, calibration, normalization, score transformation, or transfer scoring.",
+  "primary_detector": "fixed Random Forest",
+  "primary_endpoint": "attack-miss AUPRC",
+  "primary_operational_endpoint": "attack-miss capture at exactly floor(0.05*N) review rows",
+  "secondary_endpoints": [
+    "attack-miss capture at 1% and 10%",
+    "generic-error AUPRC and AUROC",
+    "family-level attack-miss AUPRC where a family is locally identifiable",
+    "direction/seed variability",
+    "selective residual error and miss rates",
+    "target Brier/calibration diagnostics",
+    "conformal coverage only where set membership can be reconstructed from frozen outputs"
+  ],
+  "labels": {
+    "attack": "binary target Label=1",
+    "prediction": "calibrated_probability >= 0.5",
+    "generic_error": "prediction differs from binary Label",
+    "attack_miss": "Label=1 and prediction=0"
+  },
+  "scores": {
+    "confidence": "larger means more review-worthy; use saved float32 as-is",
+    "random_forest_disagreement": "larger means more review-worthy; use saved float32 as-is",
+    "feature_space_distance": "larger means more review-worthy; use saved float32 as-is",
+    "split_conformal": "larger means more review-worthy; use saved float32 as-is",
+    "isolation_forest": "larger means more review-worthy; use saved float32 as-is"
+  },
+  "ranking": {
+    "budgets": [
+      0.01,
+      0.05,
+      0.1
+    ],
+    "selected_count": "floor(budget*N)",
+    "ties": "stable ascending input row offset for capture; AP groups equal scores and is tie-invariant",
+    "nonfinite": "fail analysis; no imputation or dropping"
+  },
+  "estimands": {
+    "primary_unit": "matched seed within direction; do not pool rows across seeds as independent",
+    "summary": [
+      "per seed",
+      "mean",
+      "median",
+      "sample SD",
+      "min",
+      "max",
+      "paired seed-level differences",
+      "bootstrap percentile interval over 10 matched seeds"
+    ],
+    "inference_caution": "10 seeds support descriptive paired uncertainty; avoid overstating p-values"
+  },
+  "families": {
+    "source": "committed transfer_family_registry.csv and transfer_family_pair_matrix.csv only",
+    "unseen_claim": "only supported cross-domain family IDs can support seen/unseen classification; registry withholds unsupported mappings, so do not infer unseen from raw string differences"
+  },
+  "conformal": {
+    "saved_signal": "(prediction_set_size-1); larger means more deserving of review",
+    "coverage": "must reconstruct frozen prediction set using source quantile and target calibrated probability; do not recalibrate"
+  },
+  "integrity": {
+    "score_hashes": "must match checkpoint before evaluation",
+    "manifests": "validate both locks before target labels are yielded"
+  },
+  "computation_separation": "This specification precedes label evaluation; existing transfer outputs remain immutable."
+}
