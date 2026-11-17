@@ -1,0 +1,9 @@
+{
+  "generated_utc": "2026-11-17T15:09:45.746079+00:00",
+  "validated_manifest_sha256": {
+    "cic-to-unsw": "1677641a6bc31ab177ae7218350781749775c18c803f8ea74a6595302a4adade",
+    "unsw-to-cic": "73c4fe3b2a667e68df7a491a3a8baa7a0d5aa70a08518b996796c56f1a38fd6f"
+  },
+  "head_commit": "b3f95837965fe00fff9d026ac6fb1b26f7f3ffed",
+  "target_labels_used_only_for_offline_evaluation": true
+}

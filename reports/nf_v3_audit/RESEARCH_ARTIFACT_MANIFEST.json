@@ -1,0 +1,351 @@
+{
+  "manifest_id": "nf-v3-bidirectional-transfer-analysis-artifact-manifest-v1",
+  "created_utc": "2026-11-17T17:32:19Z",
+  "branch": "codex/e0-e05",
+  "analysis_base_commit": "55dfa64aafcce4f1b44e65a813f1435cc95b3018",
+  "scope": {
+    "directions": [
+      "unsw-to-cic",
+      "cic-to-unsw"
+    ],
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "predictor_count": 46,
+    "signals": [
+      "confidence",
+      "random_forest_disagreement",
+      "feature_space_distance",
+      "split_conformal",
+      "isolation_forest"
+    ],
+    "analysis_audit": "reports/nf_v3_audit/FINAL_ANALYSIS_AUDIT.json",
+    "analysis_audit_pass": true
+  },
+  "tracked_artifacts": [
+    {
+      "path": "research_proposal.md",
+      "artifact_class": "frozen-methodology",
+      "size_bytes": 29954,
+      "sha256": "af3eadcf7b83ea09504b9d61020d6ca1871c906a527b5e1f9b4ff39689ebb7ff",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "methodology_final.md",
+      "artifact_class": "frozen-methodology",
+      "size_bytes": 27786,
+      "sha256": "11cdf5040706c08ac6cc41f6521788aadc1c8ad586a24882bc19b6ec332080f2",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "PROJECT_HANDOFF.md",
+      "artifact_class": "handoff",
+      "size_bytes": 9282,
+      "sha256": "65b8587c0209fdc98df2b87168707160db67744a1e67213bf6cdadd5f21bac60",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "REPRODUCTION.md",
+      "artifact_class": "environment",
+      "size_bytes": 1337,
+      "sha256": "c43708ee3c79b7541acadf696de06ca6f9abaeafc969cbe0d9e0b332c0f6e8e9",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "pyproject.toml",
+      "artifact_class": "environment",
+      "size_bytes": 337,
+      "sha256": "e66de14810689c7368f88717ac236a7d5034e70302e9bec8d0c22d3a6f62b798",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "uv.lock",
+      "artifact_class": "environment",
+      "size_bytes": 28782,
+      "sha256": "f10b20ff90d460d27a1a2d03545fff209e441630caf8b73b3989f1f68f15e1a1",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "scripts/run_complete_transfer_analysis.py",
+      "artifact_class": "analysis-source",
+      "size_bytes": 49808,
+      "sha256": "3305b7a63331128e2238e9e22d9a185527d1b873350e57f9adfb67bc01d55363",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/README.md",
+      "artifact_class": "analysis-report",
+      "size_bytes": 4198,
+      "sha256": "b5313ac39e0de35c01c7191fd1758e96a8e962eab924190700d19a550c6395a4",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_completion_summary.json",
+      "artifact_class": "analysis-output",
+      "size_bytes": 1591,
+      "sha256": "45ced7c1fc5e74f6114edac7294654e49358418adacd40b55288f08220c7804c",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_artifact_inventory.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 10980,
+      "sha256": "7d5e431ab8801f562fe66efc49463104a06d27aa0802fe20572bf83ec2111943",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_lock_validation.json",
+      "artifact_class": "analysis-output",
+      "size_bytes": 397,
+      "sha256": "14dc0976a30592d8c13fba77df92e23d7de42ac59d69ce9e3b3693a9fda4d71c",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_per_seed_all_metrics.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 21013,
+      "sha256": "e63034b82980cb854c1ab8a47ccd49615eafad742fc8b4935eedd1ce70b48533",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_aggregate.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 7633,
+      "sha256": "9c67e3fe9ff827bd48ec425aae11ce624e4b5f91885398c2562e5e0340aeaf05",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_paired_statistics.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 6723,
+      "sha256": "614722d01dad8c88fb989942b603e7f51f7a8c95592bb5bc25c6669efd1b77be",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_direction_shift.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 1251,
+      "sha256": "adbd4d45bfd51516a268d9d4003dd60f326011d31378767a8717d01a44560b5d",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_family_results.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 7374,
+      "sha256": "de43177c450e92e8b249232919da40298dd63fce33d16678f4dc85551c6b005e",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_family_scope.md",
+      "artifact_class": "analysis-output",
+      "size_bytes": 406,
+      "sha256": "ce30725e15d4cdc79f6d2c832dc28bf324f10d18b610d9747e76f18062fe8a0a",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_generic_error.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 13792,
+      "sha256": "adc4bda919ac8f27b34ff23e7e0232840c08e0a056def8f5b4cd0a50ea99ce65",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_selective_results.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 37989,
+      "sha256": "8f5434bc2ce7ff399559ab919c1464df4cc30fe4e3c352dd9ee192c42629c9f7",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_calibration_conformal.csv",
+      "artifact_class": "analysis-output",
+      "size_bytes": 2132,
+      "sha256": "8bce8de150dee8a172aa67d79fcd61101dab5271c5a947ad8200aa448b33732c",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_computational_cost.md",
+      "artifact_class": "analysis-output",
+      "size_bytes": 1052,
+      "sha256": "76d42bc9072b01a52c68b14a984fd3cf4ffe3e1744fa6f59254e9b90a7cf68fd",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_figures/attack_miss_auprc_unsw-to-cic.png",
+      "artifact_class": "figure",
+      "size_bytes": 58790,
+      "sha256": "7ef94f2d6213f4f164bd273f15c486bb4160bd3c43085d5f8066b498b198a2a7",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_figures/attack_miss_capture_5pct_unsw-to-cic.png",
+      "artifact_class": "figure",
+      "size_bytes": 62376,
+      "sha256": "bf26626a5a99cc7700b77ce3aa93774ccf047af215274e77399e56eed6bcd987",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_figures/attack_miss_auprc_cic-to-unsw.png",
+      "artifact_class": "figure",
+      "size_bytes": 63640,
+      "sha256": "034353ee558f99e4a7bc496929a78736a23af46554f06b6becd42705b9ee51c8",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_figures/attack_miss_capture_5pct_cic-to-unsw.png",
+      "artifact_class": "figure",
+      "size_bytes": 61944,
+      "sha256": "0ac68d0d11715f9c3bebb4cc1a8cbd2838294ac661485227ee5dfa11b1a3f2c8",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/analysis_figures/direction_signal_attack_miss_auprc.png",
+      "artifact_class": "figure",
+      "size_bytes": 92646,
+      "sha256": "28d2be15af60f7a001edb3df4c8ae8a4dd676da5c9ec80272b2ef64d2a3af787",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/FINAL_TRANSFER_ANALYSIS_REPORT.md",
+      "artifact_class": "analysis-report",
+      "size_bytes": 3779,
+      "sha256": "1eb1207aa329346e214fd6cf507e33d17a30b594259aeacd19ab2b1713595aa6",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/FINAL_ANALYSIS_AUDIT.json",
+      "artifact_class": "analysis-report",
+      "size_bytes": 366,
+      "sha256": "9b7b40a5ad4a1732a5e734b62bbd245c5a27accb7f571747efbd4e485347710f",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/NEXT_EXPERIMENT_RECOMMENDATION.md",
+      "artifact_class": "analysis-report",
+      "size_bytes": 1287,
+      "sha256": "28abc78d67862ba6ae5dc08256a69d1b6fd0960050eff9a49acde00acdb22632",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/target_transfer_manifest_unsw_to_cic.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 11213,
+      "sha256": "73c4fe3b2a667e68df7a491a3a8baa7a0d5aa70a08518b996796c56f1a38fd6f",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/target_transfer_manifest_cic_to_unsw.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 11212,
+      "sha256": "1677641a6bc31ab177ae7218350781749775c18c803f8ea74a6595302a4adade",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/target_transfer_evaluation_unsw_to_cic.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 75392,
+      "sha256": "1ccef2b1d50b8167e47b384428817805ab771ef7a7feb67f03f51bfe19962c6e",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/target_transfer_evaluation_cic_to_unsw.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 75181,
+      "sha256": "d518b585b50315a20f066302e4bb4835201af0c6692f72d9a4389098b911a8e3",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/target_transfer_progress_unsw_to_cic.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 9171,
+      "sha256": "1ebbb53e4e469de86309ac1db7c107e7767482d1b00a818552e2f4ea024e2fba",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/target_transfer_progress_cic_to_unsw.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 13917,
+      "sha256": "54fee78ac322f7850adea8c27301937ec1782b2b0716c271dd18a2c2398b51af",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/transfer_feature_registry.csv",
+      "artifact_class": "frozen-registry",
+      "size_bytes": 17374,
+      "sha256": "6eabb354c37149b3f37580b27d71b1b5be24b2fa4efb81cd5647b15c309999d7",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/transfer_family_registry.csv",
+      "artifact_class": "frozen-registry",
+      "size_bytes": 5945,
+      "sha256": "1a518dc4b369a476d97a5e0e3350ee59373e23b2e4976863568967c4580c4c6b",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/source_e1_final_results.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 68185,
+      "sha256": "438446f3226d52beac67516da789ececf5a348e5a2fc3c89afa5d93b14a91717",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/source_e1_cic_final_results.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 70050,
+      "sha256": "80e45213768c93c3bbd65f8f019ad5063c94b7df951ce874f53ec07df60f6725",
+      "git_intent": "tracked-in-analysis-archive"
+    },
+    {
+      "path": "reports/nf_v3_audit/cic_rf_n_jobs_execution_profile.json",
+      "artifact_class": "experiment-provenance",
+      "size_bytes": 3197,
+      "sha256": "4ef79b2d0c432e4fe6c09c5a5269572c31a2f07ce9970e18b42395b92966b8dc",
+      "git_intent": "tracked-in-analysis-archive"
+    }
+  ],
+  "excluded_local_artifacts": [
+    {
+      "repository_path": "data/raw/",
+      "class": "raw source datasets",
+      "reason": "Large original datasets; read-only inputs and excluded by repository policy",
+      "provenance_paths": [
+        "reports/nf_v3_audit/audit.json",
+        "dataset_source_manifest.md"
+      ]
+    },
+    {
+      "repository_path": "data/processed/source-e1-lock-1/ and data/processed/source-e1-cic-lock-1/",
+      "class": "source E1 arrays and model/result caches",
+      "reason": "Large generated numerical artifacts; excluded by repository policy",
+      "provenance_paths": [
+        "reports/nf_v3_audit/source_e1_manifest.json",
+        "reports/nf_v3_audit/source_e1_cic_experiment_manifest.json",
+        "reports/nf_v3_audit/source_e1_final_results.json",
+        "reports/nf_v3_audit/source_e1_cic_final_results.json"
+      ]
+    },
+    {
+      "repository_path": "data/processed/target-transfer-v1/",
+      "class": "target feature arrays, per-row scores, exact-distance arrays, and model caches",
+      "reason": "Large generated numerical artifacts; excluded by repository policy",
+      "provenance_paths": [
+        "reports/nf_v3_audit/analysis_artifact_inventory.csv",
+        "reports/nf_v3_audit/target_transfer_progress_unsw_to_cic.json",
+        "reports/nf_v3_audit/target_transfer_progress_cic_to_unsw.json",
+        "reports/nf_v3_audit/target_transfer_manifest_unsw_to_cic.json",
+        "reports/nf_v3_audit/target_transfer_manifest_cic_to_unsw.json"
+      ]
+    }
+  ],
+  "integrity_note": "Each tracked artifact has its own SHA-256. This manifest does not include its own hash; its identity is committed in the Git tree."
+}

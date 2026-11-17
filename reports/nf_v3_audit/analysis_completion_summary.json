@@ -1,0 +1,63 @@
+{
+  "record_id": "nf-v3-bidirectional-transfer-analysis-v1",
+  "recorded_utc": "2026-11-17T17:32:19Z",
+  "branch": "codex/e0-e05",
+  "analysis_checkpoint_commit": "55dfa64aafcce4f1b44e65a813f1435cc95b3018",
+  "directions": [
+    "unsw-to-cic",
+    "cic-to-unsw"
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "signals": [
+    "confidence",
+    "random_forest_disagreement",
+    "feature_space_distance",
+    "split_conformal",
+    "isolation_forest"
+  ],
+  "representation_predictor_count": 46,
+  "completed_analysis_phases": [
+    "inventory",
+    "primary_metrics",
+    "paired_statistics",
+    "direction_shift",
+    "family_analysis",
+    "generic_error",
+    "selective_risk",
+    "calibration_conformal",
+    "compute_cost",
+    "plots",
+    "integrated_report",
+    "integrity_audit",
+    "experiment_decision"
+  ],
+  "final_integrity_audit": {
+    "pass": true,
+    "issues": []
+  },
+  "target_labels_used_for_offline_evaluation_only": true,
+  "target_labels_used_for_fitting": false,
+  "target_labels_used_for_tuning": false,
+  "target_labels_used_for_recalibration": false,
+  "target_labels_used_for_score_construction": false,
+  "transfer_scoring_rerun_during_analysis": false,
+  "rf_fit_rerun_during_analysis": false,
+  "distance_computation_rerun_during_analysis": false,
+  "family_crosswalk_supported": [
+    "DoS"
+  ],
+  "universal_signal_winner_claimed": false,
+  "additional_experiment_recommended_now": false,
+  "large_data_and_per_row_arrays_committed": false
+}

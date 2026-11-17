@@ -1,3 +1,18 @@
+# Latest checkpoint — 2026-11-17
+
+**Authoritative continuation branch:** `codex/e0-e05`
+**Completed analysis base:** `55dfa64aafcce4f1b44e65a813f1435cc95b3018`
+**Study state:** bidirectional transfer scoring and post-transfer analysis are complete.
+
+UNSW→CIC and CIC→UNSW each have verified target evaluations for seeds 0–9 over the frozen 46-predictor representation and five reliability signals. The post-transfer analysis covers all 13 phases recorded in `reports/nf_v3_audit/analysis_master_progress.json`; `FINAL_ANALYSIS_AUDIT.json` passes with no issues. Target labels were used only for offline evaluation and not for fitting, tuning, recalibration, or score construction. No RF fitting, transfer scoring, or distance calculation was rerun to prepare this checkpoint.
+
+Read `reports/nf_v3_audit/README.md` for the analysis index, findings, and artifact exclusions; `reports/nf_v3_audit/RESEARCH_ARTIFACT_MANIFEST.json` binds the compact record to its files and hashes; `REPRODUCTION.md` documents the locked environment and local-data requirements.
+
+The principal conclusion is direction-dependent signal performance, with no universal winner. The supported family crosswalk is limited to DoS; the analysis makes no unsupported unseen-family claim. No additional experiment is recommended automatically. The deferred 8-feature sensitivity should be considered only if representation sensitivity becomes a specific unresolved question. Keep target recalibration, added datasets/detectors, and scope expansion out of the frozen study.
+
+The remainder of this document is the historical 2026-11-09 handoff snapshot. Its “Current state” and “Next work” sections describe the project at that date and are superseded by this latest checkpoint; retain them for provenance rather than treating them as active instructions.
+
+---
 # Intrusion Detection Research — Project Handoff
 
 **Handoff time:** 2026-11-09
@@ -49,8 +64,4 @@ The exact distance and RF concurrency envelope is in `CIC_SOURCE_E1_BENCHMARK_DE
 ## Next-account checkpoint
 
 The CIC exact-distance manifest v1 was superseded after resume preflight exposed a checkpoint-record bookkeeping bug (six records for three completed chunks); the distance definition and three completed score-state chunks were unaffected. Code fix commit `dae4f20` writes one record per chunk, validates manifest-bound code/benchmark/software hashes, and adds a checkpoint migration that checks duplicated records and the active state arrays before rebinding to a successor manifest. Manifest v2 was committed at `584d8a5`, explicitly supersedes manifest v1, and keeps the same exact 5-NN definition and resource decision. The migration verified and deduplicated the three completed chunk records, then the exact job resumed from chunk 4. Four of 25 chunks are now complete; query times are 992.2, 575.5, 770.4, and 939.5 seconds, averaging 819.4 seconds per chunk and projecting roughly 5.7 hours total (about 4.8 hours remaining). Peak process working set is 3.24 GB; available memory after chunk 4 was about 3.12 GB. The shared exact distance remains incomplete, and the run is active/resumable under ignored `data/processed/source-e1-cic-lock-1/full_runs/common`. CIC RF seeds have not started. Do not begin target transfer.
-
-
-
-
 

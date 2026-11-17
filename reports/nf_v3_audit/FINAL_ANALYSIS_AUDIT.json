@@ -1,0 +1,11 @@
+{
+  "generated_utc": "2026-11-17T16:48:28.754881+00:00",
+  "issues": [],
+  "pass": true,
+  "transfer_rerun": false,
+  "target_labels_used_for_fitting": false,
+  "target_labels_used_for_tuning": false,
+  "target_labels_used_for_recalibration": false,
+  "target_labels_used_for_score_construction": false,
+  "all_primary_transfer_artifacts_checked": true
+}
