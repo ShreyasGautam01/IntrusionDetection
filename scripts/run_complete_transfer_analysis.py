@@ -522,7 +522,7 @@ def phase_family_analysis() -> list[Path]:
             if int(misses.sum()) == 0:
                 detector_family_auprc = None
             else:
-                detector_family_auprc = float(average_precision_score(actual, probability))
+                detector_family_auprc = float(average_precision_score(actual, probability[family_mask]))
             for signal in SIGNALS:
                 score = np.load(score_path(direction, seed, signal), mmap_mode="r")
                 family_score = score[family_mask]
