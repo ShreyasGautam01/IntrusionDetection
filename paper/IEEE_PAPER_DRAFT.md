@@ -464,3 +464,30 @@ The reverse CIC→UNSW direction exhibits a different structure. Generic-error A
 More importantly, four of the five signals have mean attack-miss AUROC below 0.5 in CIC→UNSW: confidence 0.228, RF disagreement 0.248, feature-space distance 0.345, and Isolation Forest 0.284. The inversion flag is true for all ten seeds for each of these signals. Split conformal is the exception: its mean attack-miss AUROC is 0.545 and it remains above 0.5 for all ten seeds. This provides evidence of a pronounced directional change in score semantics: signals that retain positive ranking behavior in the reverse direction can become systematically anti-informative when applied with the same high-score review orientation.
 
 The results therefore reject the assumption that generic prediction-error ranking is a sufficient validation target for security-focused reliability. A reliability mechanism can identify ordinary detector errors effectively while failing to identify the subset of errors that correspond to missed attacks. Conversely, a signal with weak generic-error behavior can exhibit comparatively useful attack-miss prioritization under a particular transfer direction and review budget.
+
+
+### D. Directional Transportability of Reliability Performance
+
+The bidirectional experiment reveals substantial asymmetry in reliability performance. Table VII reports the absolute change in mean attack-miss AUPRC and 5% attack-miss capture when the source and target domains are reversed.
+
+**TABLE VII — DIRECTIONAL CHANGE IN RELIABILITY PERFORMANCE**
+
+| Signal | Attack-miss AUPRC gap | 5% capture gap |
+|---|---:|---:|
+| Confidence | 0.159 | 0.074 |
+| RF disagreement | **0.203** | **0.115** |
+| Feature-space distance | 0.066 | 0.038 |
+| Split conformal | **0.017** | 0.026 |
+| Isolation Forest | 0.041 | 0.003 |
+
+RF disagreement exhibits the largest directional change in both primary metrics. Its mean attack-miss AUPRC decreases from 0.238 in UNSW→CIC to 0.035 in CIC→UNSW, an absolute difference of 0.203. Its 5% capture similarly decreases by 0.115, from 12.33% to 0.88%.
+
+Confidence shows a comparable pattern, with a 0.159 AUPRC gap and a 0.074 capture gap. Feature-space distance changes less in AUPRC than these two model-dependent signals, although its operational capture changes in the opposite practical direction: mean 5% capture increases from 0.58% in UNSW→CIC to 4.34% in CIC→UNSW.
+
+Split conformal has the smallest directional AUPRC gap, 0.017, and a comparatively small 5% capture gap of 0.026. This relative stability in threshold-free attack-miss ranking is notable because the absolute ranking of the methods still changes between directions. Split conformal is not the strongest AUPRC signal in UNSW→CIC, but it remains close to its reverse-direction performance and provides the highest mean 5% capture in both directions.
+
+Isolation Forest exhibits a smaller AUPRC gap of 0.041 and only a 0.003 capture gap, but its absolute performance remains low in both directions. Thus, small directional change does not necessarily imply useful transportability; a signal can be consistently weak without being robustly useful.
+
+The directional analysis therefore separates two properties that can otherwise be conflated: **absolute reliability utility** and **transport stability**. A signal may perform strongly but change substantially when the deployment direction is reversed, or it may remain stable while providing little security value. The completed experiment provides evidence for both patterns.
+
+The results also show why a one-way transfer experiment would be insufficient for the research question. A ranking derived solely from UNSW→CIC would identify RF disagreement as the strongest attack-miss AUPRC signal, whereas the reverse experiment identifies split conformal as the strongest. Bidirectional evaluation is therefore necessary to characterize whether a reliability conclusion is transportable rather than merely favorable in one chosen direction.
