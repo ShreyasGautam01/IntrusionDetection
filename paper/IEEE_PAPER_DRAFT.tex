@@ -169,48 +169,74 @@ The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. Th
   arrow/.style={->, thick},
   freeze/.style={draw, rounded corners=3pt, fill=black!15, minimum width=6.2cm, minimum height=0.92cm, inner sep=5pt},
   hidden/.style={draw, dashed, very thick, rounded corners=3pt, minimum width=5.35cm, minimum height=0.78cm, inner sep=4pt},
-  eval/.style={draw, rounded corners=2pt, minimum width=2.75cm, minimum height=0.72cm, inner sep=4pt}
+  eval/.style={draw, rounded corners=2pt, minimum width=3.0cm, minimum height=0.72cm, inner sep=4pt}
 ]
 
-\node[box, minimum width=5.9cm, font=\bfseries\normalsize] (src) {Source domain\\\footnotesize labels available};
-\node[box, below=of src, minimum width=5.9cm] (split) {Deterministic SHA-256 partition};
-\node[smallbox, below left=0.38cm and 0.35cm of split] (train) {Source train};
-\node[smallbox, below=0.38cm of split] (cal) {Source calibration\\\scriptsize probability + conformal subsets};
-\node[smallbox, below right=0.38cm and 0.35cm of split] (stest) {Source test\\\scriptsize held out};
+% ---------------- SOURCE ----------------
+\node[box, minimum width=6.0cm, font=\bfseries\normalsize] (src)
+  {Source domain\\\footnotesize labels available};
+
+\node[box, below=of src, minimum width=6.0cm] (split)
+  {Deterministic SHA-256 partition};
+
+\node[smallbox, below left=0.42cm and 0.95cm of split] (train)
+  {Source train};
+
+\node[smallbox, below=0.42cm of split] (cal)
+  {Source calibration\\\scriptsize probability + conformal subsets};
+
+\node[smallbox, below right=0.42cm and 0.95cm of split] (stest)
+  {Source test\\\scriptsize held out};
+
+\node[group, fit=(src)(split)(train)(cal)(stest)] (sourcegroup) {};
 
 \draw[arrow] (src) -- (split);
 \draw[arrow] (split.south) -- (train.north);
 \draw[arrow] (split.south) -- (cal.north);
 \draw[arrow] (split.south) -- (stest.north);
 
-\node[box, below=0.62cm of cal, minimum width=5.9cm, minimum height=2.35cm, align=left, text width=5.35cm] (fit)
-{\textbf{Construct source-side components}\\
-Random Forest detector\\
-source probability calibrator\\
-source conformal quantile\\
-source finite-value policy and scaler\\
-5-NN distance reference\\
-Isolation Forest};
+% Source-train + calibration feed only the source-side construction block.
+\node[box, below=0.72cm of cal, minimum width=6.0cm, minimum height=2.35cm,
+      align=left, text width=5.45cm] (fit)
+  {\textbf{Construct source-side components}\\
+  Random Forest detector\\
+  source probability calibrator\\
+  source conformal quantile\\
+  source finite-value policy and scaler\\
+  5-NN distance reference\\
+  Isolation Forest};
 
-\draw[arrow] (train.south) |- (fit.north);
+\draw[arrow] (train.south) |- ([xshift=-1.7cm]fit.north);
 \draw[arrow] (cal.south) -- (fit.north);
 
 \node[freeze, below=0.62cm of fit, font=\bfseries] (freeze)
-{FREEZE\\[-1mm]\scriptsize model, calibration, preprocessing, references, score orientation};
+  {FREEZE\\[-1mm]\scriptsize model, calibration, preprocessing, references, score orientation};
 
 \draw[arrow] (fit) -- (freeze);
 
-\node[box, right=3.25cm of src, minimum width=5.9cm, font=\bfseries\normalsize] (tgt) {Target domain\\\footnotesize labels withheld};
-\node[box, below=of tgt, minimum width=5.9cm, minimum height=1.0cm] (score)
-{Apply frozen preprocessing\\and generate detector + reliability scores};
-\node[box, below=0.5cm of score, minimum width=5.9cm, minimum height=1.0cm] (outputs)
-{Frozen target outputs\\\scriptsize prediction + confidence + disagreement + distance + conformal + Isolation Forest};
+% ---------------- TARGET ----------------
+\node[box, right=3.35cm of src, minimum width=6.0cm,
+      font=\bfseries\normalsize] (tgt)
+  {Target domain\\\footnotesize labels withheld};
+
+\node[box, below=of tgt, minimum width=6.0cm, minimum height=1.0cm] (score)
+  {Apply frozen preprocessing\\and generate detector + reliability scores};
+
+\node[box, below=0.5cm of score, minimum width=6.0cm, minimum height=1.0cm] (outputs)
+  {Frozen target outputs\\
+  \scriptsize prediction + confidence + disagreement + distance + conformal + Isolation Forest};
+
 \node[hidden, below=0.58cm of outputs] (hiddenlabels)
-{\textbf{TARGET LABELS HIDDEN}\\[-1mm]\scriptsize until all target scores are complete};
-\node[box, below=0.58cm of hiddenlabels, minimum width=5.9cm] (complete)
-{Target scores complete};
-\node[box, right=1.75cm of complete, minimum width=1.8cm, minimum height=0.82cm] (reveal)
-{Reveal\\target labels};
+  {\textbf{TARGET LABELS HIDDEN}\\[-1mm]\scriptsize until all target scores are complete};
+
+\node[box, below=0.58cm of hiddenlabels, minimum width=6.0cm] (complete)
+  {Target scores complete};
+
+\node[box, right=1.65cm of complete, minimum width=1.75cm,
+      minimum height=0.82cm] (reveal)
+  {Reveal\\target labels};
+
+\node[group, fit=(tgt)(score)(outputs)(hiddenlabels)(complete)] (targetgroup) {};
 
 \draw[arrow] (tgt) -- (score);
 \draw[arrow] (score) -- (outputs);
@@ -218,13 +244,22 @@ Isolation Forest};
 \draw[arrow] (hiddenlabels) -- (complete);
 \draw[arrow] (complete) -- (reveal);
 
-\draw[arrow] (freeze.east) -- ++(0.75cm,0) |- (score.west);
+% Explicit freeze-to-target connection routed below the source-test branch.
+\draw[arrow] (freeze.east) -- ++(0.8cm,0) |- (score.west);
 
-\node[group, right=1.1cm of reveal, minimum width=3.55cm, minimum height=3.0cm] (evalgroup) {};
-\node[above=0.05cm of evalgroup.north, font=\bfseries] {Offline evaluation};
-\node[eval, below=0.48cm of evalgroup.north] (auprc) {Attack-miss AUPRC};
-\node[eval, below=0.45cm of auprc] (capture) {Attack-miss capture\\\scriptsize 1\%, 5\%, 10\%};
-\node[eval, below=0.45cm of capture] (secondary) {Secondary diagnostics\\\scriptsize generic error, AUROC, family, calibration};
+% ---------------- EVALUATION ----------------
+\node[eval] (auprc) at ($(reveal.east)+(2.05cm,0.65cm)$)
+  {Attack-miss AUPRC};
+
+\node[eval, below=0.45cm of auprc] (capture)
+  {Attack-miss capture\\\scriptsize 1\%, 5\%, 10\%};
+
+\node[eval, below=0.45cm of capture] (secondary)
+  {Secondary diagnostics\\\scriptsize generic error, AUROC, family, calibration};
+
+\node[group, fit=(auprc)(capture)(secondary)] (evalgroup) {};
+\node[above=0.15cm of evalgroup.north, font=\bfseries] (evallabel)
+  {Offline evaluation};
 
 \draw[arrow] (reveal) -- (auprc.west);
 \draw[arrow] (reveal) |- (capture.west);
