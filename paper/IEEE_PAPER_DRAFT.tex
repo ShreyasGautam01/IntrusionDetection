@@ -6,7 +6,6 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{adjustbox}
-\usepackage{svg}
 \providecommand{\tightlist}{}
 \title{Transportability of Lightweight Reliability Signals for Network Intrusion Detection under Source-Only Cross-Domain Transfer}
 \author{
@@ -140,192 +139,186 @@ This positioning deliberately avoids claiming that reliability under distributio
 
 \subsection{Experimental Design}
 
-The study evaluates the transportability of post-hoc reliability signals attached to a fixed network intrusion detector. The experimental object is a source-trained Random Forest classifier together with a set of reliability mechanisms whose parameters, reference data, calibration, and score orientation are completely determined before target-domain evaluation. The detector is never retrained on target data, and none of the reliability mechanisms is recalibrated or tuned using target labels.
+The study evaluates the transportability of lightweight post-hoc reliability signals attached to a fixed network intrusion detector. The experimental object is a source-trained Random Forest classifier together with five reliability mechanisms whose parameters, calibration, reference data, preprocessing parameters, and score orientation are determined entirely from source-domain information before target-domain evaluation. Neither the detector nor the reliability layer is adapted or recalibrated using the target domain.
 
-Two datasets from the NetFlow-v3 family form the primary source-target pair: NF-UNSW-NB15-v3 and NF-CSE-CIC-IDS2018-v3 [4]. The complete experiment is performed in both directions, denoted UNSW->CIC and CIC->UNSW. For each direction, ten fixed random seeds, 0 through 9, define the repeated detector fits. Every reliability mechanism is evaluated on the same target rows produced by the corresponding frozen transfer manifest.
+Two NetFlow-v3 datasets form the source-target pair: NF-UNSW-NB15-v3 and NF-CSE-CIC-IDS2018-v3 [4]. The experiment is conducted in both transfer directions, denoted UNSW$\rightarrow$CIC and CIC$\rightarrow$UNSW. Each direction uses ten fixed detector seeds, 0 through 9. For every seed and direction, all reliability mechanisms are evaluated on the same frozen target population.
 
-The source-only protocol is organized into four logical stages:
+The source-only protocol consists of four logical stages. First, the source representation is fixed, source-side preprocessing is fitted, deterministic source partitions are constructed, and the Random Forest and source-dependent reliability components are fitted. Second, source probability calibration and split-conformal calibration are performed using disjoint source calibration subsets. Third, the resulting components are frozen and applied to the complete target feature matrix without reading target labels, producing one detector prediction and one scalar reliability score per target flow. Fourth, after target score generation is complete, target labels are exposed only to the offline evaluation procedures.
 
-\begin{enumerate}
-\item \textbf{Source preparation:} select the frozen predictive feature interface, perform source-fitted finite-value replacement, construct deterministic source partitions, and fit the detector and all source-derived reliability components.
-\item \textbf{Source calibration:} fit the source probability calibrator and the disjoint conformal calibration component using source data only.
-\item \textbf{Target scoring:} apply the frozen source pipeline to the target feature matrix without reading target labels and generate one reliability score per target flow.
-\item \textbf{Evaluation:} after target scoring is complete, expose the target labels only to the offline metric computation for attack-miss, generic-error, family-level, calibration, and review-budget analyses.
-\end{enumerate}
-
-The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. The critical information boundary is the freeze point between source-side construction and target scoring: all model, calibration, preprocessing, reference, and score-orientation quantities are fixed before target labels are introduced into the workflow.
-
-\begin{figure*}[t]
-\centering
-\includesvg[width=\textwidth,inkscapelatex=false]{figures/figure1_source_only_protocol}
-\caption{Source-only cross-domain evaluation protocol. Source partitions and all source-derived model, calibration, preprocessing, reference, and score-orientation quantities are constructed without target labels and frozen before target scoring. Target labels remain withheld until all target scores have been generated and are then used only for offline evaluation.}
-\label{fig:source-only-protocol}
-\end{figure*}
+This separation ensures that the quantities used to construct and rank target reliability scores cannot depend on target attack labels. The resulting experiment therefore measures the source-only transportability of the reliability mechanisms rather than the benefit of target-domain adaptation.
 
 \subsection{Datasets and Predictive Representation}
 
-NF-UNSW-NB15-v3 contains 2,365,424 flows in the audited release, while NF-CSE-CIC-IDS2018-v3 contains 20,115,529 flows. The two datasets share the NetFlow-v3 schema, which was designed to provide a common 53-feature interface across multiple network datasets [4]. The present predictive interface contains 46 features selected from this common schema. Seven fields are retained outside the predictive matrix because they are identifier-like or split metadata: source and destination IP addresses, source and destination transport ports, DNS query identifiers, and the two absolute flow timestamps.
+NF-UNSW-NB15-v3 contains 2,365,424 flows in the audited release, while NF-CSE-CIC-IDS2018-v3 contains 20,115,529 flows. Both datasets use the NetFlow-v3 schema, which provides a common 53-feature interface across network-flow datasets [4]. The predictive representation used in this study contains 46 features from that common interface.
 
-The 46 predictive variables include protocol information, packet and byte counts, flow duration, TCP/ICMP/DNS/FTP indicators, throughput and retransmission statistics, packet-size bins, TCP window statistics, and directional inter-arrival-time features. The feature order is fixed and identical in both transfer directions. The complete feature registry is maintained as a frozen repository artifact.
+Seven fields are retained outside the predictive matrix because they function as identifiers or temporal/split metadata: source and destination IP addresses, source and destination transport ports, DNS query identifiers, and the two absolute flow timestamps. These fields are not used as predictors. The retained predictive variables comprise protocol information, packet and byte counts, flow duration, TCP/ICMP/DNS/FTP indicators, throughput and retransmission statistics, packet-size bins, TCP window statistics, and directional inter-arrival-time features. The feature order is fixed across both transfer directions and maintained as a frozen feature-registry artifact.
 
-A binary detector target is used:
+The binary detector target is
 
 \[
 y_i =
 \begin{cases}
-1,&\text{attack},\\
-0,&\text{benign}.
+1, & \text{attack},\\
+0, & \text{benign}.
 \end{cases}
 \]
 
-Raw attack-family labels are retained only as evaluation metadata. They are not predictors and do not enter detector training, reliability fitting, or score construction.
+Raw attack-family labels are retained only as evaluation metadata. They do not enter detector training, reliability fitting, calibration, or score construction.
 
 \subsection{Deterministic Source Partitioning and Preprocessing}
 
-To avoid dependence on arbitrary row ordering, source data are partitioned with a deterministic label-independent hash of the canonical raw 53-feature representation. The first eight bytes of the SHA-256 digest are interpreted as a big-endian integer and reduced modulo 100. Buckets 0--59 form the source-training partition, 60--79 form the source-calibration partition, and 80--99 form the source-test partition. This procedure is applied independently to each source dataset.
+To avoid dependence on arbitrary row ordering, each source dataset is partitioned using a deterministic, label-independent hash of the canonical raw 53-feature representation. The first eight bytes of the SHA-256 digest are interpreted as a big-endian integer and reduced modulo 100. Buckets 0--59 form the source-training partition, buckets 60--79 form the source-calibration partition, and buckets 80--99 form the source-test partition.
 
-The resulting source partitions contain 60\%, 20\%, and 20\% of the rows up to the deterministic hash realization. For UNSW-NB15-v3 the audited counts are 1,418,952 training rows, 473,301 calibration rows, and 473,171 source-test rows. For CIC-IDS2018-v3 the corresponding counts are 12,068,590, 4,021,791, and 4,025,148.
+The resulting partitions contain 60\%, 20\%, and 20\% of the rows up to the deterministic hash realization. For NF-UNSW-NB15-v3, the audited counts are 1,418,952 training rows, 473,301 calibration rows, and 473,171 source-test rows. For NF-CSE-CIC-IDS2018-v3, the corresponding counts are 12,068,590, 4,021,791, and 4,025,148.
 
-The source-calibration partition is further divided deterministically into two disjoint subsets. A secondary SHA-256 rule over the canonical 46-feature float32 representation assigns one subset to probability calibration and the complementary subset to conformal-quantile fitting. Identical feature vectors remain in the same calibration subpartition.
+The source-calibration partition is further divided deterministically into two disjoint subsets. A secondary SHA-256 rule applied to the canonical 46-feature float32 representation assigns one subset to probability calibration and the complementary subset to conformal-quantile fitting. Identical feature vectors remain in the same calibration subpartition.
 
-Non-finite predictor values are handled using a source-only finite-value policy. For each direction, replacement values are estimated from the source-training partition only; empty, missing, or non-finite values are replaced by the corresponding fitted source-training finite median, with a zero fallback only when no finite source-training observation exists. The same source-fitted replacement values are then applied to source calibration, source test, and target data. No target statistic is estimated for preprocessing.
+Non-finite predictor values are handled using a source-only finite-value policy. For each transfer direction, replacement values are estimated from the source-training partition alone. Empty, missing, or non-finite predictor values are replaced by the corresponding source-training finite median, with a zero fallback only when no finite source-training observation exists. The resulting source-derived replacement values are applied unchanged to source calibration, source test, and target data. No target statistic is estimated for preprocessing.
 
 \subsection{Fixed Random Forest Detector}
 
-The detector is a binary Random Forest classifier implemented with scikit-learn. The scientific configuration is:
+The predictive detector is a binary Random Forest classifier implemented with scikit-learn. The scientific configuration is fixed across datasets, transfer directions, and detector seeds: 200 trees, Gini impurity, minimum five samples per leaf, unrestricted maximum depth, minimum two samples for splitting, square-root feature subsampling, bootstrap sampling, no class weighting, no out-of-bag scoring, and no warm start. Seeds 0--9 define the repeated detector fits.
 
-| Parameter | Value | |---|---| | Number of trees | 200 | | Criterion | Gini | | Minimum samples per leaf | 5 | | Maximum depth | None | | Minimum samples to split | 2 | | Maximum features | sqrt | | Bootstrap | True | | Maximum samples | None | | Class weight | None | | Out-of-bag score | False | | Warm start | False | | Random seeds | 0--9 |
-
-No target-domain data are used for model selection or hyperparameter tuning. Execution-level parallelism was treated separately from the scientific configuration; the production setting was selected only after an equivalence benchmark established that increasing RF worker parallelism preserved tree structure, class probabilities, and disagreement scores relative to the single-worker reference.
+No target-domain data are used for detector selection or hyperparameter tuning. Execution-level parallelism is treated separately from the scientific configuration. The production worker setting was selected only after an equivalence benchmark verified preservation of tree structure, class probabilities, and RF disagreement relative to the single-worker reference. Prediction remained single-worker, while BLAS and OpenMP thread counts were constrained to one to avoid uncontrolled nested parallelism.
 
 \subsection{Source-Derived Reliability Signals}
 
-All five reliability mechanisms produce a scalar score whose common orientation is:
+All five reliability mechanisms produce a scalar score under the common operational convention
 
-> \textbf{larger score = greater priority for analyst review.}
+\[
+\text{larger score} = \text{higher priority for analyst review}.
+\]
 
 \subsubsection{1) Calibrated confidence}
 
-Let $p_i^{(0)}$ and $p_i^{(1)}$ be the source-calibrated probabilities assigned to the benign and attack classes. The reliability score is
+Let \(p_i^{(0)}\) and \(p_i^{(1)}\) denote the source-calibrated probabilities assigned to the benign and attack classes. The confidence-based review score is
 
 \[
-r_i^{\mathrm{conf}} = 1-\max\left(p_i^{(0)},p_i^{(1)}\right).
+r_i^{\mathrm{conf}}
+=
+1-\max\left(p_i^{(0)},p_i^{(1)}\right).
 \]
 
-Thus, observations for which the frozen detector is less confident receive larger review scores. Probability calibration is fitted with a source-only sigmoid/Platt calibration procedure using the dedicated source probability-calibration subset [6]. The calibrator is frozen before target scoring.
+Thus, observations for which the frozen detector is less confident receive larger review scores. Probability calibration uses a source-only sigmoid/Platt procedure fitted on the dedicated source probability-calibration subset [6]. The calibrator is frozen before any target scoring.
 
 \subsubsection{2) Random Forest tree disagreement}
 
-For the $T=200$ trees, let $v_{ic}$ denote the number of tree predictions for class (c). The vote fraction for class (c) is $v_{ic}/T$. The disagreement score is
+For the \(T=200\) trees, let \(v_{ic}\) denote the number of tree predictions for class \(c\). The disagreement score is
 
 \[
-r_i^{\mathrm{RF}} = 1-\max_{c\in\{0,1\}}\frac{v_{ic}}{T}.
+r_i^{\mathrm{RF}}
+=
+1-\max_{c\in\{0,1\}}\frac{v_{ic}}{T}.
 \]
 
-The score is therefore zero when all trees agree and increases as the tree votes become less concentrated on a single class.
+The score is zero when all trees agree and increases as the votes become less concentrated on a single class.
 
 \subsubsection{3) Feature-space distance}
 
-Let (z\_i) denote the standardized feature vector for a sample, where the standardization parameters are fitted using source-training rows only. For target observation (i), let ($N_5(i)$) be the five nearest source-training reference rows under Euclidean distance. The score is
+Let \(z_i\) denote the standardized feature vector for observation \(i\), with standardization parameters fitted using source-training rows only. For a target observation \(i\), let \(N_5(i)\) denote its five nearest source-training reference rows under Euclidean distance. The reliability score is
 
 \[
-r_i^{\mathrm{dist}} = \frac{1}{5}\sum_{j\in N_5(i)}\left\lVert z_i-z_j\right\rVert_2.
+r_i^{\mathrm{dist}}
+=
+\frac{1}{5}
+\sum_{j\in N_5(i)}
+\left\lVert z_i-z_j\right\rVert_2 .
 \]
 
-The source reference population is never augmented with target observations. The exact computation uses a KD-tree implementation with deterministic duplicate compression and top-five merging; the resulting quantity is mathematically equivalent to the mean distance to the five nearest original source-training rows.
+The source reference population is never augmented with target observations. The exact computation uses a KD-tree implementation with deterministic duplicate compression and top-five merging, producing the mathematically equivalent mean distance to the five nearest original source-training rows.
 
-Unlike the other seed-varying signals, this distance is independent of the Random Forest seed and is therefore computed once for each transfer direction and shared across all ten seeds.
+Unlike the seed-dependent detector signals, feature-space distance is independent of the Random Forest seed and is therefore computed once per transfer direction and shared across the ten detector seeds.
 
 \subsubsection{4) Split conformal score}
 
-Split conformal prediction is constructed from the source probability-calibration pipeline rather than from target observations [7]. For a source calibration observation with true class $y_i$, the nonconformity value is
+Split conformal prediction is constructed entirely from source calibration data [7]. For a source calibration observation with true class \(y_i\), the nonconformity value is
 
 \[
-a_i = 1-p_{\mathrm{cal}}\left(y_i\mid x_i\right).
+a_i
+=
+1-p_{\mathrm{cal}}(y_i\mid x_i).
 \]
 
-With $\alpha=0.10$, the finite-sample conformal quantile is obtained from the frozen source conformal-calibration subset. For a target observation, a binary class is included in the prediction set when its class-specific nonconformity does not exceed this quantile.
+With \(\alpha=0.10\), the finite-sample conformal quantile is estimated from the frozen source conformal-calibration subset. For a target observation, a class is included in the prediction set when its class-specific nonconformity does not exceed the frozen quantile.
 
-Because the paper compares all methods through a common scalar review ranking, the primary conformal review score is the normalized prediction-set size,
+Because the primary comparison requires a common scalar ranking across all five mechanisms, the conformal prediction set \(C(x_i)\) is mapped to
 
 \[
-r_i^{\mathrm{confm}} =
-r_i^{\mathrm{confm}} = \frac{|C(x_i)|-1}{2-1}.
+r_i^{\mathrm{confm}}
+=
+\frac{|C(x_i)|-1}{2-1}.
 \]
 
-where $C(x_i)$ is the binary conformal prediction set. A singleton prediction set therefore receives score 0 and a two-class prediction set receives score 1. The mapping is frozen before target evaluation.
+A singleton prediction set therefore receives score 0, while a two-class prediction set receives score 1. The mapping is frozen before target evaluation.
 
-Conformal coverage and ambiguity are treated as diagnostic quantities rather than as substitutes for the primary attack-miss ranking endpoint. In particular, the manuscript does not claim target-domain coverage guarantees beyond what is supported by the saved source quantile and implementation audit [7].
+The conformal score is used here as a source-calibrated reliability ranking rather than as evidence of a target-domain coverage guarantee. Coverage and ambiguity diagnostics are therefore treated separately from the primary attack-miss ranking analysis [7].
 
 \subsubsection{5) Isolation Forest}
 
-Isolation Forest is fitted exclusively on source-training features and is used as an unsupervised novelty signal [9]. The fixed configuration uses 100 trees, a maximum sample size of 256, all available features, automatic contamination handling, no bootstrap resampling, and the corresponding experiment seed as the fixed random state. The reported score is the negative of scikit-learn's sample score so that larger values indicate greater anomaly and greater review priority.
+Isolation Forest is fitted exclusively on source-training features and is used as an unsupervised novelty signal [9]. The fixed configuration uses 100 trees, a maximum sample size of 256, all available features, automatic contamination handling, no bootstrap resampling, and the experiment seed as the fixed random state. The reported score is the negative of scikit-learn's sample score so that larger values correspond to greater anomaly and higher review priority.
 
-Isolation Forest is independent of the Random Forest prediction itself; its role is to test whether source-fitted feature atypicality is useful for prioritizing detector failures after transfer.
+Isolation Forest does not depend on the Random Forest prediction itself. It therefore provides a separate test of whether source-fitted input atypicality can prioritize detector failures after cross-domain transfer.
 
 \subsection{Source-Only Transfer and Target Evaluation Firewall}
 
-For each transfer direction, all source-dependent quantities are frozen before target evaluation:
+For each transfer direction, all source-dependent quantities are frozen before any target labels are exposed. These quantities include the predictive feature order, finite-value replacement parameters, Random Forest configuration and fitted trees, source probability calibrator, conformal quantile, source-training feature scaler, source-training distance reference, Isolation Forest model, score orientation, and review-ranking rules.
 
-\begin{itemize}
-\item predictive feature order;
-\item finite-value replacement parameters;
-\item Random Forest parameters and seed;
-\item Random Forest fitted trees;
-\item source probability calibrator;
-\item conformal calibration quantile;
-\item source-training feature scaler;
-\item source-training distance reference;
-\item Isolation Forest parameters and fitted model;
-\item score orientation and review ranking rules.
-\end{itemize}
+The target feature matrix is transformed only with these source-derived quantities. Target reliability scores are generated and stored before target labels are read. Thus, target labels cannot affect preprocessing, detector fitting, calibration, score construction, score orientation, or ranking.
 
-No target labels are available during any of these operations. The target feature matrix is transformed only with source-derived quantities, and target scores are written before target labels are read for evaluation.
+The target evaluation uses the complete target population. For an analyst-review budget \(b\), the highest-scoring
 
-The target evaluation uses the complete target population. For the primary operational analysis, the top-scoring $\lfloor bN\rfloor$ target rows are selected for review at budgets $\{0.01,0.05,0.10\}$, with stable ascending input-row offset used as the deterministic tie-break at the selection boundary. This follows the selective-prediction principle of evaluating how risk changes when only a controlled fraction of observations can be reviewed [8].
+\[
+k_b=\left\lfloor bN\right\rfloor
+\]
+
+target rows are selected, where \(N\) is the target population size. The study evaluates review budgets of 1\%, 5\%, and 10\%, with 5\% designated as the primary operational budget. Ties at the selection boundary are resolved deterministically using the ascending input-row offset.
 
 \subsection{Security and Reliability Endpoints}
 
-The primary event is a \textbf{detector attack miss}:
+The primary security event is a detector attack miss:
 
 \[
-m_i = I\left(y_i=1\land \hat y_i=0\right).
+m_i
+=
+I\left(y_i=1\land\hat{y}_i=0\right).
 \]
 
-For a reliability score $r_i$, the primary security metric is the area under the precision-recall curve obtained by treating $m_i$ as the positive class and ranking observations from highest to lowest $r_i$. This is denoted attack-miss AUPRC.
+For reliability score \(r_i\), attack-miss AUPRC is computed by treating \(m_i\) as the positive class and ranking target observations from highest to lowest reliability score. This metric measures the ability of a reliability mechanism to prioritize the attacks that the frozen detector has incorrectly classified as benign.
 
-The primary operational metric is attack-miss capture at a 5\% review budget:
+The primary operational endpoint is attack-miss capture at the 5\% analyst-review budget:
 
 \[
-\mathrm{Capture}@b =
-\frac{\sum_{i\in S_b}m_i}{\sum_i m_i},\qquad
-|S_b|=\left\lfloor bN\right\rfloor.
-
+\mathrm{Capture}@b
+=
+\frac{\sum_{i\in S_b}m_i}
+{\sum_i m_i},
+\qquad
+|S_b|=\left\lfloor bN\right\rfloor,
 \]
 
-where $S_b$ is the set of the $bN$ highest-scoring target observations. Capture at 1\% and 10\% is reported as a secondary operational analysis.
+where \(S_b\) contains the highest-scoring target observations at review fraction \(b\). Capture at 1\% and 10\% is reported as secondary operational analysis.
 
-Generic prediction error is analyzed separately using
+Generic prediction error is evaluated separately as
 
 \[
-e_i=I\left(y_i\ne \hat y_i\right),
+e_i=I\left(y_i\ne\hat{y}_i\right).
 \]
 
-so that ordinary error detection is not conflated with attack-miss prioritization. Secondary analyses include generic-error AUPRC/AUROC, attack-miss AUROC, direction-specific score-orientation diagnostics, selective risk, family-level performance where the locked semantic registry supports a defensible comparison, calibration/conformal diagnostics, and computational cost.
+This separation prevents ordinary classification errors from being treated as equivalent to security-critical attack misses. Secondary analyses include generic-error AUPRC and AUROC, attack-miss AUROC, direction-specific score-orientation diagnostics, selective risk, family-level behavior where the locked semantic registry supports a defensible comparison, calibration and conformal diagnostics, and computational cost.
 
 \subsection{Family-Level Analysis}
 
-Attack-family analysis is restricted to the frozen semantic crosswalk rather than inferred from matching strings or dataset-specific names. In the current registry, only the documented shared DoS category is treated as a defensible cross-domain family correspondence. Other attack labels remain dataset-local when a reliable semantic equivalence cannot be established.
+Attack-family analysis is restricted to the frozen semantic crosswalk rather than inferred from matching strings or dataset-specific attack names. The current registry supports only the documented shared DoS category as a defensible cross-domain family correspondence. Other attack labels remain dataset-local where a reliable semantic equivalence cannot be established.
 
-Consequently, family-level results are interpreted as supporting failure-structure analysis rather than as comprehensive evidence about unseen attack-family generalization.
+Family-level results are therefore treated as constrained failure-structure analysis rather than as comprehensive evidence of unseen attack-family generalization.
 
 \subsection{Statistical Analysis and Repetition}
 
-Each transfer direction contains ten matched detector seeds. Seed-level results are retained rather than collapsed before inference. Paired method comparisons use the same seed across methods, with exact sign-flip permutation tests for paired differences and bootstrap intervals at the seed level.
+Each transfer direction contains ten matched detector seeds. Seed-level results are retained rather than collapsed before inference. Paired method comparisons use the same detector seed across methods within a transfer direction. Exact sign-flip permutation tests are used for paired differences, together with seed-level bootstrap intervals.
 
-For every primary comparison, the manuscript reports the effect direction and magnitude before the significance level. Descriptive rankings based only on mean values are not treated as evidence of superiority. Because several methods and secondary endpoints generate multiple pairwise comparisons, the final statistical interpretation distinguishes the predeclared primary comparisons from exploratory analyses and applies the final multiplicity policy established by the research harness.
+Descriptive rankings based solely on means are distinguished from inferential evidence. The manuscript reports effect direction and magnitude before significance levels, while the broader pairwise comparison set is interpreted as a multiple-comparison family rather than as a collection of independent claims.
 
-The experimental implementation, manifests, feature registry, family registry, source-only restrictions, and numerical outputs are archived with cryptographic hashes. The completed transfer integrity audit reports no issues and confirms that target labels were not used for fitting, tuning, recalibration, or score construction.
+The experimental implementation, feature and family registries, transfer manifests, source-only restrictions, numerical outputs, and cryptographic hashes are archived as reproducibility artifacts. The completed transfer integrity audit reports no issues and confirms that target labels were not used for fitting, tuning, recalibration, or score construction.
 
 \section{Experimental Setup}
 
