@@ -491,3 +491,14 @@ Isolation Forest exhibits a smaller AUPRC gap of 0.041 and only a 0.003 capture 
 The directional analysis therefore separates two properties that can otherwise be conflated: **absolute reliability utility** and **transport stability**. A signal may perform strongly but change substantially when the deployment direction is reversed, or it may remain stable while providing little security value. The completed experiment provides evidence for both patterns.
 
 The results also show why a one-way transfer experiment would be insufficient for the research question. A ranking derived solely from UNSW→CIC would identify RF disagreement as the strongest attack-miss AUPRC signal, whereas the reverse experiment identifies split conformal as the strongest. Bidirectional evaluation is therefore necessary to characterize whether a reliability conclusion is transportable rather than merely favorable in one chosen direction.
+
+
+### E. Family-Level Analysis and Scope of Interpretation
+
+Family-level analysis is constrained by the frozen cross-domain semantic registry. Only a documented shared DoS category is considered a defensible cross-dataset correspondence; other dataset-local attack names are not treated as equivalent without supporting semantic evidence.
+
+The resulting family analysis does not provide a sufficiently rich basis for a broad family-level conclusion. In UNSW→CIC, the saved family-analysis output contains no target rows under the documented shared DoS mapping. In CIC→UNSW, all 5,980 mapped DoS target rows are recorded as attack misses, yielding a within-family attack-miss AUPRC of 1.0 for every reliability signal. The latter result is therefore tautological rather than evidence that one reliability signal is superior for DoS prioritization.
+
+Accordingly, family-level results are not used to support a claim about general unseen-family detection or family-specific reliability robustness. The analysis instead establishes a methodological boundary: cross-domain attack-family conclusions require a defensible semantic crosswalk and sufficient within-family variation in detector outcomes. Without those conditions, family-level scores can be either unavailable or mechanically perfect and therefore uninformative.
+
+This constraint is important for interpreting the compound-shift question. The present experiment can demonstrate cross-domain reliability behavior under the frozen source-only protocol, but it does not provide comprehensive evidence about unseen attack-family transportability across these two datasets.
