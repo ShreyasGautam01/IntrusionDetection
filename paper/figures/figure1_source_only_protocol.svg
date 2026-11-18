@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="900" viewBox="0 0 1800 900">
+<defs>
+<marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L12,6 L0,12 z" fill="#38434D"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<rect x="40" y="52" width="620" height="760" rx="18" fill="#F6F8FB" stroke="#A9B3BD" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="700" y="52" width="650" height="760" rx="18" fill="#F8FBF6" stroke="#A9B7A4" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="1420" y="220" width="330" height="510" rx="18" fill="#FBF8FE" stroke="#B6A5C3" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="95" y="78" width="510" height="76" rx="16" fill="#EAF1F8" stroke="#3B6B98" stroke-width="2.6"/>
+<text x="350" y="108" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:28px;font-weight:700;fill:#20262D;">SOURCE DOMAIN</text>
+<text x="350" y="140" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:28px;font-weight:700;fill:#20262D;">Labels available</text>
+<rect x="770" y="78" width="510" height="76" rx="16" fill="#EAF4EA" stroke="#487A3D" stroke-width="2.6"/>
+<text x="1025" y="108" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:28px;font-weight:700;fill:#20262D;">TARGET DOMAIN</text>
+<text x="1025" y="140" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:28px;font-weight:700;fill:#20262D;">Labels withheld</text>
+<text x="1585" y="195" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:29px;font-weight:700;fill:#20262D;">OFFLINE EVALUATION</text>
+<rect x="135" y="182" width="430" height="60" rx="10" fill="#FFFFFF" stroke="#59636D" stroke-width="2.2"/>
+<text x="350" y="212" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:23px;font-weight:600;fill:#20262D;">Deterministic SHA-256 partition</text>
+<path d="M 350 154 L 350 182" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="75" y="274" width="180" height="92" rx="11" fill="#FFFFFF" stroke="#66737F" stroke-width="2.0"/>
+<text x="165.0" y="309" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">Source train</text>
+<text x="165.0" y="337" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">60%</text>
+<rect x="260" y="274" width="180" height="92" rx="11" fill="#FFFFFF" stroke="#66737F" stroke-width="2.0"/>
+<text x="350.0" y="309" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">Source calibration</text>
+<text x="350.0" y="337" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">20%</text>
+<rect x="445" y="274" width="180" height="92" rx="11" fill="#FFFFFF" stroke="#66737F" stroke-width="2.0"/>
+<text x="535.0" y="309" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">Source test</text>
+<text x="535.0" y="337" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">20%, held out</text>
+<path d="M 350 242 L 165 274" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 350 242 L 350 274" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 350 242 L 535 274" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="80" y="420" width="545" height="190" rx="12" fill="#FFFFFF" stroke="#59636D" stroke-width="2.2"/>
+<text x="352" y="448" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:26px;font-weight:700;fill:#20262D;">Source-side construction</text>
+<text x="105" y="485" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:21px;font-weight:700;fill:#20262D;">•</text>
+<text x="125" y="485" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:20px;font-weight:400;fill:#20262D;">Random Forest detector + source finite-value policy</text>
+<text x="105" y="511" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:21px;font-weight:700;fill:#20262D;">•</text>
+<text x="125" y="511" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:20px;font-weight:400;fill:#20262D;">Source probability calibrator</text>
+<text x="105" y="537" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:21px;font-weight:700;fill:#20262D;">•</text>
+<text x="125" y="537" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:20px;font-weight:400;fill:#20262D;">Source conformal quantile</text>
+<text x="105" y="563" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:21px;font-weight:700;fill:#20262D;">•</text>
+<text x="125" y="563" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:20px;font-weight:400;fill:#20262D;">5-NN distance reference + scaler</text>
+<text x="105" y="589" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:21px;font-weight:700;fill:#20262D;">•</text>
+<text x="125" y="589" text-anchor="start" dominant-baseline="middle" style="font-family:Arial;font-size:20px;font-weight:400;fill:#20262D;">Isolation Forest</text>
+<polyline points="165,366 165,398 220,398 220,420" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 350 366 L 350 420" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="105" y="655" width="495" height="92" rx="14" fill="#334E68" stroke="#25384A" stroke-width="2.6"/>
+<text x="352" y="686" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:31px;font-weight:700;fill:#FFFFFF;">FREEZE</text>
+<text x="352" y="718" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:17px;font-weight:600;fill:#FFFFFF;">model • calibration • preprocessing • references • score orientation</text>
+<path d="M 352 610 L 352 655" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="785" y="182" width="480" height="72" rx="12" fill="#FFFFFF" stroke="#5C7358" stroke-width="2.2"/>
+<text x="1025" y="205" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">Apply frozen preprocessing</text>
+<text x="1025" y="233" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">and generate detector + reliability scores</text>
+<path d="M 1025 154 L 1025 182" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="770" y="292" width="510" height="92" rx="12" fill="#FFFFFF" stroke="#5C7358" stroke-width="2.2"/>
+<text x="1025" y="318" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:23px;font-weight:700;fill:#20262D;">Target scoring outputs</text>
+<text x="1025" y="349" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:17px;font-weight:400;fill:#20262D;">prediction • confidence • disagreement • distance • conformal • Isolation Forest</text>
+<path d="M 1025 254 L 1025 292" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="825" y="430" width="400" height="80" rx="13" fill="#FFF7F0" stroke="#B45A2C" stroke-width="2.8"/>
+<text x="1025" y="458" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:26px;font-weight:700;fill:#7D2E13;">TARGET LABELS HIDDEN</text>
+<text x="1025" y="487" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:18px;font-weight:500;fill:#7D2E13;font-style:italic;">until all target scores are complete</text>
+<path d="M 1025 384 L 1025 430" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="850" y="560" width="350" height="64" rx="11" fill="#FFFFFF" stroke="#5C7358" stroke-width="2.2"/>
+<text x="1025" y="592" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">Target scores complete</text>
+<path d="M 1025 510 L 1025 560" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1215" y="552" width="110" height="82" rx="12" fill="#F4F1F7" stroke="#8B7AA0" stroke-width="2.2"/>
+<text x="1270" y="580" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:18px;font-weight:600;fill:#20262D;">Reveal</text>
+<text x="1270" y="605" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:18px;font-weight:600;fill:#20262D;">target labels</text>
+<path d="M 1200 592 L 1215 592" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<polyline points="600,701 680,701 680,218 785,218" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 785 218 L 772 211 L 772 225 Z" fill="#38434D"/>
+<rect x="1450" y="275" width="270" height="78" rx="12" fill="#FFFFFF" stroke="#80669B" stroke-width="2.2"/>
+<text x="1585" y="313" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:22px;font-weight:600;fill:#20262D;">Attack-miss AUPRC</text>
+<rect x="1450" y="382" width="270" height="88" rx="12" fill="#FFFFFF" stroke="#80669B" stroke-width="2.2"/>
+<text x="1585" y="410" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:21px;font-weight:600;fill:#20262D;">Attack-miss capture</text>
+<text x="1585" y="438" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:21px;font-weight:600;fill:#20262D;">1%, 5%, 10%</text>
+<rect x="1450" y="499" width="270" height="110" rx="12" fill="#FFFFFF" stroke="#80669B" stroke-width="2.2"/>
+<text x="1585" y="528" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:20px;font-weight:600;fill:#20262D;">Secondary diagnostics</text>
+<text x="1585" y="556" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:20px;font-weight:600;fill:#20262D;">generic error • AUROC</text>
+<text x="1585" y="584" text-anchor="middle" dominant-baseline="middle" style="font-family:Arial;font-size:20px;font-weight:600;fill:#20262D;">family • calibration</text>
+<polyline points="1335,592 1405,592 1405,314 1450,314" fill="none" stroke="#38434D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1450 314 L 1437 307 L 1437 321 Z" fill="#38434D"/>
+</svg>
