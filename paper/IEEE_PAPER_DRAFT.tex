@@ -574,25 +574,7 @@ The primary endpoint therefore establishes the first central result of the study
 
 \subsection{Operational Utility at Fixed Analyst-Review Budgets}
 
-The primary operational analysis asks how many detector attack misses can be recovered when only a fixed fraction of target traffic can be reviewed. Table~V reports the exact mean capture values at the 1\%, 5\%, and 10\% budgets. Fig.~2 plots the same results as budget-response curves for the two transfer directions, making changes in operational ranking visible across review capacity.
-
-\begin{table}[t]
-\centering
-\caption{Attack-miss capture at fixed review budgets}
-\begin{adjustbox}{max width=\columnwidth}
-\begin{tabular}{lllllll}
-\toprule
-\textbf{Reliability signal} & \textbf{UNSW->CIC 1\%} & \textbf{UNSW->CIC 5\%} & \textbf{UNSW->CIC 10\%} & \textbf{CIC->UNSW 1\%} & \textbf{CIC->UNSW 5\%} & \textbf{CIC->UNSW 10\%} \\
-\midrule
-Confidence & 0.90\% & 8.19\% & 19.60\% & 0.03\% & 0.77\% & 1.40\% \\
-RF disagreement & 2.46\% & 12.33\% & 24.68\% & 0.03\% & 0.88\% & 1.46\% \\
-Feature-space distance & 0.07\% & 0.58\% & 0.64\% & 0.56\% & 4.34\% & 5.09\% \\
-Split conformal & 0.0001\% & \textbf{17.37\%} & 20.40\% & \textbf{4.91\%} & \textbf{14.73\%} & \textbf{22.53\%} \\
-Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
-\bottomrule
-\end{tabular}
-\end{adjustbox}
-\end{table}
+The primary operational analysis asks how many detector attack misses can be recovered when only a fixed fraction of target traffic can be reviewed. Fig.~2 plots the budget-response curves for the two transfer directions, making changes in operational ranking visible across review capacity. Table~V reports the exact mean capture values at the 1\%, 5\%, and 10\% budgets.
 
 \begin{figure*}[!t]
 \centering
@@ -683,6 +665,26 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \label{fig:budget-capture}
 \end{figure*}
 
+\begin{table}[t]
+\centering
+\caption{Attack-miss capture at fixed review budgets}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{lllllll}
+\toprule
+\textbf{Reliability signal} & \textbf{UNSW->CIC 1\%} & \textbf{UNSW->CIC 5\%} & \textbf{UNSW->CIC 10\%} & \textbf{CIC->UNSW 1\%} & \textbf{CIC->UNSW 5\%} & \textbf{CIC->UNSW 10\%} \\
+\midrule
+Confidence & 0.90\% & 8.19\% & 19.60\% & 0.03\% & 0.77\% & 1.40\% \\
+RF disagreement & 2.46\% & 12.33\% & 24.68\% & 0.03\% & 0.88\% & 1.46\% \\
+Feature-space distance & 0.07\% & 0.58\% & 0.64\% & 0.56\% & 4.34\% & 5.09\% \\
+Split conformal & 0.0001\% & \textbf{17.37\%} & 20.40\% & \textbf{4.91\%} & \textbf{14.73\%} & \textbf{22.53\%} \\
+Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
 At the primary 5\% review budget, split conformal has the highest mean attack-miss capture in both transfer directions, at 17.37\% for UNSW$\rightarrow$CIC and 14.73\% for CIC$\rightarrow$UNSW. In the first direction, this differs from the AUPRC result in Fig.~1, where RF disagreement has the highest threshold-free ranking performance. The two metrics therefore identify different aspects of operational usefulness.
 
 Fig.~2 further shows that the difference is not limited to the single 5\% operating point. In UNSW$\rightarrow$CIC, split conformal rises sharply between 1\% and 5\% review, while RF disagreement and confidence increase more progressively. In CIC$\rightarrow$UNSW, split conformal remains the highest curve across all three tested budgets, whereas feature-space distance becomes the next most effective signal as review capacity increases.
@@ -693,25 +695,7 @@ The operational results therefore establish a second central finding: reliabilit
 
 \subsection{Generic Errors Versus Security-Critical Attack Misses}
 
-The generic-error analysis asks whether a reliability signal that is effective at identifying incorrect detector predictions is necessarily effective at prioritizing the subset of those errors that are attacks classified as benign. Table~VI reports generic-error AUPRC, attack-miss AUPRC, and attack-miss AUROC. Fig.~3 visualizes the relationship between the two AUPRC measures directly.
-
-\begin{table}[t]
-\centering
-\caption{Generic error and attack-miss behavior}
-\begin{adjustbox}{max width=\columnwidth}
-\begin{tabular}{lllllll}
-\toprule
-\textbf{Signal} & \textbf{UNSW->CIC generic-error AUPRC} & \textbf{UNSW->CIC attack-miss AUPRC} & \textbf{UNSW->CIC attack-miss AUROC} & \textbf{CIC->UNSW generic-error AUPRC} & \textbf{CIC->UNSW attack-miss AUPRC} & \textbf{CIC->UNSW attack-miss AUROC} \\
-\midrule
-Confidence & 0.738 & 0.192 & 0.701 & 0.033 & 0.033 & 0.228 \\
-RF disagreement & 0.736 & 0.238 & 0.712 & 0.035 & 0.035 & 0.248 \\
-Feature-space distance & 0.859 & 0.109 & 0.575 & 0.043 & 0.043 & 0.345 \\
-Split conformal & 0.518 & 0.096 & 0.500 & 0.079 & 0.079 & \textbf{0.545} \\
-Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
-\bottomrule
-\end{tabular}
-\end{adjustbox}
-\end{table}
+The generic-error analysis asks whether a reliability signal that is effective at identifying incorrect detector predictions is necessarily effective at prioritizing the subset of those errors that are attacks classified as benign. Fig.~3 visualizes the relationship between generic-error and attack-miss AUPRC directly. Table~VI reports the corresponding exact AUPRC and AUROC values.
 
 \begin{figure*}[t]
 \centering
@@ -802,6 +786,26 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal, with color providing redundant visual separation. The right panel uses a magnified axis range to resolve the closely clustered CIC$\rightarrow$UNSW values. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
 \label{fig:generic-vs-attackmiss}
 \end{figure*}
+
+\begin{table}[t]
+\centering
+\caption{Generic error and attack-miss behavior}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{lllllll}
+\toprule
+\textbf{Signal} & \textbf{UNSW->CIC generic-error AUPRC} & \textbf{UNSW->CIC attack-miss AUPRC} & \textbf{UNSW->CIC attack-miss AUROC} & \textbf{CIC->UNSW generic-error AUPRC} & \textbf{CIC->UNSW attack-miss AUPRC} & \textbf{CIC->UNSW attack-miss AUROC} \\
+\midrule
+Confidence & 0.738 & 0.192 & 0.701 & 0.033 & 0.033 & 0.228 \\
+RF disagreement & 0.736 & 0.238 & 0.712 & 0.035 & 0.035 & 0.248 \\
+Feature-space distance & 0.859 & 0.109 & 0.575 & 0.043 & 0.043 & 0.345 \\
+Split conformal & 0.518 & 0.096 & 0.500 & 0.079 & 0.079 & \textbf{0.545} \\
+Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
 
 The UNSW$\rightarrow$CIC direction provides the clearest separation between generic error detection and security-specific attack-miss prioritization. Fig.~3 shows that feature-space distance and Isolation Forest lie at the high end of generic-error AUPRC while remaining substantially lower on attack-miss AUPRC. Their generic-error AUPRC values are 0.859 and 0.847, but their attack-miss AUPRC values fall to 0.109 and 0.077. By contrast, RF disagreement and confidence achieve somewhat lower generic-error AUPRC but substantially higher attack-miss AUPRC.
 
