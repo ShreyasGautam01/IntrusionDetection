@@ -536,3 +536,11 @@ The paired results reinforce the principal directional pattern. In UNSW→CIC, R
 In CIC→UNSW, split conformal has a paired attack-miss AUPRC advantage over both RF disagreement and feature-space distance, with mean differences of 0.045 and 0.036, respectively. Its advantage is even larger for the 5% operational capture comparison against RF disagreement, where conformal exceeds RF disagreement by 0.139 in mean paired capture.
 
 The full analysis contains a larger number of pairwise comparisons than those shown in Table VIII. Because these tests are not independent and several are secondary diagnostic comparisons, the manuscript treats their exact p-values as inferential support for the corresponding contrasts rather than as evidence of a single global method ranking. The primary conclusions remain the effect magnitudes, directional consistency, and operational consequences observed across the two transfer directions.
+
+
+### H. Computational Cost
+
+Computational cost was treated as a secondary deployment consideration rather than a scientific factor. The execution-level RF parallelism benchmark compared multiple worker settings against a single-worker reference and verified exact equivalence of tree structure, RF class probabilities, and RF disagreement. In the bounded CIC benchmark, RF fitting time decreased from 17.64 s at (n_{mathrm{jobs}}=10) to 16.50 s at (n_{mathrm{jobs}}=16), while CPU saturation increased substantially. The production setting therefore used (n_{mathrm{jobs}}=10), which provided most of the available parallel speedup without the near-total CPU saturation observed at 12–16 workers.
+
+The benchmark illustrates an important reproducibility distinction: worker parallelism changes execution time but not the scientific definition of the Random Forest experiment when numerical equivalence has been verified. The final transfer analysis therefore reports the scientific model configuration separately from its execution setting.
+
