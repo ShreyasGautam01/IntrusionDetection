@@ -214,7 +214,7 @@ For each transfer direction, all source-dependent quantities are frozen before t
 
 No target labels are available during any of these operations. The target feature matrix is transformed only with source-derived quantities, and target scores are written before target labels are read for evaluation.
 
-The target evaluation uses the complete target population. For the primary operational analysis, the top-scoring (lfloor bNfloor) target rows are selected for review at budgets $\{0.01,0.05,0.10\}$, with stable ascending input-row offset used as the deterministic tie-break at the selection boundary. This follows the selective-prediction principle of evaluating how risk changes when only a controlled fraction of observations can be reviewed [8].
+The target evaluation uses the complete target population. For the primary operational analysis, the top-scoring $\lfloor bN\rfloor$ target rows are selected for review at budgets $\{0.01,0.05,0.10\}$, with stable ascending input-row offset used as the deterministic tie-break at the selection boundary. This follows the selective-prediction principle of evaluating how risk changes when only a controlled fraction of observations can be reviewed [8].
 
 ## Security and Reliability Endpoints
 
@@ -232,8 +232,7 @@ The primary operational metric is attack-miss capture at a 5% review budget:
 \mathrm{Capture}@b =
 \frac{\sum_{i\in S_b}m_i}{\sum_i m_i},\qquad
 |S_b|=\left\lfloor bN\right\rfloor.
-qquad
-|S_b|=lfloor bNfloor ,
+
 \]
 
 where (S_b) is the set of the (bN) highest-scoring target observations. Capture at 1% and 10% is reported as a secondary operational analysis.
