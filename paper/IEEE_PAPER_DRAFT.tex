@@ -6,8 +6,7 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{adjustbox}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,fit,calc}
+\usepackage{svg}
 \providecommand{\tightlist}{}
 \title{Transportability of Lightweight Reliability Signals for Network Intrusion Detection under Source-Only Cross-Domain Transfer}
 \author{
@@ -158,113 +157,7 @@ The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. Th
 
 \begin{figure*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[
-  >=Latex,
-  node distance=0.42cm and 0.55cm,
-  every node/.style={font=\footnotesize, align=center},
-  box/.style={draw, rounded corners=2pt, minimum height=0.72cm, inner sep=4pt},
-  smallbox/.style={draw, rounded corners=2pt, minimum width=2.05cm, minimum height=0.74cm, inner sep=3pt},
-  group/.style={draw, dashed, rounded corners=3pt, inner sep=7pt},
-  arrow/.style={->, thick},
-  freeze/.style={draw, rounded corners=3pt, fill=black!15, minimum width=6.2cm, minimum height=0.92cm, inner sep=5pt},
-  hidden/.style={draw, dashed, very thick, rounded corners=3pt, minimum width=5.35cm, minimum height=0.78cm, inner sep=4pt},
-  eval/.style={draw, rounded corners=2pt, minimum width=3.0cm, minimum height=0.72cm, inner sep=4pt}
-]
-
-% ---------------- SOURCE ----------------
-\node[box, minimum width=6.0cm, font=\bfseries\normalsize] (src)
-  {Source domain\\\footnotesize labels available};
-
-\node[box, below=of src, minimum width=6.0cm] (split)
-  {Deterministic SHA-256 partition};
-
-\node[smallbox, below left=0.42cm and 0.95cm of split] (train)
-  {Source train};
-
-\node[smallbox, below=0.42cm of split] (cal)
-  {Source calibration\\\scriptsize probability + conformal subsets};
-
-\node[smallbox, below right=0.42cm and 0.95cm of split] (stest)
-  {Source test\\\scriptsize held out};
-
-
-\draw[arrow] (src) -- (split);
-\draw[arrow] (split.south) -- (train.north);
-\draw[arrow] (split.south) -- (cal.north);
-\draw[arrow] (split.south) -- (stest.north);
-
-% Source-train + calibration feed only the source-side construction block.
-\node[box, below=0.72cm of cal, minimum width=6.0cm, minimum height=2.35cm,
-      align=left, text width=5.45cm] (fit)
-  {\textbf{Construct source-side components}\\
-  Random Forest detector\\
-  source probability calibrator\\
-  source conformal quantile\\
-  source finite-value policy and scaler\\
-  5-NN distance reference\\
-  Isolation Forest};
-
-\draw[arrow] (train.south) |- ([xshift=-1.7cm]fit.north);
-\draw[arrow] (cal.south) -- (fit.north);
-
-\node[freeze, below=0.62cm of fit, font=\bfseries] (freeze)
-  {FREEZE\\[-1mm]\scriptsize model, calibration, preprocessing, references, score orientation};
-
-\draw[arrow] (fit) -- (freeze);
-
-% ---------------- TARGET ----------------
-\node[box, right=4.6cm of src, minimum width=6.0cm,
-      font=\bfseries\normalsize] (tgt)
-  {Target domain\\\footnotesize labels withheld};
-
-\node[box, below=of tgt, minimum width=6.0cm, minimum height=1.0cm] (score)
-  {Apply frozen preprocessing\\and generate detector + reliability scores};
-
-\node[box, below=0.5cm of score, minimum width=6.0cm, minimum height=1.0cm] (outputs)
-  {Frozen target outputs\\
-  \scriptsize prediction + confidence + disagreement + distance + conformal + Isolation Forest};
-
-\node[hidden, below=0.58cm of outputs] (hiddenlabels)
-  {\textbf{TARGET LABELS HIDDEN}\\[-1mm]\scriptsize until all target scores are complete};
-
-\node[box, below=0.58cm of hiddenlabels, minimum width=6.0cm] (complete)
-  {Target scores complete};
-
-\node[box, right=1.65cm of complete, minimum width=1.75cm,
-      minimum height=0.82cm] (reveal)
-  {Reveal\\target labels};
-
-
-\draw[arrow] (tgt) -- (score);
-\draw[arrow] (score) -- (outputs);
-\draw[arrow] (outputs) -- (hiddenlabels);
-\draw[arrow] (hiddenlabels) -- (complete);
-\draw[arrow] (complete) -- (reveal);
-
-% Explicit freeze-to-target connection routed below the source-test branch.
-\draw[arrow] (freeze.east) -| (score.west);
-
-% ---------------- EVALUATION ----------------
-\node[eval] (auprc) at ($(reveal.east)+(2.05cm,0.65cm)$)
-  {Attack-miss AUPRC};
-
-\node[eval, below=0.45cm of auprc] (capture)
-  {Attack-miss capture\\\scriptsize 1\%, 5\%, 10\%};
-
-\node[eval, below=0.45cm of capture] (secondary)
-  {Secondary diagnostics\\\scriptsize generic error, AUROC, family, calibration};
-
-\node[group, fit=(auprc)(capture)(secondary)] (evalgroup) {};
-\node[above=0.15cm of evalgroup.north, font=\bfseries] (evallabel)
-  {Offline evaluation};
-
-\draw[arrow] (reveal) -- (auprc.west);
-\draw[arrow] (reveal) |- (capture.west);
-\draw[arrow] (reveal) |- (secondary.west);
-
-\end{tikzpicture}%
-}
+\includesvg[width=\textwidth,inkscapelatex=false]{figures/figure1_source_only_protocol}
 \caption{Source-only cross-domain evaluation protocol. Source partitions and all source-derived model, calibration, preprocessing, reference, and score-orientation quantities are constructed without target labels and frozen before target scoring. Target labels remain withheld until all target scores have been generated and are then used only for offline evaluation.}
 \label{fig:source-only-protocol}
 \end{figure*}
