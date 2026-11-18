@@ -437,3 +437,30 @@ The paired comparisons provide an additional qualification. In UNSW→CIC, the m
 The secondary budgets reveal additional budget dependence. In UNSW→CIC, RF disagreement rises from 2.46% capture at 1% review to 24.68% at 10%, while confidence rises from 0.90% to 19.60%. Split conformal is highly sensitive to the review budget in this direction: its mean capture is effectively zero at 1% review but reaches 17.37% at 5% and 20.40% at 10%. In CIC→UNSW, split conformal remains the strongest operational signal at all three budgets, increasing from 4.91% at 1% review to 22.53% at 10%.
 
 These results show that the reliability mechanisms do not merely differ in how well they rank attack misses; they also differ in how useful their rankings are when only a small, explicitly constrained portion of traffic can be reviewed. Consequently, the operational conclusion depends on both transfer direction and review capacity.
+
+
+### C. Generic Errors Versus Security-Critical Attack Misses
+
+The generic-error analysis shows that reliability performance can change substantially depending on which prediction failures are treated as the positive event. Table VI compares generic-error AUPRC with attack-miss AUPRC and reports attack-miss AUROC as a semantic-direction diagnostic.
+
+**TABLE VI — GENERIC ERROR AND ATTACK-MISS BEHAVIOR**
+
+| Signal | UNSW→CIC generic-error AUPRC | UNSW→CIC attack-miss AUPRC | UNSW→CIC attack-miss AUROC | CIC→UNSW generic-error AUPRC | CIC→UNSW attack-miss AUPRC | CIC→UNSW attack-miss AUROC |
+|---|---:|---:|---:|---:|---:|---:|
+| Confidence | 0.738 | 0.192 | 0.701 | 0.033 | 0.033 | 0.228 |
+| RF disagreement | 0.736 | 0.238 | 0.712 | 0.035 | 0.035 | 0.248 |
+| Feature-space distance | 0.859 | 0.109 | 0.575 | 0.043 | 0.043 | 0.345 |
+| Split conformal | 0.518 | 0.096 | 0.500 | 0.079 | 0.079 | **0.545** |
+| Isolation Forest | 0.847 | 0.077 | 0.379 | 0.036 | 0.036 | 0.284 |
+
+The UNSW→CIC direction provides the clearest separation between generic error detection and attack-miss prioritization. Feature-space distance and Isolation Forest obtain the strongest generic-error AUPRC values, 0.859 and 0.847, respectively, yet their attack-miss AUPRC values fall to 0.109 and 0.077. Their attack-miss AUROC values also indicate very different security behavior: feature-space distance remains above random ordering at 0.575, whereas Isolation Forest is below 0.5 at 0.379, indicating that its intended high-score-as-review direction is generally reversed for the attack-miss population in this transfer direction.
+
+Confidence and RF disagreement show a different pattern. Their generic-error AUPRC values are both approximately 0.74, while their attack-miss AUPRC values are 0.192 and 0.238, respectively. Thus, relatively strong generic-error ranking does not by itself determine which signal is most useful for finding attack misses. RF disagreement in particular becomes the strongest attack-miss ranking signal in UNSW→CIC even though feature-space distance is substantially stronger on generic-error AUPRC.
+
+Split conformal is close to the generic-error prevalence in UNSW→CIC, with mean generic-error AUPRC of 0.518, and its attack-miss AUROC is approximately 0.500. The signal therefore provides little evidence of useful directional discrimination for attack misses in this direction despite its nontrivial 5% attack-miss capture reported in Section V-B. This difference illustrates that threshold-free ranking, AUROC direction, and a fixed-budget capture statistic can describe different aspects of the same score distribution.
+
+The reverse CIC→UNSW direction exhibits a different structure. Generic-error AUPRC and attack-miss AUPRC are nearly identical for every signal, because the number of generic errors is almost entirely accounted for by attack misses in this target setting. Consequently, generic-error performance is not an independent proxy for security performance in this direction; it is effectively measuring the same small error population.
+
+More importantly, four of the five signals have mean attack-miss AUROC below 0.5 in CIC→UNSW: confidence 0.228, RF disagreement 0.248, feature-space distance 0.345, and Isolation Forest 0.284. The inversion flag is true for all ten seeds for each of these signals. Split conformal is the exception: its mean attack-miss AUROC is 0.545 and it remains above 0.5 for all ten seeds. This provides evidence of a pronounced directional change in score semantics: signals that retain positive ranking behavior in the reverse direction can become systematically anti-informative when applied with the same high-score review orientation.
+
+The results therefore reject the assumption that generic prediction-error ranking is a sufficient validation target for security-focused reliability. A reliability mechanism can identify ordinary detector errors effectively while failing to identify the subset of errors that correspond to missed attacks. Conversely, a signal with weak generic-error behavior can exhibit comparatively useful attack-miss prioritization under a particular transfer direction and review budget.
