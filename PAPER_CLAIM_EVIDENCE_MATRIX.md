@@ -85,3 +85,8 @@
 | C-057 | Results V-D | Feature-space distance has a higher mean 5% capture in CIC→UNSW (4.34%) than in UNSW→CIC (0.58%). | C1 | analysis_aggregate.csv; analysis_direction_shift.csv | feature_space_distance capture_0.05 | Both directions | Descriptive | No | Yes |
 | C-058 | Results V-D | Small directional change does not necessarily imply useful reliability utility, as illustrated by Isolation Forest. | C3 | analysis_aggregate.csv; analysis_direction_shift.csv | isolation_forest | Both directions | Descriptive interpretation | No | Yes |
 | C-059 | Results V-D | Bidirectional evaluation changes the identity of the highest mean attack-miss AUPRC signal, from RF disagreement to split conformal. | C1/C2 | analysis_aggregate.csv | Sections V-A and V-D | Both directions | Descriptive | No | Yes |
+
+| C-060 | Results V-E | The frozen cross-domain family analysis supports only a documented shared DoS category and does not justify broad unseen-family claims. | C1 | transfer_family_registry.csv; analysis_family_scope.md | family registry/scope | Both directions | Not applicable | No | Yes |
+| C-061 | Results V-E | UNSW→CIC has zero target rows in the saved shared-DoS family-analysis subset. | C1 | analysis_family_results.csv | unsw-to-cic / DoS | UNSW→CIC | Descriptive | No | Yes |
+| C-062 | Results V-E | CIC→UNSW has 5,980 mapped DoS rows, all of which are attack misses, making within-family AUPRC 1.0 for every signal. | C1 | analysis_family_results.csv | cic-to-unsw / DoS | CIC→UNSW | Descriptive; trivial by construction | No | Yes |
+| C-063 | Results V-E | The family analysis is insufficient for a general unseen-family robustness claim. | C3 | C-060–C-062 | Section V-E | Both directions | Not applicable | No | Yes |
