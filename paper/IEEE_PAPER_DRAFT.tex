@@ -188,7 +188,6 @@ The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. Th
 \node[smallbox, below right=0.42cm and 0.95cm of split] (stest)
   {Source test\\\scriptsize held out};
 
-\node[group, fit=(src)(split)(train)(cal)(stest)] (sourcegroup) {};
 
 \draw[arrow] (src) -- (split);
 \draw[arrow] (split.south) -- (train.north);
@@ -236,7 +235,6 @@ The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. Th
       minimum height=0.82cm] (reveal)
   {Reveal\\target labels};
 
-\node[group, fit=(tgt)(score)(outputs)(hiddenlabels)(complete)] (targetgroup) {};
 
 \draw[arrow] (tgt) -- (score);
 \draw[arrow] (score) -- (outputs);
@@ -245,7 +243,7 @@ The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. Th
 \draw[arrow] (complete) -- (reveal);
 
 % Explicit freeze-to-target connection routed below the source-test branch.
-\draw[arrow] (freeze.east) -- ++(0.8cm,0) |- (score.west);
+\draw[arrow] (freeze.east) -- ++(2.8cm,0) |- (score.west);
 
 % ---------------- EVALUATION ----------------
 \node[eval] (auprc) at ($(reveal.east)+(2.05cm,0.65cm)$)
