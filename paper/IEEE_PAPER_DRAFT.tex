@@ -723,22 +723,7 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
   tick style={draw=black!70},
   label style={font=\footnotesize},
   tick label style={font=\footnotesize},
-  legend style={
-    font=\footnotesize,
-    at={(0.5,1.17)},
-    anchor=south,
-    legend columns=3,
-    draw=none,
-    column sep=0.7em
-  },
-  clip=false,
-  scatter/classes={
-    conf={mark=o},
-    rf={mark=square*},
-    dist={mark=triangle*},
-    conformal={mark=diamond*},
-    iforest={mark=x}
-  }
+  clip=false
 ]
 
 \nextgroupplot[
@@ -746,37 +731,30 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
   title style={font=\footnotesize\bfseries}
 ]
 
-% Generic-error AUPRC vs attack-miss AUPRC.
-\addplot[
-  only marks,
-  scatter,
-  scatter src=explicit symbolic,
-  scatter/classes={
-    conf={mark=o,mark size=2.7pt},
-    rf={mark=square*,mark size=2.2pt},
-    dist={mark=triangle*,mark size=2.5pt},
-    conformal={mark=diamond*,mark size=2.4pt},
-    iforest={mark=x,mark size=2.8pt}
-  }
-]
-coordinates {
-  (0.738,0.192) [conf]
-  (0.736,0.238) [rf]
-  (0.859,0.109) [dist]
-  (0.518,0.096) [conformal]
-  (0.847,0.077) [iforest]
-};
-\addlegendentry{Confidence}
-\addlegendentry{RF disagreement}
-\addlegendentry{Feature distance}
-\addlegendentry{Split conformal}
-\addlegendentry{Isolation Forest}
+% Confidence
+\addplot[only marks,mark=o,mark size=2.7pt]
+  coordinates {(0.738,0.192)};
+\node[font=\tiny,anchor=west] at (axis cs:0.738,0.192) {Confidence};
 
-\node[font=\tiny, anchor=west] at (axis cs:0.738,0.192) {Confidence};
-\node[font=\tiny, anchor=west] at (axis cs:0.736,0.238) {RF};
-\node[font=\tiny, anchor=west] at (axis cs:0.859,0.109) {Distance};
-\node[font=\tiny, anchor=west] at (axis cs:0.518,0.096) {Conformal};
-\node[font=\tiny, anchor=east] at (axis cs:0.847,0.077) {Isolation};
+% RF disagreement
+\addplot[only marks,mark=square*,mark size=2.2pt]
+  coordinates {(0.736,0.238)};
+\node[font=\tiny,anchor=west] at (axis cs:0.736,0.238) {RF};
+
+% Feature distance
+\addplot[only marks,mark=triangle*,mark size=2.5pt]
+  coordinates {(0.859,0.109)};
+\node[font=\tiny,anchor=east] at (axis cs:0.859,0.109) {Distance};
+
+% Split conformal
+\addplot[only marks,mark=diamond*,mark size=2.4pt]
+  coordinates {(0.518,0.096)};
+\node[font=\tiny,anchor=west] at (axis cs:0.518,0.096) {Conformal};
+
+% Isolation Forest
+\addplot[only marks,mark=x,mark size=2.8pt]
+  coordinates {(0.847,0.077)};
+\node[font=\tiny,anchor=east] at (axis cs:0.847,0.077) {Isolation};
 
 \nextgroupplot[
   title={CIC$\rightarrow$UNSW},
@@ -784,32 +762,30 @@ coordinates {
   ylabel={}
 ]
 
-\addplot[
-  only marks,
-  scatter,
-  scatter src=explicit symbolic,
-  scatter/classes={
-    conf={mark=o,mark size=2.7pt},
-    rf={mark=square*,mark size=2.2pt},
-    dist={mark=triangle*,mark size=2.5pt},
-    conformal={mark=diamond*,mark size=2.4pt},
-    iforest={mark=x,mark size=2.8pt}
-  },
-  forget plot
-]
-coordinates {
-  (0.033,0.033) [conf]
-  (0.035,0.035) [rf]
-  (0.043,0.043) [dist]
-  (0.079,0.079) [conformal]
-  (0.036,0.036) [iforest]
-};
+% Confidence
+\addplot[only marks,mark=o,mark size=2.7pt]
+  coordinates {(0.033,0.033)};
+\node[font=\tiny,anchor=west] at (axis cs:0.033,0.033) {Confidence};
 
-\node[font=\tiny, anchor=west] at (axis cs:0.033,0.033) {Confidence};
-\node[font=\tiny, anchor=west] at (axis cs:0.035,0.035) {RF};
-\node[font=\tiny, anchor=west] at (axis cs:0.043,0.043) {Distance};
-\node[font=\tiny, anchor=west] at (axis cs:0.079,0.079) {Conformal};
-\node[font=\tiny, anchor=west] at (axis cs:0.036,0.036) {Isolation};
+% RF disagreement
+\addplot[only marks,mark=square*,mark size=2.2pt]
+  coordinates {(0.035,0.035)};
+\node[font=\tiny,anchor=south west] at (axis cs:0.035,0.035) {RF};
+
+% Feature distance
+\addplot[only marks,mark=triangle*,mark size=2.5pt]
+  coordinates {(0.043,0.043)};
+\node[font=\tiny,anchor=south west] at (axis cs:0.043,0.043) {Distance};
+
+% Split conformal
+\addplot[only marks,mark=diamond*,mark size=2.4pt]
+  coordinates {(0.079,0.079)};
+\node[font=\tiny,anchor=south west] at (axis cs:0.079,0.079) {Conformal};
+
+% Isolation Forest
+\addplot[only marks,mark=x,mark size=2.8pt]
+  coordinates {(0.036,0.036)};
+\node[font=\tiny,anchor=north east] at (axis cs:0.036,0.036) {Isolation};
 
 \end{groupplot}
 \end{tikzpicture}
