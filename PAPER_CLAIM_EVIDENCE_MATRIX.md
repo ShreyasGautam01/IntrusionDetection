@@ -90,3 +90,7 @@
 | C-061 | Results V-E | UNSW→CIC has zero target rows in the saved shared-DoS family-analysis subset. | C1 | analysis_family_results.csv | unsw-to-cic / DoS | UNSW→CIC | Descriptive | No | Yes |
 | C-062 | Results V-E | CIC→UNSW has 5,980 mapped DoS rows, all of which are attack misses, making within-family AUPRC 1.0 for every signal. | C1 | analysis_family_results.csv | cic-to-unsw / DoS | CIC→UNSW | Descriptive; trivial by construction | No | Yes |
 | C-063 | Results V-E | The family analysis is insufficient for a general unseen-family robustness claim. | C3 | C-060–C-062 | Section V-E | Both directions | Not applicable | No | Yes |
+
+| C-064 | Results V-F | Mean target Brier score and ECE are 0.245 and 0.317 in UNSW→CIC, versus 0.075 and 0.153 in CIC→UNSW. | C1 | analysis_calibration_conformal.csv | brier_score/ece_15bin by direction | Both directions | Descriptive | No | Yes |
+| C-065 | Results V-F | The saved target conformal ambiguity/set-size diagnostics are internally inconsistent with binary prediction-set cardinality and are withheld from quantitative manuscript claims. | C1/C3 | analysis_calibration_conformal.csv; harness QA | target_ambiguity_rate; target_mean_prediction_set_size | Both directions | QA finding | No | Yes |
+| C-066 | Results V-F | The transfer integrity audit confirms no target labels were used for fitting, tuning, recalibration, or score construction. | C1 | FINAL_ANALYSIS_AUDIT.json | audit fields | Both directions | Not applicable | No | Yes |
