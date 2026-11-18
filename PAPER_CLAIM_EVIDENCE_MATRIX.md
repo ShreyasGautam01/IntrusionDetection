@@ -111,3 +111,13 @@
 | C-078 | Discussion VI-D | Source-only monitoring is a baseline for frozen deployment rather than a replacement for target-domain adaptation. | C3 | Methodology; CIT-010 | Study scope | Conceptual | Yes | Yes |
 | C-079 | Discussion VI-E | The present contribution is empirical transportability analysis rather than algorithmic novelty. | C3 | Literature audit; complete study | Entire study | Novelty claim | Yes | Provisional pending final literature audit |
 | C-080 | Discussion VI-F | Temporal drift, target-label-efficient recalibration, broader domain replication, family-conditional analysis, and composite reliability are major logical extensions. | C3 | Results; CIT-001/CIT-003 | Future work | Not applicable | Yes | Yes |
+
+| C-081 | Limitations VII-A | Findings are based on two NetFlow-v3 datasets and two transfer directions. | C1 | target transfer manifests | dataset/domain scope | Not applicable | No | Yes |
+| C-082 | Limitations VII-B | The fixed RF backbone limits architectural generalization. | C1 | methodology/transfer manifests | detector scope | Not applicable | No | Yes |
+| C-083 | Limitations VII-C | Ten seeds quantify repeated training variability, not independent deployments. | C1 | frozen manifests | seed design | Not applicable | No | Yes |
+| C-084 | Limitations VII-D | Family analysis does not support a comprehensive unseen-family conclusion. | C1 | family registry + Results V-E | family scope | Not applicable | No | Yes |
+| C-085 | Limitations VII-E | Conformal target ambiguity/set-size diagnostics are withheld because their saved values are internally inconsistent. | C1 | calibration CSV + QA harness | conformal diagnostics | QA | No | Yes |
+| C-086 | Limitations VII-F | No target adaptation or recalibration is evaluated. | C1 | frozen transfer manifests | source-only protocol | Not applicable | No | Yes |
+| C-087 | Limitations VII-G | Offline benchmark review budgets are an abstraction of SOC analyst workflows. | C3 | methodology + literature | deployment scope | Not applicable | Yes | Yes |
+| C-088 | Limitations VII-H | Multiple methods and secondary endpoints require cautious interpretation of individual p-values. | C3 | statistical harness; paired statistics | inference scope | Multiplicity | No | Yes |
+| C-089 | Limitations VII-I | Reliability conclusions remain representation dependent, particularly distance and novelty signals. | C3 | methodology; feature registry | 46-feature interface | No | No | Yes |
