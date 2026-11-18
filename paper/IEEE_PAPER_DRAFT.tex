@@ -443,7 +443,7 @@ At the scientific level, source splits, preprocessing values, feature order, det
 
 \subsection{Primary Security Endpoint: Attack-Miss AUPRC}
 
-The primary analysis asks whether the reliability scores can rank target observations that are simultaneously attacks and false negatives of the frozen detector. Table~IV reports the exact mean attack-miss AUPRC and seed-level standard deviation for each reliability signal and transfer direction. Figure~1 visualizes the same summary as paired points with horizontal uncertainty bars, with each connecting segment showing how the corresponding signal changes when the source and target domains are reversed.
+The primary analysis asks whether the reliability scores can rank target observations that are simultaneously attacks and false negatives of the frozen detector. Table~IV reports the exact mean attack-miss AUPRC and seed-level standard deviation for each reliability signal and transfer direction. Fig.~1 visualizes the same summary as paired points with horizontal uncertainty bars, with each connecting segment showing how the corresponding signal changes when the source and target domains are reversed.
 
 \begin{table}[t]
 \centering
@@ -564,7 +564,7 @@ The primary endpoint therefore establishes the first central result of the study
 
 \subsection{Operational Utility at Fixed Analyst-Review Budgets}
 
-The primary operational analysis asks how many detector attack misses can be recovered when only a fixed fraction of target traffic can be reviewed. Table~V reports the exact mean capture values at the 1\%, 5\%, and 10\% budgets. Figure~2 plots the same results as budget-response curves for the two transfer directions, making changes in operational ranking visible across review capacity.
+The primary operational analysis asks how many detector attack misses can be recovered when only a fixed fraction of target traffic can be reviewed. Table~V reports the exact mean capture values at the 1\%, 5\%, and 10\% budgets. Fig.~2 plots the same results as budget-response curves for the two transfer directions, making changes in operational ranking visible across review capacity.
 
 \begin{table}[t]
 \centering
@@ -673,7 +673,7 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 
 At the primary 5\% review budget, split conformal has the highest mean attack-miss capture in both transfer directions, at 17.37\% for UNSW$\rightarrow$CIC and 14.73\% for CIC$\rightarrow$UNSW. In the first direction, this differs from the AUPRC result in Fig.~1, where RF disagreement has the highest threshold-free ranking performance. The two metrics therefore identify different aspects of operational usefulness.
 
-Figure~2 further shows that the difference is not limited to the single 5\% operating point. In UNSW$\rightarrow$CIC, split conformal rises sharply between 1\% and 5\% review, while RF disagreement and confidence increase more progressively. In CIC$\rightarrow$UNSW, split conformal remains the highest curve across all three tested budgets, whereas feature-space distance becomes the next most effective signal as review capacity increases.
+Fig.~2 further shows that the difference is not limited to the single 5\% operating point. In UNSW$\rightarrow$CIC, split conformal rises sharply between 1\% and 5\% review, while RF disagreement and confidence increase more progressively. In CIC$\rightarrow$UNSW, split conformal remains the highest curve across all three tested budgets, whereas feature-space distance becomes the next most effective signal as review capacity increases.
 
 The paired analysis qualifies the descriptive 5\% comparison. In UNSW$\rightarrow$CIC, the mean RF-minus-conformal difference is -0.0504 and its bootstrap interval spans zero, so the descriptive 17.37\% versus 12.33\% ordering is not a definitive paired separation at this budget. In CIC$\rightarrow$UNSW, the corresponding difference is -0.1385 with an interval entirely below zero, providing stronger paired evidence in favor of split conformal.
 
@@ -681,7 +681,7 @@ The operational results therefore establish a second central finding: reliabilit
 
 \subsection{Generic Errors Versus Security-Critical Attack Misses}
 
-The generic-error analysis asks whether a reliability signal that is effective at identifying incorrect detector predictions is necessarily effective at prioritizing the subset of those errors that are attacks classified as benign. Table~VI reports generic-error AUPRC, attack-miss AUPRC, and attack-miss AUROC. Figure~3 visualizes the relationship between the two AUPRC measures directly.
+The generic-error analysis asks whether a reliability signal that is effective at identifying incorrect detector predictions is necessarily effective at prioritizing the subset of those errors that are attacks classified as benign. Table~VI reports generic-error AUPRC, attack-miss AUPRC, and attack-miss AUROC. Fig.~3 visualizes the relationship between the two AUPRC measures directly.
 
 \begin{table}[t]
 \centering
@@ -793,7 +793,7 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \label{fig:generic-vs-attackmiss}
 \end{figure*}
 
-The UNSW$\rightarrow$CIC direction provides the clearest separation between generic error detection and security-specific attack-miss prioritization. Figure~3 shows that feature-space distance and Isolation Forest lie at the high end of generic-error AUPRC while remaining substantially lower on attack-miss AUPRC. Their generic-error AUPRC values are 0.859 and 0.847, but their attack-miss AUPRC values fall to 0.109 and 0.077. By contrast, RF disagreement and confidence achieve somewhat lower generic-error AUPRC but substantially higher attack-miss AUPRC.
+The UNSW$\rightarrow$CIC direction provides the clearest separation between generic error detection and security-specific attack-miss prioritization. Fig.~3 shows that feature-space distance and Isolation Forest lie at the high end of generic-error AUPRC while remaining substantially lower on attack-miss AUPRC. Their generic-error AUPRC values are 0.859 and 0.847, but their attack-miss AUPRC values fall to 0.109 and 0.077. By contrast, RF disagreement and confidence achieve somewhat lower generic-error AUPRC but substantially higher attack-miss AUPRC.
 
 This divergence means that input atypicality and security-critical detector failure are not interchangeable reliability objectives. An observation can be unusual in the selected feature space without being an attack that the detector misses, while an attack miss can remain close to source traffic and receive only a modest novelty score.
 
@@ -807,7 +807,7 @@ The results therefore show that generic prediction-error ranking is insufficient
 
 \subsection{Directional Transportability of Reliability Performance}
 
-Figure~1 shows the directional change in attack-miss AUPRC directly; Table~VII quantifies that change for both threshold-free ranking and the primary 5\% operational budget. This distinction is useful because a method can change substantially in absolute performance when the transfer direction is reversed without necessarily showing the same change in its operational capture.
+Fig.~1 shows the directional change in attack-miss AUPRC directly; Table~VII quantifies that change for both threshold-free ranking and the primary 5\% operational budget. This distinction is useful because a method can change substantially in absolute performance when the transfer direction is reversed without necessarily showing the same change in its operational capture.
 
 \begin{table}[t]
 \centering
@@ -895,13 +895,13 @@ This benchmark separates execution efficiency from the scientific definition of 
 
 \subsection{Principal Findings}
 
-The completed bidirectional experiment does not identify a universally transportable reliability signal. The three main empirical patterns are complementary. Figure~1 shows that the relative attack-miss AUPRC ranking changes when the source and target domains are reversed. Figure~2 shows that operational capture also depends on the analyst-review budget, and that the threshold-free ranking does not necessarily determine the best fixed-budget choice. Figure~3 shows that generic prediction-error ranking can diverge substantially from security-specific attack-miss ranking.
+The completed bidirectional experiment does not identify a universally transportable reliability signal. The three main empirical patterns are complementary. Fig.~1 shows that the relative attack-miss AUPRC ranking changes when the source and target domains are reversed. Fig.~2 shows that operational capture also depends on the analyst-review budget, and that the threshold-free ranking does not necessarily determine the best fixed-budget choice. Fig.~3 shows that generic prediction-error ranking can diverge substantially from security-specific attack-miss ranking.
 
 Together, these findings support the central interpretation that reliability transportability is not a property of a score in isolation. It depends on the interaction among the detector, source and target distributions, reliability construction, security failure mode, and operational review budget. A reliability layer selected from one benchmark direction therefore cannot automatically be treated as deployment-robust.
 
 \subsection{Why Generic Reliability and Security Reliability Diverge}
 
-Figure~3 provides the clearest evidence for the distinction between generic reliability and security-specific reliability. In UNSW$\rightarrow$CIC, feature-space distance and Isolation Forest occupy relatively strong positions on generic-error AUPRC while remaining much lower on attack-miss AUPRC. This pattern is consistent with a difference between \textbf{input atypicality} and \textbf{security-relevant detector failure}.
+Fig.~3 provides the clearest evidence for the distinction between generic reliability and security-specific reliability. In UNSW$\rightarrow$CIC, feature-space distance and Isolation Forest occupy relatively strong positions on generic-error AUPRC while remaining much lower on attack-miss AUPRC. This pattern is consistent with a difference between \textbf{input atypicality} and \textbf{security-relevant detector failure}.
 
 An observation can be unusual in the chosen feature space without being an attack that the detector misses. Conversely, a dangerous attack can remain close to source traffic and therefore receive a modest novelty score. The figure therefore supports a narrower interpretation of novelty signals: they measure atypicality under the selected representation, not security risk itself.
 
@@ -923,7 +923,7 @@ The results suggest that deployment monitoring should answer two separate questi
 
 First, \textbf{does the score remain aligned with actual detector failures after transfer?} The directional and semantic behavior in Fig.~1 and the attack-miss AUROC analysis show that this cannot be assumed.
 
-Second, \textbf{how useful is the score under the available analyst budget?} Figure~2 demonstrates that operational capture depends on the review fraction and need not follow the threshold-free AUPRC ranking.
+Second, \textbf{how useful is the score under the available analyst budget?} Fig.~2 demonstrates that operational capture depends on the review fraction and need not follow the threshold-free AUPRC ranking.
 
 These observations imply that a deployment workflow should validate both score orientation and budgeted capture on a representative deployment scenario before operationalizing a reliability layer. The appropriate validation target should be the security failure mode of interest—here, attack misses—rather than generic error detection alone, as demonstrated in Fig.~3.
 
