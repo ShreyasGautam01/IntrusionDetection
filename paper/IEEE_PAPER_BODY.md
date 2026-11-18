@@ -89,13 +89,13 @@ The 46 predictive variables include protocol information, packet and byte counts
 
 A binary detector target is used:
 
-[
+\[
 y_i =
-egin{cases}
-1,&	ext{attack},\
-0,&	ext{benign}.
-end{cases}
-]
+\begin{cases}
+1,&\text{attack},\\
+0,&\text{benign}.
+\end{cases}
+\]
 
 Raw attack-family labels are retained only as evaluation metadata. They are not predictors and do not enter detector training, reliability fitting, or score construction.
 
@@ -140,32 +140,32 @@ All five reliability mechanisms produce a scalar score whose common orientation 
 
 Let (p_i^{(0)}) and (p_i^{(1)}) be the source-calibrated probabilities assigned to the benign and attack classes. The reliability score is
 
-[
-r_i^{mathrm{conf}} = 1-maxleft(p_i^{(0)},p_i^{(1)}ight).
-]
+\[
+r_i^{\mathrm{conf}} = 1-\max\left(p_i^{(0)},p_i^{(1)}\right).
+\]
 
 Thus, observations for which the frozen detector is less confident receive larger review scores. Probability calibration is fitted with a source-only sigmoid/Platt calibration procedure using the dedicated source probability-calibration subset [6]. The calibrator is frozen before target scoring.
 
 #### 2) Random Forest tree disagreement
 
-For the (T=200) trees, let (v_{ic}) denote the number of tree predictions for class (c). The vote fraction for class (c) is (v_{ic}/T). The disagreement score is
+For the ($T=200$) trees, let (v_{ic}) denote the number of tree predictions for class (c). The vote fraction for class (c) is (v_{ic}/T). The disagreement score is
 
-[
+\[
 r_i^{mathrm{RF}} =
-1-max_{cin{0,1}}rac{v_{ic}}{T}.
-]
+r_i^{\mathrm{RF}} = 1-\max_{c\in\{0,1\}}\frac{v_{ic}}{T}.
+\]
 
 The score is therefore zero when all trees agree and increases as the tree votes become less concentrated on a single class.
 
 #### 3) Feature-space distance
 
-Let (z_i) denote the standardized feature vector for a sample, where the standardization parameters are fitted using source-training rows only. For target observation (i), let (N_5(i)) be the five nearest source-training reference rows under Euclidean distance. The score is
+Let (z_i) denote the standardized feature vector for a sample, where the standardization parameters are fitted using source-training rows only. For target observation (i), let ($N_5(i)$) be the five nearest source-training reference rows under Euclidean distance. The score is
 
-[
+\[
 r_i^{mathrm{dist}} =
-rac{1}{5}sum_{jin N_5(i)}
+\frac{1}{5}\sum_{j\in N_5(i)}\left\lVert z_i-z_j\right\rVert_2.
 left|z_i-z_jight|_2 .
-]
+\]
 
 The source reference population is never augmented with target observations. The exact computation uses a KD-tree implementation with deterministic duplicate compression and top-five merging; the resulting quantity is mathematically equivalent to the mean distance to the five nearest original source-training rows.
 
@@ -175,18 +175,18 @@ Unlike the other seed-varying signals, this distance is independent of the Rando
 
 Split conformal prediction is constructed from the source probability-calibration pipeline rather than from target observations [7]. For a source calibration observation with true class (y_i), the nonconformity value is
 
-[
-a_i = 1-p_{mathrm{cal}}(y_imid x_i).
-]
+\[
+a_i = 1-p_{\mathrm{cal}}\left(y_i\mid x_i\right).
+\]
 
-With (alpha=0.10), the finite-sample conformal quantile is obtained from the frozen source conformal-calibration subset. For a target observation, a binary class is included in the prediction set when its class-specific nonconformity does not exceed this quantile.
+With ($\\alpha=0.10$), the finite-sample conformal quantile is obtained from the frozen source conformal-calibration subset. For a target observation, a binary class is included in the prediction set when its class-specific nonconformity does not exceed this quantile.
 
 Because the paper compares all methods through a common scalar review ranking, the primary conformal review score is the normalized prediction-set size,
 
-[
+\[
 r_i^{mathrm{confm}} =
-rac{|C(x_i)|-1}{2-1},
-]
+r_i^{\mathrm{confm}} = \frac{|C(x_i)|-1}{2-1}.
+\]
 
 where (C(x_i)) is the binary conformal prediction set. A singleton prediction set therefore receives score 0 and a two-class prediction set receives score 1. The mapping is frozen before target evaluation.
 
@@ -221,30 +221,30 @@ The target evaluation uses the complete target population. For the primary opera
 
 The primary event is a **detector attack miss**:
 
-[
-m_i = I(y_i=1 land hat y_i=0).
-]
+\[
+m_i = I\left(y_i=1\land \hat y_i=0\right).
+\]
 
 For a reliability score (r_i), the primary security metric is the area under the precision-recall curve obtained by treating (m_i) as the positive class and ranking observations from highest to lowest (r_i). This is denoted attack-miss AUPRC.
 
 The primary operational metric is attack-miss capture at a 5% review budget:
 
-[
-mathrm{Capture}@b =
-rac{sum_{iin S_b}m_i}
-{sum_i m_i},
+\[
+\mathrm{Capture}@b =
+\frac{\sum_{i\in S_b}m_i}{\sum_i m_i},\qquad
+|S_b|=\left\lfloor bN\right\rfloor.
 qquad
 |S_b|=lfloor bNfloor ,
-]
+\]
 
 where (S_b) is the set of the (bN) highest-scoring target observations. Capture at 1% and 10% is reported as a secondary operational analysis.
 
 Generic prediction error is analyzed separately using
 
-[
-e_i=I(y_i
+\[
+e_i=I\left(y_i\ne \hat y_i\right),
 ehat y_i),
-]
+\]
 
 so that ordinary error detection is not conflated with attack-miss prioritization. Secondary analyses include generic-error AUPRC/AUROC, attack-miss AUROC, direction-specific score-orientation diagnostics, selective risk, family-level performance where the locked semantic registry supports a defensible comparison, calibration/conformal diagnostics, and computational cost.
 
@@ -315,7 +315,7 @@ Five post-hoc signals are compared under the same source-trained detector.
 | Confidence | Calibrated RF class probabilities | Sigmoid/Platt calibration | High = unreliable |
 | RF disagreement | 200 tree class votes | (1-max_c v_c/200) | High = unreliable |
 | Feature distance | Standardized source-train reference | Euclidean mean of 5 nearest rows | High = unreliable |
-| Split conformal | Source conformal calibration | (alpha=0.10) | High = unreliable |
+| Split conformal | Source conformal calibration | ($\\alpha=0.10$) | High = unreliable |
 | Isolation Forest | Source-training anomaly model | 100 trees, max_samples=256 | High = unreliable |
 
 The reliability methods differ in the information they exploit. Confidence and RF disagreement are model-dependent; feature distance and Isolation Forest primarily characterize input atypicality; conformal scoring incorporates a source-calibrated uncertainty rule. All five are converted to the same review-score orientation so that the target evaluation can use an identical ranking procedure.
@@ -329,9 +329,9 @@ The complete experiment consists of two transfer directions:
 
 Each direction is repeated with the ten fixed seeds
 
-[
-S={0,1,2,3,4,5,6,7,8,9}.
-]
+\[
+S=\{0,1,2,3,4,5,6,7,8,9\}.
+\]
 
 The feature-distance signal is seed independent and is computed once per direction, whereas confidence, RF disagreement, split conformal, and Isolation Forest produce seed-indexed outputs under the frozen configuration.
 
@@ -352,9 +352,9 @@ The completed audit passes all four checks for both transfer directions.
 
 For each target flow, the frozen detector produces a binary prediction and the frozen reliability layer produces a scalar review score. The target rows are then ordered from highest to lowest reliability score. For an analyst-review budget (b), the first
 
-[
-k_b=leftlfloor bNightfloor
-]
+\[
+k_b=\left\lfloor bN\right\rfloor
+\]
 
 rows are selected, where (N) is the full target population. The study evaluates (bin{0.01,0.05,0.10}), with 5% as the primary operational budget.
 
