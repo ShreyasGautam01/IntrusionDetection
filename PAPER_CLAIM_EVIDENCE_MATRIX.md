@@ -11,3 +11,17 @@
 | C-007 | Abstract | Split conformal has the highest mean attack-miss AUPRC in CIC→UNSW (0.079). | C1 | analysis_aggregate.csv | direction=CIC→UNSW, method=split conformal | Primary transfer | Descriptive | No | Yes |
 | C-008 | Abstract | Split conformal has the highest mean 5% attack-miss capture in both directions. | C1 | analysis_aggregate.csv | 5% capture rows | Operational endpoint | Descriptive | No | Yes |
 | C-009 | Abstract/Introduction | No single reliability signal dominates across both directions. | C2 | analysis_aggregate.csv; paired statistics | Both directions | Primary methods | Yes; final multiplicity audit required | No | Provisional |
+
+## Related Work claims
+
+| Claim ID | Section | Claim | Level | Evidence / Citation | Evidence location | Scope | Statistical support | Citation required | Verified |
+|---|---|---|---|---|---|---|---|---|---|
+| C-010 | Related Work | Recent IDS cross-dataset studies report threshold-transfer failures and score-orientation changes under benchmark shift. | C1 | CIT-002 | Source [2] | Cross-dataset IDS | Source-specific | Yes | Yes |
+| C-011 | Related Work | Recent temporal IDS work has evaluated confidence monitoring, model agreement, and conformal abstention under label-free shift. | C1 | CIT-001 | Source [1] | Temporal IDS shift | Source-specific | Yes | Yes |
+| C-012 | Related Work | Recent IDS uncertainty work evaluates uncertainty-aware RF and neural approaches for trustworthy and open-set IDS. | C1 | CIT-005 | Source [5] | IDS uncertainty | Source-specific | Yes | Yes |
+| C-013 | Related Work | Selective prediction formalizes a risk-coverage tradeoff through a reject option. | C1 | CIT-008 | Source [8] | General selective classification | Not applicable | Yes | Yes |
+| C-014 | Related Work | Conformal prediction provides distribution-free uncertainty sets under exchangeability assumptions. | C1 | CIT-007 | Source [7] | General conformal prediction | Not applicable | Yes | Yes |
+| C-015 | Related Work | Recent IDS conformal triage work reports family-dependent novelty behavior and score inversion. | C1 | CIT-003 | Source [3] | Unseen attack families | Source-specific | Yes | Yes |
+| C-016 | Related Work | Recent transfer-learning IDS work improves cross-domain target performance through target-domain adaptation, which answers a different question from source-only transportability. | C1/C3 | CIT-010 | Source [10] | Cross-dataset adaptation | Source-specific | Yes | Yes |
+| C-017 | Related Work | Isolation Forest is an established lightweight unsupervised anomaly-detection construction. | C1 | CIT-009 | Source [9] | General anomaly detection | Not applicable | Yes | Yes |
+| C-018 | Related Work | No individual component is presented as algorithmically novel; the contribution is the controlled empirical comparison focused on attack-miss prioritization under frozen source-only transfer. | C2/C3 | CIT-001–CIT-010 + completed artifacts | Section II-E | Present study scope | Final novelty audit required | Yes | Provisional |
