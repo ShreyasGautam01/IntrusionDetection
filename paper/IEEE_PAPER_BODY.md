@@ -416,7 +416,7 @@ The primary operational endpoint is the fraction of detector attack misses recov
 | Split conformal | 0.0001% | **17.37%** | 20.40% | **4.91%** | **14.73%** | **22.53%** |
 | Isolation Forest | 0.14% | 0.75% | 1.76% | 0.05% | 0.45% | 0.82% |
 
-At the primary 5% review budget, split conformal has the highest mean attack-miss capture in both transfer directions: 17.37% for UNSW→CIC and 14.73% for CIC→UNSW. In UNSW→CIC, RF disagreement is the second-highest mean at 12.33%, followed by confidence at 8.19%, feature-space distance at 0.58%, and Isolation Forest at 0.75%. In CIC→UNSW, feature-space distance is the second-highest mean at 4.34%, followed by RF disagreement at 0.88%, confidence at 0.77%, and Isolation Forest at 0.45%.
+At the primary 5% review budget, split conformal has the highest mean attack-miss capture in both transfer directions: 17.37% for UNSW→CIC and 14.73% for CIC→UNSW. In UNSW→CIC, RF disagreement is the second-highest mean at 12.33%, followed by confidence at 8.19%, Isolation Forest at 0.75%, and feature-space distance at 0.58%. In CIC→UNSW, feature-space distance is the second-highest mean at 4.34%, followed by RF disagreement at 0.88%, confidence at 0.77%, and Isolation Forest at 0.45%.
 
 The operational ranking therefore differs from the primary AUPRC ranking. In UNSW→CIC, RF disagreement has the highest attack-miss AUPRC, but split conformal captures more attack misses at the 5% review budget. In CIC→UNSW, split conformal is the highest-ranked method under both metrics. This distinction demonstrates why threshold-free ranking quality and fixed-budget triage should not be treated as interchangeable measures of reliability utility.
 
