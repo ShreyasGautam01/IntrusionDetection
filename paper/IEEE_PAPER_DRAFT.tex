@@ -465,6 +465,7 @@ Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
 
 \begin{figure}[t]
 \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}
 \begin{axis}[
   width=\columnwidth,
@@ -549,7 +550,8 @@ Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
 \addlegendentry{CIC$\rightarrow$UNSW}
 
 \end{axis}
-\end{tikzpicture}
+\end{tikzpicture}%
+}
 \caption{Bidirectional attack-miss AUPRC. Filled and open markers denote the two transfer directions; horizontal error bars show seed-level standard deviation. Each segment connects the two directional means for the same reliability signal, making directional transportability visible without replacing the exact values reported in Table~IV.}
 \label{fig:bidirectional-auprc}
 \end{figure}
