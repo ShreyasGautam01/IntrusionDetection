@@ -544,3 +544,61 @@ Computational cost was treated as a secondary deployment consideration rather th
 
 The benchmark illustrates an important reproducibility distinction: worker parallelism changes execution time but not the scientific definition of the Random Forest experiment when numerical equivalence has been verified. The final transfer analysis therefore reports the scientific model configuration separately from its execution setting.
 
+
+
+## VI. DISCUSSION
+
+### A. Principal Findings
+
+The completed bidirectional experiment does not identify a universally transportable reliability signal. Instead, it reveals three consistent patterns. First, the method ranking changes with transfer direction: RF disagreement has the highest attack-miss AUPRC in UNSW→CIC, whereas split conformal has the highest attack-miss AUPRC in CIC→UNSW. Second, operational ranking and threshold-free ranking are not identical: split conformal provides the highest mean 5% attack-miss capture in both directions even where another method has higher AUPRC. Third, generic prediction-error performance can differ sharply from security-specific attack-miss performance.
+
+These findings support the central interpretation that reliability transportability is not a property of a score in isolation. It is a property of the interaction among the detector, source and target distributions, reliability construction, and security objective. A reliability layer selected from one benchmark or transfer direction therefore cannot automatically be treated as deployment-robust.
+
+### B. Why Generic Reliability and Security Reliability Diverge
+
+The strongest evidence for this distinction is the UNSW→CIC result. Feature-space distance and Isolation Forest identify generic prediction errors relatively well, but their attack-miss performance is much lower. This pattern is consistent with a difference between **input atypicality** and **security-relevant detector failure**. An observation can be unusual in feature space without being a false-negative attack, while a dangerous attack can remain close to source traffic and therefore receive a modest novelty score.
+
+The same distinction helps explain the different behavior of RF disagreement. Disagreement is generated directly from the detector ensemble and therefore reflects instability of the classifier's decision process rather than only the atypicality of the input representation. In UNSW→CIC, this relationship is favorable for attack-miss prioritization. The result does not establish a causal mechanism, but it is consistent with the interpretation that model-dependent uncertainty can sometimes be more aligned with detector failure than representation-level novelty.
+
+The reverse direction further demonstrates that score semantics can change. Confidence, RF disagreement, feature-space distance, and Isolation Forest have mean attack-miss AUROC below 0.5 in CIC→UNSW, with inversion detected for all ten seeds. This means that a workflow that mechanically interprets a larger score as "more deserving of review" could become systematically misdirected after the source and target roles are reversed. Similar concerns about score orientation under distribution shift have recently been reported in IDS benchmarking [2], while recent conformal/novelty work has also documented family-dependent and inverted score behavior [3].
+
+### C. Interpreting the Conformal Result
+
+Split conformal occupies a distinctive position in the experiment. It has the smallest directional change in mean attack-miss AUPRC and the highest mean 5% capture in both transfer directions. This combination suggests that the conformal score is comparatively stable as a ranking/triage signal under the particular source-only transfers studied here.
+
+However, this finding should not be interpreted as evidence that the target-domain conformal coverage guarantee remains valid after distribution shift. Classical conformal guarantees rely on assumptions such as exchangeability, and the present experiment deliberately evaluates a shifted target domain [7]. The study instead uses split conformal as a source-fitted reliability construction and measures its empirical ability to prioritize target attack misses. This is a narrower claim and avoids confusing source-calibrated uncertainty with guaranteed target-domain validity.
+
+The saved conformal diagnostic inconsistency further reinforces this distinction. The primary ranking results are retained because they are supported by the frozen transfer artifacts, but the malformed target set-size and ambiguity fields prevent a stronger claim about target conformal coverage or prediction-set behavior. The implementation should therefore be repaired and independently revalidated before any future paper version makes such claims.
+
+### D. Implications for Deployment
+
+The results suggest that deployment monitoring should evaluate at least two separate questions.
+
+First, **does a reliability score remain positively aligned with actual detector failures?** The semantic-inversion results show that this cannot be assumed after transfer.
+
+Second, **how useful is the score under the available analyst budget?** The review-budget results demonstrate that the score with the best threshold-free attack-miss AUPRC need not capture the most attack misses at a fixed review fraction.
+
+A practical deployment workflow should therefore validate the score direction and operational capture behavior on a representative deployment scenario before using a reliability signal to prioritize analyst attention. This recommendation is consistent with recent deployment-oriented IDS studies that emphasize threshold dynamics, distribution shift, and budget-constrained alerting rather than relying on a single in-domain accuracy metric [2], [10].
+
+The present study does not imply that source-only reliability monitoring is a substitute for target-domain adaptation. Rather, it establishes a measurement baseline for what can be expected when adaptation is deliberately unavailable. In settings where target labels or trustworthy unlabeled adaptation data become available, a logical next step is to investigate whether calibration or reliability transport can be improved without sacrificing the leakage controls used here.
+
+### E. Relationship to Existing Literature
+
+The results reinforce several conclusions emerging from recent work while contributing a narrower security-focused evaluation. Recent studies already show that cross-dataset and temporal shift can damage confidence, threshold transfer, and label-free monitoring [1], [2]. Recent conformal IDS work similarly shows that novelty and triage behavior can vary across attack families [3]. The present results extend this picture by evaluating the reliability signals specifically against the detector's **attack misses**, while holding the detector and source-derived reliability layer fixed and reversing the transfer direction.
+
+The contribution should therefore be understood as an empirical transportability study rather than a new uncertainty-estimation method. Its main value lies in showing that the answer to "which reliability signal works?" can change when the target domain, direction, error definition, and review budget change—even when the detector architecture and reliability implementations remain fixed.
+
+### F. Future Research Directions
+
+The results point to several high-value extensions.
+
+**Temporal deployment drift:** The current experiment compares two cross-domain environments. A natural extension is to evaluate the same reliability layers as source calibration becomes stale over time, explicitly separating temporal drift from cross-dataset differences [1].
+
+**Target-label-efficient recalibration:** The source-only protocol intentionally prevents target recalibration. Future work can quantify how much small amounts of trusted target data are needed to recover score orientation or calibration without requiring full retraining.
+
+**Broader domain replication:** Repeating the experiment across additional NetFlow-v3 domains and other common-feature IDS benchmarks would test whether the observed direction dependence is a property of these two datasets or a broader phenomenon.
+
+**Family-conditional reliability:** A larger, independently validated attack-family ontology could determine whether reliability transportability differs systematically by attack semantics instead of restricting family analysis to the single defensible shared category available here.
+
+**Composite reliability policies:** The present results compare individual signals. Future work could test whether combining disagreement, calibrated confidence, and feature-space novelty yields more stable triage than any individual score, while preserving source-only constraints.
+
