@@ -6,6 +6,8 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc}
 \providecommand{\tightlist}{}
 \title{Transportability of Lightweight Reliability Signals for Network Intrusion Detection under Source-Only Cross-Domain Transfer}
 \author{
@@ -152,7 +154,87 @@ The source-only protocol is organized into four logical stages:
 \item \textbf{Evaluation:} after target scoring is complete, expose the target labels only to the offline metric computation for attack-miss, generic-error, family-level, calibration, and review-budget analyses.
 \end{enumerate}
 
-This separation prevents target performance from influencing the system that generated the target scores.
+The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. The critical information boundary is the freeze point between source-side construction and target scoring: all model, calibration, preprocessing, reference, and score-orientation quantities are fixed before target labels are introduced into the workflow.
+
+\begin{figure*}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  >=Latex,
+  node distance=0.42cm and 0.55cm,
+  every node/.style={font=\footnotesize, align=center},
+  box/.style={draw, rounded corners=2pt, minimum height=0.72cm, inner sep=4pt},
+  smallbox/.style={draw, rounded corners=2pt, minimum width=2.05cm, minimum height=0.74cm, inner sep=3pt},
+  group/.style={draw, dashed, rounded corners=3pt, inner sep=7pt},
+  arrow/.style={->, thick},
+  freeze/.style={draw, rounded corners=3pt, fill=black!15, minimum width=6.2cm, minimum height=0.92cm, inner sep=5pt},
+  hidden/.style={draw, dashed, very thick, rounded corners=3pt, minimum width=5.35cm, minimum height=0.78cm, inner sep=4pt},
+  eval/.style={draw, rounded corners=2pt, minimum width=2.75cm, minimum height=0.72cm, inner sep=4pt}
+]
+
+\node[box, minimum width=5.9cm, font=\bfseries\normalsize] (src) {Source domain\\\footnotesize labels available};
+\node[box, below=of src, minimum width=5.9cm] (split) {Deterministic SHA-256 partition};
+\node[smallbox, below left=0.38cm and 0.35cm of split] (train) {Source train};
+\node[smallbox, below=0.38cm of split] (cal) {Source calibration\\\scriptsize probability + conformal subsets};
+\node[smallbox, below right=0.38cm and 0.35cm of split] (stest) {Source test\\\scriptsize held out};
+
+\draw[arrow] (src) -- (split);
+\draw[arrow] (split.south) -- (train.north);
+\draw[arrow] (split.south) -- (cal.north);
+\draw[arrow] (split.south) -- (stest.north);
+
+\node[box, below=0.62cm of cal, minimum width=5.9cm, minimum height=2.35cm, align=left, text width=5.35cm] (fit)
+{\textbf{Construct source-side components}\\
+Random Forest detector\\
+source probability calibrator\\
+source conformal quantile\\
+source finite-value policy and scaler\\
+5-NN distance reference\\
+Isolation Forest};
+
+\draw[arrow] (train.south) |- (fit.north);
+\draw[arrow] (cal.south) -- (fit.north);
+
+\node[freeze, below=0.62cm of fit, font=\bfseries] (freeze)
+{FREEZE\\[-1mm]\scriptsize model, calibration, preprocessing, references, score orientation};
+
+\draw[arrow] (fit) -- (freeze);
+
+\node[box, right=3.25cm of src, minimum width=5.9cm, font=\bfseries\normalsize] (tgt) {Target domain\\\footnotesize labels withheld};
+\node[box, below=of tgt, minimum width=5.9cm, minimum height=1.0cm] (score)
+{Apply frozen preprocessing\\and generate detector + reliability scores};
+\node[box, below=0.5cm of score, minimum width=5.9cm, minimum height=1.0cm] (outputs)
+{Frozen target outputs\\\scriptsize prediction + confidence + disagreement + distance + conformal + Isolation Forest};
+\node[hidden, below=0.58cm of outputs] (hiddenlabels)
+{\textbf{TARGET LABELS HIDDEN}\\[-1mm]\scriptsize until all target scores are complete};
+\node[box, below=0.58cm of hiddenlabels, minimum width=5.9cm] (complete)
+{Target scores complete};
+\node[box, right=1.75cm of complete, minimum width=1.8cm, minimum height=0.82cm] (reveal)
+{Reveal\\target labels};
+
+\draw[arrow] (tgt) -- (score);
+\draw[arrow] (score) -- (outputs);
+\draw[arrow] (outputs) -- (hiddenlabels);
+\draw[arrow] (hiddenlabels) -- (complete);
+\draw[arrow] (complete) -- (reveal);
+
+\draw[arrow] (freeze.east) -- ++(0.75cm,0) |- (score.west);
+
+\node[group, right=1.1cm of reveal, minimum width=3.55cm, minimum height=3.0cm] (evalgroup) {};
+\node[above=0.05cm of evalgroup.north, font=\bfseries] {Offline evaluation};
+\node[eval, below=0.48cm of evalgroup.north] (auprc) {Attack-miss AUPRC};
+\node[eval, below=0.45cm of auprc] (capture) {Attack-miss capture\\\scriptsize 1\%, 5\%, 10\%};
+\node[eval, below=0.45cm of capture] (secondary) {Secondary diagnostics\\\scriptsize generic error, AUROC, family, calibration};
+
+\draw[arrow] (reveal) -- (auprc.west);
+\draw[arrow] (reveal) |- (capture.west);
+\draw[arrow] (reveal) |- (secondary.west);
+
+\end{tikzpicture}%
+}
+\caption{Source-only cross-domain evaluation protocol. Source partitions and all source-derived model, calibration, preprocessing, reference, and score-orientation quantities are constructed without target labels and frozen before target scoring. Target labels remain withheld until all target scores have been generated and are then used only for offline evaluation.}
+\label{fig:source-only-protocol}
+\end{figure*}
 
 \subsection{Datasets and Predictive Representation}
 
@@ -419,7 +501,7 @@ The feature-distance signal is seed independent and is computed once per directi
 
 \subsection{Target-Label Isolation}
 
-Target labels are inaccessible during preprocessing, fitting, calibration, score construction, ranking, and method comparison. Target labels are read only after all target reliability scores have been generated for the offline evaluation stage.
+As shown by the freeze boundary in Fig.~\ref{fig:source-only-protocol}, target labels are inaccessible during preprocessing, fitting, calibration, score construction, ranking, and method comparison. Target labels are read only after all target reliability scores have been generated for the offline evaluation stage.
 
 The transfer integrity audit checks four independent conditions:
 
