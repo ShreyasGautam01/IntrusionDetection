@@ -325,9 +325,20 @@ The experimental implementation, manifests, feature registry, family registry, s
 
 The primary evaluation uses two audited NetFlow-v3 datasets: NF-UNSW-NB15-v3 and NF-CSE-CIC-IDS2018-v3 [4]. Both datasets are represented through the same frozen 46-feature predictive interface described in Section III. Dataset identity, file integrity, and row counts are fixed by the transfer manifests.
 
-\textbf{TABLE I --- DATASET AND SOURCE-PARTITION CONFIGURATION}
-
-| Dataset | Total flows | Source train | Source calibration | Source test | Predictors | |---|---:|---:|---:|---:|---:| | NF-UNSW-NB15-v3 | 2,365,424 | 1,418,952 | 473,301 | 473,171 | 46 | | NF-CSE-CIC-IDS2018-v3 | 20,115,529 | 12,068,590 | 4,021,791 | 4,025,148 | 46 |
+\begin{table}[t]
+\centering
+\caption{TABLE I --- DATASET AND SOURCE-PARTITION CONFIGURATION}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{llllll}
+\toprule
+\textbf{Dataset} & \textbf{Total flows} & \textbf{Source train} & \textbf{Source calibration} & \textbf{Source test} & \textbf{Predictors} \\
+\midrule
+NF-UNSW-NB15-v3 & 2,365,424 & 1,418,952 & 473,301 & 473,171 & 46 \\
+NF-CSE-CIC-IDS2018-v3 & 20,115,529 & 12,068,590 & 4,021,791 & 4,025,148 & 46 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
 
 The source partitions are generated deterministically from SHA-256 hashes of the canonical raw 53-feature representation, with 60\%, 20\%, and 20\% bucket ranges assigned to training, calibration, and source-test data, respectively. The source calibration partition is further divided into disjoint probability-calibration and conformal-calibration subsets. This construction makes the split reproducible while preventing the split procedure from depending on target labels.
 
@@ -337,9 +348,31 @@ The UNSW release contains attack and benign flows in the audited binary target, 
 
 Each source-domain detector is a binary Random Forest with 200 trees and minimum leaf size five. The same scientific hyperparameters are used for every seed and transfer direction.
 
-\textbf{TABLE II --- RANDOM FOREST CONFIGURATION}
-
-| Parameter | Setting | |---|---| | Classifier | RandomForestClassifier | | Trees | 200 | | Criterion | Gini | | Maximum depth | None | | Minimum samples split | 2 | | Minimum samples leaf | 5 | | Maximum features | sqrt | | Bootstrap | True | | Class weight | None | | Maximum samples | None | | Out-of-bag score | False | | Warm start | False | | Seeds | 0--9 |
+\begin{table}[t]
+\centering
+\caption{TABLE II --- RANDOM FOREST CONFIGURATION}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Setting} \\
+\midrule
+Classifier & RandomForestClassifier \\
+Trees & 200 \\
+Criterion & Gini \\
+Maximum depth & None \\
+Minimum samples split & 2 \\
+Minimum samples leaf & 5 \\
+Maximum features & sqrt \\
+Bootstrap & True \\
+Class weight & None \\
+Maximum samples & None \\
+Out-of-bag score & False \\
+Warm start & False \\
+Seeds & 0--9 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
 
 Execution-level parallelism is not treated as a scientific factor. A resource benchmark verified that the selected parallel fitting implementation produced the same tree structure, RF probabilities, and disagreement scores as the single-worker reference. Prediction remained single-worker. BLAS and OpenMP thread counts were constrained to one to prevent uncontrolled nested parallelism.
 
@@ -347,9 +380,23 @@ Execution-level parallelism is not treated as a scientific factor. A resource be
 
 Five post-hoc signals are compared under the same source-trained detector.
 
-\textbf{TABLE III --- RELIABILITY SIGNALS}
-
-| Signal | Source-derived quantity | Main configuration | Direction | |---|---|---|---| | Confidence | Calibrated RF class probabilities | Sigmoid/Platt calibration | High = unreliable | | RF disagreement | 200 tree class votes | (1-max\_c v\_c/200) | High = unreliable | | Feature distance | Standardized source-train reference | Euclidean mean of 5 nearest rows | High = unreliable | | Split conformal | Source conformal calibration | $\alpha=0.10$ | High = unreliable | | Isolation Forest | Source-training anomaly model | 100 trees, max\_samples=256 | High = unreliable |
+\begin{table}[t]
+\centering
+\caption{TABLE III --- RELIABILITY SIGNALS}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{llll}
+\toprule
+\textbf{Signal} & \textbf{Source-derived quantity} & \textbf{Main configuration} & \textbf{Direction} \\
+\midrule
+Confidence & Calibrated RF class probabilities & Sigmoid/Platt calibration & High = unreliable \\
+RF disagreement & 200 tree class votes & (1-max\_c v\_c/200) & High = unreliable \\
+Feature distance & Standardized source-train reference & Euclidean mean of 5 nearest rows & High = unreliable \\
+Split conformal & Source conformal calibration & $\alpha=0.10$ & High = unreliable \\
+Isolation Forest & Source-training anomaly model & 100 trees, max\_samples=256 & High = unreliable \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
 
 The reliability methods differ in the information they exploit. Confidence and RF disagreement are model-dependent; feature distance and Isolation Forest primarily characterize input atypicality; conformal scoring incorporates a source-calibrated uncertainty rule. All five are converted to the same review-score orientation so that the target evaluation can use an identical ranking procedure.
 
@@ -417,9 +464,23 @@ The computational implementation is deterministic at the scientific level: sourc
 
 The primary analysis asks whether the reliability scores can rank the subset of target observations that are both attacks and false negatives of the frozen detector. Table IV reports the mean attack-miss AUPRC over the ten matched seeds for each transfer direction.
 
-\textbf{TABLE IV --- ATTACK-MISS AUPRC UNDER BIDIRECTIONAL SOURCE-ONLY TRANSFER}
-
-| Reliability signal | UNSW->CIC mean +/- SD | CIC->UNSW mean +/- SD | |---|---:|---:| | Confidence | 0.192 +/- 0.051 | 0.033 +/- 0.001 | | RF disagreement | \textbf{0.238 +/- 0.102} | 0.035 +/- 0.001 | | Feature-space distance | 0.109 +/- 0.009 | 0.043 +/- 0.001 | | Split conformal | 0.096 +/- 0.007 | \textbf{0.079 +/- 0.025} | | Isolation Forest | 0.077 +/- 0.008 | 0.036 +/- 0.001 |
+\begin{table}[t]
+\centering
+\caption{TABLE IV --- ATTACK-MISS AUPRC UNDER BIDIRECTIONAL SOURCE-ONLY TRANSFER}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{lll}
+\toprule
+\textbf{Reliability signal} & \textbf{UNSW->CIC mean +/- SD} & \textbf{CIC->UNSW mean +/- SD} \\
+\midrule
+Confidence & 0.192 +/- 0.051 & 0.033 +/- 0.001 \\
+RF disagreement & \textbf{0.238 +/- 0.102} & 0.035 +/- 0.001 \\
+Feature-space distance & 0.109 +/- 0.009 & 0.043 +/- 0.001 \\
+Split conformal & 0.096 +/- 0.007 & \textbf{0.079 +/- 0.025} \\
+Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
 
 In the UNSW->CIC direction, RF disagreement has the highest mean attack-miss AUPRC at 0.238, followed by calibrated confidence at 0.192. Feature-space distance, split conformal, and Isolation Forest obtain lower means of 0.109, 0.096, and 0.077, respectively. The seed-level variability is also largest for RF disagreement, whose standard deviation is 0.102, indicating substantially more variation across repeated detector fits than the other signals in this direction.
 
@@ -435,9 +496,23 @@ The primary endpoint therefore provides two results central to the study. First,
 
 The primary operational endpoint is the fraction of detector attack misses recovered when only 5\% of target flows can be sent to an analyst. Table V reports mean attack-miss capture over the ten seeds at the primary 5\% budget, together with the secondary 1\% and 10\% budgets.
 
-\textbf{TABLE V --- ATTACK-MISS CAPTURE AT FIXED REVIEW BUDGETS}
-
-| Reliability signal | UNSW->CIC 1\% | UNSW->CIC 5\% | UNSW->CIC 10\% | CIC->UNSW 1\% | CIC->UNSW 5\% | CIC->UNSW 10\% | |---|---:|---:|---:|---:|---:|---:| | Confidence | 0.90\% | 8.19\% | 19.60\% | 0.03\% | 0.77\% | 1.40\% | | RF disagreement | 2.46\% | 12.33\% | 24.68\% | 0.03\% | 0.88\% | 1.46\% | | Feature-space distance | 0.07\% | 0.58\% | 0.64\% | 0.56\% | 4.34\% | 5.09\% | | Split conformal | 0.0001\% | \textbf{17.37\%} | 20.40\% | \textbf{4.91\%} | \textbf{14.73\%} | \textbf{22.53\%} | | Isolation Forest | 0.14\% | 0.75\% | 1.76\% | 0.05\% | 0.45\% | 0.82\% |
+\begin{table}[t]
+\centering
+\caption{TABLE V --- ATTACK-MISS CAPTURE AT FIXED REVIEW BUDGETS}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{lllllll}
+\toprule
+\textbf{Reliability signal} & \textbf{UNSW->CIC 1\%} & \textbf{UNSW->CIC 5\%} & \textbf{UNSW->CIC 10\%} & \textbf{CIC->UNSW 1\%} & \textbf{CIC->UNSW 5\%} & \textbf{CIC->UNSW 10\%} \\
+\midrule
+Confidence & 0.90\% & 8.19\% & 19.60\% & 0.03\% & 0.77\% & 1.40\% \\
+RF disagreement & 2.46\% & 12.33\% & 24.68\% & 0.03\% & 0.88\% & 1.46\% \\
+Feature-space distance & 0.07\% & 0.58\% & 0.64\% & 0.56\% & 4.34\% & 5.09\% \\
+Split conformal & 0.0001\% & \textbf{17.37\%} & 20.40\% & \textbf{4.91\%} & \textbf{14.73\%} & \textbf{22.53\%} \\
+Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
 
 At the primary 5\% review budget, split conformal has the highest mean attack-miss capture in both transfer directions: 17.37\% for UNSW->CIC and 14.73\% for CIC->UNSW. In UNSW->CIC, RF disagreement is the second-highest mean at 12.33\%, followed by confidence at 8.19\%, Isolation Forest at 0.75\%, and feature-space distance at 0.58\%. In CIC->UNSW, feature-space distance is the second-highest mean at 4.34\%, followed by RF disagreement at 0.88\%, confidence at 0.77\%, and Isolation Forest at 0.45\%.
 
@@ -453,9 +528,23 @@ These results show that the reliability mechanisms do not merely differ in how w
 
 The generic-error analysis shows that reliability performance can change substantially depending on which prediction failures are treated as the positive event. Table VI compares generic-error AUPRC with attack-miss AUPRC and reports attack-miss AUROC as a semantic-direction diagnostic.
 
-\textbf{TABLE VI --- GENERIC ERROR AND ATTACK-MISS BEHAVIOR}
-
-| Signal | UNSW->CIC generic-error AUPRC | UNSW->CIC attack-miss AUPRC | UNSW->CIC attack-miss AUROC | CIC->UNSW generic-error AUPRC | CIC->UNSW attack-miss AUPRC | CIC->UNSW attack-miss AUROC | |---|---:|---:|---:|---:|---:|---:| | Confidence | 0.738 | 0.192 | 0.701 | 0.033 | 0.033 | 0.228 | | RF disagreement | 0.736 | 0.238 | 0.712 | 0.035 | 0.035 | 0.248 | | Feature-space distance | 0.859 | 0.109 | 0.575 | 0.043 | 0.043 | 0.345 | | Split conformal | 0.518 | 0.096 | 0.500 | 0.079 | 0.079 | \textbf{0.545} | | Isolation Forest | 0.847 | 0.077 | 0.379 | 0.036 | 0.036 | 0.284 |
+\begin{table}[t]
+\centering
+\caption{TABLE VI --- GENERIC ERROR AND ATTACK-MISS BEHAVIOR}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{lllllll}
+\toprule
+\textbf{Signal} & \textbf{UNSW->CIC generic-error AUPRC} & \textbf{UNSW->CIC attack-miss AUPRC} & \textbf{UNSW->CIC attack-miss AUROC} & \textbf{CIC->UNSW generic-error AUPRC} & \textbf{CIC->UNSW attack-miss AUPRC} & \textbf{CIC->UNSW attack-miss AUROC} \\
+\midrule
+Confidence & 0.738 & 0.192 & 0.701 & 0.033 & 0.033 & 0.228 \\
+RF disagreement & 0.736 & 0.238 & 0.712 & 0.035 & 0.035 & 0.248 \\
+Feature-space distance & 0.859 & 0.109 & 0.575 & 0.043 & 0.043 & 0.345 \\
+Split conformal & 0.518 & 0.096 & 0.500 & 0.079 & 0.079 & \textbf{0.545} \\
+Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
 
 The UNSW->CIC direction provides the clearest separation between generic error detection and attack-miss prioritization. Feature-space distance and Isolation Forest obtain the strongest generic-error AUPRC values, 0.859 and 0.847, respectively, yet their attack-miss AUPRC values fall to 0.109 and 0.077. Their attack-miss AUROC values also indicate very different security behavior: feature-space distance remains above random ordering at 0.575, whereas Isolation Forest is below 0.5 at 0.379, indicating that its intended high-score-as-review direction is generally reversed for the attack-miss population in this transfer direction.
 
@@ -473,9 +562,23 @@ The results therefore reject the assumption that generic prediction-error rankin
 
 The bidirectional experiment reveals substantial asymmetry in reliability performance. Table VII reports the absolute change in mean attack-miss AUPRC and 5\% attack-miss capture when the source and target domains are reversed.
 
-\textbf{TABLE VII --- DIRECTIONAL CHANGE IN RELIABILITY PERFORMANCE}
-
-| Signal | Attack-miss AUPRC gap | 5\% capture gap | |---|---:|---:| | Confidence | 0.159 | 0.074 | | RF disagreement | \textbf{0.203} | \textbf{0.115} | | Feature-space distance | 0.066 | 0.038 | | Split conformal | \textbf{0.017} | 0.026 | | Isolation Forest | 0.041 | 0.003 |
+\begin{table}[t]
+\centering
+\caption{TABLE VII --- DIRECTIONAL CHANGE IN RELIABILITY PERFORMANCE}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{lll}
+\toprule
+\textbf{Signal} & \textbf{Attack-miss AUPRC gap} & \textbf{5\% capture gap} \\
+\midrule
+Confidence & 0.159 & 0.074 \\
+RF disagreement & \textbf{0.203} & \textbf{0.115} \\
+Feature-space distance & 0.066 & 0.038 \\
+Split conformal & \textbf{0.017} & 0.026 \\
+Isolation Forest & 0.041 & 0.003 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
 
 RF disagreement exhibits the largest directional change in both primary metrics. Its mean attack-miss AUPRC decreases from 0.238 in UNSW->CIC to 0.035 in CIC->UNSW, an absolute difference of 0.203. Its 5\% capture similarly decreases by 0.115, from 12.33\% to 0.88\%.
 
@@ -515,9 +618,23 @@ The distinction is important because conformal prediction is fundamentally a set
 
 The ten-seed design permits paired comparisons because the same detector seed is used for every reliability method within a transfer direction. Table VIII summarizes several key paired contrasts using the mean seed-level difference, a seed-level bootstrap interval, and the exact two-sided sign-flip permutation p-value. The complete pairwise matrix is retained in the analysis artifacts.
 
-\textbf{TABLE VIII --- SELECTED PAIRED EFFECTS}
-
-| Direction | Comparison | Metric | Mean difference | Bootstrap interval | Exact p | |---|---|---|---:|---:|---:| | UNSW->CIC | RF disagreement - split conformal | Attack-miss AUPRC | +0.142 | [0.082, 0.206] | 0.00195 | | UNSW->CIC | RF disagreement - split conformal | 5\% capture | -0.050 | [-0.110, 0.016] | 0.168 | | CIC->UNSW | RF disagreement - split conformal | Attack-miss AUPRC | -0.045 | [-0.061, -0.031] | 0.00195 | | CIC->UNSW | Feature distance - split conformal | Attack-miss AUPRC | -0.036 | [-0.052, -0.023] | 0.00195 | | CIC->UNSW | RF disagreement - split conformal | 5\% capture | -0.139 | [-0.169, -0.111] | 0.00195 |
+\begin{table}[t]
+\centering
+\caption{TABLE VIII --- SELECTED PAIRED EFFECTS}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{llllll}
+\toprule
+\textbf{Direction} & \textbf{Comparison} & \textbf{Metric} & \textbf{Mean difference} & \textbf{Bootstrap interval} & \textbf{Exact p} \\
+\midrule
+UNSW->CIC & RF disagreement - split conformal & Attack-miss AUPRC & +0.142 & [0.082, 0.206] & 0.00195 \\
+UNSW->CIC & RF disagreement - split conformal & 5\% capture & -0.050 & [-0.110, 0.016] & 0.168 \\
+CIC->UNSW & RF disagreement - split conformal & Attack-miss AUPRC & -0.045 & [-0.061, -0.031] & 0.00195 \\
+CIC->UNSW & Feature distance - split conformal & Attack-miss AUPRC & -0.036 & [-0.052, -0.023] & 0.00195 \\
+CIC->UNSW & RF disagreement - split conformal & 5\% capture & -0.139 & [-0.169, -0.111] & 0.00195 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
 
 The paired results reinforce the principal directional pattern. In UNSW->CIC, RF disagreement has a large attack-miss AUPRC advantage over split conformal, with a mean paired difference of 0.142 and a bootstrap interval entirely above zero. However, the same comparison at the 5\% review budget favors split conformal descriptively, with RF disagreement minus conformal equal to -0.050, but the interval spans zero. The threshold-free and fixed-budget comparisons therefore do not support the same operational conclusion.
 
