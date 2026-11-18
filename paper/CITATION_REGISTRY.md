@@ -67,7 +67,7 @@ URL: https://doi.org/10.1109/ACCESS.2026.3688204
 
 Supports: NetFlow-v3 dataset family and 53-feature common representation.
 
-Used in: Section I, Section III.
+Used in: Section I, Section III-B.
 
 ### CIT-005 — Talpini et al. (2024)
 
@@ -81,7 +81,7 @@ URL: https://doi.org/10.1007/s40860-024-00238-8
 
 Supports: IDS-specific uncertainty quantification; overconfident erroneous/unknown inputs; uncertainty-aware RF and neural approaches; open-set motivation.
 
-Used in: Section II-B.
+Used in: Section II-B and Section III-E.
 
 ### CIT-006 — Guo et al. (2017)
 
@@ -109,7 +109,7 @@ URL: https://arxiv.org/abs/2107.07511
 
 Supports: general conformal prediction framework; distribution-free uncertainty; pre-trained model compatibility; distribution-shift extensions.
 
-Used in: Section II-C and later Methodology.
+Used in: Section II-C, Section III-E, and Section III-G.
 
 ### CIT-008 — Geifman and El-Yaniv (2017)
 
@@ -123,7 +123,7 @@ URL: https://papers.neurips.cc/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-
 
 Supports: selective prediction/reject option; coverage-risk tradeoff.
 
-Used in: Section II-C and later operational methodology.
+Used in: Section II-C and Section III-F.
 
 ### CIT-009 — Liu et al. (2008)
 
@@ -137,7 +137,7 @@ URL: https://doi.org/10.1109/ICDM.2008.17
 
 Supports: Isolation Forest as a lightweight unsupervised anomaly-detection construction.
 
-Used in: Section II-D and later Methodology.
+Used in: Section II-D and Section III-E.
 
 ### CIT-010 — Alalisalem et al. (2026)
 
