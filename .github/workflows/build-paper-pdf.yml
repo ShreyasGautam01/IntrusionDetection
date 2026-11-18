@@ -1,0 +1,38 @@
+name: IEEE paper PDF build
+
+on:
+  push:
+    branches:
+      - codex/e0-e05
+  workflow_dispatch:
+
+jobs:
+  build-paper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-latex-extra texlive-fonts-recommended texlive-publishers
+
+      - name: Build IEEE PDF
+        working-directory: paper
+        run: latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error IEEE_PAPER_DRAFT.tex
+
+      - name: Inspect PDF
+        working-directory: paper
+        run: |
+          pdfinfo IEEE_PAPER_DRAFT.pdf | tee pdfinfo.txt
+          pdftotext -layout IEEE_PAPER_DRAFT.pdf paper-text.txt
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ieee-paper-pdf
+          path: |
+            paper/IEEE_PAPER_DRAFT.pdf
+            paper/pdfinfo.txt
+            paper/paper-text.txt
