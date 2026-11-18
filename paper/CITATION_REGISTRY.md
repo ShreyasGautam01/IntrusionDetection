@@ -167,6 +167,9 @@ Used in: Section II-A and Section VI-D.
 | CIT-008 | [8] | Yes | Yes | Yes |
 | CIT-009 | [9] | Yes | Yes | Yes |
 | CIT-010 | [10] | Yes | Yes | Yes |
+| CIT-011 | [11] | Yes | Yes | Yes |
+| CIT-012 | [12] | Yes | Yes | Yes |
+| CIT-013 | [13] | Yes | Yes | Yes |
 
 ## Required before final submission
 
@@ -176,3 +179,46 @@ Used in: Section II-A and Section VI-D.
 4. Ensure every bibliography entry is cited in the manuscript or deliberately retained as a background reference.
 5. Ensure no manuscript citation points to an unregistered source.
 6. Review all claims supported by recent 2026 literature immediately before submission because this area is changing rapidly.
+
+
+### CIT-011 — Ha Thanh (2026), TAN-IDS
+
+Current IEEE number: [11]
+
+Citation:
+D. Ha Thanh, "A transfer-aware, deployment-oriented evaluation framework for NetFlow-based intrusion detection systems (TAN-IDS)," *PLOS ONE*, vol. 21, no. 4, Art. no. e0346801, 2026, doi: 10.1371/journal.pone.0346801.
+
+Verified source: PLOS ONE.
+URL: https://doi.org/10.1371/journal.pone.0346801
+
+Supports: deployment-oriented NetFlow evaluation; direct cross-dataset transfer without adaptation; unified feature representation; distinction between source-only transfer and target fine-tuning.
+
+Used in: Section II-A.
+
+### CIT-012 — Dung (2026), RiskGate-IDS
+
+Current IEEE number: [12]
+
+Citation:
+H. T. Dung, "Budget-aware two-stage NetFlow intrusion detection for high-traffic critical information infrastructure under domain shift," *International Journal of Critical Infrastructure Protection*, vol. 54, 2026, doi: 10.1016/j.ijcip.2026.100876.
+
+Verified source: ScienceDirect / bibliographic record.
+URL: https://doi.org/10.1016/j.ijcip.2026.100876
+
+Supports: budget-aware NetFlow risk ranking; target-labeled calibration; distinction between target-aware risk adaptation and source-only reliability transportability.
+
+Used in: Section II-A.
+
+### CIT-013 — Li and Zhou (2026)
+
+Current IEEE number: [13]
+
+Citation:
+H. Li and Z. Zhou, "From Risk Scores to Budget-Constrained Alert Streams: Temporal Evaluation of Flow-Level Network Intrusion Detection," *Electronics*, vol. 15, no. 20, Art. no. 4854, 2026, doi: 10.3390/electronics15204854.
+
+Verified source: MDPI.
+URL: https://doi.org/10.3390/electronics15204854
+
+Supports: temporal score-to-alert conversion; explicit alert budgets; threshold provenance and budget-overrun diagnostics.
+
+Used in: Section II-A.
