@@ -8,6 +8,7 @@
 \usepackage{adjustbox}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
 \providecommand{\tightlist}{}
 \title{Transportability of Lightweight Reliability Signals for Network Intrusion Detection under Source-Only Cross-Domain Transfer}
 \author{
@@ -563,7 +564,7 @@ The primary endpoint therefore establishes the first central result of the study
 
 \subsection{Operational Utility at Fixed Analyst-Review Budgets}
 
-The primary operational endpoint is the fraction of detector attack misses recovered when only 5\% of target flows can be sent to an analyst. Table V reports mean attack-miss capture over the ten seeds at the primary 5\% budget, together with the secondary 1\% and 10\% budgets.
+The primary operational analysis asks how many detector attack misses can be recovered when only a fixed fraction of target traffic can be reviewed. Table~V reports the exact mean capture values at the 1\%, 5\%, and 10\% budgets. Figure~2 plots the same results as budget-response curves for the two transfer directions, making changes in operational ranking visible across review capacity.
 
 \begin{table}[t]
 \centering
@@ -583,15 +584,100 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \end{adjustbox}
 \end{table}
 
-At the primary 5\% review budget, split conformal has the highest mean attack-miss capture in both transfer directions: 17.37\% for UNSW->CIC and 14.73\% for CIC->UNSW. In UNSW->CIC, RF disagreement is the second-highest mean at 12.33\%, followed by confidence at 8.19\%, Isolation Forest at 0.75\%, and feature-space distance at 0.58\%. In CIC->UNSW, feature-space distance is the second-highest mean at 4.34\%, followed by RF disagreement at 0.88\%, confidence at 0.77\%, and Isolation Forest at 0.45\%.
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={
+    group size=2 by 1,
+    horizontal sep=1.2cm
+  },
+  width=0.43\textwidth,
+  height=5.2cm,
+  xmin=1, xmax=10,
+  ymin=0, ymax=26,
+  xtick={1,5,10},
+  xticklabels={1\%,5\%,10\%},
+  xlabel={Analyst review budget},
+  ylabel={Attack-miss capture (\%)},
+  grid=major,
+  grid style={dotted, draw=black!18},
+  axis line style={draw=black!70},
+  tick style={draw=black!70},
+  label style={font=\footnotesize},
+  tick label style={font=\footnotesize},
+  legend style={
+    font=\footnotesize,
+    at={(0.5,1.16)},
+    anchor=south,
+    legend columns=3,
+    draw=none,
+    column sep=0.7em
+  },
+  clip=false
+]
 
-The operational ranking therefore differs from the primary AUPRC ranking. In UNSW->CIC, RF disagreement has the highest attack-miss AUPRC, but split conformal captures more attack misses at the 5\% review budget. In CIC->UNSW, split conformal is the highest-ranked method under both metrics. This distinction demonstrates why threshold-free ranking quality and fixed-budget triage should not be treated as interchangeable measures of reliability utility.
+\nextgroupplot[
+  title={UNSW$\rightarrow$CIC},
+  title style={font=\footnotesize\bfseries}
+]
 
-The paired comparisons provide an additional qualification. In UNSW->CIC, the mean 5\% capture difference between RF disagreement and split conformal is -0.0504 when computed as RF minus conformal; its bootstrap interval spans zero, so the two methods are not clearly separated at this budget by the present ten-seed paired analysis. By contrast, the CIC->UNSW difference is -0.1385 for RF minus split conformal, with a bootstrap interval entirely below zero. Thus, the descriptive 17.37\% versus 12.33\% difference in UNSW->CIC should not be interpreted as definitive evidence of superiority, whereas the larger CIC->UNSW separation provides stronger paired evidence in favor of split conformal at the primary review budget.
+% Confidence
+\addplot[solid,mark=o,mark size=2pt,line width=0.9pt]
+  coordinates {(1,0.90) (5,8.19) (10,19.60)};
+\addlegendentry{Confidence}
 
-The secondary budgets reveal additional budget dependence. In UNSW->CIC, RF disagreement rises from 2.46\% capture at 1\% review to 24.68\% at 10\%, while confidence rises from 0.90\% to 19.60\%. Split conformal is highly sensitive to the review budget in this direction: its mean capture is effectively zero at 1\% review but reaches 17.37\% at 5\% and 20.40\% at 10\%. In CIC->UNSW, split conformal remains the strongest operational signal at all three budgets, increasing from 4.91\% at 1\% review to 22.53\% at 10\%.
+% RF disagreement
+\addplot[dashed,mark=square*,mark size=1.8pt,line width=0.9pt]
+  coordinates {(1,2.46) (5,12.33) (10,24.68)};
+\addlegendentry{RF disagreement}
 
-These results show that the reliability mechanisms do not merely differ in how well they rank attack misses; they also differ in how useful their rankings are when only a small, explicitly constrained portion of traffic can be reviewed. Consequently, the operational conclusion depends on both transfer direction and review capacity.
+% Feature distance
+\addplot[dotted,mark=triangle*,mark size=2.2pt,line width=1.0pt]
+  coordinates {(1,0.07) (5,0.58) (10,0.64)};
+\addlegendentry{Feature distance}
+
+% Split conformal
+\addplot[dashdotted,mark=diamond*,mark size=2.0pt,line width=0.9pt]
+  coordinates {(1,0.0001) (5,17.37) (10,20.40)};
+\addlegendentry{Split conformal}
+
+% Isolation Forest
+\addplot[densely dashed,mark=x,mark size=2.3pt,line width=0.9pt]
+  coordinates {(1,0.14) (5,0.75) (10,1.76)};
+\addlegendentry{Isolation Forest}
+
+\nextgroupplot[
+  title={CIC$\rightarrow$UNSW},
+  title style={font=\footnotesize\bfseries},
+  ylabel={}
+]
+
+% Same styles, no repeated legend.
+\addplot[solid,mark=o,mark size=2pt,line width=0.9pt,forget plot]
+  coordinates {(1,0.03) (5,0.77) (10,1.40)};
+\addplot[dashed,mark=square*,mark size=1.8pt,line width=0.9pt,forget plot]
+  coordinates {(1,0.03) (5,0.88) (10,1.46)};
+\addplot[dotted,mark=triangle*,mark size=2.2pt,line width=1.0pt,forget plot]
+  coordinates {(1,0.56) (5,4.34) (10,5.09)};
+\addplot[dashdotted,mark=diamond*,mark size=2.0pt,line width=0.9pt,forget plot]
+  coordinates {(1,4.91) (5,14.73) (10,22.53)};
+\addplot[densely dashed,mark=x,mark size=2.3pt,line width=0.9pt,forget plot]
+  coordinates {(1,0.05) (5,0.45) (10,0.82)};
+
+\end{groupplot}
+\end{tikzpicture}
+\caption{Attack-miss capture as a function of analyst-review budget. Each panel corresponds to one transfer direction; line style and marker identify the reliability signal. The curves show that operational ranking changes with review capacity and need not match the threshold-free attack-miss AUPRC ordering.}
+\label{fig:budget-capture}
+\end{figure*}
+
+At the primary 5\% review budget, split conformal has the highest mean attack-miss capture in both transfer directions, at 17.37\% for UNSW$\rightarrow$CIC and 14.73\% for CIC$\rightarrow$UNSW. In the first direction, this differs from the AUPRC result in Fig.~1, where RF disagreement has the highest threshold-free ranking performance. The two metrics therefore identify different aspects of operational usefulness.
+
+Figure~2 further shows that the difference is not limited to the single 5\% operating point. In UNSW$\rightarrow$CIC, split conformal rises sharply between 1\% and 5\% review, while RF disagreement and confidence increase more progressively. In CIC$\rightarrow$UNSW, split conformal remains the highest curve across all three tested budgets, whereas feature-space distance becomes the next most effective signal as review capacity increases.
+
+The paired analysis qualifies the descriptive 5\% comparison. In UNSW$\rightarrow$CIC, the mean RF-minus-conformal difference is -0.0504 and its bootstrap interval spans zero, so the descriptive 17.37\% versus 12.33\% ordering is not a definitive paired separation at this budget. In CIC$\rightarrow$UNSW, the corresponding difference is -0.1385 with an interval entirely below zero, providing stronger paired evidence in favor of split conformal.
+
+The operational results therefore establish a second central finding: reliability utility depends not only on which signal is used and which transfer direction is considered, but also on how much target traffic an analyst can review. Threshold-free ranking and fixed-budget triage should consequently be reported as complementary, rather than interchangeable, evaluations.
 
 \subsection{Generic Errors Versus Security-Critical Attack Misses}
 
