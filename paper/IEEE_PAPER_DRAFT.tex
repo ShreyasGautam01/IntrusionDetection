@@ -909,9 +909,11 @@ These tests support selected method contrasts but do not establish a single glob
 
 \subsection{Computational Cost}
 
-Computational cost was treated as a secondary deployment consideration rather than a scientific factor. The execution-level RF parallelism benchmark compared multiple worker settings against a single-worker reference and verified exact equivalence of tree structure, RF class probabilities, and RF disagreement. In the bounded CIC benchmark, RF fitting time decreased from 17.64 s at (n\_\{mathrm\{jobs\}\}=10) to 16.50 s at (n\_\{mathrm\{jobs\}\}=16), while CPU saturation increased substantially. The production setting therefore used (n\_\{mathrm\{jobs\}\}=10), which provided most of the available parallel speedup without the near-total CPU saturation observed at 12--16 workers.
+Computational cost is treated as a secondary deployment consideration rather than a scientific factor. The execution-level Random Forest parallelism benchmark compared multiple worker settings against a single-worker reference and verified exact equivalence of tree structure, class probabilities, and RF disagreement.
 
-The benchmark illustrates an important reproducibility distinction: worker parallelism changes execution time but not the scientific definition of the Random Forest experiment when numerical equivalence has been verified. The final transfer analysis therefore reports the scientific model configuration separately from its execution setting.
+In the bounded CIC benchmark, RF fitting time decreased from 17.64~s at 10 workers to 16.50~s at 16 workers, while CPU saturation increased substantially. The production setting therefore used 10 workers, which provided most of the available parallel speedup without the near-total CPU saturation observed at the highest tested settings.
+
+This benchmark separates execution efficiency from the scientific definition of the detector. Worker parallelism changes runtime but, under the verified equivalence condition, does not change the model being evaluated. No figure is used because the benchmark is not central to the scientific conclusions and the two timing values are more precisely reported in text.
 
 \section{Discussion}
 
