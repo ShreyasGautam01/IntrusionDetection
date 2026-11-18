@@ -67,7 +67,7 @@ URL: https://doi.org/10.1109/ACCESS.2026.3688204
 
 Supports: NetFlow-v3 dataset family and 53-feature common representation.
 
-Used in: Section I, Section III-B.
+Used in: Section I, Section III-B, and Section IV-A.
 
 ### CIT-005 — Talpini et al. (2024)
 
@@ -137,7 +137,7 @@ URL: https://doi.org/10.1109/ICDM.2008.17
 
 Supports: Isolation Forest as a lightweight unsupervised anomaly-detection construction.
 
-Used in: Section II-D and Section III-E.
+Used in: Section II-D, Section III-E, and Section IV-C.
 
 ### CIT-010 — Alalisalem et al. (2026)
 
