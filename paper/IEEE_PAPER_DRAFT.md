@@ -602,3 +602,50 @@ The results point to several high-value extensions.
 
 **Composite reliability policies:** The present results compare individual signals. Future work could test whether combining disagreement, calibrated confidence, and feature-space novelty yields more stable triage than any individual score, while preserving source-only constraints.
 
+
+
+## VII. LIMITATIONS
+
+### A. Dataset and Domain Scope
+
+The primary conclusions are based on two NetFlow-v3 datasets and two transfer directions. Although the use of a common feature interface reduces one major source of incompatibility, two benchmark environments cannot establish universal transportability across network types, organizations, traffic-generating applications, or deployment periods. The findings should therefore be interpreted as controlled evidence for the studied source-target pair rather than as a general guarantee for all NIDS deployments.
+
+### B. Fixed Detector Architecture
+
+The experiment fixes the detector to a Random Forest. This is intentional because it isolates the reliability layer, but it limits architectural generalization. Reliability mechanisms may interact differently with neural detectors, gradient-boosted trees, calibrated linear models, or streaming architectures. The results therefore establish transportability behavior for the studied RF backbone rather than for arbitrary IDS models.
+
+### C. Limited Repetition Count
+
+Each transfer direction uses ten detector seeds. This provides matched repeated observations for paired analysis but should not be confused with ten independent deployments or ten independent datasets. The seed-level statistical analysis captures detector-training variability under the fixed configuration; it does not quantify variability across organizations, collection campaigns, or network infrastructures.
+
+### D. Family-Semantic Coverage
+
+The attack-family ontology intentionally uses a conservative semantic crosswalk. Only a documented shared DoS category is treated as cross-domain equivalent, and the resulting family analysis is not informative enough to support a general unseen-family conclusion. Many dataset-local attack labels are therefore excluded from direct cross-domain family comparisons.
+
+This limitation is preferable to asserting semantic equivalence from similar names. Nevertheless, it means that the present paper cannot answer how each reliability signal behaves across a comprehensive hierarchy of unseen attack families.
+
+### E. Conformal Diagnostic Integrity
+
+The source split-conformal construction is frozen and used as one of the five primary reliability signals, but the archived target ambiguity/set-size diagnostic fields contain internally inconsistent values. Those diagnostics are consequently excluded from strong claims about target conformal coverage or prediction-set behavior. The primary attack-miss ranking results remain reported, but future work must repair and independently validate the conformal diagnostic implementation before extending the claims.
+
+### F. No Target Adaptation or Recalibration
+
+The study deliberately forbids target-domain adaptation and recalibration. This is necessary to isolate source-only transportability, but it means the results do not show whether a small amount of target information could substantially improve reliability. In a practical deployment, adaptation, recalibration, threshold adjustment, or continual learning may change the observed ranking.
+
+### G. Benchmark-to-Deployment Gap
+
+The experiments operate on offline benchmark flow records. They do not model the full operational environment of a live SOC, including analyst fatigue, correlated alerts, changing review capacity, multi-stage incidents, alert deduplication, delayed labels, or adversarial manipulation of the monitoring process. Fixed review budgets are therefore an operational abstraction rather than a complete SOC simulation.
+
+### H. Statistical and Multiple-Comparison Constraints
+
+The analysis includes several methods, metrics, directions, and secondary diagnostics. Pairwise p-values are therefore not interpreted as establishing a single global method ordering. The primary conclusions rely more heavily on effect sizes, paired intervals, direction consistency, and operational behavior than on isolated secondary significance tests.
+
+### I. Representation Dependence
+
+Although the 46-feature interface is standardized across the two primary datasets, distance- and novelty-based reliability mechanisms remain inherently dependent on the chosen feature representation. The present study therefore does not claim representation-invariant reliability. Conclusions about feature-space distance or unsupervised novelty should be interpreted within the frozen representation used here.
+
+### J. Researcher-Defined Review Score Orientation
+
+All methods are normalized to the operational convention that larger scores receive greater review priority. This is necessary for a common budgeted evaluation but means that score orientation is part of the study definition. The semantic-inversion analysis demonstrates why this assumption must be validated under transfer rather than presumed.
+
+Overall, these limitations restrict the scope of the paper's conclusions but do not undermine the central controlled comparison. They define the boundary between what the experiment establishes directly and what requires replication, adaptation experiments, additional datasets, or improved family and conformal validation.
