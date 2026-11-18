@@ -609,7 +609,7 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
   ymin=0, ymax=26,
   xtick={1,5,10},
   xticklabels={1\%,5\%,10\%},
-  xlabel={Analyst review budget},
+  xlabel={Review budget (\%)},
   ylabel={Attack-miss capture (\%)},
   grid=major,
   grid style={dotted, draw=black!18},
@@ -619,18 +619,18 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
   tick label style={font=\footnotesize},
   legend style={
     font=\footnotesize,
-    at={(0.5,1.16)},
+    at={(0.5,1.25)},
     anchor=south,
-    legend columns=3,
+    legend columns=5,
     draw=none,
-    column sep=0.7em
+    column sep=0.8em
   },
   clip=true
 ]
 
 \nextgroupplot[
-  title={UNSW$\rightarrow$CIC},
-  title style={font=\footnotesize\bfseries}
+  title={(a) UNSW$\rightarrow$CIC},
+  title style={font=\footnotesize\bfseries, yshift=-1pt}
 ]
 
 % Confidence
@@ -659,8 +659,8 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \addlegendentry{Isolation Forest}
 
 \nextgroupplot[
-  title={CIC$\rightarrow$UNSW},
-  title style={font=\footnotesize\bfseries},
+  title={(b) CIC$\rightarrow$UNSW},
+  title style={font=\footnotesize\bfseries, yshift=-1pt},
   ylabel={}
 ]
 
@@ -740,13 +740,13 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 ]
 
 \nextgroupplot[
-  title={UNSW$\rightarrow$CIC},
-  title style={font=\footnotesize\bfseries},
+  title={(a) UNSW$\rightarrow$CIC},
+  title style={font=\footnotesize\bfseries, yshift=-1pt},
   legend style={
     font=\footnotesize,
-    at={(0.5,-0.22)},
-    anchor=north,
-    legend columns=3,
+    at={(0.5,1.25)},
+    anchor=south,
+    legend columns=5,
     draw=none,
     column sep=0.8em
   }
@@ -773,8 +773,8 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \addlegendentry{Isolation Forest}
 
 \nextgroupplot[
-  title={CIC$\rightarrow$UNSW},
-  title style={font=\footnotesize\bfseries},
+  title={(b) CIC$\rightarrow$UNSW (zoomed)},
+  title style={font=\footnotesize\bfseries, yshift=-1pt},
   ylabel={},
   xmin=0.025, xmax=0.085,
   ymin=0.025, ymax=0.085,
@@ -796,7 +796,7 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \end{groupplot}
 \end{tikzpicture}%
 }
-\caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal, with color providing redundant visual separation. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
+\caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal, with color providing redundant visual separation. The right panel uses a magnified axis range to resolve the closely clustered CIC$\rightarrow$UNSW values. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
 \label{fig:generic-vs-attackmiss}
 \end{figure*}
 
