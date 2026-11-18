@@ -196,9 +196,9 @@ All five reliability mechanisms produce a scalar score whose common orientation 
 
 > \textbf{larger score = greater priority for analyst review.}
 
-\#\#\#\# 1) Calibrated confidence
+\subsubsection{1) Calibrated confidence}
 
-Let (p\_i^\{(0)\}) and (p\_i^\{(1)\}) be the source-calibrated probabilities assigned to the benign and attack classes. The reliability score is
+Let $p_i^{(0)}$ and $p_i^{(1)}$ be the source-calibrated probabilities assigned to the benign and attack classes. The reliability score is
 
 \[
 r_i^{\mathrm{conf}} = 1-\max\left(p_i^{(0)},p_i^{(1)}\right).
@@ -206,9 +206,9 @@ r_i^{\mathrm{conf}} = 1-\max\left(p_i^{(0)},p_i^{(1)}\right).
 
 Thus, observations for which the frozen detector is less confident receive larger review scores. Probability calibration is fitted with a source-only sigmoid/Platt calibration procedure using the dedicated source probability-calibration subset [6]. The calibrator is frozen before target scoring.
 
-\#\#\#\# 2) Random Forest tree disagreement
+\subsubsection{2) Random Forest tree disagreement}
 
-For the $T=200$ trees, let (v\_\{ic\}) denote the number of tree predictions for class (c). The vote fraction for class (c) is (v\_\{ic\}/T). The disagreement score is
+For the $T=200$ trees, let $v_{ic}$ denote the number of tree predictions for class (c). The vote fraction for class (c) is $v_{ic}/T$. The disagreement score is
 
 \[
 r_i^{\mathrm{RF}} = 1-\max_{c\in\{0,1\}}\frac{v_{ic}}{T}.
@@ -216,7 +216,7 @@ r_i^{\mathrm{RF}} = 1-\max_{c\in\{0,1\}}\frac{v_{ic}}{T}.
 
 The score is therefore zero when all trees agree and increases as the tree votes become less concentrated on a single class.
 
-\#\#\#\# 3) Feature-space distance
+\subsubsection{3) Feature-space distance}
 
 Let (z\_i) denote the standardized feature vector for a sample, where the standardization parameters are fitted using source-training rows only. For target observation (i), let ($N_5(i)$) be the five nearest source-training reference rows under Euclidean distance. The score is
 
@@ -228,9 +228,9 @@ The source reference population is never augmented with target observations. The
 
 Unlike the other seed-varying signals, this distance is independent of the Random Forest seed and is therefore computed once for each transfer direction and shared across all ten seeds.
 
-\#\#\#\# 4) Split conformal score
+\subsubsection{4) Split conformal score}
 
-Split conformal prediction is constructed from the source probability-calibration pipeline rather than from target observations [7]. For a source calibration observation with true class (y\_i), the nonconformity value is
+Split conformal prediction is constructed from the source probability-calibration pipeline rather than from target observations [7]. For a source calibration observation with true class $y_i$, the nonconformity value is
 
 \[
 a_i = 1-p_{\mathrm{cal}}\left(y_i\mid x_i\right).
@@ -245,11 +245,11 @@ r_i^{\mathrm{confm}} =
 r_i^{\mathrm{confm}} = \frac{|C(x_i)|-1}{2-1}.
 \]
 
-where (C(x\_i)) is the binary conformal prediction set. A singleton prediction set therefore receives score 0 and a two-class prediction set receives score 1. The mapping is frozen before target evaluation.
+where $C(x_i)$ is the binary conformal prediction set. A singleton prediction set therefore receives score 0 and a two-class prediction set receives score 1. The mapping is frozen before target evaluation.
 
 Conformal coverage and ambiguity are treated as diagnostic quantities rather than as substitutes for the primary attack-miss ranking endpoint. In particular, the manuscript does not claim target-domain coverage guarantees beyond what is supported by the saved source quantile and implementation audit [7].
 
-\#\#\#\# 5) Isolation Forest
+\subsubsection{5) Isolation Forest}
 
 Isolation Forest is fitted exclusively on source-training features and is used as an unsupervised novelty signal [9]. The fixed configuration uses 100 trees, a maximum sample size of 256, all available features, automatic contamination handling, no bootstrap resampling, and the corresponding experiment seed as the fixed random state. The reported score is the negative of scikit-learn's sample score so that larger values indicate greater anomaly and greater review priority.
 
@@ -284,7 +284,7 @@ The primary event is a \textbf{detector attack miss}:
 m_i = I\left(y_i=1\land \hat y_i=0\right).
 \]
 
-For a reliability score (r\_i), the primary security metric is the area under the precision-recall curve obtained by treating (m\_i) as the positive class and ranking observations from highest to lowest (r\_i). This is denoted attack-miss AUPRC.
+For a reliability score $r_i$, the primary security metric is the area under the precision-recall curve obtained by treating $m_i$ as the positive class and ranking observations from highest to lowest $r_i$. This is denoted attack-miss AUPRC.
 
 The primary operational metric is attack-miss capture at a 5\% review budget:
 
@@ -295,7 +295,7 @@ The primary operational metric is attack-miss capture at a 5\% review budget:
 
 \]
 
-where (S\_b) is the set of the (bN) highest-scoring target observations. Capture at 1\% and 10\% is reported as a secondary operational analysis.
+where $S_b$ is the set of the $bN$ highest-scoring target observations. Capture at 1\% and 10\% is reported as a secondary operational analysis.
 
 Generic prediction error is analyzed separately using
 
@@ -393,7 +393,7 @@ For each target flow, the frozen detector produces a binary prediction and the f
 k_b=\left\lfloor bN\right\rfloor
 \]
 
-rows are selected, where $N$ is the full target population. The study evaluates $\{0.01,0.05,0.10\}$, with 5\% as the primary operational budget.
+rows are selected, where (N) is the full target population. The study evaluates $\{0.01,0.05,0.10\}$, with 5\% as the primary operational budget.
 
 The principal analysis treats an attack incorrectly predicted as benign as the positive security event. This creates a ranking problem over detector failures rather than over all attacks. A method is therefore rewarded when its high-scoring rows contain a large fraction of the detector's attack misses.
 
