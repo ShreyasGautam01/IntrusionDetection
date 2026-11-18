@@ -52,3 +52,16 @@
 | C-033 | Experimental Setup | Review budgets are 1%, 5%, and 10%, with 5% primary. | C1 | Frozen target manifests | review_budgets | Both directions | Not applicable | No | Yes |
 | C-034 | Experimental Setup | Results are retained per seed and paired comparisons use the same seed across methods. | C1/C2 | analysis_per_seed_all_metrics.csv; analysis_paired_statistics.csv | analysis artifacts | Both directions | Yes | No | Yes |
 | C-035 | Experimental Setup | The computational environment is pinned through the repository lockfile and versioned artifacts. | C1 | REPRODUCTION.md; uv.lock; artifact manifest | environment records | Entire study | Not applicable | No | Yes |
+
+
+## Results claims — V-A Primary Security Endpoint
+
+| Claim ID | Section | Claim | Level | Evidence / Citation | Evidence location | Scope | Statistical support | Citation required | Verified |
+|---|---|---|---|---|---|---|---|---|---|
+| C-036 | Results V-A | RF disagreement has the highest mean attack-miss AUPRC in UNSW→CIC at 0.237903. | C1 | analysis_aggregate.csv | unsw-to-cic / random_forest_disagreement / attack_miss_auprc | 10 seeds | Descriptive | No | Yes |
+| C-037 | Results V-A | Split conformal has the highest mean attack-miss AUPRC in CIC→UNSW at 0.079389. | C1 | analysis_aggregate.csv | cic-to-unsw / split_conformal / attack_miss_auprc | 10 seeds | Descriptive | No | Yes |
+| C-038 | Results V-A | RF disagreement versus confidence differs by 0.045789 AUPRC in UNSW→CIC. | C2 | analysis_paired_statistics.csv | unsw-to-cic / attack_miss_auprc | Matched seeds | Paired CI and raw exact sign-flip p | No | Yes |
+| C-039 | Results V-A | RF disagreement versus split conformal differs by 0.141751 AUPRC in UNSW→CIC. | C2 | analysis_paired_statistics.csv | unsw-to-cic / attack_miss_auprc | Matched seeds | Paired CI and raw exact sign-flip p | No | Yes |
+| C-040 | Results V-A | Split conformal has the smallest absolute directional mean gap in attack-miss AUPRC at 0.016764. | C1 | analysis_direction_shift.csv | attack_miss_auprc rows | Two directions | Descriptive | No | Yes |
+| C-041 | Results V-A | RF disagreement has the largest absolute directional mean gap in attack-miss AUPRC at 0.203221. | C1 | analysis_direction_shift.csv | attack_miss_auprc rows | Two directions | Descriptive | No | Yes |
+| C-042 | Results V-A | The best mean attack-miss ranking changes when transfer direction is reversed. | C2 | analysis_aggregate.csv; analysis_direction_shift.csv | both directions | Primary methods | Descriptive cross-direction comparison | No | Yes |
