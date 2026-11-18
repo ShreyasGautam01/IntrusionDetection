@@ -121,3 +121,9 @@
 | C-087 | Limitations VII-G | Offline benchmark review budgets are an abstraction of SOC analyst workflows. | C3 | methodology + literature | deployment scope | Not applicable | Yes | Yes |
 | C-088 | Limitations VII-H | Multiple methods and secondary endpoints require cautious interpretation of individual p-values. | C3 | statistical harness; paired statistics | inference scope | Multiplicity | No | Yes |
 | C-089 | Limitations VII-I | Reliability conclusions remain representation dependent, particularly distance and novelty signals. | C3 | methodology; feature registry | 46-feature interface | No | No | Yes |
+
+| C-090 | Conclusion VIII | The study shows reliability transportability is direction dependent. | C2 | Results V-A/V-D | Both directions | Descriptive + paired effects | No | Yes |
+| C-091 | Conclusion VIII | Split conformal has the highest mean 5% attack-miss capture in both directions. | C1 | Results V-B | Both directions | Primary operational endpoint | No | Yes |
+| C-092 | Conclusion VIII | Generic-error ranking is not a sufficient substitute for attack-miss prioritization. | C2 | Results V-C | Both directions | Security endpoint | No | Yes |
+| C-093 | Conclusion VIII | Several reliability scores can reverse semantic orientation after cross-domain transfer. | C2 | Results V-C | CIC→UNSW primarily | Semantic diagnostic | No | Yes |
+| C-094 | Conclusion VIII | The study does not establish a universal best signal or comprehensive unseen-family robustness. | C1/C3 | Entire study scope | Entire study | Scope limitation | No | Yes |
