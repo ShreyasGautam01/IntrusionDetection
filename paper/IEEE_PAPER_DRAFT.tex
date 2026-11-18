@@ -214,7 +214,7 @@ The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. Th
 \draw[arrow] (fit) -- (freeze);
 
 % ---------------- TARGET ----------------
-\node[box, right=3.35cm of src, minimum width=6.0cm,
+\node[box, right=4.6cm of src, minimum width=6.0cm,
       font=\bfseries\normalsize] (tgt)
   {Target domain\\\footnotesize labels withheld};
 
@@ -243,7 +243,7 @@ The four-stage protocol is summarized in Fig.~\ref{fig:source-only-protocol}. Th
 \draw[arrow] (complete) -- (reveal);
 
 % Explicit freeze-to-target connection routed below the source-test branch.
-\draw[arrow] (freeze.east) -- ++(-1.55cm,0) |- ([yshift=0.35cm]score.west) -- (score.west);
+\draw[arrow] (freeze.east) -| (score.west);
 
 % ---------------- EVALUATION ----------------
 \node[eval] (auprc) at ($(reveal.east)+(2.05cm,0.65cm)$)
