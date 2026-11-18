@@ -1,0 +1,47 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{markdown}
+\title{Transportability of Lightweight Reliability Signals for Network Intrusion Detection under Source-Only Cross-Domain Transfer}
+\author{\IEEEauthorblockN{Author Name}
+\IEEEauthorblockA{Department or Institution\\
+City, Country\\
+email@example.com}}
+\begin{document}
+\maketitle
+\begin{abstract}
+Reliability signals are increasingly used to identify uncertain or potentially erroneous predictions from network intrusion detection systems, but their usefulness may change when a detector is deployed in a different network environment. This study evaluates the transportability of five lightweight post-hoc reliability signals—source-calibrated confidence, Random Forest tree disagreement, feature-space distance, split conformal scoring, and Isolation Forest—under source-only cross-domain transfer. A fixed Random Forest detector is trained on either NF-UNSW-NB15-v3 or NF-CSE-CIC-IDS2018-v3 using a common frozen feature representation, and each reliability layer is evaluated in both transfer directions without target-domain adaptation, recalibration, or tuning. Ten random seeds are used for each direction and method. The primary security endpoint is attack-miss area under the precision-recall curve (AUPRC), where an attack miss denotes an attack flow incorrectly classified as benign. Operational utility is evaluated by the fraction of attack misses captured within fixed analyst-review budgets.
+
+Reliability performance varies substantially with transfer direction and with the reliability mechanism. In UNSW→CIC transfer, Random Forest disagreement achieves the highest mean attack-miss AUPRC (0.238), whereas split conformal scoring performs best in CIC→UNSW transfer (0.079). At a 5% review budget, split conformal scoring captures the largest mean fraction of attack misses in both directions, reaching 17.4% for UNSW→CIC and 14.7% for CIC→UNSW. These results show that generic error detection and security-relevant false-negative prioritization are not interchangeable objectives and that no single reliability signal dominates across both transfer directions. The findings highlight the need to evaluate reliability mechanisms under the specific deployment shift and security objective for which they are intended.
+\end{abstract}
+\begin{IEEEkeywords}
+Network intrusion detection, distribution shift, cross-domain transfer, reliability estimation, uncertainty quantification, false-negative prioritization, conformal prediction, analyst review, Random Forest.
+\end{IEEEkeywords}
+\markdownInput{IEEE_PAPER_BODY.md}
+\begin{thebibliography}{10}
+\bibitem{1}
+W. A. Ahmed, M. A. Rahaman, P. Roy, and P. Alam, ``The dashboard says perfect: A systematic audit of label-free model monitoring and test-time adaptation under temporal distribution shift in network intrusion detection,'' \emph{Frontiers in Artificial Intelligence}, vol. 9, Art. no. 1928858, 2026, doi: 10.3389/frai.2026.1928858.
+\bibitem{2}
+H. Jin and H. Lee, ``Benchmark-Shift-Aware Intrusion Detection for Evolving Network Traffic: Cross-Dataset Generalization, Calibrated Alerting, and Score-Orientation Diagnostics,'' \emph{Electronics}, vol. 15, no. 17, Art. no. 3761, 2026, doi: 10.3390/electronics15173761.
+\bibitem{3}
+S. V. Arepalli, U. S. G. Irrinki, A. Morampudi, and R. K. Surapani, ``Conformal prediction for network intrusion triage and analysis of unseen attack families,'' \emph{Discover Informatics}, vol. 1, Art. no. 33, 2026, doi: 10.1007/s44564-026-00033-y.
+\bibitem{4}
+M. Luay, S. Layeghy, S. Hosseininoorbin, M. Sarhan, N. Moustafa, and M. Portmann, ``Temporal Analysis of NetFlow Datasets for Network Intrusion Detection Systems,'' \emph{IEEE Access}, 2026, doi: 10.1109/ACCESS.2026.3688204.
+\bibitem{5}
+J. Talpini, F. Sartori, and M. Savi, ``Enhancing trustworthiness in ML-based network intrusion detection with uncertainty quantification,'' \emph{Journal of Reliable Intelligent Environments}, vol. 10, pp. 501--520, 2024, doi: 10.1007/s40860-024-00238-8.
+\bibitem{6}
+C. Guo, G. Pleiss, Y. Sun, and K. Q. Weinberger, ``On calibration of modern neural networks,'' in \emph{Proc. 34th Int. Conf. Machine Learning (ICML)}, PMLR, vol. 70, 2017, pp. 1321--1330.
+\bibitem{7}
+A. N. Angelopoulos and S. Bates, ``A gentle introduction to conformal prediction and distribution-free uncertainty quantification,'' arXiv:2107.07511, 2021.
+\bibitem{8}
+Y. Geifman and R. El-Yaniv, ``Selective classification for deep neural networks,'' in \emph{Advances in Neural Information Processing Systems 30 (NeurIPS)}, 2017, pp. 4878--4887.
+\bibitem{9}
+F. T. Liu, K. M. Ting, and Z.-H. Zhou, ``Isolation forest,'' in \emph{Proc. 8th IEEE Int. Conf. Data Mining (ICDM)}, 2008, pp. 413--422, doi: 10.1109/ICDM.2008.17.
+\bibitem{10}
+D. Alalisalem, A. Almohsen, K. Albudair, and A. Aljughaiman, ``Cross-Dataset Generalization in Intrusion Detection Systems Using Transfer Learning,'' \emph{IEEE Access}, vol. 14, pp. 90334--90353, 2026, doi: 10.1109/ACCESS.2026.3700037.
+\end{thebibliography}
+\end{document}
