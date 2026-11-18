@@ -515,3 +515,24 @@ Conformal prediction requires a separate interpretation. The source conformal co
 This restriction does not remove split conformal from the primary attack-miss ranking experiment. The frozen target score arrays and primary attack-miss metrics remain part of the completed transfer analysis. The conformal diagnostic issue instead limits the strength of claims that can be made specifically about target-domain coverage guarantees or prediction-set behavior. A separate implementation audit is required before those diagnostics can be used in a final publication version.
 
 The distinction is important because conformal prediction is fundamentally a set-valued uncertainty procedure rather than merely a scalar ranking score [7]. The present study therefore reports its scalar review-ranking results while avoiding unsupported claims about target coverage.
+
+
+### G. Paired Effects Across Random Seeds
+
+The ten-seed design permits paired comparisons because the same detector seed is used for every reliability method within a transfer direction. Table VIII summarizes several key paired contrasts using the mean seed-level difference, a seed-level bootstrap interval, and the exact two-sided sign-flip permutation p-value. The complete pairwise matrix is retained in the analysis artifacts.
+
+**TABLE VIII — SELECTED PAIRED EFFECTS**
+
+| Direction | Comparison | Metric | Mean difference | Bootstrap interval | Exact p |
+|---|---|---|---:|---:|---:|
+| UNSW→CIC | RF disagreement − split conformal | Attack-miss AUPRC | +0.142 | [0.082, 0.206] | 0.00195 |
+| UNSW→CIC | RF disagreement − split conformal | 5% capture | −0.050 | [−0.110, 0.016] | 0.168 |
+| CIC→UNSW | RF disagreement − split conformal | Attack-miss AUPRC | −0.045 | [−0.061, −0.031] | 0.00195 |
+| CIC→UNSW | Feature distance − split conformal | Attack-miss AUPRC | −0.036 | [−0.052, −0.023] | 0.00195 |
+| CIC→UNSW | RF disagreement − split conformal | 5% capture | −0.139 | [−0.169, −0.111] | 0.00195 |
+
+The paired results reinforce the principal directional pattern. In UNSW→CIC, RF disagreement has a large attack-miss AUPRC advantage over split conformal, with a mean paired difference of 0.142 and a bootstrap interval entirely above zero. However, the same comparison at the 5% review budget favors split conformal descriptively, with RF disagreement minus conformal equal to −0.050, but the interval spans zero. The threshold-free and fixed-budget comparisons therefore do not support the same operational conclusion.
+
+In CIC→UNSW, split conformal has a paired attack-miss AUPRC advantage over both RF disagreement and feature-space distance, with mean differences of 0.045 and 0.036, respectively. Its advantage is even larger for the 5% operational capture comparison against RF disagreement, where conformal exceeds RF disagreement by 0.139 in mean paired capture.
+
+The full analysis contains a larger number of pairwise comparisons than those shown in Table VIII. Because these tests are not independent and several are secondary diagnostic comparisons, the manuscript treats their exact p-values as inferential support for the corresponding contrasts rather than as evidence of a single global method ranking. The primary conclusions remain the effect magnitudes, directional consistency, and operational consequences observed across the two transfer directions.
