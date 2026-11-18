@@ -7,6 +7,12 @@
 \usepackage{array}
 \usepackage{adjustbox}
 \usepackage{pgfplots}
+\usepackage{xcolor}
+\definecolor{methodblue}{HTML}{0072B2}
+\definecolor{methodorange}{HTML}{E69F00}
+\definecolor{methodgreen}{HTML}{009E73}
+\definecolor{methodvermillion}{HTML}{D55E00}
+\definecolor{methodpurple}{HTML}{CC79A7}
 \pgfplotsset{compat=1.18}
 \usepgfplotslibrary{groupplots}
 \providecommand{\tightlist}{}
@@ -626,52 +632,56 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 ]
 
 % Confidence
-\addplot[solid,mark=o,mark size=2pt,line width=0.9pt]
+\addplot[solid,mark=o,mark size=2pt,line width=0.9pt,color=methodblue]
   coordinates {(1,0.90) (5,8.19) (10,19.60)};
 \addlegendentry{Confidence}
 
 % RF disagreement
-\addplot[dashed,mark=square*,mark size=1.8pt,line width=0.9pt]
+\addplot[dashed,mark=square*,mark size=1.8pt,line width=0.9pt,color=methodorange]
   coordinates {(1,2.46) (5,12.33) (10,24.68)};
 \addlegendentry{RF disagreement}
 
 % Feature distance
-\addplot[dotted,mark=triangle*,mark size=2.2pt,line width=1.0pt]
+\addplot[dotted,mark=triangle*,mark size=2.2pt,line width=1.0pt,color=methodgreen]
   coordinates {(1,0.07) (5,0.58) (10,0.64)};
 \addlegendentry{Feature distance}
 
 % Split conformal
-\addplot[dashdotted,mark=diamond*,mark size=2.0pt,line width=0.9pt]
+\addplot[dashdotted,mark=diamond*,mark size=2.0pt,line width=0.9pt,color=methodvermillion]
   coordinates {(1,0.0001) (5,17.37) (10,20.40)};
 \addlegendentry{Split conformal}
 
 % Isolation Forest
-\addplot[densely dashed,mark=x,mark size=2.3pt,line width=0.9pt]
+\addplot[densely dashed,mark=x,mark size=2.3pt,line width=0.9pt,color=methodpurple]
   coordinates {(1,0.14) (5,0.75) (10,1.76)};
 \addlegendentry{Isolation Forest}
 
 \nextgroupplot[
   title={CIC$\rightarrow$UNSW},
   title style={font=\footnotesize\bfseries},
-  ylabel={}
+  ylabel={},
+  xmin=0.025, xmax=0.085,
+  ymin=0.025, ymax=0.085,
+  xtick={0.03,0.04,0.05,0.06,0.07,0.08},
+  ytick={0.03,0.04,0.05,0.06,0.07,0.08}
 ]
 
 % Same styles, no repeated legend.
-\addplot[solid,mark=o,mark size=2pt,line width=0.9pt,forget plot]
+\addplot[solid,mark=o,mark size=2pt,line width=0.9pt,color=methodblue,forget plot]
   coordinates {(1,0.03) (5,0.77) (10,1.40)};
-\addplot[dashed,mark=square*,mark size=1.8pt,line width=0.9pt,forget plot]
+\addplot[dashed,mark=square*,mark size=1.8pt,line width=0.9pt,color=methodorange,forget plot]
   coordinates {(1,0.03) (5,0.88) (10,1.46)};
-\addplot[dotted,mark=triangle*,mark size=2.2pt,line width=1.0pt,forget plot]
+\addplot[dotted,mark=triangle*,mark size=2.2pt,line width=1.0pt,color=methodgreen,forget plot]
   coordinates {(1,0.56) (5,4.34) (10,5.09)};
-\addplot[dashdotted,mark=diamond*,mark size=2.0pt,line width=0.9pt,forget plot]
+\addplot[dashdotted,mark=diamond*,mark size=2.0pt,line width=0.9pt,color=methodvermillion,forget plot]
   coordinates {(1,4.91) (5,14.73) (10,22.53)};
-\addplot[densely dashed,mark=x,mark size=2.3pt,line width=0.9pt,forget plot]
+\addplot[densely dashed,mark=x,mark size=2.3pt,line width=0.9pt,color=methodpurple,forget plot]
   coordinates {(1,0.05) (5,0.45) (10,0.82)};
 
 \end{groupplot}
 \end{tikzpicture}
 }
-\caption{Attack-miss capture as a function of analyst-review budget. Each panel corresponds to one transfer direction; line style and marker identify the reliability signal. The curves show that operational ranking changes with review capacity and need not match the threshold-free attack-miss AUPRC ordering.}
+\caption{Attack-miss capture as a function of analyst-review budget. Each panel corresponds to one transfer direction; line style and marker identify the reliability signal. Color provides redundant method identification while line style and marker remain printable secondary encodings. The curves show that operational ranking changes with review capacity and need not match the threshold-free attack-miss AUPRC ordering.}
 \label{fig:budget-capture}
 \end{figure*}
 
@@ -744,23 +754,23 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
   }
 ]
 
-\addplot[only marks,mark=o,mark size=2.7pt]
+\addplot[only marks,mark=o,mark size=2.7pt,color=methodblue]
   coordinates {(0.738,0.192)};
 \addlegendentry{Confidence}
 
-\addplot[only marks,mark=square*,mark size=2.2pt]
+\addplot[only marks,mark=square*,mark size=2.2pt,color=methodorange]
   coordinates {(0.736,0.238)};
 \addlegendentry{RF disagreement}
 
-\addplot[only marks,mark=triangle*,mark size=2.5pt]
+\addplot[only marks,mark=triangle*,mark size=2.5pt,color=methodgreen]
   coordinates {(0.859,0.109)};
 \addlegendentry{Feature distance}
 
-\addplot[only marks,mark=diamond*,mark size=2.4pt]
+\addplot[only marks,mark=diamond*,mark size=2.4pt,color=methodvermillion]
   coordinates {(0.518,0.096)};
 \addlegendentry{Split conformal}
 
-\addplot[only marks,mark=x,mark size=2.8pt]
+\addplot[only marks,mark=x,mark size=2.8pt,color=methodpurple]
   coordinates {(0.847,0.077)};
 \addlegendentry{Isolation Forest}
 
@@ -770,21 +780,21 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
   ylabel={}
 ]
 
-\addplot[only marks,mark=o,mark size=2.7pt,forget plot]
+\addplot[only marks,mark=o,mark size=2.7pt,color=methodblue,forget plot]
   coordinates {(0.033,0.033)};
-\addplot[only marks,mark=square*,mark size=2.2pt,forget plot]
+\addplot[only marks,mark=square*,mark size=2.2pt,color=methodorange,forget plot]
   coordinates {(0.035,0.035)};
-\addplot[only marks,mark=triangle*,mark size=2.5pt,forget plot]
+\addplot[only marks,mark=triangle*,mark size=2.5pt,color=methodgreen,forget plot]
   coordinates {(0.043,0.043)};
-\addplot[only marks,mark=diamond*,mark size=2.4pt,forget plot]
+\addplot[only marks,mark=diamond*,mark size=2.4pt,color=methodvermillion,forget plot]
   coordinates {(0.079,0.079)};
-\addplot[only marks,mark=x,mark size=2.8pt,forget plot]
+\addplot[only marks,mark=x,mark size=2.8pt,color=methodpurple,forget plot]
   coordinates {(0.036,0.036)};
 
 \end{groupplot}
 \end{tikzpicture}%
 }
-\caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
+\caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal, with color providing redundant visual separation. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
 \label{fig:generic-vs-attackmiss}
 \end{figure*}
 
