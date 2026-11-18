@@ -5,6 +5,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{dblfloatfix}
 \usepackage{adjustbox}
 \usepackage{pgfplots}
 \usepackage{xcolor}
@@ -337,7 +338,7 @@ The primary evaluation uses two audited NetFlow-v3 datasets, NF-UNSW-NB15-v3 and
 
 \begin{table}[t]
 \centering
-\caption{TABLE I --- DATASET AND SOURCE-PARTITION CONFIGURATION}
+\caption{Dataset and source-partition configuration}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{llllll}
 \toprule
@@ -358,7 +359,7 @@ The fixed detector is a binary Random Forest with 200 trees and minimum leaf siz
 
 \begin{table}[t]
 \centering
-\caption{TABLE II --- RANDOM FOREST CONFIGURATION}
+\caption{Random Forest configuration}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{ll}
 \toprule
@@ -390,7 +391,7 @@ The five reliability mechanisms defined mathematically in Section~III are instan
 
 \begin{table}[t]
 \centering
-\caption{TABLE III --- RELIABILITY SIGNAL CONFIGURATION}
+\caption{Reliability signal configuration}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{llll}
 \toprule
@@ -453,7 +454,7 @@ The primary analysis asks whether the reliability scores can rank target observa
 
 \begin{table}[t]
 \centering
-\caption{TABLE IV --- ATTACK-MISS AUPRC UNDER BIDIRECTIONAL SOURCE-ONLY TRANSFER}
+\caption{Attack-miss AUPRC under bidirectional source-only transfer}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{lll}
 \toprule
@@ -576,7 +577,7 @@ The primary operational analysis asks how many detector attack misses can be rec
 
 \begin{table}[t]
 \centering
-\caption{TABLE V --- ATTACK-MISS CAPTURE AT FIXED REVIEW BUDGETS}
+\caption{Attack-miss capture at fixed review budgets}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{lllllll}
 \toprule
@@ -592,7 +593,7 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \end{adjustbox}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure*}[!tb]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}
@@ -699,7 +700,7 @@ The generic-error analysis asks whether a reliability signal that is effective a
 
 \begin{table}[t]
 \centering
-\caption{TABLE VI --- GENERIC ERROR AND ATTACK-MISS BEHAVIOR}
+\caption{Generic error and attack-miss behavior}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{lllllll}
 \toprule
@@ -816,7 +817,7 @@ Fig.~1 shows the directional change in attack-miss AUPRC directly; Table~VII qua
 
 \begin{table}[t]
 \centering
-\caption{TABLE VII --- DIRECTIONAL CHANGE IN RELIABILITY PERFORMANCE}
+\caption{Directional change in reliability performance}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{lll}
 \toprule
@@ -866,7 +867,7 @@ The ten-seed design permits matched comparisons because the same detector seed i
 
 \begin{table}[t]
 \centering
-\caption{TABLE VIII --- SELECTED PAIRED EFFECTS}
+\caption{Selected paired effects}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{llllll}
 \toprule
