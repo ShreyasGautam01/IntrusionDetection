@@ -660,3 +660,26 @@ The results show that reliability transportability is strongly direction depende
 These findings support a practical conclusion: a reliability layer should not be selected solely from in-domain performance, generic-error ranking, or a single source-target direction. Its usefulness should be validated against the security failure mode of interest, its score orientation should be checked after transfer, and its operational value should be evaluated under the analyst review budget available in deployment.
 
 The study does not establish a universal best reliability signal or comprehensive unseen-family robustness. Rather, it provides controlled empirical evidence that existing lightweight reliability mechanisms can exhibit materially different transportability, security relevance, and operational utility under source-only cross-domain deployment. This suggests that reliability monitoring should be treated as a deployment-specific evaluation problem and provides a baseline for future work on temporal drift, target-label-efficient recalibration, broader domain replication, family-conditional reliability, and composite reliability policies.
+
+
+## REFERENCES
+
+[1] W. A. Ahmed, M. A. Rahaman, P. Roy, and P. Alam, “The dashboard says ‘perfect:’ A systematic audit of label-free model monitoring and test-time adaptation under temporal distribution shift in network intrusion detection,” *Frontiers in Artificial Intelligence*, vol. 9, Art. no. 1928858, 2026, doi: 10.3389/frai.2026.1928858.
+
+[2] H. Jin and H. Lee, “Benchmark-Shift-Aware Intrusion Detection for Evolving Network Traffic: Cross-Dataset Generalization, Calibrated Alerting, and Score-Orientation Diagnostics,” *Electronics*, vol. 15, no. 17, Art. no. 3761, 2026, doi: 10.3390/electronics15173761.
+
+[3] S. V. Arepalli, U. S. G. Irrinki, A. Morampudi, and R. K. Surapani, “Conformal prediction for network intrusion triage and analysis of unseen attack families,” *Discover Informatics*, vol. 1, Art. no. 33, 2026, doi: 10.1007/s44564-026-00033-y.
+
+[4] M. Luay, S. Layeghy, S. Hosseininoorbin, M. Sarhan, N. Moustafa, and M. Portmann, “Temporal Analysis of NetFlow Datasets for Network Intrusion Detection Systems,” *IEEE Access*, 2026, doi: 10.1109/ACCESS.2026.3688204.
+
+[5] J. Talpini, F. Sartori, and M. Savi, “Enhancing trustworthiness in ML-based network intrusion detection with uncertainty quantification,” *Journal of Reliable Intelligent Environments*, vol. 10, pp. 501–520, 2024, doi: 10.1007/s40860-024-00238-8.
+
+[6] C. Guo, G. Pleiss, Y. Sun, and K. Q. Weinberger, “On calibration of modern neural networks,” in *Proc. 34th Int. Conf. Machine Learning (ICML)*, PMLR, vol. 70, 2017, pp. 1321–1330.
+
+[7] A. N. Angelopoulos and S. Bates, “A gentle introduction to conformal prediction and distribution-free uncertainty quantification,” arXiv:2107.07511, 2021.
+
+[8] Y. Geifman and R. El-Yaniv, “Selective classification for deep neural networks,” in *Advances in Neural Information Processing Systems 30 (NeurIPS)*, 2017, pp. 4878–4887.
+
+[9] F. T. Liu, K. M. Ting, and Z.-H. Zhou, “Isolation forest,” in *Proc. 8th IEEE Int. Conf. Data Mining (ICDM)*, 2008, pp. 413–422, doi: 10.1109/ICDM.2008.17.
+
+[10] D. Alalisalem, A. Almohsen, K. Albudair, and A. Aljughaiman, “Cross-Dataset Generalization in Intrusion Detection Systems Using Transfer Learning,” *IEEE Access*, vol. 14, pp. 90334–90353, 2026, doi: 10.1109/ACCESS.2026.3700037.
