@@ -9,20 +9,22 @@ The manuscript source is:
 
 ## Local compilation
 
-From the `paper/` directory:
+From the repository root:
 
 ```bash
-pdflatex -shell-escape IEEE_PAPER_DRAFT.tex
-pdflatex -shell-escape IEEE_PAPER_DRAFT.tex
+python scripts/build_ieee_paper.py
+cd paper
+pdflatex -interaction=nonstopmode -halt-on-error IEEE_PAPER_DRAFT.tex
+pdflatex -interaction=nonstopmode -halt-on-error IEEE_PAPER_DRAFT.tex
 ```
 
-The `-shell-escape` flag is required because the LaTeX markdown package imports the maintained Markdown body during compilation.
+The build script converts the maintained Markdown body to `IEEE_PAPER_BODY.tex`, converts Markdown tables to IEEE column-contained `tabular` blocks, and then the IEEEtran wrapper compiles the generated body. No shell escape is required.
 
 The source uses `IEEEtran` conference mode, which produces the standard IEEE two-column letter-size layout. The author metadata in the wrapper is intentionally a placeholder and must be replaced before submission.
 
 ## Citation control
 
-The manuscript currently retains explicit IEEE citation numbers [1]–[10]. The permanent source identities are tracked by `CIT-001`–`CIT-010` in `paper/CITATION_REGISTRY.md`.
+The manuscript currently retains explicit IEEE citation numbers [1]–[13]. The permanent source identities are tracked by `CIT-001`–`CIT-010` in `paper/CITATION_REGISTRY.md`.
 
 Before final submission:
 
