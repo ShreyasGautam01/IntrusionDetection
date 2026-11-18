@@ -40,3 +40,15 @@
 | C-026 | Methodology | Target review budgets are 1%, 5%, and 10%, with 5% as the primary operational endpoint. | C1 | Target transfer manifests; completed analysis | review_budgets | Both directions | Not applicable | No | Yes |
 | C-027 | Methodology | Attack-miss capture ranks the highest-reliability target rows and divides selected attack misses by all target attack misses. | C1 | Frozen analysis implementation | analysis/selective artifacts | Both directions | Not applicable | No | Yes |
 | C-028 | Methodology | Family-level conclusions are restricted to the documented shared DoS mapping. | C1 | transfer_family_registry.csv | family registry | Both directions | Not applicable | No | Yes |
+
+## Experimental Setup claims
+
+| Claim ID | Section | Claim | Level | Evidence / Citation | Evidence location | Scope | Statistical support | Citation required | Verified |
+|---|---|---|---|---|---|---|---|---|---|
+| C-029 | Experimental Setup | The audited datasets contain 2,365,424 and 20,115,529 total flows, respectively, with deterministic source partitions as reported. | C1 | Frozen transfer manifests; CIT-004 | target_transfer_manifest_* | Both datasets | Not applicable | Yes for dataset context | Yes |
+| C-030 | Experimental Setup | Each transfer direction uses ten fixed seeds 0–9. | C1 | Frozen target manifests | seeds | Both directions | Not applicable | No | Yes |
+| C-031 | Experimental Setup | Target-label isolation passes for fitting, tuning, recalibration, and score construction. | C1 | FINAL_ANALYSIS_AUDIT.json | audit fields | Both directions | Not applicable | No | Yes |
+| C-032 | Experimental Setup | Five reliability signals are evaluated under a common high-score-means-review orientation. | C1 | Frozen transfer manifests | reliability_signals | Both directions | Not applicable | No | Yes |
+| C-033 | Experimental Setup | Review budgets are 1%, 5%, and 10%, with 5% primary. | C1 | Frozen target manifests | review_budgets | Both directions | Not applicable | No | Yes |
+| C-034 | Experimental Setup | Results are retained per seed and paired comparisons use the same seed across methods. | C1/C2 | analysis_per_seed_all_metrics.csv; analysis_paired_statistics.csv | analysis artifacts | Both directions | Yes | No | Yes |
+| C-035 | Experimental Setup | The computational environment is pinned through the repository lockfile and versioned artifacts. | C1 | REPRODUCTION.md; uv.lock; artifact manifest | environment records | Entire study | Not applicable | No | Yes |
