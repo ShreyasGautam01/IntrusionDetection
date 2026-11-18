@@ -469,12 +469,12 @@ Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
 \begin{axis}[
   width=\columnwidth,
   height=5.4cm,
-  xmin=0, xmax=0.27,
+  xmin=0, xmax=0.36,
   ymin=0.45, ymax=5.55,
   xlabel={Attack-miss AUPRC},
   ylabel={},
-  xtick={0,0.05,0.10,0.15,0.20,0.25},
-  xticklabels={0,0.05,0.10,0.15,0.20,0.25},
+  xtick={0,0.05,0.10,0.15,0.20,0.25,0.30,0.35},
+  xticklabels={0,0.05,0.10,0.15,0.20,0.25,0.30,0.35},
   ytick={1,2,3,4,5},
   yticklabels={
     Isolation Forest,
@@ -586,6 +586,7 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 
 \begin{figure*}[t]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}
 \begin{groupplot}[
   group style={
@@ -667,6 +668,7 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 
 \end{groupplot}
 \end{tikzpicture}
+}
 \caption{Attack-miss capture as a function of analyst-review budget. Each panel corresponds to one transfer direction; line style and marker identify the reliability signal. The curves show that operational ranking changes with review capacity and need not match the threshold-free attack-miss AUPRC ordering.}
 \label{fig:budget-capture}
 \end{figure*}
@@ -703,6 +705,7 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 
 \begin{figure*}[t]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}
 \begin{groupplot}[
   group style={
@@ -723,7 +726,15 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
   tick style={draw=black!70},
   label style={font=\footnotesize},
   tick label style={font=\footnotesize},
-  clip=false
+  clip=false,
+  legend style={
+    font=\footnotesize,
+    at={(0.5,-0.22)},
+    anchor=north,
+    legend columns=3,
+    draw=none,
+    column sep=0.8em
+  }
 ]
 
 \nextgroupplot[
@@ -787,8 +798,20 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
   coordinates {(0.036,0.036)};
 \node[font=\tiny,anchor=north east] at (axis cs:0.036,0.036) {Isolation};
 
-\end{groupplot}
-\end{tikzpicture}
+\\end{groupplot}
+
+% Shared marker legend for both panels.
+\\node[anchor=north, yshift=-0.15cm] at (current bounding box.south)
+{\\footnotesize
+\\begin{tikzpicture}[baseline=-0.3ex]
+\\node[anchor=west] at (0,0) {\tikz[baseline=-0.4ex]\draw[fill=black] (0,0) circle (1.2pt);\ Confidence};
+\\node[anchor=west] at (2.15,0) {\tikz[baseline=-0.4ex]\draw[fill=black] (0,0) rectangle (2.1pt,2.1pt);\ RF disagreement};
+\\node[anchor=west] at (5.0,0) {\tikz[baseline=-0.4ex]\draw[fill=black] (0,0) -- (1.8pt,1.8pt) -- (-1.8pt,1.8pt) -- cycle;\ Feature distance};
+\\node[anchor=west] at (7.9,0) {\tikz[baseline=-0.4ex]\draw[fill=black] (0,1.4pt) -- (1.4pt,0) -- (0,-1.4pt) -- (-1.4pt,0) -- cycle;\ Split conformal};
+\\node[anchor=west] at (10.5,0) {\tikz[baseline=-0.4ex]\draw (0,0) -- (2pt,2pt) (0,2pt) -- (2pt,0);\ Isolation Forest};
+\\end{tikzpicture}
+};\n\\end{tikzpicture}%
+}
 \caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
 \label{fig:generic-vs-attackmiss}
 \end{figure*}
