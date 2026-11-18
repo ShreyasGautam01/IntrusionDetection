@@ -6,6 +6,8 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{adjustbox}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \providecommand{\tightlist}{}
 \title{Transportability of Lightweight Reliability Signals for Network Intrusion Detection under Source-Only Cross-Domain Transfer}
 \author{
@@ -440,7 +442,7 @@ At the scientific level, source splits, preprocessing values, feature order, det
 
 \subsection{Primary Security Endpoint: Attack-Miss AUPRC}
 
-The primary analysis asks whether the reliability scores can rank the subset of target observations that are both attacks and false negatives of the frozen detector. Table IV reports the mean attack-miss AUPRC over the ten matched seeds for each transfer direction.
+The primary analysis asks whether the reliability scores can rank target observations that are simultaneously attacks and false negatives of the frozen detector. Table~IV reports the exact mean attack-miss AUPRC and seed-level standard deviation for each reliability signal and transfer direction. Figure~1 visualizes the same summary as paired points with horizontal uncertainty bars, with each connecting segment showing how the corresponding signal changes when the source and target domains are reversed.
 
 \begin{table}[t]
 \centering
@@ -460,15 +462,104 @@ Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
 \end{adjustbox}
 \end{table}
 
-In the UNSW->CIC direction, RF disagreement has the highest mean attack-miss AUPRC at 0.238, followed by calibrated confidence at 0.192. Feature-space distance, split conformal, and Isolation Forest obtain lower means of 0.109, 0.096, and 0.077, respectively. The seed-level variability is also largest for RF disagreement, whose standard deviation is 0.102, indicating substantially more variation across repeated detector fits than the other signals in this direction.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\columnwidth,
+  height=5.4cm,
+  xmin=0, xmax=0.27,
+  ymin=0.45, ymax=5.55,
+  xlabel={Attack-miss AUPRC},
+  ylabel={},
+  xtick={0,0.05,0.10,0.15,0.20,0.25},
+  xticklabels={0,0.05,0.10,0.15,0.20,0.25},
+  ytick={1,2,3,4,5},
+  yticklabels={
+    Isolation Forest,
+    Split conformal,
+    Feature-space distance,
+    RF disagreement,
+    Confidence
+  },
+  y dir=normal,
+  grid=major,
+  grid style={dotted, draw=black!18},
+  axis line style={draw=black!70},
+  tick style={draw=black!70},
+  label style={font=\footnotesize},
+  tick label style={font=\footnotesize},
+  legend style={
+    font=\footnotesize,
+    at={(0.5,1.03)},
+    anchor=south,
+    legend columns=2,
+    draw=none,
+    column sep=0.8em
+  },
+  clip=false
+]
 
-The paired seed analysis is consistent with this descriptive ordering. The mean attack-miss AUPRC difference between RF disagreement and confidence is 0.046 in favor of RF disagreement, while the difference between RF disagreement and split conformal is 0.142. The corresponding 95\% bootstrap intervals for the paired differences exclude zero for both comparisons. These estimates are reported as paired effects; the complete set of pairwise significance tests is treated as a multiple-comparison family and is interpreted separately from the primary descriptive ranking.
+% Directional connecting segments.
+\addplot[black!55, line width=0.8pt, forget plot]
+  coordinates {(0.077,1) (0.036,1)};
+\addplot[black!55, line width=0.8pt, forget plot]
+  coordinates {(0.096,2) (0.079,2)};
+\addplot[black!55, line width=0.8pt, forget plot]
+  coordinates {(0.109,3) (0.043,3)};
+\addplot[black!55, line width=0.8pt, forget plot]
+  coordinates {(0.238,4) (0.035,4)};
+\addplot[black!55, line width=0.8pt, forget plot]
+  coordinates {(0.192,5) (0.033,5)};
 
-The reverse transfer direction produces a materially different ranking. In CIC->UNSW, split conformal has the highest mean attack-miss AUPRC at 0.079, followed by feature-space distance at 0.043 and Isolation Forest at 0.036. RF disagreement and confidence are lower at 0.035 and 0.033, respectively. Thus, reversing the source and target domains changes both the magnitude of attack-miss ranking performance and the relative ordering of the signals.
+% UNSW -> CIC: filled markers with SD error bars.
+\addplot+[
+  only marks,
+  mark=*,
+  mark size=2.4pt,
+  error bars/.cd,
+  x dir=both,
+  x explicit
+] coordinates {
+  (0.077,1) +- (0.008,0)
+  (0.096,2) +- (0.007,0)
+  (0.109,3) +- (0.009,0)
+  (0.238,4) +- (0.102,0)
+  (0.192,5) +- (0.051,0)
+};
+\addlegendentry{UNSW$\rightarrow$CIC}
 
-The contrast is not explained simply by a universal scaling difference among methods. The direction-specific mean gap is 0.203 for RF disagreement, 0.159 for confidence, 0.066 for feature-space distance, 0.017 for split conformal, and 0.041 for Isolation Forest. Split conformal therefore exhibits the smallest absolute change in mean attack-miss AUPRC between the two transfer directions, although its seed variability is greater in the CIC->UNSW direction. Conversely, RF disagreement shows the largest directional change among the five signals.
+% CIC -> UNSW: open markers with SD error bars.
+\addplot+[
+  only marks,
+  mark=o,
+  mark size=2.8pt,
+  mark options={line width=0.9pt},
+  error bars/.cd,
+  x dir=both,
+  x explicit
+] coordinates {
+  (0.036,1) +- (0.001,0)
+  (0.079,2) +- (0.025,0)
+  (0.043,3) +- (0.001,0)
+  (0.035,4) +- (0.001,0)
+  (0.033,5) +- (0.001,0)
+};
+\addlegendentry{CIC$\rightarrow$UNSW}
 
-The primary endpoint therefore provides two results central to the study. First, the most effective reliability signal is source-target-direction dependent: RF disagreement ranks highest in UNSW->CIC, whereas split conformal ranks highest in CIC->UNSW. Second, performance degradation is also signal dependent, with some mechanisms changing substantially more than others when the same detector is transferred in the opposite direction. These observations argue against selecting a reliability mechanism from a single transfer direction and treating that ranking as universally transportable.
+\end{axis}
+\end{tikzpicture}
+\caption{Bidirectional attack-miss AUPRC. Filled and open markers denote the two transfer directions; horizontal error bars show seed-level standard deviation. Each segment connects the two directional means for the same reliability signal, making directional transportability visible without replacing the exact values reported in Table~IV.}
+\label{fig:bidirectional-auprc}
+\end{figure}
+
+In UNSW$\rightarrow$CIC, RF disagreement achieves the highest mean attack-miss AUPRC at 0.238. In CIC$\rightarrow$UNSW, the ordering changes and split conformal becomes the highest-ranked signal at 0.079. Thus, the best-performing reliability mechanism is not invariant to reversal of the source and target domains.
+
+The figure also makes the different directional behavior of the signals apparent. RF disagreement and confidence move substantially between the two directions, whereas split conformal remains comparatively close to its original level. Feature-space distance and Isolation Forest remain lower-performing signals in both directions despite their different directional changes.
+
+The paired seed analysis provides inferential support for the strongest UNSW$\rightarrow$CIC contrasts. RF disagreement exceeds confidence by a mean paired difference of 0.046, with a 95\% bootstrap interval excluding zero, and exceeds split conformal by 0.142 with the corresponding interval also excluding zero. These effects are reported alongside the broader multiple-comparison analysis rather than interpreted as evidence of a universal ranking.
+
+The primary endpoint therefore establishes the first central result of the study: reliability performance is source-target-direction dependent. A ranking obtained from one transfer direction cannot automatically be treated as a transportable ordering for the reverse deployment direction.
 
 \subsection{Operational Utility at Fixed Analyst-Review Budgets}
 
