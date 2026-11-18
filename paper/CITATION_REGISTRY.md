@@ -25,7 +25,7 @@ URL: https://doi.org/10.3389/frai.2026.1928858
 
 Supports: temporal/cross-domain reliability monitoring; confidence, agreement, conformal abstention; strict target-label isolation.
 
-Used in: Section I, Section II-A.
+Used in: Section I, Section II-A, and Section VI-B, VI-E, and VI-F.
 
 ### CIT-002 — Jin and Lee (2026)
 
@@ -39,7 +39,7 @@ URL: https://doi.org/10.3390/electronics15173761
 
 Supports: benchmark shift, calibrated alerting, score-orientation diagnostics, cross-dataset generalization.
 
-Used in: Section I, Section II-A.
+Used in: Section I, Section II-A, and Section VI-D and VI-E.
 
 ### CIT-003 — Arepalli et al. (2026)
 
@@ -109,7 +109,7 @@ URL: https://arxiv.org/abs/2107.07511
 
 Supports: general conformal prediction framework; distribution-free uncertainty; pre-trained model compatibility; distribution-shift extensions.
 
-Used in: Section II-C, Section III-E, and Section III-G.
+Used in: Section II-C, Section III-E, Section III-G, and Section VI-C.
 
 ### CIT-008 — Geifman and El-Yaniv (2017)
 
@@ -151,7 +151,7 @@ URL: https://doi.org/10.1109/ACCESS.2026.3700037
 
 Supports: recent cross-dataset IDS adaptation literature; distinction between source-only evaluation and target-domain transfer learning.
 
-Used in: Section II-A.
+Used in: Section II-A and Section VI-D.
 
 ## Citation verification status
 
