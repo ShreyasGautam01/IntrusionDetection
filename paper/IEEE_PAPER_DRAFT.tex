@@ -498,6 +498,7 @@ Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
   tick style={draw=black!70},
   label style={font=\footnotesize},
   tick label style={font=\footnotesize},
+  clip=true,
   legend style={
     font=\footnotesize,
     at={(0.5,1.03)},
@@ -593,17 +594,17 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \end{adjustbox}
 \end{table}
 
-\begin{figure*}[!tb]
+\begin{figure*}[!t]
 \centering
-\resizebox{\textwidth}{!}{%
+\resizebox{0.92\textwidth}{!}{%
 \begin{tikzpicture}
 \begin{groupplot}[
   group style={
     group size=2 by 1,
-    horizontal sep=1.2cm
+    horizontal sep=0.9cm
   },
-  width=0.43\textwidth,
-  height=5.2cm,
+  width=0.40\textwidth,
+  height=4.5cm,
   xmin=1, xmax=10,
   ymin=0, ymax=26,
   xtick={1,5,10},
@@ -660,11 +661,7 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \nextgroupplot[
   title={CIC$\rightarrow$UNSW},
   title style={font=\footnotesize\bfseries},
-  ylabel={},
-  xmin=0.025, xmax=0.085,
-  ymin=0.025, ymax=0.085,
-  xtick={0.03,0.04,0.05,0.06,0.07,0.08},
-  ytick={0.03,0.04,0.05,0.06,0.07,0.08}
+  ylabel={}
 ]
 
 % Same styles, no repeated legend.
@@ -682,7 +679,7 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \end{groupplot}
 \end{tikzpicture}
 }
-\caption{Attack-miss capture as a function of analyst-review budget. Each panel corresponds to one transfer direction; line style and marker identify the reliability signal. Color provides redundant method identification while line style and marker remain printable secondary encodings. The curves show that operational ranking changes with review capacity and need not match the threshold-free attack-miss AUPRC ordering.}
+\caption{Attack-miss capture as a function of analyst-review budget. Each panel corresponds to one transfer direction; line style and marker identify the reliability signal, with color providing redundant visual separation. The curves show that operational ranking changes with review capacity and need not match the threshold-free attack-miss AUPRC ordering.}
 \label{fig:budget-capture}
 \end{figure*}
 
@@ -718,15 +715,15 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 
 \begin{figure*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\resizebox{0.92\textwidth}{!}{%
 \begin{tikzpicture}
 \begin{groupplot}[
   group style={
     group size=2 by 1,
-    horizontal sep=1.2cm
+    horizontal sep=0.9cm
   },
-  width=0.43\textwidth,
-  height=5.4cm,
+  width=0.40\textwidth,
+  height=4.8cm,
   xmin=0, xmax=0.90,
   ymin=0, ymax=0.28,
   xtick={0,0.2,0.4,0.6,0.8},
@@ -778,7 +775,11 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \nextgroupplot[
   title={CIC$\rightarrow$UNSW},
   title style={font=\footnotesize\bfseries},
-  ylabel={}
+  ylabel={},
+  xmin=0.025, xmax=0.085,
+  ymin=0.025, ymax=0.085,
+  xtick={0.03,0.04,0.05,0.06,0.07,0.08},
+  ytick={0.03,0.04,0.05,0.06,0.07,0.08}
 ]
 
 \addplot[only marks,mark=o,mark size=2.7pt,color=methodblue,forget plot]
