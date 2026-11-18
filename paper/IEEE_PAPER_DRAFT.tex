@@ -881,7 +881,7 @@ The distinction is important because classical conformal guarantees depend on co
 
 \subsection{Paired Effects Across Random Seeds}
 
-The ten-seed design permits paired comparisons because the same detector seed is used for every reliability method within a transfer direction. Table VIII summarizes several key paired contrasts using the mean seed-level difference, a seed-level bootstrap interval, and the exact two-sided sign-flip permutation p-value. The complete pairwise matrix is retained in the analysis artifacts.
+The ten-seed design permits matched comparisons because the same detector seed is used for every reliability method within a transfer direction. Table~VIII reports selected paired contrasts using the mean seed-level difference, a seed-level bootstrap interval, and an exact two-sided sign-flip permutation test.
 
 \begin{table}[t]
 \centering
@@ -901,11 +901,11 @@ CIC->UNSW & RF disagreement - split conformal & 5\% capture & -0.139 & [-0.169, 
 \end{adjustbox}
 \end{table}
 
-The paired results reinforce the principal directional pattern. In UNSW->CIC, RF disagreement has a large attack-miss AUPRC advantage over split conformal, with a mean paired difference of 0.142 and a bootstrap interval entirely above zero. However, the same comparison at the 5\% review budget favors split conformal descriptively, with RF disagreement minus conformal equal to -0.050, but the interval spans zero. The threshold-free and fixed-budget comparisons therefore do not support the same operational conclusion.
+The paired effects reinforce the contrast already visible in Figs.~1 and~2. In UNSW$\rightarrow$CIC, RF disagreement has a large attack-miss AUPRC advantage over split conformal, with a mean paired difference of 0.142 and an interval entirely above zero. At the 5\% review budget, however, the comparison favors split conformal descriptively, with RF-minus-conformal equal to -0.050 and an interval spanning zero.
 
-In CIC->UNSW, split conformal has a paired attack-miss AUPRC advantage over both RF disagreement and feature-space distance, with mean differences of 0.045 and 0.036, respectively. Its advantage is even larger for the 5\% operational capture comparison against RF disagreement, where conformal exceeds RF disagreement by 0.139 in mean paired capture.
+In CIC$\rightarrow$UNSW, split conformal has a paired attack-miss AUPRC advantage over RF disagreement and feature-space distance, with mean differences of 0.045 and 0.036, respectively. Its operational advantage over RF disagreement is larger at the 5\% budget, where the mean paired difference is 0.139 in favor of conformal.
 
-The full analysis contains a larger number of pairwise comparisons than those shown in Table VIII. Because these tests are not independent and several are secondary diagnostic comparisons, the manuscript treats their exact p-values as inferential support for the corresponding contrasts rather than as evidence of a single global method ranking. The primary conclusions remain the effect magnitudes, directional consistency, and operational consequences observed across the two transfer directions.
+These tests support selected method contrasts but do not establish a single global ordering across all signals and metrics. The broader pairwise results are retained in the analysis artifacts, while the manuscript emphasizes effect magnitudes, uncertainty intervals, directional consistency, and the operational patterns shown in Figs.~1--3.
 
 \subsection{Computational Cost}
 
