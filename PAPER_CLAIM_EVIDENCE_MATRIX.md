@@ -103,3 +103,11 @@
 
 | C-072 | Results V-H | The RF execution benchmark showed 17.64 s at n_jobs=10 and 16.50 s at n_jobs=16 on the bounded benchmark, while higher worker settings saturated CPU more strongly. | C1 | analysis_computational_cost.md; n_jobs benchmark artifacts | RF execution benchmark | Bounded benchmark | Descriptive | No | Yes |
 | C-073 | Results V-H | RF n_jobs was treated as an execution parameter rather than a scientific factor because tested settings were exactly equivalent to the n_jobs=1 reference on tree structure, probabilities, and disagreement. | C1 | computational benchmark decision | equivalence audit | RF implementation | Not applicable | No | Yes |
+
+| C-074 | Discussion VI-A | Reliability ranking is not universally transportable; the best AUPRC signal changes with transfer direction. | C2 | Results V-A/V-D | Both directions | Supported by completed results | No | Yes |
+| C-075 | Discussion VI-B | Input atypicality and detector-failure reliability are distinct objectives. | C3 | Results V-C; CIT-003 | UNSW→CIC | Interpretive | Yes | Yes |
+| C-076 | Discussion VI-B | Score orientation can reverse after transfer, creating a risk of systematically misdirected review if high-score semantics are assumed unchanged. | C2/C3 | Results V-C; CIT-002/CIT-003 | CIC→UNSW | Descriptive + literature context | Yes | Yes |
+| C-077 | Discussion VI-C | Split conformal shows comparatively stable attack-miss AUPRC across directions, but this study does not establish target-domain conformal coverage guarantees. | C2 | Results V-A/V-D; CIT-007 | Both directions | Primary transfer | Yes | Yes |
+| C-078 | Discussion VI-D | Source-only monitoring is a baseline for frozen deployment rather than a replacement for target-domain adaptation. | C3 | Methodology; CIT-010 | Study scope | Conceptual | Yes | Yes |
+| C-079 | Discussion VI-E | The present contribution is empirical transportability analysis rather than algorithmic novelty. | C3 | Literature audit; complete study | Entire study | Novelty claim | Yes | Provisional pending final literature audit |
+| C-080 | Discussion VI-F | Temporal drift, target-label-efficient recalibration, broader domain replication, family-conditional analysis, and composite reliability are major logical extensions. | C3 | Results; CIT-001/CIT-003 | Future work | Not applicable | Yes | Yes |
