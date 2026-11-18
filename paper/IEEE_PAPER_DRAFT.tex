@@ -6,7 +6,6 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{dblfloatfix}
-\usepackage{placeins}
 \usepackage{adjustbox}
 \usepackage{pgfplots}
 \usepackage{xcolor}
@@ -587,7 +586,7 @@ The primary operational analysis asks how many detector attack misses can be rec
     horizontal sep=0.9cm
   },
   width=0.40\textwidth,
-  height=4.5cm,
+  height=4.2cm,
   xmin=1, xmax=10,
   ymin=0, ymax=26,
   xtick={1,5,10},
@@ -602,7 +601,7 @@ The primary operational analysis asks how many detector attack misses can be rec
   tick label style={font=\footnotesize},
   legend style={
     font=\footnotesize,
-    at={(0.5,1.25)},
+    at={(0.5,1.20)},
     anchor=south,
     legend columns=5,
     draw=none,
@@ -665,7 +664,6 @@ The primary operational analysis asks how many detector attack misses can be rec
 \caption{Attack-miss capture as a function of analyst-review budget. Each panel corresponds to one transfer direction; line style and marker identify the reliability signal, with color providing redundant visual separation. The curves show that operational ranking changes with review capacity and need not match the threshold-free attack-miss AUPRC ordering.}
 \label{fig:budget-capture}
 \end{figure*}
-\FloatBarrier
 
 \begin{table}[t]
 \centering
@@ -684,7 +682,6 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \end{tabular}
 \end{adjustbox}
 \end{table}
-\FloatBarrier
 
 
 
@@ -710,7 +707,7 @@ The generic-error analysis asks whether a reliability signal that is effective a
     horizontal sep=0.9cm
   },
   width=0.40\textwidth,
-  height=4.8cm,
+  height=4.5cm,
   xmin=0, xmax=0.90,
   ymin=0, ymax=0.28,
   xtick={0,0.2,0.4,0.6,0.8},
@@ -732,7 +729,7 @@ The generic-error analysis asks whether a reliability signal that is effective a
   title style={font=\footnotesize\bfseries, yshift=-1pt},
   legend style={
     font=\footnotesize,
-    at={(0.5,1.25)},
+    at={(0.5,1.20)},
     anchor=south,
     legend columns=5,
     draw=none,
@@ -766,8 +763,9 @@ The generic-error analysis asks whether a reliability signal that is effective a
   ylabel={},
   xmin=0.025, xmax=0.085,
   ymin=0.025, ymax=0.085,
-  xtick={0.03,0.05,0.07,0.08},
-  ytick={0.03,0.05,0.07,0.08},
+  xtick={0.03,0.05,0.08},
+  ytick={0.03,0.05,0.08},
+  tick label style={font=\scriptsize},
   scaled x ticks=false,
   scaled y ticks=false
 ]
@@ -807,7 +805,6 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \end{tabular}
 \end{adjustbox}
 \end{table}
-\FloatBarrier
 
 
 
