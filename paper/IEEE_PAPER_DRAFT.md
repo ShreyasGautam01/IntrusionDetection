@@ -273,3 +273,115 @@ Each transfer direction contains ten matched detector seeds. Seed-level results 
 For every primary comparison, the manuscript reports the effect direction and magnitude before the significance level. Descriptive rankings based only on mean values are not treated as evidence of superiority. Because several methods and secondary endpoints generate multiple pairwise comparisons, the final statistical interpretation distinguishes the predeclared primary comparisons from exploratory analyses and applies the final multiplicity policy established by the research harness.
 
 The experimental implementation, manifests, feature registry, family registry, source-only restrictions, and numerical outputs are archived with cryptographic hashes. The completed transfer integrity audit reports no issues and confirms that target labels were not used for fitting, tuning, recalibration, or score construction.
+
+
+## IV. EXPERIMENTAL SETUP
+
+### A. Dataset and Split Configuration
+
+The primary evaluation uses two audited NetFlow-v3 datasets: NF-UNSW-NB15-v3 and NF-CSE-CIC-IDS2018-v3 [4]. Both datasets are represented through the same frozen 46-feature predictive interface described in Section III. Dataset identity, file integrity, and row counts are fixed by the transfer manifests.
+
+**TABLE I — DATASET AND SOURCE-PARTITION CONFIGURATION**
+
+| Dataset | Total flows | Source train | Source calibration | Source test | Predictors |
+|---|---:|---:|---:|---:|---:|
+| NF-UNSW-NB15-v3 | 2,365,424 | 1,418,952 | 473,301 | 473,171 | 46 |
+| NF-CSE-CIC-IDS2018-v3 | 20,115,529 | 12,068,590 | 4,021,791 | 4,025,148 | 46 |
+
+The source partitions are generated deterministically from SHA-256 hashes of the canonical raw 53-feature representation, with 60%, 20%, and 20% bucket ranges assigned to training, calibration, and source-test data, respectively. The source calibration partition is further divided into disjoint probability-calibration and conformal-calibration subsets. This construction makes the split reproducible while preventing the split procedure from depending on target labels.
+
+The UNSW release contains attack and benign flows in the audited binary target, while CIC-IDS2018 contains substantially more flows and a different attack composition. The resulting class imbalance is therefore not identical across domains. This is one reason the primary ranking metric is attack-miss AUPRC rather than accuracy.
+
+### B. Detector Configuration
+
+Each source-domain detector is a binary Random Forest with 200 trees and minimum leaf size five. The same scientific hyperparameters are used for every seed and transfer direction.
+
+**TABLE II — RANDOM FOREST CONFIGURATION**
+
+| Parameter | Setting |
+|---|---|
+| Classifier | RandomForestClassifier |
+| Trees | 200 |
+| Criterion | Gini |
+| Maximum depth | None |
+| Minimum samples split | 2 |
+| Minimum samples leaf | 5 |
+| Maximum features | sqrt |
+| Bootstrap | True |
+| Class weight | None |
+| Maximum samples | None |
+| Out-of-bag score | False |
+| Warm start | False |
+| Seeds | 0–9 |
+
+Execution-level parallelism is not treated as a scientific factor. A resource benchmark verified that the selected parallel fitting implementation produced the same tree structure, RF probabilities, and disagreement scores as the single-worker reference. Prediction remained single-worker. BLAS and OpenMP thread counts were constrained to one to prevent uncontrolled nested parallelism.
+
+### C. Reliability-Layer Configuration
+
+Five post-hoc signals are compared under the same source-trained detector.
+
+**TABLE III — RELIABILITY SIGNALS**
+
+| Signal | Source-derived quantity | Main configuration | Direction |
+|---|---|---|---|
+| Confidence | Calibrated RF class probabilities | Sigmoid/Platt calibration | High = unreliable |
+| RF disagreement | 200 tree class votes | (1-max_c v_c/200) | High = unreliable |
+| Feature distance | Standardized source-train reference | Euclidean mean of 5 nearest rows | High = unreliable |
+| Split conformal | Source conformal calibration | (alpha=0.10) | High = unreliable |
+| Isolation Forest | Source-training anomaly model | 100 trees, max_samples=256 | High = unreliable |
+
+The reliability methods differ in the information they exploit. Confidence and RF disagreement are model-dependent; feature distance and Isolation Forest primarily characterize input atypicality; conformal scoring incorporates a source-calibrated uncertainty rule. All five are converted to the same review-score orientation so that the target evaluation can use an identical ranking procedure.
+
+### D. Transfer Directions and Repetition
+
+The complete experiment consists of two transfer directions:
+
+1. **UNSW→CIC:** the Random Forest and all reliability components are fitted from NF-UNSW-NB15-v3 and frozen before scoring NF-CSE-CIC-IDS2018-v3.
+2. **CIC→UNSW:** the same procedure is reversed, with NF-CSE-CIC-IDS2018-v3 as the source and NF-UNSW-NB15-v3 as the target.
+
+Each direction is repeated with the ten fixed seeds
+
+[
+S={0,1,2,3,4,5,6,7,8,9}.
+]
+
+The feature-distance signal is seed independent and is computed once per direction, whereas confidence, RF disagreement, split conformal, and Isolation Forest produce seed-indexed outputs under the frozen configuration.
+
+### E. Target-Label Isolation
+
+Target labels are inaccessible during preprocessing, fitting, calibration, score construction, ranking, and method comparison. Target labels are read only after all target reliability scores have been generated for the offline evaluation stage.
+
+The transfer integrity audit checks four independent conditions:
+
+1. target labels are not used for model fitting;
+2. target labels are not used for tuning;
+3. target labels are not used for recalibration;
+4. target labels are not used for score construction.
+
+The completed audit passes all four checks for both transfer directions.
+
+### F. Evaluation Procedure
+
+For each target flow, the frozen detector produces a binary prediction and the frozen reliability layer produces a scalar review score. The target rows are then ordered from highest to lowest reliability score. For an analyst-review budget (b), the first
+
+[
+k_b=leftlfloor bNightfloor
+]
+
+rows are selected, where (N) is the full target population. The study evaluates (bin{0.01,0.05,0.10}), with 5% as the primary operational budget.
+
+The principal analysis treats an attack incorrectly predicted as benign as the positive security event. This creates a ranking problem over detector failures rather than over all attacks. A method is therefore rewarded when its high-scoring rows contain a large fraction of the detector's attack misses.
+
+Threshold-free ranking is summarized by attack-miss AUPRC. Operational triage is summarized by attack-miss capture at each review budget. Generic prediction-error AUPRC/AUROC is reported separately to determine whether a signal's ability to find incorrect predictions is aligned with its ability to find security-critical false negatives.
+
+### G. Statistical Reporting
+
+Results are retained at the individual-seed level and summarized across the ten matched seeds. Paired comparisons are made using the same seed across methods and transfer directions where applicable. The completed analysis uses exact sign-flip permutation testing for paired differences and seed-level bootstrap intervals.
+
+The paper distinguishes descriptive method rankings from inferential evidence. Mean performance is used to summarize the central tendency of each signal, while paired effect estimates and uncertainty intervals determine whether a difference is supported across repeated runs. Secondary pairwise comparisons are treated as exploratory when they are not part of the primary research questions.
+
+### H. Reproducibility Environment
+
+The experiment is pinned to the repository's locked software environment. The completed source and transfer artifacts record Python 3.14.7, NumPy 2.5.2, pandas 3.0.6, scikit-learn 1.9.1, and the corresponding uv lockfile. Dataset SHA-256 hashes, feature-registry hashes, transfer-manifest hashes, score-artifact hashes, and analysis outputs are retained in the repository artifact manifest.
+
+The computational implementation is deterministic at the scientific level: source splits, preprocessing values, feature order, detector seeds, source-derived reliability components, review ranking, and tie breaking are all fixed by the experiment manifests. This allows the numerical Results section to be traced back to exact machine-readable outputs rather than manually transcribed calculations.
