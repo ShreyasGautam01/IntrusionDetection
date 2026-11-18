@@ -859,13 +859,13 @@ The directional results therefore distinguish \textbf{absolute utility} from \te
 
 \subsection{Family-Level Analysis and Scope of Interpretation}
 
-Family-level analysis is constrained by the frozen cross-domain semantic registry. Only a documented shared DoS category is considered a defensible cross-dataset correspondence; other dataset-local attack names are not treated as equivalent without supporting semantic evidence.
+Family-level analysis is restricted to the frozen cross-domain semantic registry. Only the documented shared DoS category is treated as a defensible cross-dataset correspondence; dataset-local attack names are not treated as equivalent merely because their labels are similar.
 
-The resulting family analysis does not provide a sufficiently rich basis for a broad family-level conclusion. In UNSW->CIC, the saved family-analysis output contains no target rows under the documented shared DoS mapping. In CIC->UNSW, all 5,980 mapped DoS target rows are recorded as attack misses, yielding a within-family attack-miss AUPRC of 1.0 for every reliability signal. The latter result is therefore tautological rather than evidence that one reliability signal is superior for DoS prioritization.
+The available family evidence is insufficient for a broad family-level conclusion. In UNSW$\rightarrow$CIC, the documented shared DoS mapping contains no target rows. In CIC$\rightarrow$UNSW, all 5,980 mapped DoS target rows are recorded as attack misses, producing an attack-miss AUPRC of 1.0 for every reliability signal. Because every mapped row belongs to the positive attack-miss population, this value is tautological rather than evidence of method superiority.
 
-Accordingly, family-level results are not used to support a claim about general unseen-family detection or family-specific reliability robustness. The analysis instead establishes a methodological boundary: cross-domain attack-family conclusions require a defensible semantic crosswalk and sufficient within-family variation in detector outcomes. Without those conditions, family-level scores can be either unavailable or mechanically perfect and therefore uninformative.
+Accordingly, the family analysis is not used to support claims about general unseen-family detection or family-specific reliability robustness. Its role is instead to establish an interpretive boundary: meaningful cross-domain family analysis requires both a defensible semantic correspondence and sufficient within-family variation in detector outcomes.
 
-This constraint is important for interpreting the compound-shift question. The present experiment can demonstrate cross-domain reliability behavior under the frozen source-only protocol, but it does not provide comprehensive evidence about unseen attack-family transportability across these two datasets.
+The experiment therefore provides evidence about source-only cross-domain reliability transportability at the aggregate security-failure level, but not comprehensive evidence about reliability behavior across unseen attack families.
 
 \subsection{Calibration and Conformal Diagnostics}
 
