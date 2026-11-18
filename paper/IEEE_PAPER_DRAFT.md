@@ -412,3 +412,28 @@ The reverse transfer direction produces a materially different ranking. In CIC�
 The contrast is not explained simply by a universal scaling difference among methods. The direction-specific mean gap is 0.203 for RF disagreement, 0.159 for confidence, 0.066 for feature-space distance, 0.017 for split conformal, and 0.041 for Isolation Forest. Split conformal therefore exhibits the smallest absolute change in mean attack-miss AUPRC between the two transfer directions, although its seed variability is greater in the CIC→UNSW direction. Conversely, RF disagreement shows the largest directional change among the five signals.
 
 The primary endpoint therefore provides two results central to the study. First, the most effective reliability signal is source-target-direction dependent: RF disagreement ranks highest in UNSW→CIC, whereas split conformal ranks highest in CIC→UNSW. Second, performance degradation is also signal dependent, with some mechanisms changing substantially more than others when the same detector is transferred in the opposite direction. These observations argue against selecting a reliability mechanism from a single transfer direction and treating that ranking as universally transportable.
+
+
+### B. Operational Utility at Fixed Analyst-Review Budgets
+
+The primary operational endpoint is the fraction of detector attack misses recovered when only 5% of target flows can be sent to an analyst. Table V reports mean attack-miss capture over the ten seeds at the primary 5% budget, together with the secondary 1% and 10% budgets.
+
+**TABLE V — ATTACK-MISS CAPTURE AT FIXED REVIEW BUDGETS**
+
+| Reliability signal | UNSW→CIC 1% | UNSW→CIC 5% | UNSW→CIC 10% | CIC→UNSW 1% | CIC→UNSW 5% | CIC→UNSW 10% |
+|---|---:|---:|---:|---:|---:|---:|
+| Confidence | 0.90% | 8.19% | 19.60% | 0.03% | 0.77% | 1.40% |
+| RF disagreement | 2.46% | 12.33% | 24.68% | 0.03% | 0.88% | 1.46% |
+| Feature-space distance | 0.07% | 0.58% | 0.64% | 0.56% | 4.34% | 5.09% |
+| Split conformal | 0.0001% | **17.37%** | 20.40% | **4.91%** | **14.73%** | **22.53%** |
+| Isolation Forest | 0.14% | 0.75% | 1.76% | 0.05% | 0.45% | 0.82% |
+
+At the primary 5% review budget, split conformal has the highest mean attack-miss capture in both transfer directions: 17.37% for UNSW→CIC and 14.73% for CIC→UNSW. In UNSW→CIC, RF disagreement is the second-highest mean at 12.33%, followed by confidence at 8.19%, feature-space distance at 0.58%, and Isolation Forest at 0.75%. In CIC→UNSW, feature-space distance is the second-highest mean at 4.34%, followed by RF disagreement at 0.88%, confidence at 0.77%, and Isolation Forest at 0.45%.
+
+The operational ranking therefore differs from the primary AUPRC ranking. In UNSW→CIC, RF disagreement has the highest attack-miss AUPRC, but split conformal captures more attack misses at the 5% review budget. In CIC→UNSW, split conformal is the highest-ranked method under both metrics. This distinction demonstrates why threshold-free ranking quality and fixed-budget triage should not be treated as interchangeable measures of reliability utility.
+
+The paired comparisons provide an additional qualification. In UNSW→CIC, the mean 5% capture difference between RF disagreement and split conformal is -0.0504 when computed as RF minus conformal; its bootstrap interval spans zero, so the two methods are not clearly separated at this budget by the present ten-seed paired analysis. By contrast, the CIC→UNSW difference is -0.1385 for RF minus split conformal, with a bootstrap interval entirely below zero. Thus, the descriptive 17.37% versus 12.33% difference in UNSW→CIC should not be interpreted as definitive evidence of superiority, whereas the larger CIC→UNSW separation provides stronger paired evidence in favor of split conformal at the primary review budget.
+
+The secondary budgets reveal additional budget dependence. In UNSW→CIC, RF disagreement rises from 2.46% capture at 1% review to 24.68% at 10%, while confidence rises from 0.90% to 19.60%. Split conformal is highly sensitive to the review budget in this direction: its mean capture is effectively zero at 1% review but reaches 17.37% at 5% and 20.40% at 10%. In CIC→UNSW, split conformal remains the strongest operational signal at all three budgets, increasing from 4.91% at 1% review to 22.53% at 10%.
+
+These results show that the reliability mechanisms do not merely differ in how well they rank attack misses; they also differ in how useful their rankings are when only a small, explicitly constrained portion of traffic can be reviewed. Consequently, the operational conclusion depends on both transfer direction and review capacity.
