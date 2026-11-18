@@ -681,7 +681,7 @@ The operational results therefore establish a second central finding: reliabilit
 
 \subsection{Generic Errors Versus Security-Critical Attack Misses}
 
-The generic-error analysis shows that reliability performance can change substantially depending on which prediction failures are treated as the positive event. Table VI compares generic-error AUPRC with attack-miss AUPRC and reports attack-miss AUROC as a semantic-direction diagnostic.
+The generic-error analysis asks whether a reliability signal that is effective at identifying incorrect detector predictions is necessarily effective at prioritizing the subset of those errors that are attacks classified as benign. Table~VI reports generic-error AUPRC, attack-miss AUPRC, and attack-miss AUROC. Figure~3 visualizes the relationship between the two AUPRC measures directly.
 
 \begin{table}[t]
 \centering
@@ -701,17 +701,133 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \end{adjustbox}
 \end{table}
 
-The UNSW->CIC direction provides the clearest separation between generic error detection and attack-miss prioritization. Feature-space distance and Isolation Forest obtain the strongest generic-error AUPRC values, 0.859 and 0.847, respectively, yet their attack-miss AUPRC values fall to 0.109 and 0.077. Their attack-miss AUROC values also indicate very different security behavior: feature-space distance remains above random ordering at 0.575, whereas Isolation Forest is below 0.5 at 0.379, indicating that its intended high-score-as-review direction is generally reversed for the attack-miss population in this transfer direction.
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={
+    group size=2 by 1,
+    horizontal sep=1.2cm
+  },
+  width=0.43\textwidth,
+  height=5.4cm,
+  xmin=0, xmax=0.90,
+  ymin=0, ymax=0.28,
+  xtick={0,0.2,0.4,0.6,0.8},
+  ytick={0,0.05,0.10,0.15,0.20,0.25},
+  xlabel={Generic-error AUPRC},
+  ylabel={Attack-miss AUPRC},
+  grid=major,
+  grid style={dotted, draw=black!18},
+  axis line style={draw=black!70},
+  tick style={draw=black!70},
+  label style={font=\footnotesize},
+  tick label style={font=\footnotesize},
+  legend style={
+    font=\footnotesize,
+    at={(0.5,1.17)},
+    anchor=south,
+    legend columns=3,
+    draw=none,
+    column sep=0.7em
+  },
+  clip=false,
+  scatter/classes={
+    conf={mark=o},
+    rf={mark=square*},
+    dist={mark=triangle*},
+    conformal={mark=diamond*},
+    iforest={mark=x}
+  }
+]
 
-Confidence and RF disagreement show a different pattern. Their generic-error AUPRC values are both approximately 0.74, while their attack-miss AUPRC values are 0.192 and 0.238, respectively. Thus, relatively strong generic-error ranking does not by itself determine which signal is most useful for finding attack misses. RF disagreement in particular becomes the strongest attack-miss ranking signal in UNSW->CIC even though feature-space distance is substantially stronger on generic-error AUPRC.
+\nextgroupplot[
+  title={UNSW$\rightarrow$CIC},
+  title style={font=\footnotesize\bfseries}
+]
 
-Split conformal is close to the generic-error prevalence in UNSW->CIC, with mean generic-error AUPRC of 0.518, and its attack-miss AUROC is approximately 0.500. The signal therefore provides little evidence of useful directional discrimination for attack misses in this direction despite its nontrivial 5\% attack-miss capture reported in Section V-B. This difference illustrates that threshold-free ranking, AUROC direction, and a fixed-budget capture statistic can describe different aspects of the same score distribution.
+% Generic-error AUPRC vs attack-miss AUPRC.
+\addplot[
+  only marks,
+  scatter,
+  scatter src=explicit symbolic,
+  scatter/classes={
+    conf={mark=o,mark size=2.7pt},
+    rf={mark=square*,mark size=2.2pt},
+    dist={mark=triangle*,mark size=2.5pt},
+    conformal={mark=diamond*,mark size=2.4pt},
+    iforest={mark=x,mark size=2.8pt}
+  }
+]
+coordinates {
+  (0.738,0.192) [conf]
+  (0.736,0.238) [rf]
+  (0.859,0.109) [dist]
+  (0.518,0.096) [conformal]
+  (0.847,0.077) [iforest]
+};
+\addlegendentry{Confidence}
+\addlegendentry{RF disagreement}
+\addlegendentry{Feature distance}
+\addlegendentry{Split conformal}
+\addlegendentry{Isolation Forest}
 
-The reverse CIC->UNSW direction exhibits a different structure. Generic-error AUPRC and attack-miss AUPRC are nearly identical for every signal, because the number of generic errors is almost entirely accounted for by attack misses in this target setting. Consequently, generic-error performance is not an independent proxy for security performance in this direction; it is effectively measuring the same small error population.
+\node[font=\tiny, anchor=west] at (axis cs:0.738,0.192) {Confidence};
+\node[font=\tiny, anchor=west] at (axis cs:0.736,0.238) {RF};
+\node[font=\tiny, anchor=west] at (axis cs:0.859,0.109) {Distance};
+\node[font=\tiny, anchor=west] at (axis cs:0.518,0.096) {Conformal};
+\node[font=\tiny, anchor=east] at (axis cs:0.847,0.077) {Isolation};
 
-More importantly, four of the five signals have mean attack-miss AUROC below 0.5 in CIC->UNSW: confidence 0.228, RF disagreement 0.248, feature-space distance 0.345, and Isolation Forest 0.284. The inversion flag is true for all ten seeds for each of these signals. Split conformal is the exception: its mean attack-miss AUROC is 0.545 and it remains above 0.5 for all ten seeds. This provides evidence of a pronounced directional change in score semantics: signals that retain positive ranking behavior in the reverse direction can become systematically anti-informative when applied with the same high-score review orientation.
+\nextgroupplot[
+  title={CIC$\rightarrow$UNSW},
+  title style={font=\footnotesize\bfseries},
+  ylabel={}
+]
 
-The results therefore reject the assumption that generic prediction-error ranking is a sufficient validation target for security-focused reliability. A reliability mechanism can identify ordinary detector errors effectively while failing to identify the subset of errors that correspond to missed attacks. Conversely, a signal with weak generic-error behavior can exhibit comparatively useful attack-miss prioritization under a particular transfer direction and review budget.
+\addplot[
+  only marks,
+  scatter,
+  scatter src=explicit symbolic,
+  scatter/classes={
+    conf={mark=o,mark size=2.7pt},
+    rf={mark=square*,mark size=2.2pt},
+    dist={mark=triangle*,mark size=2.5pt},
+    conformal={mark=diamond*,mark size=2.4pt},
+    iforest={mark=x,mark size=2.8pt}
+  },
+  forget plot
+]
+coordinates {
+  (0.033,0.033) [conf]
+  (0.035,0.035) [rf]
+  (0.043,0.043) [dist]
+  (0.079,0.079) [conformal]
+  (0.036,0.036) [iforest]
+};
+
+\node[font=\tiny, anchor=west] at (axis cs:0.033,0.033) {Confidence};
+\node[font=\tiny, anchor=west] at (axis cs:0.035,0.035) {RF};
+\node[font=\tiny, anchor=west] at (axis cs:0.043,0.043) {Distance};
+\node[font=\tiny, anchor=west] at (axis cs:0.079,0.079) {Conformal};
+\node[font=\tiny, anchor=west] at (axis cs:0.036,0.036) {Isolation};
+
+\end{groupplot}
+\end{tikzpicture}
+\caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
+\label{fig:generic-vs-attackmiss}
+\end{figure*}
+
+The UNSW$\rightarrow$CIC direction provides the clearest separation between generic error detection and security-specific attack-miss prioritization. Figure~3 shows that feature-space distance and Isolation Forest lie at the high end of generic-error AUPRC while remaining substantially lower on attack-miss AUPRC. Their generic-error AUPRC values are 0.859 and 0.847, but their attack-miss AUPRC values fall to 0.109 and 0.077. By contrast, RF disagreement and confidence achieve somewhat lower generic-error AUPRC but substantially higher attack-miss AUPRC.
+
+This divergence means that input atypicality and security-critical detector failure are not interchangeable reliability objectives. An observation can be unusual in the selected feature space without being an attack that the detector misses, while an attack miss can remain close to source traffic and receive only a modest novelty score.
+
+Split conformal occupies an intermediate position in UNSW$\rightarrow$CIC. Its generic-error AUPRC is 0.518 and its attack-miss AUPRC is 0.096, while its attack-miss AUROC is approximately 0.500. Thus, the signal's operational behavior cannot be inferred from generic-error ranking alone, consistent with the distinction established by the fixed-budget analysis in Section~V-B.
+
+The reverse CIC$\rightarrow$UNSW direction has a different structure. The five points cluster close to the low end of both axes, and generic-error AUPRC is nearly identical to attack-miss AUPRC for every signal. In this target setting, generic errors are therefore largely accounted for by attack misses, making the generic-error metric a poor independent test of security-specific reliability.
+
+The AUROC results add an important semantic qualification. Four signals have mean attack-miss AUROC below 0.5 in CIC$\rightarrow$UNSW: confidence 0.228, RF disagreement 0.248, feature-space distance 0.345, and Isolation Forest 0.284. The inversion flag is true for all ten seeds for each of these signals. Split conformal is the exception, with mean attack-miss AUROC 0.545 and values above 0.5 for all ten seeds. Thus, the same high-score review convention can become systematically anti-informative after transfer for several reliability mechanisms.
+
+The results therefore show that generic prediction-error ranking is insufficient as a security-reliability validation target. A signal can perform strongly on ordinary detector errors while performing poorly on dangerous attack misses. The primary reliability question should consequently be defined by the security failure mode that the analyst workflow is intended to recover.
 
 \subsection{Directional Transportability of Reliability Performance}
 
