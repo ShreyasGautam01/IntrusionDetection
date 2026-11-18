@@ -385,3 +385,30 @@ The paper distinguishes descriptive method rankings from inferential evidence. M
 The experiment is pinned to the repository's locked software environment. The completed source and transfer artifacts record Python 3.14.7, NumPy 2.5.2, pandas 3.0.6, scikit-learn 1.9.1, and the corresponding uv lockfile. Dataset SHA-256 hashes, feature-registry hashes, transfer-manifest hashes, score-artifact hashes, and analysis outputs are retained in the repository artifact manifest.
 
 The computational implementation is deterministic at the scientific level: source splits, preprocessing values, feature order, detector seeds, source-derived reliability components, review ranking, and tie breaking are all fixed by the experiment manifests. This allows the numerical Results section to be traced back to exact machine-readable outputs rather than manually transcribed calculations.
+
+
+## V. RESULTS
+
+### A. Primary Security Endpoint: Attack-Miss AUPRC
+
+The primary analysis asks whether the reliability scores can rank the subset of target observations that are both attacks and false negatives of the frozen detector. Table IV reports the mean attack-miss AUPRC over the ten matched seeds for each transfer direction.
+
+**TABLE IV — ATTACK-MISS AUPRC UNDER BIDIRECTIONAL SOURCE-ONLY TRANSFER**
+
+| Reliability signal | UNSW→CIC mean ± SD | CIC→UNSW mean ± SD |
+|---|---:|---:|
+| Confidence | 0.192 ± 0.051 | 0.033 ± 0.001 |
+| RF disagreement | **0.238 ± 0.102** | 0.035 ± 0.001 |
+| Feature-space distance | 0.109 ± 0.009 | 0.043 ± 0.001 |
+| Split conformal | 0.096 ± 0.007 | **0.079 ± 0.025** |
+| Isolation Forest | 0.077 ± 0.008 | 0.036 ± 0.001 |
+
+In the UNSW→CIC direction, RF disagreement has the highest mean attack-miss AUPRC at 0.238, followed by calibrated confidence at 0.192. Feature-space distance, split conformal, and Isolation Forest obtain lower means of 0.109, 0.096, and 0.077, respectively. The seed-level variability is also largest for RF disagreement, whose standard deviation is 0.102, indicating substantially more variation across repeated detector fits than the other signals in this direction.
+
+The paired seed analysis is consistent with this descriptive ordering. The mean attack-miss AUPRC difference between RF disagreement and confidence is 0.046 in favor of RF disagreement, while the difference between RF disagreement and split conformal is 0.142. The corresponding 95% bootstrap intervals for the paired differences exclude zero for both comparisons. These estimates are reported as paired effects; the complete set of pairwise significance tests is treated as a multiple-comparison family and is interpreted separately from the primary descriptive ranking.
+
+The reverse transfer direction produces a materially different ranking. In CIC→UNSW, split conformal has the highest mean attack-miss AUPRC at 0.079, followed by feature-space distance at 0.043 and Isolation Forest at 0.036. RF disagreement and confidence are lower at 0.035 and 0.033, respectively. Thus, reversing the source and target domains changes both the magnitude of attack-miss ranking performance and the relative ordering of the signals.
+
+The contrast is not explained simply by a universal scaling difference among methods. The direction-specific mean gap is 0.203 for RF disagreement, 0.159 for confidence, 0.066 for feature-space distance, 0.017 for split conformal, and 0.041 for Isolation Forest. Split conformal therefore exhibits the smallest absolute change in mean attack-miss AUPRC between the two transfer directions, although its seed variability is greater in the CIC→UNSW direction. Conversely, RF disagreement shows the largest directional change among the five signals.
+
+The primary endpoint therefore provides two results central to the study. First, the most effective reliability signal is source-target-direction dependent: RF disagreement ranks highest in UNSW→CIC, whereas split conformal ranks highest in CIC→UNSW. Second, performance degradation is also signal dependent, with some mechanisms changing substantially more than others when the same detector is transferred in the opposite direction. These observations argue against selecting a reliability mechanism from a single transfer direction and treating that ranking as universally transportable.
