@@ -267,6 +267,18 @@ The novelty claim will be narrowed if direct overlap is stronger than expected.
 
 ---
 
+## 6A. Literature freshness audit — 2026-11-18
+
+The final-freshness pass identified three directly adjacent 2026 publications that were not in the original registry:
+
+- TAN-IDS: a deployment-oriented NetFlow evaluation framework covering direct cross-dataset transfer without adaptation and limited-label target fine-tuning [11].
+- RiskGate-IDS: budget-aware NetFlow risk gating using labeled target calibration, which is methodologically distinct from the source-only frozen protocol used here [12].
+- A temporal budget-constrained alert-stream study examining threshold provenance, realized alert budgets, and attack coverage after score-to-alert conversion [13].
+
+These works do not invalidate the study, but they narrow its positioning. The manuscript therefore presents the contribution as a controlled empirical evaluation of lightweight post-hoc reliability signals for **attack-miss prioritization under source-only bidirectional transfer**, rather than as a general deployment-evaluation framework, a budget-aware target-adaptation method, or a general study of alert-threshold transfer.
+
+The literature positioning remains subject to one final submission-time freshness search.
+
 # 7. Source-of-truth hierarchy
 
 When documents disagree, use this hierarchy:
