@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{dblfloatfix}
+\usepackage{placeins}
 \usepackage{adjustbox}
 \usepackage{pgfplots}
 \usepackage{xcolor}
@@ -664,6 +665,7 @@ The primary operational analysis asks how many detector attack misses can be rec
 \caption{Attack-miss capture as a function of analyst-review budget. Each panel corresponds to one transfer direction; line style and marker identify the reliability signal, with color providing redundant visual separation. The curves show that operational ranking changes with review capacity and need not match the threshold-free attack-miss AUPRC ordering.}
 \label{fig:budget-capture}
 \end{figure*}
+\FloatBarrier
 
 \begin{table}[t]
 \centering
@@ -682,6 +684,7 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \end{tabular}
 \end{adjustbox}
 \end{table}
+\FloatBarrier
 
 
 
@@ -758,13 +761,13 @@ The generic-error analysis asks whether a reliability signal that is effective a
 \addlegendentry{Isolation Forest}
 
 \nextgroupplot[
-  title={(b) CIC$\rightarrow$UNSW (zoomed)},
+  title={(b) CIC$\rightarrow$UNSW},
   title style={font=\footnotesize\bfseries, yshift=-1pt},
   ylabel={},
   xmin=0.025, xmax=0.085,
   ymin=0.025, ymax=0.085,
-  xtick={0.03,0.04,0.05,0.06,0.07,0.08},
-  ytick={0.03,0.04,0.05,0.06,0.07,0.08},
+  xtick={0.03,0.05,0.07,0.08},
+  ytick={0.03,0.05,0.07,0.08},
   scaled x ticks=false,
   scaled y ticks=false
 ]
@@ -783,7 +786,7 @@ The generic-error analysis asks whether a reliability signal that is effective a
 \end{groupplot}
 \end{tikzpicture}%
 }
-\caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal, with color providing redundant visual separation. The right panel uses a magnified axis range to resolve the closely clustered CIC$\rightarrow$UNSW values. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
+\caption{Relationship between generic-error and attack-miss AUPRC. Each point represents one reliability signal; marker shape identifies the signal, with color providing redundant visual separation. The right panel uses a narrower axis range to resolve the closely clustered CIC$\rightarrow$UNSW values; its plotted values remain the same as in Table~VI. The UNSW$\rightarrow$CIC panel shows that strong generic-error ranking need not imply strong attack-miss ranking, while the CIC$\rightarrow$UNSW panel shows the two metrics becoming nearly identical for all five signals.}
 \label{fig:generic-vs-attackmiss}
 \end{figure*}
 
@@ -804,6 +807,7 @@ Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \end{tabular}
 \end{adjustbox}
 \end{table}
+\FloatBarrier
 
 
 
