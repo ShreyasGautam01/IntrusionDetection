@@ -180,11 +180,11 @@ Raw attack-family labels are retained only as evaluation metadata. They do not e
 
 \subsection{Deterministic Source Partitioning and Preprocessing}
 
-To avoid dependence on arbitrary row ordering, each source dataset is partitioned using a deterministic, label-independent hash of the canonical raw 53-feature representation. The first eight bytes of the SHA-256 digest are interpreted as a big-endian integer and reduced modulo 100. Buckets 0--59 form the source-training partition, buckets 60--79 form the source-calibration partition, and buckets 80--99 form the source-test partition.
+To avoid dependence on arbitrary row ordering, the archived experiment partitions each source dataset using a deterministic, label-independent hash of the canonical raw 53-feature representation. This is reproducible but is not fully duplicate-safe in predictor space because seven raw fields are excluded from the 46-feature predictor matrix. The first eight bytes of the SHA-256 digest are interpreted as a big-endian integer and reduced modulo 100. Buckets 0--59 form the source-training partition, buckets 60--79 form the source-calibration partition, and buckets 80--99 form the source-test partition.
 
 The resulting partitions contain 60\%, 20\%, and 20\% of the rows up to the deterministic hash realization. For NF-UNSW-NB15-v3, the audited counts are 1,418,952 training rows, 473,301 calibration rows, and 473,171 source-test rows. For NF-CSE-CIC-IDS2018-v3, the corresponding counts are 12,068,590, 4,021,791, and 4,025,148.
 
-The source-calibration partition is further divided deterministically into two disjoint subsets. A secondary SHA-256 rule applied to the canonical 46-feature float32 representation assigns one subset to probability calibration and the complementary subset to conformal-quantile fitting. Identical feature vectors remain in the same calibration subpartition.
+The source-calibration partition is further divided deterministically into two disjoint subsets. A secondary SHA-256 rule applied to the canonical 46-feature float32 representation assigns one subset to probability calibration and the complementary subset to conformal-quantile fitting. Identical 46-feature vectors remain in the same calibration subpartition. However, the primary 60/20/20 source split is hashed on all 53 raw fields; identical predictor vectors that differ only in excluded identifier or timestamp fields could therefore cross the train/calibration/test boundary. This is treated as a methodological limitation and must be resolved with a predictor-space duplicate-safe rerun before the results are presented as final.
 
 Non-finite predictor values are handled using a source-only finite-value policy. For each transfer direction, replacement values are estimated from the source-training partition alone. Empty, missing, or non-finite predictor values are replaced by the corresponding source-training finite median, with a zero fallback only when no finite source-training observation exists. The resulting source-derived replacement values are applied unchanged to source calibration, source test, and target data. No target statistic is estimated for preprocessing.
 
@@ -212,7 +212,7 @@ r_i^{\mathrm{conf}}
 1-\max\left(p_i^{(0)},p_i^{(1)}\right).
 \]
 
-Thus, observations for which the frozen detector is less confident receive larger review scores. Probability calibration uses a source-only sigmoid/Platt procedure fitted on the dedicated source probability-calibration subset [6]. The calibrator is frozen before any target scoring.
+Thus, observations for which the frozen detector is less confident receive larger review scores. Probability calibration uses a source-only sigmoid/Platt procedure fitted on the dedicated source probability-calibration subset [6], [NEW_PLATT], [NEW_NIC]. The calibrator is frozen before any target scoring.
 
 \subsubsection{2) Random Forest tree disagreement}
 
@@ -244,27 +244,19 @@ Unlike the seed-dependent detector signals, feature-space distance is independen
 
 \subsubsection{4) Split conformal score}
 
-Split conformal prediction is constructed entirely from source calibration data [7]. For a source calibration observation with true class \(y_i\), the nonconformity value is
-
+Split conformal prediction is constructed entirely from source calibration data [7]. For a source calibration observation with true class (y_i), the nonconformity value is
 \[
-a_i
-=
-1-p_{\mathrm{cal}}(y_i\mid x_i).
+a_i = 1-p_{\mathrm{cal}}(y_i\mid x_i).
 \]
-
 With \(\alpha=0.10\), the finite-sample conformal quantile is estimated from the frozen source conformal-calibration subset. For a target observation, a class is included in the prediction set when its class-specific nonconformity does not exceed the frozen quantile.
 
-Because the primary comparison requires a common scalar ranking across all five mechanisms, the conformal prediction set \(C(x_i)\) is mapped to
-
+The archived implementation maps prediction-set size to the scalar
 \[
-r_i^{\mathrm{confm}}
-=
-\frac{|C(x_i)|-1}{2-1}.
+r_i^{\mathrm{confm}}=|C(x_i)|-1.
 \]
+In the present binary setting this collapses to a highly discrete score: the saved outputs are effectively \(-1\) for an empty set and (0) for a singleton set, with virtually no two-class sets. The target diagnostics confirm mean set sizes near zero in UNSW$\rightarrow$CIC and very small values in CIC$\rightarrow$UNSW. The reported ambiguity field near (-1) is a derived diagnostic artifact, not a meaningful negative ambiguity rate.
 
-A singleton prediction set therefore receives score 0, while a two-class prediction set receives score 1. The mapping is frozen before target evaluation.
-
-The conformal score is used here as a source-calibrated reliability ranking rather than as evidence of a target-domain coverage guarantee. Coverage and ambiguity diagnostics are therefore treated separately from the primary attack-miss ranking analysis [7].
+This scalarization creates massive cutoff ties. At the 5\% budget, essentially the full target population can share the conformal cutoff score, so deterministic row-offset tie handling decides which observations enter review. Conformal values are therefore retained in the tables for audit transparency but excluded from comparative winner claims. A publication-quality comparison requires a rerun using a continuous source-derived conformal p-value or nonconformity ranking together with randomized-tie or expected-tie budget capture.
 
 \subsubsection{5) Isolation Forest}
 
@@ -277,6 +269,8 @@ Isolation Forest does not depend on the Random Forest prediction itself. It ther
 For each transfer direction, all source-dependent quantities are frozen before any target labels are exposed. These quantities include the predictive feature order, finite-value replacement parameters, Random Forest configuration and fitted trees, source probability calibrator, conformal quantile, source-training feature scaler, source-training distance reference, Isolation Forest model, score orientation, and review-ranking rules.
 
 The target feature matrix is transformed only with these source-derived quantities. Target reliability scores are generated and stored before target labels are read. Thus, target labels cannot affect preprocessing, detector fitting, calibration, score construction, score orientation, or ranking.
+
+The target detector threshold is fixed at calibrated attack probability \(p_{\mathrm{attack}}\ge 0.5\); no target-side threshold optimization is performed. The operational benchmark ranks the complete target population rather than only the predicted-benign queue, so the budgeted capture is a controlled whole-target ranking benchmark rather than a direct simulation of a SOC predicted-benign queue.
 
 The target evaluation uses the complete target population. For an analyst-review budget \(b\), the highest-scoring
 
@@ -298,7 +292,7 @@ I\left(y_i=1\land\hat{y}_i=0\right).
 
 For reliability score \(r_i\), attack-miss AUPRC is computed by treating \(m_i\) as the positive class and ranking target observations from highest to lowest reliability score. This metric measures the ability of a reliability mechanism to prioritize the attacks that the frozen detector has incorrectly classified as benign.
 
-The primary operational endpoint is attack-miss capture at the 5\% analyst-review budget:
+The primary operational endpoint is attack-miss capture at the 5\% analyst-review budget. Random ranking has expected capture (b) at review fraction (b), so 5\% review provides a 5\% chance baseline. Because cutoff ties can be substantial, budgeted capture is conditional on the archived deterministic row-offset tie rule; tie mass is therefore treated as a secondary diagnostic.
 
 \[
 \mathrm{Capture}@b
@@ -311,13 +305,13 @@ The primary operational endpoint is attack-miss capture at the 5\% analyst-revie
 
 where \(S_b\) contains the highest-scoring target observations at review fraction \(b\). Capture at 1\% and 10\% is reported as secondary operational analysis.
 
-Generic prediction error is evaluated separately as
+Average precision is used as the AUPRC estimator, avoiding ambiguity about area integration under tied scores. Generic prediction error is evaluated separately as
 
 \[
 e_i=I\left(y_i\ne\hat{y}_i\right).
 \]
 
-This separation prevents ordinary classification errors from being treated as equivalent to security-critical attack misses. Secondary analyses include generic-error AUPRC and AUROC, attack-miss AUROC, direction-specific score-orientation diagnostics, selective risk, family-level behavior where the locked semantic registry supports a defensible comparison, calibration and conformal diagnostics, and computational cost.
+This separation prevents ordinary classification errors from being treated as equivalent to security-critical attack misses. Secondary analyses include generic-error AUPRC and AUROC, attack-miss AUROC, residual attack-miss rate among unreviewed rows, and cutoff tie mass, direction-specific score-orientation diagnostics, selective risk, family-level behavior where the locked semantic registry supports a defensible comparison, calibration and conformal diagnostics, and computational cost.
 
 \subsection{Family-Level Analysis}
 
@@ -433,7 +427,7 @@ All five reliability signals are evaluated on the same target population within 
 
 The source-only and target-label-isolation rules defined in Section~III are enforced throughout the experiment. In particular, target labels are unavailable during preprocessing, detector fitting, calibration, score construction, score orientation, and target ranking. Target labels are read only after all target reliability scores have been generated for offline evaluation.
 
-The completed transfer-integrity audit reports no issues for either direction and verifies four target-label conditions: target labels were not used for model fitting, tuning, recalibration, or score construction.
+The completed label-isolation audit verifies four target-label conditions: target labels were not used for model fitting, tuning, recalibration, or score construction. This leakage audit passes; it does not validate conformal scalarization or duplicate-safe source splitting.
 
 The primary operational analysis evaluates the three review budgets specified in Section~III: 1\%, 5\%, and 10\%, with 5\% treated as the predeclared primary budget. Stable ascending input-row offset is used as the deterministic tie-break at the selection boundary.
 
@@ -441,7 +435,7 @@ The primary operational analysis evaluates the three review budgets specified in
 
 Results are retained at the individual-seed level and summarized across the ten matched seeds. Paired comparisons use the same detector seed across methods within a transfer direction. Exact sign-flip permutation tests are used for paired differences, with seed-level bootstrap intervals for uncertainty quantification.
 
-The analysis distinguishes descriptive rankings from inferential evidence. Mean performance summarizes central tendency, while paired effect estimates and uncertainty intervals support comparisons across repeated detector fits. Secondary pairwise comparisons are treated as exploratory within the broader multiple-comparison family.
+The primary comparison family is defined before testing: target attack-miss AUPRC and attack-miss capture at the 5\% budget in each transfer direction. The 1\% and 10\% budgets, generic-error metrics, attack-miss AUROC, selective residual risk, calibration, family analysis, and score-orientation diagnostics are secondary or exploratory. No global method superiority claim is assigned from the collection of pairwise tests. Exact sign-flip p-values are reported as paired seed-level evidence; with ten seeds, (p=0.00195) is the minimum nonzero two-sided sign-flip value, so p-values are interpreted alongside effect sizes and intervals rather than as a broad multiplicity-adjusted ranking.
 
 \subsection{Reproducibility Environment}
 
