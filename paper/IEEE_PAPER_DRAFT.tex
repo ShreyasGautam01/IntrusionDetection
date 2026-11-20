@@ -449,7 +449,7 @@ At the scientific level, source splits, preprocessing values, feature order, det
 
 \subsection{Primary Security Endpoint: Attack-Miss AUPRC}
 
-The primary analysis asks whether the reliability scores can rank target observations that are simultaneously attacks and false negatives of the frozen detector. Table~IV reports the exact mean attack-miss AUPRC and seed-level standard deviation for each reliability signal and transfer direction. Fig.~1 visualizes the same summary as paired points with horizontal uncertainty bars, with each connecting segment showing how the corresponding signal changes when the source and target domains are reversed.
+The primary analysis asks whether the reliability scores can rank target observations that are simultaneously attacks and false negatives of the frozen detector. In UNSW$\rightarrow$CIC, target attack AUROC is approximately 0.51 and mean attack-miss prevalence is 9.62\%; in CIC$\rightarrow$UNSW, the detector misses approximately 127,688 of 127,693 attacks, making attack-miss prevalence 5.40\%. The reliability problem is therefore studied under severe detector transfer failure, especially in the reverse direction. Table~IV reports the exact mean attack-miss AUPRC and seed-level standard deviation for each reliability signal and transfer direction. Fig.~1 visualizes the same summary as paired points with horizontal uncertainty bars, with each connecting segment showing how the corresponding signal changes when the source and target domains are reversed.
 
 \begin{table}[t]
 \centering
@@ -563,17 +563,17 @@ Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
 \label{fig:bidirectional-auprc}
 \end{figure}
 
-In UNSW$\rightarrow$CIC, RF disagreement achieves the highest mean attack-miss AUPRC at 0.238. In CIC$\rightarrow$UNSW, the ordering changes and split conformal becomes the highest-ranked signal at 0.079. Thus, the best-performing reliability mechanism is not invariant to reversal of the source and target domains.
+In UNSW$\rightarrow$CIC, RF disagreement achieves the highest mean attack-miss AUPRC at 0.238. In CIC$\rightarrow$UNSW, the ordering changes and feature-space distance is the highest non-conformal signal at 0.043. The split-conformal value of 0.079 is retained for audit completeness but is not interpreted as a competitive result because its scalar is degenerate. Thus, the best-performing reliability mechanism is not invariant to reversal of the source and target domains.
 
-The figure also makes the different directional behavior of the signals apparent. RF disagreement and confidence move substantially between the two directions, whereas split conformal remains comparatively close to its original level. Feature-space distance and Isolation Forest remain lower-performing signals in both directions despite their different directional changes.
+The figure also makes the different directional behavior of the non-degenerate signals apparent. RF disagreement and confidence move substantially between the two directions, whereas feature-space distance changes less in threshold-free ranking. The conformal points are shown only as an audit reference. Feature-space distance and Isolation Forest remain lower-performing signals in both directions despite their different directional changes.
 
-The paired seed analysis provides inferential support for the strongest UNSW$\rightarrow$CIC contrasts. RF disagreement exceeds confidence by a mean paired difference of 0.046, with a 95\% bootstrap interval excluding zero, and exceeds split conformal by 0.142 with the corresponding interval also excluding zero. These effects are reported alongside the broader multiple-comparison analysis rather than interpreted as evidence of a universal ranking.
+The paired seed analysis provides inferential support for the strongest UNSW$\rightarrow$CIC contrasts. RF disagreement exceeds confidence by a mean paired difference of 0.046, with a 95\% bootstrap interval excluding zero. The earlier RF-versus-conformal contrast is not used as a primary superiority claim because the conformal scalarization is tie-dominated. These effects are reported alongside the broader multiple-comparison analysis rather than interpreted as evidence of a universal ranking.
 
-The primary endpoint therefore establishes the first central result of the study: reliability performance is source-target-direction dependent. A ranking obtained from one transfer direction cannot automatically be treated as a transportable ordering for the reverse deployment direction.
+The primary endpoint establishes the first central result of the study: reliability performance is source-target-direction dependent, but its interpretation must be conditioned on detector transfer failure and on the validity of each reliability score's scalarization. A ranking obtained from one transfer direction cannot automatically be treated as a transportable ordering for the reverse deployment direction.
 
 \subsection{Operational Utility at Fixed Analyst-Review Budgets}
 
-The primary operational analysis asks how many detector attack misses can be recovered when only a fixed fraction of target traffic can be reviewed. Fig.~2 plots the budget-response curves for the two transfer directions, making changes in operational ranking visible across review capacity. Table~V reports the exact mean capture values at the 1\%, 5\%, and 10\% budgets.
+The primary operational analysis asks how many detector attack misses can be recovered when only a fixed fraction of the complete target-flow population can be reviewed. The benchmark is deliberately a whole-target ranking abstraction rather than a predicted-benign SOC queue. Fig.~2 plots the budget-response curves for the two transfer directions, making changes in operational ranking visible across review capacity. Table~V reports the exact mean capture values at the 1\%, 5\%, and 10\% budgets.
 
 \begin{figure*}[!t]
 \centering
@@ -684,17 +684,17 @@ Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 
 
 
-At the primary 5\% review budget, split conformal has the highest mean attack-miss capture in both transfer directions, at 17.37\% for UNSW$\rightarrow$CIC and 14.73\% for CIC$\rightarrow$UNSW. In the first direction, this differs from the AUPRC result in Fig.~1, where RF disagreement has the highest threshold-free ranking performance. The two metrics therefore identify different aspects of operational usefulness.
+At the primary 5\% review budget, the random-review baseline is 5\% capture. Among the non-degenerate signals, RF disagreement captures 12.33\% in UNSW$\rightarrow$CIC, while feature-space distance captures 4.34\% in CIC$\rightarrow$UNSW and is therefore below the random baseline. The split-conformal 17.37\% and 14.73\% values are retained for audit completeness but are not interpreted as comparative evidence because the score is dominated by equal-value ties. In the first direction, this differs from the AUPRC result in Fig.~1, where RF disagreement has the highest threshold-free ranking performance. The two metrics therefore identify different aspects of operational usefulness.
 
-Fig.~2 further shows that the difference is not limited to the single 5\% operating point. In UNSW$\rightarrow$CIC, split conformal rises sharply between 1\% and 5\% review, while RF disagreement and confidence increase more progressively. In CIC$\rightarrow$UNSW, split conformal remains the highest curve across all three tested budgets, whereas feature-space distance becomes the next most effective signal as review capacity increases.
+Fig.~2 further shows that operational ordering changes with review capacity. A 5\% budget corresponds to approximately 1,005,776 CIC target flows and 118,271 UNSW target flows. In UNSW$\rightarrow$CIC, RF disagreement and confidence are the strongest non-degenerate operational signals, while distance and Isolation Forest are near or below random review. In CIC$\rightarrow$UNSW, distance is the strongest non-conformal signal and modestly exceeds the random baseline at 5\% review.
 
-The paired analysis qualifies the descriptive 5\% comparison. In UNSW$\rightarrow$CIC, the mean RF-minus-conformal difference is -0.0504 and its bootstrap interval spans zero, so the descriptive 17.37\% versus 12.33\% ordering is not a definitive paired separation at this budget. In CIC$\rightarrow$UNSW, the corresponding difference is -0.1385 with an interval entirely below zero, providing stronger paired evidence in favor of split conformal.
+The paired analysis is restricted to predeclared non-degenerate contrasts. Conformal contrasts are not treated as substantive method comparisons because of the scalarization audit. The deterministic tie rule is also a limitation for RF disagreement and conformal, so randomized-tie sensitivity is required.
 
-The operational results therefore establish a second central finding: reliability utility depends not only on which signal is used and which transfer direction is considered, but also on how much target traffic an analyst can review. Threshold-free ranking and fixed-budget triage should consequently be reported as complementary, rather than interchangeable, evaluations.
+At 5\% review, mean residual attack-miss rate among unreviewed flows was approximately 8.9\% for RF disagreement, 9.3\% for confidence, 10.1\% for distance, and 10.0\% for Isolation Forest in UNSW$\rightarrow$CIC; in CIC$\rightarrow$UNSW the corresponding values were about 5.6\%, 5.6\%, 5.4\%, and 5.7\%. These selective-risk quantities are secondary because the review pool is the complete target population. Threshold-free ranking and fixed-budget triage should consequently be reported as complementary, rather than interchangeable, evaluations.
 
 \subsection{Generic Errors Versus Security-Critical Attack Misses}
 
-The generic-error analysis asks whether a reliability signal that is effective at identifying incorrect detector predictions is necessarily effective at prioritizing the subset of those errors that are attacks classified as benign. Fig.~3 visualizes the relationship between generic-error and attack-miss AUPRC directly. Table~VI reports the corresponding exact AUPRC and AUROC values.
+The generic-error analysis asks whether a reliability signal that is effective at identifying incorrect detector predictions is necessarily effective at prioritizing the subset of those errors that are attacks classified as benign. Generic-error prevalence is approximately 51.8\% in UNSW$\rightarrow$CIC and 5.40\% in CIC$\rightarrow$UNSW. Fig.~3 visualizes the relationship between generic-error and attack-miss AUPRC directly. Table~VI reports the corresponding exact AUPRC and AUROC values.
 
 \begin{figure*}[t]
 \centering
@@ -811,39 +811,41 @@ The UNSW$\rightarrow$CIC direction provides the clearest separation between gene
 
 This divergence means that input atypicality and security-critical detector failure are not interchangeable reliability objectives. An observation can be unusual in the selected feature space without being an attack that the detector misses, while an attack miss can remain close to source traffic and receive only a modest novelty score.
 
-Split conformal occupies an intermediate position in UNSW$\rightarrow$CIC. Its generic-error AUPRC is 0.518 and its attack-miss AUPRC is 0.096, while its attack-miss AUROC is approximately 0.500. Thus, the signal's operational behavior cannot be inferred from generic-error ranking alone, consistent with the distinction established by the fixed-budget analysis in Section~V-B.
+Split conformal's generic-error AUPRC in UNSW$\rightarrow$CIC is 0.518, essentially its generic-error prevalence, while its generic-error and attack-miss AUROCs are both approximately 0.500. This is consistent with the scalarization audit rather than evidence of a meaningful reliability ranking.
 
-The reverse CIC$\rightarrow$UNSW direction has a different structure. The five points cluster close to the low end of both axes, and generic-error AUPRC is nearly identical to attack-miss AUPRC for every signal. In this target setting, generic errors are therefore largely accounted for by attack misses, making the generic-error metric a poor independent test of security-specific reliability.
+The reverse CIC$\rightarrow$UNSW direction has a different structure. The detector is effectively blind to attacks, so generic errors and attack misses almost coincide. Generic-error and attack-miss AUROC are approximately 0.228/0.228 for confidence, 0.248/0.248 for RF disagreement, 0.345/0.345 for distance, and 0.284/0.284 for Isolation Forest. In this target setting, generic errors are therefore largely accounted for by attack misses, making the generic-error metric a poor independent test of security-specific reliability.
 
-The AUROC results add an important semantic qualification. Four signals have mean attack-miss AUROC below 0.5 in CIC$\rightarrow$UNSW: confidence 0.228, RF disagreement 0.248, feature-space distance 0.345, and Isolation Forest 0.284. The inversion flag is true for all ten seeds for each of these signals. Split conformal is the exception, with mean attack-miss AUROC 0.545 and values above 0.5 for all ten seeds. Thus, the same high-score review convention can become systematically anti-informative after transfer for several reliability mechanisms.
+The UNSW$\rightarrow$CIC results show that generic-error discrimination can survive while security-specific ranking deteriorates: generic-error AUROC averages about 0.839, 0.837, 0.877, and 0.840 for confidence, RF disagreement, distance, and Isolation Forest, while attack-miss AUROC falls to about 0.701, 0.712, 0.575, and 0.379. In CIC$\rightarrow$UNSW, four non-conformal signals are below 0.5, but this inversion is inseparable from the near-blind detector regime.
 
 The results therefore show that generic prediction-error ranking is insufficient as a security-reliability validation target, consistent with the broader distinction between detecting misclassified examples and detecting the particular failure mode that matters operationally [21]. A signal can perform strongly on ordinary detector errors while performing poorly on dangerous attack misses. The primary reliability question should consequently be defined by the security failure mode that the analyst workflow is intended to recover.
 
 \subsection{Directional Transportability of Reliability Performance}
 
-Fig.~1 shows the directional change in attack-miss AUPRC directly; Table~VII quantifies that change for both threshold-free ranking and the primary 5\% operational budget. This distinction is useful because a method can change substantially in absolute performance when the transfer direction is reversed without necessarily showing the same change in its operational capture.
+Fig.~1 shows the directional change in attack-miss AUPRC directly; Table~VII expresses the primary metrics relative to direction-specific baselines because attack-miss prevalence differs materially between the two targets.
 
 \begin{table}[t]
 \centering
-\caption{Directional change in reliability performance}
+\caption{Direction-normalized reliability performance}
 \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{lll}
 \toprule
-\textbf{Signal} & \textbf{Attack-miss AUPRC gap} & \textbf{5\% capture gap} \\
+\textbf{Signal} & \textbf{AUPRC lift (UNSW/CIC)} & \textbf{5\% capture lift (UNSW/CIC)} \\
 \midrule
-Confidence & 0.159 & 0.074 \\
-RF disagreement & \textbf{0.203} & \textbf{0.115} \\
-Feature-space distance & 0.066 & 0.038 \\
-Split conformal & \textbf{0.017} & 0.026 \\
-Isolation Forest & 0.041 & 0.003 \\
+Confidence & 2.00 / 0.61 & 1.64 / 0.15 \\
+RF disagreement & \textbf{2.47 / 0.64} & \textbf{2.47 / 0.18} \\
+Feature-space distance & 1.13 / 0.80 & 0.12 / 0.87 \\
+Split conformal$^\dagger$ & 1.00 / 1.47 & 3.47 / 2.95 \\
+Isolation Forest & 0.80 / 0.66 & 0.15 / 0.09 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
+\\[-1mm]
+{\footnotesize AUPRC lift is relative to attack-miss prevalence; 5\% capture lift is relative to random 5\% review. Pairs are UNSW$\rightarrow$CIC / CIC$\rightarrow$UNSW. $^\dagger$ Conformal is audit-only.}
 \end{table}
 
-RF disagreement exhibits the largest directional change in both primary quantities: its attack-miss AUPRC gap is 0.203 and its 5\% capture gap is 0.115. Confidence shows a similarly pronounced directional change, with gaps of 0.159 and 0.074. These results are consistent with the large separation between the corresponding points in Fig.~1.
+RF disagreement retains the strongest normalized threshold-free lift in UNSW$\rightarrow$CIC, while distance becomes relatively stronger for the fixed-budget endpoint in CIC$\rightarrow$UNSW. The normalized view is preferable to raw directional gaps because the positive-event prevalence differs by direction.
 
-Split conformal has the smallest attack-miss AUPRC gap, 0.017, while maintaining the highest mean 5\% capture in both transfer directions. Its comparatively small AUPRC gap indicates greater stability in threshold-free attack-miss ranking, although stability alone does not imply high absolute utility. Isolation Forest illustrates the complementary case: its 5\% capture gap is only 0.003, but its absolute capture remains low in both directions.
+Conformal's normalized values are shown for audit completeness only. Isolation Forest has low absolute and normalized operational utility in both directions, so its small raw directional gap does not imply useful transportability.
 
 The directional results therefore distinguish \textbf{absolute utility} from \textbf{transport stability}. A signal may achieve strong performance in one direction but change substantially after source-target reversal, or it may remain relatively stable while providing limited security value. This is why a one-way transfer experiment cannot establish that a reliability ranking is transportable.
 
