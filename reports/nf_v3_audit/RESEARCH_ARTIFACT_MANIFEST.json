@@ -56,8 +56,8 @@
     {
       "path": "REPRODUCTION.md",
       "artifact_class": "environment",
-      "size_bytes": 1337,
-      "sha256": "c43708ee3c79b7541acadf696de06ca6f9abaeafc969cbe0d9e0b332c0f6e8e9",
+      "size_bytes": 10280,
+      "sha256": "82ea12d0ede60b1c9404f0361bc71b791e014ff11c9211b5fe6b9b9f62f59523",
       "git_intent": "tracked-in-analysis-archive"
     },
     {
