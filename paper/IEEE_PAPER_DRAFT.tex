@@ -337,16 +337,18 @@ The primary evaluation uses two audited NetFlow-v3 datasets, NF-UNSW-NB15-v3 and
 \centering
 \caption{Dataset and source-partition configuration}
 \begin{adjustbox}{max width=\columnwidth}
-\begin{tabular}{llllll}
+\begin{tabular}{lllllll}
 \toprule
-\textbf{Dataset} & \textbf{Total flows} & \textbf{Source train} & \textbf{Source calibration} & \textbf{Source test} & \textbf{Predictors} \\
+\textbf{Dataset} & \textbf{Total} & \textbf{Attack} & \textbf{Train} & \textbf{Cal.} & \textbf{Test} & \textbf{Pred.} \\
 \midrule
-NF-UNSW-NB15-v3 & 2,365,424 & 1,418,952 & 473,301 & 473,171 & 46 \\
-NF-CSE-CIC-IDS2018-v3 & 20,115,529 & 12,068,590 & 4,021,791 & 4,025,148 & 46 \\
+NF-UNSW-NB15-v3 & 2,365,424 & 127,693 (5.40\%) & 1,418,952 & 473,301 & 473,171 & 46 \\
+NF-CSE-CIC-IDS2018-v3 & 20,115,529 & 2,600,903 (12.93\%) & 12,068,590 & 4,021,791 & 4,025,148 & 46 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
 \end{table}
+
+The in-domain source-test detector provides a necessary baseline for interpreting transfer failure. On the UNSW source test, attack AUPRC and AUROC are both approximately 1.000 and the detector produces only 10 attack misses across 25,608 attacks. On the CIC source test, mean attack AUPRC is 0.976 and attack AUROC is 0.990, with about 26 attack misses across 520,568 attacks.
 
 The deterministic source partitions and the secondary calibration split follow the procedures defined in Section~III. No target-domain observations are used to determine these partitions or their preprocessing parameters. The two datasets nevertheless differ substantially in traffic composition and scale, making the bidirectional transfer experiment a test of transportability rather than a same-distribution replication.
 
