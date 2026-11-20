@@ -853,11 +853,11 @@ The directional results therefore distinguish \textbf{absolute utility} from \te
 
 Family-level analysis is restricted to the frozen cross-domain semantic registry. Only the documented shared DoS category is treated as a defensible cross-dataset correspondence; dataset-local attack names are not treated as equivalent merely because their labels are similar.
 
-The available family evidence is insufficient for a broad family-level conclusion. In UNSW$\rightarrow$CIC, the documented shared DoS mapping contains no target rows. In CIC$\rightarrow$UNSW, all 5,980 mapped DoS target rows are recorded as attack misses, producing an attack-miss AUPRC of 1.0 for every reliability signal. Because every mapped row belongs to the positive attack-miss population, this value is tautological rather than evidence of method superiority.
+The available family evidence is insufficient for a broad family-level conclusion. The locked semantic registry admits only the documented shared DoS relation; other target families are not called unseen because unsupported semantic mappings are intentionally withheld. In UNSW$\rightarrow$CIC, the shared DoS mapping contains no target rows. In CIC$\rightarrow$UNSW, all 5,980 mapped DoS target rows are recorded as attack misses, producing an attack-miss AUPRC of 1.0 for every reliability signal. Because every mapped row belongs to the positive attack-miss population, this value is tautological rather than evidence of method superiority.
 
 Accordingly, the family analysis is not used to support claims about general unseen-family detection or family-specific reliability robustness. Its role is instead to establish an interpretive boundary: meaningful cross-domain family analysis requires both a defensible semantic correspondence and sufficient within-family variation in detector outcomes.
 
-The experiment therefore provides evidence about source-only cross-domain reliability transportability at the aggregate security-failure level, but not comprehensive evidence about reliability behavior across unseen attack families.
+The experiment therefore provides evidence about source-only cross-domain reliability transportability at the aggregate security-failure level, but it does not establish comprehensive unseen-family generalization.
 
 \subsection{Calibration and Conformal Diagnostics}
 
@@ -865,11 +865,12 @@ Calibration behavior differs between the two transfer directions. For UNSW$\righ
 
 The calibration results provide context for the confidence signal but do not alter the primary ranking analysis. In particular, the study does not assume that source-calibrated probability values retain their numerical target-domain interpretation after transfer.
 
-The split-conformal construction is likewise treated primarily as a frozen source-derived ranking mechanism. The archived conformal diagnostic output contains inconsistent target ambiguity and prediction-set-size fields: the recorded target set-size values are incompatible with the binary set-valued definition, and the associated ambiguity-rate field is approximately negative one. These diagnostic fields are therefore excluded from quantitative claims about target conformal coverage, ambiguity, or prediction-set behavior.
+ The conformal diagnostic requires a stronger correction than the earlier draft implied.
+ The archived target set-size output is not merely a malformed ambiguity statistic: the prediction sets are overwhelmingly empty or singleton, so the saved scalar (r=|C|-1) collapses to (-1) or (0). The resulting cutoff tie mass is enormous; at 5\% review, essentially the full target population can share the conformal cutoff score. The archived capture values therefore depend on deterministic row-offset tie handling.
 
-This diagnostic limitation does not remove split conformal from the primary attack-miss analysis. Its frozen target score arrays and corresponding AUPRC and review-budget results remain part of the completed transfer experiment. The limitation applies specifically to claims about target-domain coverage or set-valued conformal behavior, which require a separate implementation audit before publication.
+ Accordingly, conformal AUPRC and capture are retained only as audit outputs. They are not used to establish method superiority or transport stability. A corrected experiment should replace the binary set-size scalar with a continuous conformal p-value or nonconformity ranking and report randomized-tie or expected-tie budget capture before comparative conclusions are drawn.
 
-The distinction is important because classical conformal guarantees depend on conditions such as exchangeability [7]. The present cross-domain experiment does not establish that those conditions hold on the target domain. The paper therefore reports empirical ranking and triage behavior without interpreting it as a target-domain conformal guarantee.
+ The distinction is important because classical conformal guarantees depend on conditions such as exchangeability [7]. The present cross-domain experiment does not establish that those conditions hold on the target domain. The paper therefore reports empirical ranking and triage behavior without interpreting it as a target-domain conformal guarantee.
 
 \subsection{Paired Effects Across Random Seeds}
 
@@ -888,14 +889,15 @@ UNSW->CIC & RF disagreement - split conformal & 5\% capture & -0.050 & [-0.110, 
 CIC->UNSW & RF disagreement - split conformal & Attack-miss AUPRC & -0.045 & [-0.061, -0.031] & 0.00195 \\
 CIC->UNSW & Feature distance - split conformal & Attack-miss AUPRC & -0.036 & [-0.052, -0.023] & 0.00195 \\
 CIC->UNSW & RF disagreement - split conformal & 5\% capture & -0.139 & [-0.169, -0.111] & 0.00195 \\
+UNSW->CIC & RF disagreement - confidence & Attack-miss AUPRC & +0.046 & [0.014, 0.088] & 0.00781 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
 \end{table}
 
-The paired effects reinforce the contrast already visible in Figs.~1 and~2. In UNSW$\rightarrow$CIC, RF disagreement has a large attack-miss AUPRC advantage over split conformal, with a mean paired difference of 0.142 and an interval entirely above zero. At the 5\% review budget, however, the comparison favors split conformal descriptively, with RF-minus-conformal equal to -0.050 and an interval spanning zero.
+The paired effects reinforce the contrast already visible in Figs.~1 and~2. In UNSW$\rightarrow$CIC, RF disagreement has a mean paired AUPRC advantage over confidence of 0.046 with a bootstrap interval excluding zero. The earlier RF-versus-conformal contrast is retained only as an audit statistic because the conformal score is tie-dominated.
 
-In CIC$\rightarrow$UNSW, split conformal has a paired attack-miss AUPRC advantage over RF disagreement and feature-space distance, with mean differences of 0.045 and 0.036, respectively. Its operational advantage over RF disagreement is larger at the 5\% budget, where the mean paired difference is 0.139 in favor of conformal.
+In CIC$\rightarrow$UNSW, feature-space distance is the strongest non-conformal attack-miss AUPRC signal, while conformal paired contrasts are not used to support a preferred-method claim.
 
 These tests support selected method contrasts but do not establish a single global ordering across all signals and metrics. The broader pairwise results are retained in the analysis artifacts, while the manuscript emphasizes effect magnitudes, uncertainty intervals, directional consistency, and the operational patterns shown in Figs.~1--3.
 
@@ -911,7 +913,7 @@ This benchmark separates execution efficiency from the scientific definition of 
 
 \subsection{Principal Findings}
 
-The completed bidirectional experiment does not identify a universally transportable reliability signal. The three main empirical patterns are complementary. Fig.~1 shows that the relative attack-miss AUPRC ranking changes when the source and target domains are reversed. Fig.~2 shows that operational capture also depends on the analyst-review budget, and that the threshold-free ranking does not necessarily determine the best fixed-budget choice. Fig.~3 shows that generic prediction-error ranking can diverge substantially from security-specific attack-miss ranking.
+It does not identify a universally transportable reliability signal. The completed bidirectional experiment instead reveals three interacting patterns: the detector itself can collapse under transfer, non-degenerate reliability signals can change ranking with direction, and generic-error ranking can diverge from security-specific attack-miss prioritization. Fig.~1 shows that the relative attack-miss AUPRC ranking changes when the source and target domains are reversed. Fig.~2 shows that operational capture also depends on the review budget and random-review baseline. Fig.~3 shows that generic prediction-error ranking can diverge substantially from security-specific attack-miss ranking.
 
 Together, these findings support the central interpretation that reliability transportability is not a property of a score in isolation. It depends on the interaction among the detector, source and target distributions, reliability construction, security failure mode, and operational review budget. A reliability layer selected from one benchmark direction therefore cannot automatically be treated as deployment-robust.
 
@@ -927,11 +929,9 @@ The reverse direction adds a separate semantic concern. The attack-miss AUROC re
 
 \subsection{Interpreting the Conformal Result}
 
-Split conformal occupies a distinctive position across the three figures. In Fig.~1, its attack-miss AUPRC changes relatively little between the two transfer directions compared with the larger shifts of confidence and RF disagreement. In Fig.~2, it provides the highest mean attack-miss capture at the primary 5\% review budget in both directions and remains the strongest operational curve across the tested budgets in CIC$\rightarrow$UNSW.
+The conformal arm should be interpreted as an implementation audit rather than as a validated competitive reliability result. The source calibration is correctly source-only, but the exported prediction-set-size scalar collapses to a highly tied \(-1/0\) variable. This explains the near-zero target set sizes and abrupt budget-capture behavior. The result demonstrates that a conformal method cannot be judged from its nominal coverage parameter alone; the exported ranking scalar must be non-degenerate under the deployment setting.
 
-This combination suggests comparative stability as an empirical ranking and triage signal under the particular transfers studied here. It does not establish universal superiority, because the strongest threshold-free ranking in UNSW$\rightarrow$CIC is still produced by RF disagreement and because the conformal diagnostic implementation does not support stronger claims about target-domain coverage.
-
-Classical conformal guarantees depend on assumptions such as exchangeability [7]. The present experiment deliberately evaluates a shifted target domain and does not establish that those assumptions hold there. The appropriate interpretation is therefore empirical: the frozen source-calibrated conformal construction produced the observed target ranking and operational behavior, without implying a target-domain coverage guarantee.
+Classical conformal guarantees depend on exchangeability, and the present transfer setting does not establish target exchangeability [NEW_TIBSHIRANI]. A corrected continuous-score conformal rerun is required before the method can be compared fairly with the other signals.
 
 \subsection{Implications for Deployment}
 
@@ -975,6 +975,10 @@ The primary conclusions are based on two NetFlow-v3 datasets and two transfer di
 
 The experiment fixes the detector to a Random Forest. This is intentional because it isolates the reliability layer, but it limits architectural generalization. Reliability mechanisms may interact differently with neural detectors, gradient-boosted trees, calibrated linear models, or streaming architectures. The results therefore establish transportability behavior for the studied RF backbone rather than for arbitrary IDS models.
 
+\subsection{Source-Split Duplicate Risk}
+
+The archived 60/20/20 source split hashes the canonical 53-feature representation, while only 46 fields enter the predictive matrix. Although the secondary calibration split groups identical 46-feature vectors together, the primary source partitions could place identical predictor vectors in different train, calibration, and test subsets when only excluded identifier or timestamp fields differ. A duplicate-safe 46-feature source split should therefore be regenerated before final publication.
+
 \subsection{Limited Repetition Count}
 
 Each transfer direction uses ten detector seeds. This provides matched repeated observations for paired analysis but should not be confused with ten independent deployments or ten independent datasets. The seed-level statistical analysis captures detector-training variability under the fixed configuration; it does not quantify variability across organizations, collection campaigns, or network infrastructures.
@@ -985,17 +989,25 @@ The attack-family ontology intentionally uses a conservative semantic crosswalk.
 
 This limitation is preferable to asserting semantic equivalence from similar names. Nevertheless, it means that the present paper cannot answer how each reliability signal behaves across a comprehensive hierarchy of unseen attack families.
 
-\subsection{Conformal Diagnostic Integrity}
+\subsection{Conformal Scalarization and Tie Degeneracy}
 
-The source split-conformal construction is frozen and used as one of the five primary reliability signals, but the archived target ambiguity/set-size diagnostic fields contain internally inconsistent values. Those diagnostics are consequently excluded from strong claims about target conformal coverage or prediction-set behavior. The primary attack-miss ranking results remain reported, but future work must repair and independently validate the conformal diagnostic implementation before extending the claims.
+The source split-conformal construction is source-only, but its exported prediction-set-size scalar collapses to a highly tied binary score under the present alpha and binary setup. This makes the archived conformal ranking and fixed-budget capture unsuitable for a definitive method comparison until a continuous scalarization and tie-robust analysis are rerun.
 
 \subsection{No Target Adaptation or Recalibration}
 
 The study deliberately forbids target-domain adaptation and recalibration. This is necessary to isolate source-only transportability, but it means the results do not show whether a small amount of target information could substantially improve reliability. In a practical deployment, adaptation, recalibration, threshold adjustment, or continual learning may change the observed ranking.
 
+\subsection{Detector Transfer Failure and Review-Pool Abstraction}
+
+The reverse CIC$\rightarrow$UNSW detector misses essentially all target attacks, so semantic inversion results in that direction must be interpreted as behavior under a near-blind detector rather than as a standalone property of reliability scores. In addition, the review benchmark ranks all target flows; it does not model a predicted-benign analyst queue, alert deduplication, or alert prioritization after already-detected attacks are removed.
+
 \subsection{Benchmark-to-Deployment Gap}
 
 The experiments operate on offline benchmark flow records. They do not model the full operational environment of a live SOC, including analyst fatigue, correlated alerts, changing review capacity, multi-stage incidents, alert deduplication, delayed labels, or adversarial manipulation of the monitoring process. Fixed review budgets are therefore an operational abstraction rather than a complete SOC simulation.
+
+\subsection{Label Quality and Flow Dependence}
+
+The positive class is defined by benchmark labels, and prior audits of public NIDS datasets have documented errors in traffic generation, flow construction, feature extraction, and labeling [NEW_ENGELEN], while later work has explicitly studied label-error prevalence in CIC-IDS2017 and CSE-CIC-IDS2018 [NEW_LIU]. Flows are also not guaranteed to be independent because multiple rows can belong to the same session or temporal episode. Seed-level analysis therefore captures detector-training variability, not all dataset-level uncertainty.
 
 \subsection{Statistical and Multiple-Comparison Constraints}
 
@@ -1013,14 +1025,15 @@ Overall, these limitations restrict the scope of the paper's conclusions but do 
 
 \section{Conclusion}
 
-This study evaluated whether lightweight post-hoc reliability signals remain useful for prioritizing dangerous detector failures after a fixed network intrusion detector is transferred to a different domain without target-domain adaptation or recalibration. Using a common frozen feature representation, a fixed Random Forest detector, five reliability mechanisms, ten matched seeds, and both UNSW->CIC and CIC->UNSW transfer directions, the experiment treated attack-miss ranking as the primary security objective and fixed-budget review capture as the primary operational objective.
+This study evaluated whether source-fitted post-hoc reliability signals remain useful for prioritizing detector attack misses after a fixed NIDS is transferred to a different domain without target-domain adaptation or recalibration. The source-test baselines show that the Random Forest detector is highly effective in-domain, while the target detector can degrade severely: UNSW$\rightarrow$CIC transfer brings attack discrimination close to chance, and CIC$\rightarrow$UNSW produces an almost completely blind attack detector.
 
-The results show that reliability transportability is strongly direction dependent. RF disagreement achieved the highest mean attack-miss AUPRC in UNSW->CIC, whereas split conformal achieved the highest mean attack-miss AUPRC in CIC->UNSW. At a 5\% analyst-review budget, split conformal captured the highest mean fraction of attack misses in both directions. Generic-error performance was not a reliable substitute for security-specific evaluation: signals that ranked ordinary detector errors strongly could perform substantially worse when the positive event was restricted to attacks incorrectly classified as benign. Several reliability scores also changed semantic orientation after transfer, including systematic inversion for four of the five signals in the CIC->UNSW attack-miss AUROC analysis.
+The reliability results therefore cannot be interpreted independently of detector failure. Among the non-degenerate signals, RF disagreement provides the strongest attack-miss AUPRC in UNSW$\rightarrow$CIC, while feature-space distance is the strongest non-conformal signal in CIC$\rightarrow$UNSW. Their relative utility also changes with analyst-review budget and direction-specific random-review baselines. Generic-error performance is not sufficient as a security-reliability proxy: signals can rank ordinary detector errors well while remaining weak on dangerous attack misses.
 
-These findings support a practical conclusion: a reliability layer should not be selected solely from in-domain performance, generic-error ranking, or a single source-target direction. Its usefulness should be validated against the security failure mode of interest, its score orientation should be checked after transfer, and its operational value should be evaluated under the analyst review budget available in deployment.
+The conformal arm produces a separate methodological finding rather than a validated method win. Its exported prediction-set-size scalar collapses to a highly tied binary score, making the archived target capture curves dependent on deterministic tie handling. The conformal values are therefore retained for transparency but excluded from comparative superiority claims pending a continuous-score rerun.
 
-The study does not establish a universal best reliability signal or comprehensive unseen-family robustness. Rather, it provides controlled empirical evidence that existing lightweight reliability mechanisms can exhibit materially different transportability, security relevance, and operational utility under source-only cross-domain deployment. This suggests that reliability monitoring should be treated as a deployment-specific evaluation problem and provides a baseline for future work on temporal drift, target-label-efficient recalibration, broader domain replication, family-conditional reliability, and composite reliability policies.
+The study consequently supports a narrower conclusion than the earlier draft: reliability transportability is deployment- and failure-mode-specific, and it must be evaluated together with detector transfer behavior, direction-specific prevalence, random-review baselines, score tie structure, and operational review definition. The current results also identify two pre-publication requirements---a predictor-space duplicate-safe source split and a corrected continuous conformal scalarization---before the quantitative comparison should be treated as final.
 
+The paper does not establish universal post-hoc reliability robustness, comprehensive unseen-family generalization, or a universal best method. It provides controlled evidence about how existing source-only reliability signals behave under the specific cross-domain transfers studied here and defines the methodological conditions required for a defensible final comparison.
 \begin{thebibliography}{13}
 \bibitem{1}
 W. A. Ahmed, M. A. Rahaman, P. Roy, and P. Alam, ``The dashboard says perfect: A systematic audit of label-free model monitoring and test-time adaptation under temporal distribution shift in network intrusion detection,'' \emph{Frontiers in Artificial Intelligence}, vol. 9, Art. no. 1928858, 2026, doi: 10.3389/frai.2026.1928858.
