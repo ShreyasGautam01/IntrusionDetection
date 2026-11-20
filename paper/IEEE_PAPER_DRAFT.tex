@@ -85,20 +85,13 @@ This study evaluates that question using a fixed Random Forest detector and five
 The study makes four principal contributions:
 
 \begin{enumerate}
-\item \textbf{Controlled transportability evaluation:} It provides a common experimental comparison of five post-hoc reliability layers under an identical fixed detector, feature interface, source-only transfer protocol, and bidirectional cross-domain evaluation.
-\end{enumerate}
-
-\begin{enumerate}
+\item \textbf{Controlled transportability evaluation:} It provides a common experimental comparison of five post-hoc reliability signals under an identical fixed detector, feature interface, source-only transfer protocol, and bidirectional cross-domain evaluation.
 \item \textbf{Security-specific reliability endpoint:} It evaluates reliability as a mechanism for prioritizing detector attack misses rather than treating generic prediction error as a sufficient proxy for security risk.
+\item \textbf{Bidirectional and operational analysis:} It examines source-target reversal and fixed analyst-review budgets, including explicit comparison against random-review baselines.
+\item \textbf{Failure-mode characterization:} It separates detector transfer failure, attack-miss ranking, generic-error ranking, score-orientation behavior, family-semantic limits, and conformal scalarization failure, distinguishing validated findings from analyses that require revalidation.
 \end{enumerate}
 
-\begin{enumerate}
-\item \textbf{Bidirectional and operational analysis:} It examines whether reliability rankings remain stable when the source and target domains are reversed and measures the fraction of attack misses that can be recovered within fixed analyst-review budgets.
-\end{enumerate}
-
-\begin{enumerate}
-\item \textbf{Failure-mode characterization:} It separates attack-miss ranking from generic-error ranking and examines directional score behavior, constrained family-level behavior, selective risk, calibration/conformal diagnostics, and computational cost to identify conditions under which a reliability mechanism becomes less useful or changes its operational interpretation.
-\end{enumerate}
+In this paper, \emph{transportability} is used in an operational machine-learning sense: whether a source-fitted reliability signal retains useful ranking or triage behavior after transfer to a different target distribution. This is not a claim of causal transportability in the formal causal-inference sense.
 
 Research questions are stated before the primary comparisons. RQ1 asks whether post-hoc reliability rankings for detector attack misses remain stable when the source and target domains are reversed. RQ2 asks whether threshold-free ranking agrees with utility under fixed analyst-review budgets. RQ3 asks whether generic prediction-error ranking is a valid proxy for the security-critical attack-miss population. RQ4 asks whether score orientation and scalarization remain interpretable after transfer.
 
@@ -325,7 +318,7 @@ Each transfer direction contains ten matched detector seeds. Seed-level results 
 
 Descriptive rankings based solely on means are distinguished from inferential evidence. The manuscript reports effect direction and magnitude before significance levels, while the broader pairwise comparison set is interpreted as a multiple-comparison family rather than as a collection of independent claims.
 
-The experimental implementation, feature and family registries, transfer manifests, source-only restrictions, numerical outputs, and cryptographic hashes are archived as reproducibility artifacts. The completed transfer integrity audit reports no issues and confirms that target labels were not used for fitting, tuning, recalibration, or score construction.
+The experimental implementation, feature and family registries, transfer manifests, source-only restrictions, numerical outputs, and cryptographic hashes are archived as reproducibility artifacts. The completed label-isolation audit confirms that target labels were not used for fitting, tuning, recalibration, or score construction. This leakage audit passes; it does not validate conformal scalarization or duplicate-safe source splitting.
 
 \section{Experimental Setup}
 
@@ -941,7 +934,7 @@ First, \textbf{does the score remain aligned with actual detector failures after
 
 Second, \textbf{how useful is the score under the available analyst budget?} Fig.~2 demonstrates that operational capture depends on the review fraction and need not follow the threshold-free AUPRC ranking.
 
-These observations imply that a deployment workflow should validate both score orientation and budgeted capture on a representative deployment scenario before operationalizing a reliability layer. The appropriate validation target should be the security failure mode of interest—here, attack misses—rather than generic error detection alone, as demonstrated in Fig.~3.
+These observations imply that an offline validation study with trusted deployment labels should verify score orientation and budgeted capture before operationalizing a source-only reliability layer. The source-only runtime protocol itself does not require those labels; they are needed for external validation of the failure-detection objective. The appropriate validation target should be the security failure mode of interest—here, attack misses—rather than generic error detection alone, as demonstrated in Fig.~3.
 
 The present study does not imply that source-only reliability monitoring is a substitute for target-domain adaptation. Instead, it provides a measurement baseline for the case in which adaptation is unavailable, delayed, undesirable, or deliberately excluded. Where target information later becomes available, future work can investigate whether calibration or score orientation can be improved without weakening the source-only leakage controls used here.
 
