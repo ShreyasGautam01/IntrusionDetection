@@ -386,7 +386,7 @@ The scientific configuration is independent of the execution configuration. Prod
 
 \subsection{Reliability-Layer Configuration}
 
-The five reliability mechanisms defined mathematically in Section~III are instantiated under the common configurations in Table~III. The common score orientation is retained across both transfer directions so that every method can be evaluated with the same ranking and analyst-budget procedure.
+The five reliability mechanisms defined mathematically in Section~III are instantiated under the common configurations in Table~III. $^\dagger$ marks the archived split-conformal scalarization, which is shown for audit transparency but excluded from competitive ranking claims. The common score orientation is retained across both transfer directions so that every method can be evaluated with the same ranking and analyst-budget procedure.
 
 \begin{table}[t]
 \centering
@@ -399,7 +399,7 @@ The five reliability mechanisms defined mathematically in Section~III are instan
 Confidence & Calibrated RF class probabilities & Sigmoid/Platt calibration & High = unreliable \\
 RF disagreement & 200 tree class votes & $1-\max_c(v_c/200)$ & High = unreliable \\
 Feature distance & Standardized source-train reference & Euclidean mean of 5 nearest rows & High = unreliable \\
-Split conformal & Source conformal calibration & $\alpha=0.10$ & High = unreliable \\
+Split conformal$^\dagger$ & Source conformal calibration & $\alpha=0.10$ & High = unreliable \\
 Isolation Forest & Source-training anomaly model & 100 trees, max\_samples=256 & High = unreliable \\
 \bottomrule
 \end{tabular}
@@ -462,7 +462,7 @@ The primary analysis asks whether the reliability scores can rank target observa
 Confidence & 0.192 +/- 0.051 & 0.033 +/- 0.001 \\
 RF disagreement & \textbf{0.238 +/- 0.102} & 0.035 +/- 0.001 \\
 Feature-space distance & 0.109 +/- 0.009 & 0.043 +/- 0.001 \\
-Split conformal & 0.096 +/- 0.007 & \textbf{0.079 +/- 0.025} \\
+Split conformal$^\dagger$ & 0.096 +/- 0.007 & \textbf{0.079 +/- 0.025} \\
 Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
 \bottomrule
 \end{tabular}
@@ -485,7 +485,7 @@ Isolation Forest & 0.077 +/- 0.008 & 0.036 +/- 0.001 \\
   ytick={1,2,3,4,5},
   yticklabels={
     Isolation Forest,
-    Split conformal,
+    Split conformal$^\dagger$,
     Feature-space distance,
     RF disagreement,
     Confidence
@@ -675,7 +675,7 @@ The primary operational analysis asks how many detector attack misses can be rec
 Confidence & 0.90\% & 8.19\% & 19.60\% & 0.03\% & 0.77\% & 1.40\% \\
 RF disagreement & 2.46\% & 12.33\% & 24.68\% & 0.03\% & 0.88\% & 1.46\% \\
 Feature-space distance & 0.07\% & 0.58\% & 0.64\% & 0.56\% & 4.34\% & 5.09\% \\
-Split conformal & 0.0001\% & \textbf{17.37\%} & 20.40\% & \textbf{4.91\%} & \textbf{14.73\%} & \textbf{22.53\%} \\
+Split conformal$^\dagger$ & 0.0001\% & \textbf{17.37\%} & 20.40\% & \textbf{4.91\%} & \textbf{14.73\%} & \textbf{22.53\%} \\
 Isolation Forest & 0.14\% & 0.75\% & 1.76\% & 0.05\% & 0.45\% & 0.82\% \\
 \bottomrule
 \end{tabular}
@@ -798,7 +798,7 @@ The generic-error analysis asks whether a reliability signal that is effective a
 Confidence & 0.738 & 0.192 & 0.701 & 0.033 & 0.033 & 0.228 \\
 RF disagreement & 0.736 & 0.238 & 0.712 & 0.035 & 0.035 & 0.248 \\
 Feature-space distance & 0.859 & 0.109 & 0.575 & 0.043 & 0.043 & 0.345 \\
-Split conformal & 0.518 & 0.096 & 0.500 & 0.079 & 0.079 & \textbf{0.545} \\
+Split conformal$^\dagger$ & 0.518 & 0.096 & 0.500 & 0.079 & 0.079 & \textbf{0.545} \\
 Isolation Forest & 0.847 & 0.077 & 0.379 & 0.036 & 0.036 & 0.284 \\
 \bottomrule
 \end{tabular}
